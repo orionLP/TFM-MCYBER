@@ -1,0 +1,8 @@
+stages:
+  packers:
+    cmd: ./src/packers/packers.sh
+    deps:
+    - data/raw/
+    - src/packers/
+    outs:
+    - data/packed/
