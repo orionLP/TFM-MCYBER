@@ -2,6 +2,8 @@
 
 # For now this is to just test the setup
 
+mkdir -p data/packed/upx/exe/x86
+
 for file in $(ls data/raw/exe/x86);
 do
 	strip "data/raw/exe/x86/${file}" -o "data/packed/upx/exe/x86/${file}";
