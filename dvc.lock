@@ -1,0 +1,21 @@
+schema: '2.0'
+stages:
+  packers:
+    cmd: ./src/packers/packers.sh
+    deps:
+    - path: data/raw/
+      hash: md5
+      md5: 260efdd64e5cd1623191d0416578be7d.dir
+      size: 1832448
+      nfiles: 20
+    - path: src/packers/
+      hash: md5
+      md5: 5fa3d86b48dfdf054edcd00ceb4c559f.dir
+      size: 246
+      nfiles: 1
+    outs:
+    - path: data/packed/
+      hash: md5
+      md5: 692b7da42a9ac8087cfe8c9d0b0d63db.dir
+      size: 419328
+      nfiles: 9
