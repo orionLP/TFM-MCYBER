@@ -1,0 +1,94 @@
+dataset version v1.0.0
+
+scan_time: detected after download or while it was at disk
+run_time: detected after running
+broken: payload not working after modification
+ran: ran without being detected
+
+The time format is mm:ss:ms where mm is minutes, ss seconds, and ms a second fraction (from 0 to 99)
+
+/packed/exe/x86/upx/lzma/ avast_free
+
+windows_encrypted_shell_reverse_tcp.exe scan_time 00:09:74
+windows_exec.exe scan_time 00:06:58
+windows_meterpreter_bind_tcp.exe scan_time 00:06:78
+windows_meterpreter_reverse_http.exe scan_time 00:07:50
+windows_meterpreter_reverse_https.exe scan_time 00:08:11
+windows_meterpreter_reverse_tcp.exe scan_time 00:07:23
+windows_pingback_bind_tcp.exe scan_time 00:16:57
+windows_pingback_reverse_tcp.exe scan_time 00:13:60
+windows_powershell_bind_tcp.exe scan_time 00:13:53
+windows_powershell_reverse_tcp.exe scan_time 01:13:15
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:07:95
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:19:59
+windows_shell_bind_tcp.exe scan_time 00:07:78
+windows_shell_hidden_bind_tcp.exe scan_time 00:11:37
+windows_shell_reverse_tcp_rc4.exe scan_time 00:09:30
+
+/packed/exe/x86/petite/ avast_free
+
+windows_encrypted_shell_reverse_tcp.exe scan_time 00:13:19
+windows_exec.exe scan_time 00:08:63
+windows_meterpreter_bind_tcp.exe scan_time 00:11:98
+windows_meterpreter_reverse_http.exe scan_time 00:08:85
+windows_meterpreter_reverse_https.exe scan_time 00:09:00
+windows_meterpreter_reverse_tcp.exe scan_time 00:06:67
+windows_pingback_bind_tcp.exe scan_time 00:13:50
+windows_pingback_reverse_tcp.exe scan_time 00:05:63
+windows_powershell_bind_tcp.exe scan_time 00:14:48
+windows_powershell_reverse_tcp.exe scan_time 00:06:16
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:05:14
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:07:41
+windows_shell_bind_tcp.exe scan_time 00:05:26
+windows_shell_hidden_bind_tcp.exe scan_time 00:03:22
+windows_shell_reverse_tcp_rc4.exe scan_time 00:05:34
+
+/packed/exe/x86/mpress/ avast_free
+
+windows_encrypted_shell_reverse_tcp.exe run_time 00:18:86
+windows_exec.exe scan_time 00:18:17
+windows_meterpreter_bind_tcp.exe scan_time 00:09:59
+windows_meterpreter_reverse_http.exe scan_time 00:08:15
+windows_meterpreter_reverse_https.exe scan_time 00:05:47
+windows_meterpreter_reverse_tcp.exe scan_time 00:09:07
+windows_pingback_bind_tcp.exe scan_time 00:08:42
+windows_pingback_reverse_tcp.exe scan_time 00:12:59
+windows_powershell_bind_tcp.exe scan_time 00:07:70
+windows_powershell_reverse_tcp.exe scan_time 00:15:60
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:17:39
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:04:31
+windows_shell_bind_tcp.exe scan_time 00:07:93
+windows_shell_hidden_bind_tcp.exe scan_time 00:08:05
+windows_shell_reverse_tcp_rc4.exe scan_time 00:07:97
+
+/packed/exe/x86/upx/default/ avast_free
+
+windows_encrypted_shell_reverse_tcp.exe scan_time 00:15:52
+windows_exec.exe scan_time 00:07:41
+windows_meterpreter_bind_tcp.exe scan_time 00:09:32
+windows_meterpreter_reverse_http.exe scan_time 00:04:64
+windows_meterpreter_reverse_https.exe scan_time 00:06:03
+windows_meterpreter_reverse_tcp.exe scan_time 00:06:07
+windows_pingback_bind_tcp.exe scan_time 00:16:43
+windows_pingback_reverse_tcp.exe scan_time 00:09:79
+windows_powershell_bind_tcp.exe scan_time 01:04:80
+windows_powershell_reverse_tcp.exe scan_time 00:33:04
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:35:78
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:54:29
+windows_shell_bind_tcp.exe scan_time 00:16:25
+windows_shell_hidden_bind_tcp.exe scan_time 00:21:85
+windows_shell_reverse_tcp_rc4.exe scan_time 00:14:45
+
+
+
+
+
+
+
+
+
+
+
+
+
+
