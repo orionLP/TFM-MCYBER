@@ -5,9 +5,9 @@ stages:
     deps:
     - path: data/raw/
       hash: md5
-      md5: 7cf1c0bb174c51ef956bbb2d62d46afe.dir
-      size: 1839616
-      nfiles: 21
+      md5: e7c14df5bbd0f247d71e63f61b4c7b48.dir
+      size: 1885184
+      nfiles: 26
     - path: src/packers/
       hash: md5
       md5: 5fa3d86b48dfdf054edcd00ceb4c559f.dir
@@ -16,6 +16,33 @@ stages:
     outs:
     - path: data/packed/
       hash: md5
-      md5: e72374c86c02d955177d19d1773b7e71.dir
-      size: 421888
-      nfiles: 10
+      md5: e03d3891fb28daaf33fa7591693bc6cc.dir
+      size: 441856
+      nfiles: 15
+  crypters_tutorial:
+    cmd: clang --target=i686-pc-windows-gnu ./src/crypters/tutorial/decrypter.c 
+      -o ./src/crypters/tutorial/decrypter.exe  "-Wl,--entry=__start" 
+      -nostartfiles -nostdlib -lkernel32 && python3 
+      ./src/crypters/tutorial/crypter.py
+    deps:
+    - path: ./data/raw/exe/x86/
+      hash: md5
+      md5: ce6784c84e615c66c4e7afed79b2af7c.dir
+      size: 875008
+      nfiles: 15
+    - path: ./src/crypters/tutorial/crypter.py
+      hash: md5
+      md5: e5f50925760e74dcf44e642c4bbc05b7
+      size: 2890
+      isexec: true
+    - path: ./src/crypters/tutorial/decrypter.c
+      hash: md5
+      md5: 978a14a54b31ed1f1944d3b320defe35
+      size: 9393
+      isexec: true
+    outs:
+    - path: ./data/crypters/exe/x86/tutorial/
+      hash: md5
+      md5: 93bcec3f522d85f5ecf1cd611f1ad771.dir
+      size: 996748
+      nfiles: 15

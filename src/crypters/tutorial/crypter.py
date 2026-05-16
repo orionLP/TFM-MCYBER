@@ -32,6 +32,8 @@ input_directory = "data/raw/exe/x86"
 output_directory = "data/crypters/exe/x86/tutorial"
 unpacker_path = "src/crypters/tutorial/decrypter.exe"
 
+os.makedirs(output_directory, exist_ok=True)
+
 for file in os.listdir(input_directory):
     input_filepath = input_directory + "/" + file
     output_filepath = output_directory + "/" + file

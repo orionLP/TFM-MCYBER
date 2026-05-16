@@ -6,3 +6,14 @@ stages:
     - src/packers/
     outs:
     - data/packed/
+  crypters_tutorial:
+    cmd: clang --target=i686-pc-windows-gnu ./src/crypters/tutorial/decrypter.c 
+      -o ./src/crypters/tutorial/decrypter.exe  "-Wl,--entry=__start"  
+      -nostartfiles -nostdlib -lkernel32 && python3 
+      ./src/crypters/tutorial/crypter.py
+    deps:
+    - ./data/raw/exe/x86/
+    - ./src/crypters/tutorial/crypter.py
+    - ./src/crypters/tutorial/decrypter.c
+    outs:
+    - ./data/crypters/exe/x86/tutorial/
