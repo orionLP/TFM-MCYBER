@@ -13,7 +13,7 @@ windows_encrypted_shell_reverse_tcp.exe run_time 00:34:91
 windows_exec.exe scan_time 00:08:40
 windows_meterpreter_bind_tcp.exe scan_time 00:09:40
 windows_meterpreter_reverse_http.exe scan_time 00:14:71
-windows_meterpreter_reverse_https.exe run_time run_time 00:15:21
+windows_meterpreter_reverse_https.exe run_time 00:15:21
 windows_meterpreter_reverse_tcp.exe scan_time 00:13:68
 windows_pingback_bind_tcp.exe scan_time 00:18:58
 windows_pingback_reverse_tcp.exe scan_time 00:19:01
@@ -79,20 +79,20 @@ windows_shell_bind_tcp.exe scan_time 00:09:04
 windows_shell_hidden_bind_tcp.exe scan_time 00:06:91
 windows_shell_reverse_tcp_rc4.exe scan_time 00:04:41
 
-data/crypters/exe/x86/tutorial
+data/crypters/exe/x86/tutorial kaspersky (it will not even allow me to download the files, so i will zero the metrics)
 
-windows_encrypted_shell_reverse_tcp.exe                   
-windows_exec.exe
-windows_meterpreter_bind_tcp.exe
-windows_meterpreter_reverse_http.exe
-windows_meterpreter_reverse_https.exe
-windows_meterpreter_reverse_tcp.exe
-windows_pingback_bind_tcp.exe
-windows_pingback_reverse_tcp.exe
-windows_powershell_bind_tcp.exe
-windows_powershell_reverse_tcp.exe
-windows_powershell_reverse_tcp_ssl.exe
-windows_shell_bind_hidden_ipknock_tcp.exe
-windows_shell_bind_tcp.exe
-windows_shell_hidden_bind_tcp.exe
-windows_shell_reverse_tcp_rc4.exe
+windows_encrypted_shell_reverse_tcp.exe scan_time 00:00:00                  
+windows_exec.exe scan_time 00:00:00
+windows_meterpreter_bind_tcp.exe scan_time 00:00:00
+windows_meterpreter_reverse_http.exe scan_time 00:00:00
+windows_meterpreter_reverse_https.exe scan_time 00:00:00
+windows_meterpreter_reverse_tcp.exe scan_time 00:00:00
+windows_pingback_bind_tcp.exe scan_time 00:00:00
+windows_pingback_reverse_tcp.exe scan_time 00:00:00
+windows_powershell_bind_tcp.exe scan_time 00:00:00
+windows_powershell_reverse_tcp.exe scan_time 00:00:00
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:00:00
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:00:00
+windows_shell_bind_tcp.exe scan_time 00:00:00
+windows_shell_hidden_bind_tcp.exe scan_time 00:00:00
+windows_shell_reverse_tcp_rc4.exe scan_time 00:00:00
