@@ -1,0 +1,537 @@
+{
+    "version": "v1.0.0",
+    "labels": {
+        "scan_time": "detected after download or while it was at disk",
+        "run_time": "detected after running",
+        "broken": "payload not working after modification",
+        "ran": "ran without being detected"
+    },
+    "misc": "The time format is mm:ss:ms where mm is minutes, ss seconds, and ms a second fraction (from 0 to 99). kaspersky would not allow me to download the files so the times have been put to 0. Both avast_free and avg_antivirus_free were sent a sample before the experiment for testing purposes.",
+    "data": [
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "run_time",
+            "time": "00:34:91"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:08:40"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:40"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:14:71"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "run_time",
+            "time": "00:15:21"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:68"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:18:58"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:19:01"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:25:86"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:22:98"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "01:20:37"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:60"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:22:70"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:02"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avast_free",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:13:33"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:43"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:13:16"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:20"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:15:03"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:32:04"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:15:73"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:19:01"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:40:34"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "01:02:70"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:25:54"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:22:30"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:22:67"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:20:21"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:27:75"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:17:22"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "run_time",
+            "time": "00:28:48"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:30:02"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "01:27:67"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "01:33:20"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:54:56"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "01:00:46"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "01:04:03"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "01:08:21"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "01:14:11"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:39:07"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:48:63"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:33:26"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:18:46"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:48:75"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "norton",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:59:66"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:36:83"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "01:14:28"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:04:87"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:07:10"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:05:36"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:04:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:52"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:03:74"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:03:40"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:01:70"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:02:54"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:48:08"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:04"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:91"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "bitdefender",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:04:41"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/crypters/exe/x86/tutorial",
+            "av": "kaspersky",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        }
+    ]
+}
