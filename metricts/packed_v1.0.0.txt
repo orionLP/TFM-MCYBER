@@ -151,12 +151,74 @@ windows_shell_bind_tcp.exe scan_time 00:06:91
 windows_shell_hidden_bind_tcp.exe scan_time 00:06:51
 windows_shell_reverse_tcp_rc4.exe scan_time 00:05:39
 
+/packed/exe/x86/mpress/ kaspersky
 
+windows_encrypted_shell_reverse_tcp.exe scan_time 00:00:00
+windows_exec.exe scan_time 00:00:00
+windows_meterpreter_bind_tcp.exe scan_time 00:00:00
+windows_meterpreter_reverse_http.exe scan_time 00:00:00
+windows_meterpreter_reverse_https.exe scan_time 00:00:00
+windows_meterpreter_reverse_tcp.exe scan_time 00:00:00
+windows_pingback_bind_tcp.exe scan_time 00:00:00
+windows_pingback_reverse_tcp.exe scan_time 00:00:00
+windows_powershell_bind_tcp.exe scan_time 00:00:00
+windows_powershell_reverse_tcp.exe scan_time 00:00:00
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:00:00
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:00:00
+windows_shell_bind_tcp.exe scan_time 00:00:00
+windows_shell_hidden_bind_tcp.exe scan_time 00:00:00
+windows_shell_reverse_tcp_rc4.exe scan_time 00:00:00
 
+/packed/exe/x86/petite/ kaspersky
 
+windows_encrypted_shell_reverse_tcp.exe scan_time 00:00:00
+windows_exec.exe scan_time 00:00:00
+windows_meterpreter_bind_tcp.exe scan_time 00:00:00
+windows_meterpreter_reverse_http.exe scan_time 00:00:00
+windows_meterpreter_reverse_https.exe scan_time 00:00:00
+windows_meterpreter_reverse_tcp.exe scan_time 00:00:00
+windows_pingback_bind_tcp.exe scan_time 00:00:00
+windows_pingback_reverse_tcp.exe scan_time 00:00:00
+windows_powershell_bind_tcp.exe scan_time 00:00:00
+windows_powershell_reverse_tcp.exe scan_time 00:00:00
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:00:00
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:00:00
+windows_shell_bind_tcp.exe scan_time 00:00:00
+windows_shell_hidden_bind_tcp.exe scan_time 00:00:00
+windows_shell_reverse_tcp_rc4.exe scan_time 00:00:00
 
+/packed/exe/x86/upx/default/ kaspersky
 
+windows_encrypted_shell_reverse_tcp.exe scan_time 00:00:00
+windows_exec.exe scan_time 00:00:00
+windows_meterpreter_bind_tcp.exe scan_time 00:00:00
+windows_meterpreter_reverse_http.exe scan_time 00:00:00
+windows_meterpreter_reverse_https.exe scan_time 00:00:00
+windows_meterpreter_reverse_tcp.exe scan_time 00:00:00
+windows_pingback_bind_tcp.exe scan_time 00:00:00
+windows_pingback_reverse_tcp.exe scan_time 00:00:00
+windows_powershell_bind_tcp.exe scan_time 00:00:00
+windows_powershell_reverse_tcp.exe scan_time 00:00:00
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:00:00
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:00:00
+windows_shell_bind_tcp.exe scan_time 00:00:00
+windows_shell_hidden_bind_tcp.exe scan_time 00:00:00
+windows_shell_reverse_tcp_rc4.exe scan_time 00:00:00
 
+/packed/exe/x86/upx/lzma/ kaspersky
 
-
-
+windows_encrypted_shell_reverse_tcp.exe scan_time 00:00:00
+windows_exec.exe scan_time 00:00:00
+windows_meterpreter_bind_tcp.exe scan_time 00:00:00
+windows_meterpreter_reverse_http.exe scan_time 00:00:00
+windows_meterpreter_reverse_https.exe scan_time 00:00:00
+windows_meterpreter_reverse_tcp.exe scan_time 00:00:00
+windows_pingback_bind_tcp.exe scan_time 00:00:00
+windows_pingback_reverse_tcp.exe scan_time 00:00:00
+windows_powershell_bind_tcp.exe scan_time 00:00:00
+windows_powershell_reverse_tcp.exe scan_time 00:00:00
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:00:00
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:00:00
+windows_shell_bind_tcp.exe scan_time 00:00:00
+windows_shell_hidden_bind_tcp.exe scan_time 00:00:00
+windows_shell_reverse_tcp_rc4.exe scan_time 00:00:00
