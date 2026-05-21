@@ -1,0 +1,2112 @@
+{
+    "version": "v1.0.0",
+    "labels": {
+        "scan_time": "detected after download or while it was at disk",
+        "run_time": "detected after running",
+        "broken": "payload not working after modification",
+        "ran": "ran without being detected"
+    },
+    "misc": "The time format is mm:ss:ms where mm is minutes, ss seconds, and ms a second fraction (from 0 to 99). kaspersky did not allow downloads so times have been put to 00:00:00.",
+    "data": [
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:74"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:06:58"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:78"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:07:50"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:08:11"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:23"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:16:57"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:60"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:53"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "01:13:15"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:07:95"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:19:59"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:78"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:11:37"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avast_free",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:09:30"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:19"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:08:63"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:11:98"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:08:85"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:09:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:67"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:50"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:05:63"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:48"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:16"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:05:14"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:41"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:05:26"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:03:22"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avast_free",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:05:34"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "run_time",
+            "time": "00:18:86"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:18:17"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:59"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:08:15"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:05:47"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:07"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:42"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:12:59"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:70"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:15:60"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:17:39"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:04:31"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:93"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:05"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avast_free",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:07:97"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:15:52"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:07:41"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:32"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:04:64"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:06:03"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:07"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:16:43"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:79"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "01:04:80"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:33:04"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:35:78"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:54:29"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:16:25"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:21:85"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avast_free",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:14:45"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:21:67"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_exec.exe",
+            "status": "run_time",
+            "time": "00:10:15"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:17"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:11:22"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:06:61"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:99"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:98"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:56:01"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:32"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:67"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:06:58"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:35"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:80"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:04:47"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:06:30"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:32:52"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:20:02"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:08"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:06:55"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:05:85"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:41"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:29:10"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:06"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:52"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:74"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:35:84"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:51"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:11:81"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:49"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:10:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:10:54"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:15:20"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:12:63"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:37:62"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:25:54"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:30:99"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:33"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:53"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:30"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:37"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:05:13"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:80"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:04:99"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:05:96"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:04:72"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:34:44"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:14:25"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:80"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:07:32"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:16:29"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:11:44"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:05:69"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:31"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:05:24"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:03"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:07:10"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:71"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:91"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:51"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:05:39"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "kaspersky",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "kaspersky",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "kaspersky",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "kaspersky",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:00:00"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:11"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:09:26"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:89"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:07:81"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:05:59"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:33"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:05:57"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:05:49"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:05:39"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:11:46"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:16:53"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:26"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:03"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:06:61"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "norton",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:05:97"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:28:14"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:25:14"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:20:46"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:24:20"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:24:24"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:46:69"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:16:74"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:15:67"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:40"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:16:01"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:28:02"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:18:11"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:16:00"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:18:47"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "norton",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:17:42"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:13"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:20:09"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:29:46"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:30:65"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:29:77"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:29:25"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:44"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:49"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:32:07"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:28:48"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:12:94"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:51"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:34"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:51"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "norton",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:15:73"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:23:20"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:17:54"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:30:32"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:26:78"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:32:31"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:28:68"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:15:33"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:32"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:01"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:78"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:12:33"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:28:48"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:87"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:15:23"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "norton",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:15:50"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "run_time",
+            "time": "00:47:04"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:49:27"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:43:15"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:11:67"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:16:37"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:52"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:72"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:20:16"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:16:89"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:28"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:14:65"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:45"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:19:89"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:18:36"
+        },
+        {
+            "path": "data/packed/exe/x86/mpress/",
+            "av": "bitdefender",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:17:05"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:40"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:17:07"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:93"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:09:64"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:14:98"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:05:18"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:35"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:10:56"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:29"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:09"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:15:48"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:09:03"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:07"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:93"
+        },
+        {
+            "path": "data/packed/exe/x86/petite/",
+            "av": "bitdefender",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:16:54"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:14"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:14:36"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:60"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:17:29"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:09:94"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:40"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:16:17"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:17:35"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:16:38"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:18:38"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:17:90"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:48"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:32"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:80"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/default/",
+            "av": "bitdefender",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:08:67"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_encrypted_shell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:45"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_exec.exe",
+            "status": "scan_time",
+            "time": "00:14:25"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:16:59"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_http.exe",
+            "status": "scan_time",
+            "time": "00:13:75"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_https.exe",
+            "status": "scan_time",
+            "time": "00:17:45"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_meterpreter_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:04:32"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_pingback_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:60"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_pingback_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:80"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_powershell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:07:75"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_powershell_reverse_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:53"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_powershell_reverse_tcp_ssl.exe",
+            "status": "scan_time",
+            "time": "00:07:93"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_shell_bind_hidden_ipknock_tcp.exe",
+            "status": "scan_time",
+            "time": "00:13:18"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:14:31"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_shell_hidden_bind_tcp.exe",
+            "status": "scan_time",
+            "time": "00:08:10"
+        },
+        {
+            "path": "data/packed/exe/x86/upx/lzma/",
+            "av": "bitdefender",
+            "file": "windows_shell_reverse_tcp_rc4.exe",
+            "status": "scan_time",
+            "time": "00:17:20"
+        }
+    ]
+}

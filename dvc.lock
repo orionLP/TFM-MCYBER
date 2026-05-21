@@ -10,8 +10,8 @@ stages:
       nfiles: 26
     - path: src/packers/
       hash: md5
-      md5: 5fa3d86b48dfdf054edcd00ceb4c559f.dir
-      size: 246
+      md5: 68f3e0becc14f2893e4fa4701da0fc8f.dir
+      size: 1624
       nfiles: 1
     outs:
     - path: data/packed/
