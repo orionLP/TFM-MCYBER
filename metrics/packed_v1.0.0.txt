@@ -240,3 +240,59 @@ windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:09:26
 windows_shell_bind_tcp.exe scan_time 00:08:03
 windows_shell_hidden_bind_tcp.exe scan_time 00:06:61 
 windows_shell_reverse_tcp_rc4.exe scan_time 00:05:97
+
+/packed/exe/x86/petite/ norton
+
+windows_encrypted_shell_reverse_tcp.exe scan_time 00:28:14
+windows_exec.exe scan_time 00:25:14
+windows_meterpreter_bind_tcp.exe scan_time 00:20:46
+windows_meterpreter_reverse_http.exe scan_time 00:24:20
+windows_meterpreter_reverse_https.exe scan_time 00:24:24
+windows_meterpreter_reverse_tcp.exe scan_time 00:46:69
+windows_pingback_bind_tcp.exe scan_time 00:16:74
+windows_pingback_reverse_tcp.exe scan_time 00:15:67
+windows_powershell_bind_tcp.exe scan_time 00:14:40
+windows_powershell_reverse_tcp.exe scan_time 00:16:01
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:28:02
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:18:11
+windows_shell_bind_tcp.exe scan_time 00:16:00
+windows_shell_hidden_bind_tcp.exe scan_time 00:18:47
+windows_shell_reverse_tcp_rc4.exe scan_time 00:17:42
+
+/packed/exe/x86/upx/default/ norton
+
+windows_encrypted_shell_reverse_tcp.exe scan_time 00:13:13
+windows_exec.exe scan_time 00:20:09
+windows_meterpreter_bind_tcp.exe scan_time 00:29:46
+windows_meterpreter_reverse_http.exe scan_time 00:30:65
+windows_meterpreter_reverse_https.exe scan_time 00:29:77
+windows_meterpreter_reverse_tcp.exe scan_time 00:29:25
+windows_pingback_bind_tcp.exe scan_time 00:17:44
+windows_pingback_reverse_tcp.exe scan_time 00:09:49
+windows_powershell_bind_tcp.exe scan_time 00:32:07
+windows_powershell_reverse_tcp.exe scan_time 00:28:48
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:12:94
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:13:51
+windows_shell_bind_tcp.exe scan_time 00:09:34
+windows_shell_hidden_bind_tcp.exe scan_time 00:14:51
+windows_shell_reverse_tcp_rc4.exe scan_time 00:15:73
+
+/packed/exe/x86/upx/lzma/ norton
+
+windows_encrypted_shell_reverse_tcp.exe scan_time 00:23:20
+windows_exec.exe scan_time 00:17:54
+windows_meterpreter_bind_tcp.exe scan_time 00:30:32
+windows_meterpreter_reverse_http.exe scan_time 00:26:78
+windows_meterpreter_reverse_https.exe scan_time 00:32:31
+windows_meterpreter_reverse_tcp.exe scan_time 00:28:68
+windows_pingback_bind_tcp.exe scan_time 00:15:33
+windows_pingback_reverse_tcp.exe scan_time 00:14:32
+windows_powershell_bind_tcp.exe scan_time 00:13:01
+windows_powershell_reverse_tcp.exe scan_time 00:13:78
+windows_powershell_reverse_tcp_ssl.exe scan_time 00:12:33
+windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:28:48
+windows_shell_bind_tcp.exe scan_time 00:14:87
+windows_shell_hidden_bind_tcp.exe scan_time 00:15:23
+windows_shell_reverse_tcp_rc4.exe scan_time 00:15:50
+
+
