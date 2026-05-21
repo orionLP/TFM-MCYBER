@@ -5,9 +5,9 @@ run_time: detected after running
 broken: payload not working after modification
 ran: ran without being detected
 
-The time format is mm:ss:ms where mm is minutes, ss seconds, and ms a second fraction (from 0 to 99)
+The time format is mm:ss:ms where mm is minutes, ss seconds, and ms a second fraction (from 0 to 99). kaspersky did not allow downloads so times have been put to 00:00:00.
 
-/packed/exe/x86/upx/lzma/ avast_free
+data/packed/exe/x86/upx/lzma/ avast_free
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:09:74
 windows_exec.exe scan_time 00:06:58
@@ -25,7 +25,7 @@ windows_shell_bind_tcp.exe scan_time 00:07:78
 windows_shell_hidden_bind_tcp.exe scan_time 00:11:37
 windows_shell_reverse_tcp_rc4.exe scan_time 00:09:30
 
-/packed/exe/x86/petite/ avast_free
+data/packed/exe/x86/petite/ avast_free
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:13:19
 windows_exec.exe scan_time 00:08:63
@@ -43,7 +43,7 @@ windows_shell_bind_tcp.exe scan_time 00:05:26
 windows_shell_hidden_bind_tcp.exe scan_time 00:03:22
 windows_shell_reverse_tcp_rc4.exe scan_time 00:05:34
 
-/packed/exe/x86/mpress/ avast_free
+data/packed/exe/x86/mpress/ avast_free
 
 windows_encrypted_shell_reverse_tcp.exe run_time 00:18:86
 windows_exec.exe scan_time 00:18:17
@@ -61,7 +61,7 @@ windows_shell_bind_tcp.exe scan_time 00:07:93
 windows_shell_hidden_bind_tcp.exe scan_time 00:08:05
 windows_shell_reverse_tcp_rc4.exe scan_time 00:07:97
 
-/packed/exe/x86/upx/default/ avast_free
+data/packed/exe/x86/upx/default/ avast_free
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:15:52
 windows_exec.exe scan_time 00:07:41
@@ -79,7 +79,7 @@ windows_shell_bind_tcp.exe scan_time 00:16:25
 windows_shell_hidden_bind_tcp.exe scan_time 00:21:85
 windows_shell_reverse_tcp_rc4.exe scan_time 00:14:45
 
-/packed/exe/x86/mpress/ avg_antivirus_free
+data/packed/exe/x86/mpress/ avg_antivirus_free
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:21:67
 windows_exec.exe run_time 00:10:15
@@ -97,7 +97,7 @@ windows_shell_bind_tcp.exe scan_time 00:07:80
 windows_shell_hidden_bind_tcp.exe scan_time 00:04:47
 windows_shell_reverse_tcp_rc4.exe scan_time 00:06:30
 
-/packed/exe/x86/petite/ avg_antivirus_free
+data/packed/exe/x86/petite/ avg_antivirus_free
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:32:52
 windows_exec.exe scan_time 00:20:02
@@ -115,7 +115,7 @@ windows_shell_bind_tcp.exe scan_time 00:11:81
 windows_shell_hidden_bind_tcp.exe scan_time 00:17:49
 windows_shell_reverse_tcp_rc4.exe scan_time 00:10:00
 
-/packed/exe/x86/upx/default/ avg_antivirus_free
+data/packed/exe/x86/upx/default/ avg_antivirus_free
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:10:54
 windows_exec.exe scan_time 00:15:20
@@ -130,10 +130,10 @@ windows_powershell_reverse_tcp.exe scan_time 00:17:37
 windows_powershell_reverse_tcp_ssl.exe scan_time 00:05:13
 windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:06:80
 windows_shell_bind_tcp.exe scan_time 00:04:99
-windows_shell_hidden_bind_tcp.exe 00:05:96
+windows_shell_hidden_bind_tcp.exe scan_time 00:05:96
 windows_shell_reverse_tcp_rc4.exe scan_time 00:04:72
 
-/packed/exe/x86/upx/lzma/ avg_antivirus_free
+data/packed/exe/x86/upx/lzma/ avg_antivirus_free
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:34:44
 windows_exec.exe scan_time 00:14:25
@@ -151,7 +151,7 @@ windows_shell_bind_tcp.exe scan_time 00:06:91
 windows_shell_hidden_bind_tcp.exe scan_time 00:06:51
 windows_shell_reverse_tcp_rc4.exe scan_time 00:05:39
 
-/packed/exe/x86/mpress/ kaspersky
+data/packed/exe/x86/mpress/ kaspersky
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:00:00
 windows_exec.exe scan_time 00:00:00
@@ -169,7 +169,7 @@ windows_shell_bind_tcp.exe scan_time 00:00:00
 windows_shell_hidden_bind_tcp.exe scan_time 00:00:00
 windows_shell_reverse_tcp_rc4.exe scan_time 00:00:00
 
-/packed/exe/x86/petite/ kaspersky
+data/packed/exe/x86/petite/ kaspersky
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:00:00
 windows_exec.exe scan_time 00:00:00
@@ -187,7 +187,7 @@ windows_shell_bind_tcp.exe scan_time 00:00:00
 windows_shell_hidden_bind_tcp.exe scan_time 00:00:00
 windows_shell_reverse_tcp_rc4.exe scan_time 00:00:00
 
-/packed/exe/x86/upx/default/ kaspersky
+data/packed/exe/x86/upx/default/ kaspersky
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:00:00
 windows_exec.exe scan_time 00:00:00
@@ -205,7 +205,7 @@ windows_shell_bind_tcp.exe scan_time 00:00:00
 windows_shell_hidden_bind_tcp.exe scan_time 00:00:00
 windows_shell_reverse_tcp_rc4.exe scan_time 00:00:00
 
-/packed/exe/x86/upx/lzma/ kaspersky
+data/packed/exe/x86/upx/lzma/ kaspersky
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:00:00
 windows_exec.exe scan_time 00:00:00
@@ -223,7 +223,7 @@ windows_shell_bind_tcp.exe scan_time 00:00:00
 windows_shell_hidden_bind_tcp.exe scan_time 00:00:00
 windows_shell_reverse_tcp_rc4.exe scan_time 00:00:00
 
-/packed/exe/x86/mpress/ norton
+data/packed/exe/x86/mpress/ norton
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:17:11
 windows_exec.exe scan_time 00:09:26
@@ -241,7 +241,7 @@ windows_shell_bind_tcp.exe scan_time 00:08:03
 windows_shell_hidden_bind_tcp.exe scan_time 00:06:61 
 windows_shell_reverse_tcp_rc4.exe scan_time 00:05:97
 
-/packed/exe/x86/petite/ norton
+data/packed/exe/x86/petite/ norton
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:28:14
 windows_exec.exe scan_time 00:25:14
@@ -259,7 +259,7 @@ windows_shell_bind_tcp.exe scan_time 00:16:00
 windows_shell_hidden_bind_tcp.exe scan_time 00:18:47
 windows_shell_reverse_tcp_rc4.exe scan_time 00:17:42
 
-/packed/exe/x86/upx/default/ norton
+data/packed/exe/x86/upx/default/ norton
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:13:13
 windows_exec.exe scan_time 00:20:09
@@ -277,7 +277,7 @@ windows_shell_bind_tcp.exe scan_time 00:09:34
 windows_shell_hidden_bind_tcp.exe scan_time 00:14:51
 windows_shell_reverse_tcp_rc4.exe scan_time 00:15:73
 
-/packed/exe/x86/upx/lzma/ norton
+data/packed/exe/x86/upx/lzma/ norton
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:23:20
 windows_exec.exe scan_time 00:17:54
@@ -295,7 +295,7 @@ windows_shell_bind_tcp.exe scan_time 00:14:87
 windows_shell_hidden_bind_tcp.exe scan_time 00:15:23
 windows_shell_reverse_tcp_rc4.exe scan_time 00:15:50
 
-/packed/exe/x86/mpress/ bitdefender
+data/packed/exe/x86/mpress/ bitdefender
 
 windows_encrypted_shell_reverse_tcp.exe run_time 00:47:04
 windows_exec.exe scan_time 00:49:27
@@ -311,9 +311,9 @@ windows_powershell_reverse_tcp_ssl.exe scan_time 00:14:65
 windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:07:45
 windows_shell_bind_tcp.exe scan_time 00:19:89
 windows_shell_hidden_bind_tcp.exe scan_time 00:18:36
-windows_shell_reverse_tcp_rc4.exe 00:17:05
+windows_shell_reverse_tcp_rc4.exe scan_time 00:17:05
 
-/packed/exe/x86/petite/ bitdefender
+data/packed/exe/x86/petite/ bitdefender
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:08:40
 windows_exec.exe scan_time 00:17:07
@@ -331,7 +331,7 @@ windows_shell_bind_tcp.exe scan_time 00:17:07
 windows_shell_hidden_bind_tcp.exe scan_time 00:08:93
 windows_shell_reverse_tcp_rc4.exe scan_time 00:16:54
 
-/packed/exe/x86/upx/default/ bitdefender
+data/packed/exe/x86/upx/default/ bitdefender
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:17:14
 windows_exec.exe scan_time 00:14:36
@@ -341,7 +341,7 @@ windows_meterpreter_reverse_https.exe scan_time 00:09:94
 windows_meterpreter_reverse_tcp.exe scan_time 00:17:40
 windows_pingback_bind_tcp.exe scan_time 00:16:17
 windows_pingback_reverse_tcp.exe scan_time 00:17:35
-windows_powershell_bind_tcp.exe 00:16:38
+windows_powershell_bind_tcp.exe scan_time 00:16:38
 windows_powershell_reverse_tcp.exe scan_time 00:18:38
 windows_powershell_reverse_tcp_ssl.exe scan_time 00:17:90
 windows_shell_bind_hidden_ipknock_tcp.exe scan_time 00:14:48
@@ -349,7 +349,7 @@ windows_shell_bind_tcp.exe scan_time 00:08:32
 windows_shell_hidden_bind_tcp.exe scan_time 00:08:80
 windows_shell_reverse_tcp_rc4.exe scan_time 00:08:67
 
-/packed/exe/x86/upx/lzma/ bitdefender
+data/packed/exe/x86/upx/lzma/ bitdefender
 
 windows_encrypted_shell_reverse_tcp.exe scan_time 00:14:45
 windows_exec.exe scan_time 00:14:25
