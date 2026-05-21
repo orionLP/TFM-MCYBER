@@ -1,4 +1,4 @@
-schema: '2.0' 
+schema: '2.0'
 stages:
   packers:
     cmd: ./src/packers/packers.sh
@@ -16,7 +16,7 @@ stages:
     outs:
     - path: data/packed/
       hash: md5
-      md5: a8c96981ca29406d57b29547ae813d3b.dir
+      md5: 6a3ba55f448429dbeaaf3ad0ba8be677.dir
       size: 1706510
       nfiles: 60
   crypters_tutorial:
@@ -43,6 +43,6 @@ stages:
     outs:
     - path: ./data/crypters/exe/x86/tutorial/
       hash: md5
-      md5: 93bcec3f522d85f5ecf1cd611f1ad771.dir
+      md5: a0135595016df69d1e201c4562f121fc.dir
       size: 996748
       nfiles: 15
