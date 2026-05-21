@@ -33,7 +33,7 @@ pack_petite(){
 	wine ./software/petite.exe -n "${target_directory}/${source_filename}" | grep "Writing"
 	rm "${target_directory}/${source_filename}.bak"
 }
-
+ 
 source_dir='data/raw/exe/x86'
 target_dir='data/packed/exe/x86'
 upx_dir="${target_dir}/upx"
