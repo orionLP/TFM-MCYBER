@@ -2,13 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include <stdint.h>
 
 #include "pe_file.h"
 
 #define TRY_IO(io_call, expected_result, label) if((io_call) != (expected_result)) { goto label;}
-
-
 
 // The following definitions are taken from wine 
 
@@ -74,6 +71,7 @@ struct pe_file{
     IMAGE_FILE_HEADER file_header;
     // for now i do not need the optional directories
     IMAGE_SECTION_HEADER *section_headers;
+    char **section_names;
 };
 
 static bool is_mode(char *mode){
@@ -104,7 +102,7 @@ error_free:
     return -1;
 }
 
-pe_file *read_pe_file(char *path, char *mode){
+pe_file *open_pe_file(char *path, char *mode){
     if(!is_mode(mode)){
         return NULL;
     }
@@ -116,26 +114,89 @@ pe_file *read_pe_file(char *path, char *mode){
     
     new_file->contents = NULL;
     new_file->section_headers = NULL;
+    new_file->section_names = NULL;
 
     new_file->contents = fopen(path, mode);
     if(new_file->contents == NULL){
-        free(new_file);
+        destructor_pe_file(new_file);
         return NULL;
     }
 
     if(read_data_structures(new_file) != 0){
-        fclose(new_file->contents);
-        free(new_file);
+        destructor_pe_file(new_file);
+        return NULL;
+    }
+
+    new_file->section_names = malloc(sizeof(char *) * new_file->file_header.NumberOfSections);
+    if(new_file->section_names != NULL){
+        for(int i = 0; i < new_file->file_header.NumberOfSections; i++){
+            new_file->section_names[i] = NULL;
+        }
+
+        for(int i = 0; i < new_file->file_header.NumberOfSections; i++){
+            new_file->section_names[i] = malloc(sizeof(char) * (IMAGE_SIZEOF_SHORT_NAME + 1));
+            if(new_file->section_names[i] != NULL){
+                for(int j = 0; j < IMAGE_SIZEOF_SHORT_NAME; j++)
+                    new_file->section_names[i][j] = new_file->section_headers[i].Name[j];
+                new_file->section_names[i][IMAGE_SIZEOF_SHORT_NAME] = '\0';
+            } else{
+                destructor_pe_file(new_file);
+                return NULL;
+            }
+        }
+    } else{
+        destructor_pe_file(new_file);
         return NULL;
     }
 
     return new_file;
 }
 
-void close_pe_file(pe_file *file){
+void destructor_pe_file(pe_file *file){
     fclose(file->contents);
     free(file->section_headers);
+    
+    if(file->section_names != NULL){
+    for(int i = 0; i < file->file_header.NumberOfSections; i++)
+        free(file->section_names[i]);
+    }
+    free(file->section_names);
+
     free(file);
+}
+
+int number_of_sections(pe_file *file){
+    return file->file_header.NumberOfSections;
+}
+
+const char *section_name(pe_file *file, int number){
+    return file->section_names[number];
+}
+
+int section_number(pe_file *file, const char *name){
+    for(int i = 0; i < number_of_sections(file); i++){
+        if(strcmp(name, section_name(file, i)) == 0){
+            return i;
+        }
+    }
+    return -1;
+}
+
+int section_size(pe_file *file, const char *name){
+    int number = section_number(file, name);
+    if(number == -1)
+        return -1;
+    return file->section_headers[number].SizeOfRawData;
+}
+
+int write_constant(pe_file *file, const char *name, uint8_t value, int amount, int offset){
+    int number = section_number(file, name);
+    int start_pointer = file->section_headers[number].PointerToRawData;
+    TRY_IO(fseek(file->contents, start_pointer + offset, SEEK_SET), 0, error);
+    for(int i = 0; i < amount; i++)
+        TRY_IO(fwrite(&value, sizeof(value), 1, file->contents), 1, error);
+error:
+    return -1;
 }
 
 void print_hex_contents(uint8_t *from, int times){
@@ -159,5 +220,6 @@ void print_headers(pe_file *file){
     for(int i = 0; i < file->file_header.NumberOfSections; i++){
         printf("Section %d %s:\n", i, file->section_headers[i].Name);
         print_hex_contents((uint8_t *) (file->section_headers + i), sizeof(IMAGE_SECTION_HEADER));
+        printf("%s\n", file->section_names[i]);
     }
 }
