@@ -102,7 +102,7 @@ error_free:
     return -1;
 }
 
-pe_file *open_pe_file(char *path, char *mode){
+pe_file *pe_file_open(char *path, char *mode){
     if(!is_mode(mode)){
         return NULL;
     }
@@ -118,12 +118,12 @@ pe_file *open_pe_file(char *path, char *mode){
 
     new_file->contents = fopen(path, mode);
     if(new_file->contents == NULL){
-        destructor_pe_file(new_file);
+        pe_file_destructor(new_file);
         return NULL;
     }
 
     if(read_data_structures(new_file) != 0){
-        destructor_pe_file(new_file);
+        pe_file_destructor(new_file);
         return NULL;
     }
 
@@ -140,19 +140,19 @@ pe_file *open_pe_file(char *path, char *mode){
                     new_file->section_names[i][j] = new_file->section_headers[i].Name[j];
                 new_file->section_names[i][IMAGE_SIZEOF_SHORT_NAME] = '\0';
             } else{
-                destructor_pe_file(new_file);
+                pe_file_destructor(new_file);
                 return NULL;
             }
         }
     } else{
-        destructor_pe_file(new_file);
+        pe_file_destructor(new_file);
         return NULL;
     }
 
     return new_file;
 }
 
-void destructor_pe_file(pe_file *file){
+void pe_file_destructor(pe_file *file){
     fclose(file->contents);
     free(file->section_headers);
     
@@ -165,32 +165,32 @@ void destructor_pe_file(pe_file *file){
     free(file);
 }
 
-int number_of_sections(pe_file *file){
+int pe_file_number_of_sections(pe_file *file){
     return file->file_header.NumberOfSections;
 }
 
-const char *section_name(pe_file *file, int number){
+const char *pe_file_section_name(pe_file *file, int number){
     return file->section_names[number];
 }
 
-int section_number(pe_file *file, const char *name){
-    for(int i = 0; i < number_of_sections(file); i++){
-        if(strcmp(name, section_name(file, i)) == 0){
+int pe_file_section_number(pe_file *file, const char *name){
+    for(int i = 0; i < pe_file_number_of_sections(file); i++){
+        if(strcmp(name, pe_file_section_name(file, i)) == 0){
             return i;
         }
     }
     return -1;
 }
 
-int section_size(pe_file *file, const char *name){
-    int number = section_number(file, name);
+int pe_file_section_size(pe_file *file, const char *name){
+    int number = pe_file_section_number(file, name);
     if(number == -1)
         return -1;
     return file->section_headers[number].SizeOfRawData;
 }
 
-int write_constant(pe_file *file, const char *name, uint8_t value, int amount, int offset){
-    int number = section_number(file, name);
+int pe_file_write_constant(pe_file *file, const char *name, uint8_t value, int amount, int offset){
+    int number = pe_file_section_number(file, name);
     int start_pointer = file->section_headers[number].PointerToRawData;
     TRY_IO(fseek(file->contents, start_pointer + offset, SEEK_SET), 0, error);
     for(int i = 0; i < amount; i++)
@@ -199,14 +199,14 @@ error:
     return -1;
 }
 
-void print_hex_contents(uint8_t *from, int times){
+static void print_hex_contents(uint8_t *from, int times){
     for(int i = 0; i < times; i++){
         printf("%02x ", *(from + i));
     }
     printf("\n");
 }
 
-void print_headers(pe_file *file){
+void pe_file_print_headers(pe_file *file){
     printf("The DOS header has the following bytes:\n");
     print_hex_contents((uint8_t *) &(file->dos_header), sizeof(IMAGE_DOS_HEADER));
 
