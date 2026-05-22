@@ -9,6 +9,8 @@
 #define WORD uint16_t
 #define DWORD uint32_t
 
+// The following definitions are taken from wine 
+
 typedef struct _IMAGE_DOS_HEADER {
     WORD  e_magic;      /* 00: MZ Header signature */
     WORD  e_cblp;       /* 02: Bytes on last page of file */
@@ -31,9 +33,21 @@ typedef struct _IMAGE_DOS_HEADER {
     DWORD e_lfanew;     /* 3c: Offset to extended header */
 } IMAGE_DOS_HEADER, *PIMAGE_DOS_HEADER;
 
+typedef struct _IMAGE_FILE_HEADER {
+  WORD  Machine;
+  WORD  NumberOfSections;
+  DWORD TimeDateStamp;
+  DWORD PointerToSymbolTable;
+  DWORD NumberOfSymbols;
+  WORD  SizeOfOptionalHeader;
+  WORD  Characteristics;
+} IMAGE_FILE_HEADER, *PIMAGE_FILE_HEADER;
+
 struct pe_file{
     FILE *contents;
     IMAGE_DOS_HEADER dos_header;
+    DWORD signature;
+    IMAGE_FILE_HEADER file_header;
 };
 
 static bool is_mode(char *mode){
@@ -43,7 +57,22 @@ static bool is_mode(char *mode){
 }
 
 static int read_data_structures(pe_file *file){
-    int result = fread(&(file->dos_header), sizeof(pe_file), 1, file->contents);
+    int result = fread(&(file->dos_header), sizeof(IMAGE_DOS_HEADER), 1, file->contents);
+    if(result != 1){
+        return -1;
+    }
+    
+    result = fseek(file->contents, (long int) file->dos_header.e_lfanew, SEEK_SET);
+    if(result != 0){
+        return -1;
+    }
+
+    result = fread(&(file->signature), sizeof(DWORD), 1, file->contents);
+    if(result != 1){
+        return -1;
+    }
+
+    result = fread(&(file->file_header), sizeof(IMAGE_FILE_HEADER), 1, file->contents);
     if(result != 1){
         return -1;
     }
@@ -81,9 +110,19 @@ void close_pe_file(pe_file *file){
     free(file);
 }
 
-void print_headers(pe_file *file){
-    int size_dos_header = sizeof(IMAGE_DOS_HEADER);
-    for(int i = 0; i < size_dos_header; i++){
-        printf("%02x ", *(((uint8_t *) &(file->dos_header)) + i));
+void print_hex_contents(uint8_t *from, int times){
+    for(int i = 0; i < times; i++){
+        printf("%02x ", *(from + i));
     }
+}
+
+void print_headers(pe_file *file){
+    printf("The DOS header has the following bytes:\n");
+    print_hex_contents((uint8_t *) &(file->dos_header), sizeof(IMAGE_DOS_HEADER));
+
+    printf("\nThe bytes of the signature are:\n");
+    print_hex_contents((uint8_t *) &(file->signature), sizeof(file->signature));
+
+    printf("\nThe file header has the following bytes:\n");
+    print_hex_contents((uint8_t *) &(file->file_header), sizeof(file->file_header));
 }
