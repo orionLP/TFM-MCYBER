@@ -6,12 +6,16 @@
 
 #include "pe_file.h"
 
-#define WORD uint16_t
-#define DWORD uint32_t
-
 #define TRY_IO(io_call, expected_result, label) if((io_call) != (expected_result)) { goto label;}
 
+
+
 // The following definitions are taken from wine 
+
+#define BYTE uint8_t
+#define WORD uint16_t
+#define DWORD uint32_t
+#define IMAGE_SIZEOF_SHORT_NAME 8
 
 typedef struct _IMAGE_DOS_HEADER {
     WORD  e_magic;      /* 00: MZ Header signature */
@@ -45,6 +49,22 @@ typedef struct _IMAGE_FILE_HEADER {
   WORD  Characteristics;
 } IMAGE_FILE_HEADER, *PIMAGE_FILE_HEADER;
 
+typedef struct _IMAGE_SECTION_HEADER {
+  BYTE  Name[IMAGE_SIZEOF_SHORT_NAME];
+  union {
+    DWORD PhysicalAddress;
+    DWORD VirtualSize;
+  } Misc;
+  DWORD VirtualAddress;
+  DWORD SizeOfRawData;
+  DWORD PointerToRawData;
+  DWORD PointerToRelocations;
+  DWORD PointerToLinenumbers;
+  WORD  NumberOfRelocations;
+  WORD  NumberOfLinenumbers;
+  DWORD Characteristics;
+} IMAGE_SECTION_HEADER, *PIMAGE_SECTION_HEADER;
+
 // end of code from wine
 
 struct pe_file{
@@ -52,6 +72,8 @@ struct pe_file{
     IMAGE_DOS_HEADER dos_header;
     DWORD signature;
     IMAGE_FILE_HEADER file_header;
+    // for now i do not need the optional directories
+    IMAGE_SECTION_HEADER *section_headers;
 };
 
 static bool is_mode(char *mode){
@@ -65,8 +87,20 @@ static int read_data_structures(pe_file *file){
     TRY_IO(fseek(file->contents, (long int) file->dos_header.e_lfanew, SEEK_SET), 0, error);
     TRY_IO(fread(&(file->signature), sizeof(DWORD), 1, file->contents), 1, error);
     TRY_IO(fread(&(file->file_header), sizeof(IMAGE_FILE_HEADER), 1, file->contents), 1, error);
+    TRY_IO(fseek(file->contents, (long int) (file->dos_header.e_lfanew + sizeof(DWORD) + sizeof(IMAGE_FILE_HEADER) + file->file_header.SizeOfOptionalHeader), SEEK_SET), 0, error);
+    
+    file->section_headers = malloc(sizeof(IMAGE_SECTION_HEADER) * file->file_header.NumberOfSections);
+    if(file->section_headers == NULL) 
+        goto error;
+
+    TRY_IO(fread(file->section_headers, sizeof(IMAGE_SECTION_HEADER), file->file_header.NumberOfSections, file->contents), file->file_header.NumberOfSections, error_free);
+
     return 0;
 error:
+    return -1;
+error_free:
+    free(file->section_headers);
+    file->section_headers = NULL;
     return -1;
 }
 
@@ -80,6 +114,9 @@ pe_file *read_pe_file(char *path, char *mode){
         return NULL;
     }
     
+    new_file->contents = NULL;
+    new_file->section_headers = NULL;
+
     new_file->contents = fopen(path, mode);
     if(new_file->contents == NULL){
         free(new_file);
@@ -97,6 +134,7 @@ pe_file *read_pe_file(char *path, char *mode){
 
 void close_pe_file(pe_file *file){
     fclose(file->contents);
+    free(file->section_headers);
     free(file);
 }
 
@@ -104,15 +142,22 @@ void print_hex_contents(uint8_t *from, int times){
     for(int i = 0; i < times; i++){
         printf("%02x ", *(from + i));
     }
+    printf("\n");
 }
 
 void print_headers(pe_file *file){
     printf("The DOS header has the following bytes:\n");
     print_hex_contents((uint8_t *) &(file->dos_header), sizeof(IMAGE_DOS_HEADER));
 
-    printf("\nThe bytes of the signature are:\n");
+    printf("The bytes of the signature are:\n");
     print_hex_contents((uint8_t *) &(file->signature), sizeof(file->signature));
 
-    printf("\nThe file header has the following bytes:\n");
+    printf("The file header has the following bytes:\n");
     print_hex_contents((uint8_t *) &(file->file_header), sizeof(file->file_header));
+
+    printf("The bytes of the sections are the following:\n");
+    for(int i = 0; i < file->file_header.NumberOfSections; i++){
+        printf("Section %d %s:\n", i, file->section_headers[i].Name);
+        print_hex_contents((uint8_t *) (file->section_headers + i), sizeof(IMAGE_SECTION_HEADER));
+    }
 }
