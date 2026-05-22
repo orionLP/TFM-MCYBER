@@ -9,6 +9,8 @@
 #define WORD uint16_t
 #define DWORD uint32_t
 
+#define TRY_IO(io_call, expected_result, label) if((io_call) != (expected_result)) { goto label;}
+
 // The following definitions are taken from wine 
 
 typedef struct _IMAGE_DOS_HEADER {
@@ -43,6 +45,8 @@ typedef struct _IMAGE_FILE_HEADER {
   WORD  Characteristics;
 } IMAGE_FILE_HEADER, *PIMAGE_FILE_HEADER;
 
+// end of code from wine
+
 struct pe_file{
     FILE *contents;
     IMAGE_DOS_HEADER dos_header;
@@ -57,27 +61,13 @@ static bool is_mode(char *mode){
 }
 
 static int read_data_structures(pe_file *file){
-    int result = fread(&(file->dos_header), sizeof(IMAGE_DOS_HEADER), 1, file->contents);
-    if(result != 1){
-        return -1;
-    }
-    
-    result = fseek(file->contents, (long int) file->dos_header.e_lfanew, SEEK_SET);
-    if(result != 0){
-        return -1;
-    }
-
-    result = fread(&(file->signature), sizeof(DWORD), 1, file->contents);
-    if(result != 1){
-        return -1;
-    }
-
-    result = fread(&(file->file_header), sizeof(IMAGE_FILE_HEADER), 1, file->contents);
-    if(result != 1){
-        return -1;
-    }
-
+    TRY_IO(fread(&(file->dos_header), sizeof(IMAGE_DOS_HEADER), 1, file->contents), 1, error);
+    TRY_IO(fseek(file->contents, (long int) file->dos_header.e_lfanew, SEEK_SET), 0, error);
+    TRY_IO(fread(&(file->signature), sizeof(DWORD), 1, file->contents), 1, error);
+    TRY_IO(fread(&(file->file_header), sizeof(IMAGE_FILE_HEADER), 1, file->contents), 1, error);
     return 0;
+error:
+    return -1;
 }
 
 pe_file *read_pe_file(char *path, char *mode){
