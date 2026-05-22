@@ -5,9 +5,11 @@
 #define PE_WRITE_MODE "wb"
 #define PE_READWRITE_MODE "rb+"
 
-struct pe_file;
+typedef struct pe_file pe_file;
 
-struct pe_file *read_pe_file(char *path, char *mode);
-void delete_pe_file(struct pe_file *file);
+pe_file *read_pe_file(char *path, char *mode);
+void close_pe_file(pe_file *file);
+
+void print_headers(pe_file *file);
 
 #endif
