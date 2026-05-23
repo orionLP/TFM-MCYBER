@@ -189,19 +189,40 @@ int pe_file_section_size(pe_file *file, const char *name){
     return file->section_headers[number].SizeOfRawData;
 }
 
-bool in_bounds(pe_file *file, int section_number, int amount, int offset){
-    return amount + offset <= file->section_headers[section_number].SizeOfRawData;
+static bool in_bounds(pe_file *file, int part_size, int amount, int offset){
+    return amount + offset <= part_size;
 }
 
-int pe_file_write_constant(pe_file *file, const char *name, uint8_t value, int amount, int offset){
+int pe_file_header_size(pe_file *file){
+    return file->dos_header.e_lfanew + 
+        sizeof(DWORD) + 
+        sizeof(IMAGE_FILE_HEADER) + 
+        file->file_header.SizeOfOptionalHeader +
+        file->file_header.NumberOfSections * sizeof(IMAGE_SECTION_HEADER);
+}
+
+int pe_file_header_write_constant(pe_file *file, uint8_t value, int amount, int offset){
+    if(!in_bounds(file, pe_file_header_size(file), amount, offset))
+        return -1;
+    
+    TRY_IO(fseek(file->contents, 0, SEEK_SET), 0, error);
+    for(int i = 0; i < amount; i++)
+        TRY_IO(fwrite(&value, sizeof(value), 1, file->contents), 1, error);
+    return 0;
+error:
+    return -1;
+}
+
+int pe_file_section_write_constant(pe_file *file, const char *name, uint8_t value, int amount, int offset){
     int number = pe_file_section_number(file, name);
-    if(!in_bounds(file, number, amount, offset) == -1)
+    if(!in_bounds(file, file->section_headers[number].SizeOfRawData, amount, offset) == -1)
         return -1;
 
     int start_pointer = file->section_headers[number].PointerToRawData;
     TRY_IO(fseek(file->contents, start_pointer + offset, SEEK_SET), 0, error);
     for(int i = 0; i < amount; i++)
         TRY_IO(fwrite(&value, sizeof(value), 1, file->contents), 1, error);
+    return 0;
 error:
     return -1;
 }
