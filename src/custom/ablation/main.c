@@ -85,14 +85,24 @@ void create_combination_name(char *buff, const char *filepath, pe_file *file, co
     if(combination[0])
     strcat(buff, "_header_");
     for(int i = 0; i < number_of_sections; i++)
-        strcat(buff, pe_file_section_name(file, i));
+        if(combination[i + 1])
+            strcat(buff, pe_file_section_name(file, i));
 }
 
 void do_combination(const char *filepath, pe_file *file, bool *combination, const int n, int k, int remaining){
     if(remaining == 0){
         char final_name[256] = {0};
         create_combination_name(final_name, filepath, file, combination, n - 1);
+        copy_binary_file(filepath, final_name);
         printf("%s\n", final_name);
+        if(combination[0])
+            pe_file_header_write_constant(file, 0, pe_file_header_size(file), 0);
+        for(int i = 1; i < n; i++){
+            if(combination[i]){
+                const char *section_name = pe_file_section_name(file, i - 1);
+                pe_file_section_write_constant(file, section_name, 0, pe_file_section_size(file, section_name), 0);
+            }
+        }
     } else{
         for(int i = k; i < (n - remaining + 1); i++){
             combination[i] = true;
@@ -131,7 +141,7 @@ int main(int argc, char **argv){
 
         pe_file *next_file = pe_file_open(buff, PE_READWRITE_MODE);
         int number_sections = pe_file_number_of_sections(next_file);
-        int number_combinations = 2 << number_sections; // do a power of 2 ** (number_sections + 1)
+        // int number_combinations = 2 << number_sections; // do a power of 2 ** (number_sections + 1)
 
     
         bool *combination = malloc((number_sections + 1) * sizeof(bool));
@@ -140,9 +150,6 @@ int main(int argc, char **argv){
             return -1;
         }
 
-        printf("Number of sections: %d\n", number_sections);
-        printf("Combinations to do (sections + header): %d\n", number_combinations);
-        
         for(int i = 0; i <= number_sections; i++)
             do_combination(buff, next_file, combination, number_sections + 1, 0, i);
         
