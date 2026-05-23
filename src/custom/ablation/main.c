@@ -83,7 +83,7 @@ int copy_directory_files(const char *source, const char *dest){
 void create_combination_name(char *buff, const char *filepath, pe_file *file, const bool *combination, const int number_of_sections){
     strcpy(buff, filepath);
     if(combination[0])
-    strcat(buff, "_header_");
+        strcat(buff, "_header_");
     for(int i = 0; i < number_of_sections; i++)
         if(combination[i + 1])
             strcat(buff, pe_file_section_name(file, i));
@@ -94,7 +94,13 @@ void do_combination(const char *filepath, pe_file *file, bool *combination, cons
         char final_name[256] = {0};
         create_combination_name(final_name, filepath, file, combination, n - 1);
         copy_binary_file(filepath, final_name);
+        
         printf("%s\n", final_name);
+        for(int i = 0; i < n; i++){
+            printf(" %s ", combination[i] ? "x" : "o");
+        }
+        printf("\nn: %d, k: %d, remain: %d \n", n, k, remaining);
+
         if(combination[0])
             pe_file_header_write_constant(file, 0, pe_file_header_size(file), 0);
         for(int i = 1; i < n; i++){
@@ -144,7 +150,13 @@ int main(int argc, char **argv){
         // int number_combinations = 2 << number_sections; // do a power of 2 ** (number_sections + 1)
 
     
-        bool *combination = malloc((number_sections + 1) * sizeof(bool));
+        bool *combination = calloc((number_sections + 1), sizeof(bool));
+        printf("The vector before anything, with n being %d: ", number_sections + 1);
+        for(int i = 0; i < number_sections + 1; i++){
+            printf(" %d ", combination[i]);
+        }
+        printf("\n");
+
         if(combination == NULL){
             pe_file_destructor(next_file);
             return -1;
