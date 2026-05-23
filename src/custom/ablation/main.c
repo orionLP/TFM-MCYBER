@@ -8,7 +8,6 @@
 #include <errno.h>
 #include <string.h>
 
-
 int copy_binary_file(const char *source, const char *dest){
     FILE *source_file = fopen(source, "rb");
     FILE *dest_file = fopen(dest, "wb+");
@@ -32,53 +31,6 @@ int copy_binary_file(const char *source, const char *dest){
     fclose(dest_file);
     return 0;
 }
-
-// int copy_directory_files(const char *source, const char *dest){
-//     DIR *input_dir = opendir(source);
-//     if(input_dir == NULL){
-//         printf("Cannot open input directory\n");
-//         exit(-1);
-//     }
-    
-//     struct dirent *ep;
-//     errno = 0;
-//     while((ep = readdir(input_dir)) != NULL){
-//         if(strcmp(ep->d_name, ".") == 0 || strcmp(ep->d_name, "..") == 0)
-//         continue;
-
-//         int source_len = strlen(source) + strlen(ep->d_name) + 1;
-//         int dest_len = strlen(dest) + strlen(ep->d_name) + 1;
-        
-//         char *full_source = malloc(source_len * sizeof(char));
-//         if(full_source == NULL)
-//             return -1;
-//         char *full_dest = malloc(dest_len * sizeof(char));
-//         if(full_dest == NULL){
-//             free(full_source);
-//             return -1;
-//         }
-
-//         strcpy(full_dest, dest);
-//         strcpy(full_source, source);
-//         strcat(full_dest, ep->d_name);
-//         strcat(full_source, ep->d_name);
-
-//         if(copy_binary_file(full_source, full_dest) == -1){
-//             free(full_source);
-//             free(full_dest);
-//             return -1;
-//         }
-
-//         free(full_source);
-//         free(full_dest);
-//     }
-//     if(errno != 0){
-//         closedir(input_dir);
-//         return -1;
-//     }
-//     return 0;    
-// }
-
 
 void create_combination_name(char *buff, const char *filepath, pe_file *file, const bool *combination, const int number_of_sections){
     strcpy(buff, filepath);
@@ -116,11 +68,6 @@ int main(int argc, char **argv){
         printf("The executable should be called as 'executable input_directory output_directory'\n");
         exit(-1);
     }
-    
-    // if(copy_directory_files(argv[1],argv[2]) == -1){
-    //     printf("Error copying directory\n");
-    //     exit(-1);
-    // }
     
     DIR *input_dir = opendir(argv[1]);
     if(input_dir == NULL){
