@@ -22,8 +22,26 @@ void do_combination(pe_file *file, bool *combination, const int n, int k, int re
 }
 
 int copy_binary_file(const char *source, const char *dest){
-    printf("source %s\n", source);
-    printf("destination %s\n", dest);
+    FILE *source_file = fopen(source, "rb");
+    FILE *dest_file = fopen(dest, "wb+");
+
+    if(source_file == NULL || dest_file == NULL)
+        return -1;
+    if(fseek(source_file, 0L, SEEK_END) != 0)
+        return -1;
+    long file_size = ftell(source_file);
+    if(fseek(source_file, 0L, SEEK_SET) != 0)
+        return -1;
+
+    uint8_t *buff = malloc(file_size);
+    if(fread(buff, sizeof(uint8_t), file_size, source_file) != file_size)
+        return -1;
+    if(fwrite(buff, sizeof(uint8_t), file_size, dest_file) != file_size)
+        return -1;
+
+    free(buff);
+    fclose(source_file);
+    fclose(dest_file);
     return 0;
 }
 
@@ -37,6 +55,9 @@ int copy_directory_files(const char *source, const char *dest){
     struct dirent *ep;
     errno = 0;
     while((ep = readdir(input_dir)) != NULL){
+        if(strcmp(ep->d_name, ".") == 0 || strcmp(ep->d_name, "..") == 0)
+            continue;
+
         int source_len = strlen(source) + strlen(ep->d_name) + 1;
         int dest_len = strlen(dest) + strlen(ep->d_name) + 1;
         
@@ -82,7 +103,10 @@ int main(int argc, char **argv){
         exit(-1);
     }
 
-    copy_directory_files(argv[1],argv[2]);
+    if(copy_directory_files(argv[1],argv[2]) == -1){
+        printf("Error copying directory\n");
+        exit(-1);
+    }
 
 
     // pe_file *myfile = pe_file_open("./windows_exec.exe", PE_READWRITE_MODE);
