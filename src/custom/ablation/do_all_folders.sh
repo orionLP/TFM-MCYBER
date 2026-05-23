@@ -27,7 +27,7 @@ if [ "${#source_directories[@]}" -ne "${#destination_directories[@]}" ]; then
 fi
 
 for i in "${!source_directories[@]}"; do
-    mkdir -p "${source_directories[$i]}"
-    find "${source_directories[$i]}" -mindepth 1 -delete
+    mkdir -p "${destination_directories[$i]}"
+    rm "${destination_directories[$i]}/*"
     "$executable" "${source_directories[$i]}" "${destination_directories[$i]}"
 done
