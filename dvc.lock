@@ -46,3 +46,47 @@ stages:
       md5: c3a7475cf8b6d9b9f97d48bfed5213dc.dir
       size: 996748
       nfiles: 15
+  custom_ablation:
+    cmd: ./src/custom/ablation/do_all_folders.sh
+    deps:
+    - path: ./data/crypters/exe/x86/tutorial/
+      hash: md5
+      md5: c3a7475cf8b6d9b9f97d48bfed5213dc.dir
+      size: 996748
+      nfiles: 15
+    - path: ./data/packed/exe/x86/mpress/
+      hash: md5
+      md5: 2a067a7626fd529cbcd8d8817c0b30ee.dir
+      size: 399872
+      nfiles: 15
+    - path: ./data/packed/exe/x86/petite/
+      hash: md5
+      md5: cdc965dfad12cc1f6d3cd5da9f9bfee0.dir
+      size: 440334
+      nfiles: 15
+    - path: ./data/packed/exe/x86/upx/default/
+      hash: md5
+      md5: 74b8fa97cab4670c8f4c4efeed3a8a6a.dir
+      size: 441856
+      nfiles: 15
+    - path: ./data/packed/exe/x86/upx/lzma/
+      hash: md5
+      md5: 90c9b45c77f75d399b2b72821ffc634f.dir
+      size: 424448
+      nfiles: 15
+    - path: ./src/custom/ablation/
+      hash: md5
+      md5: ac4d2674dcc34450a7babf93db6f5d0d.dir
+      size: 37396
+      nfiles: 5
+    - path: ./src/custom/ablation/do_all_folders.sh
+      hash: md5
+      md5: d4df873fd37f9ee07bc4388a98416357
+      size: 1062
+      isexec: true
+    outs:
+    - path: data/custom/ablation/
+      hash: md5
+      md5: 19e73f33fe75fff8d7d4a6e7fb878eb9.dir
+      size: 138613560
+      nfiles: 2580

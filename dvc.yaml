@@ -8,7 +8,7 @@ stages:
     - data/packed/
   crypters_tutorial:
     cmd: clang --target=i686-pc-windows-gnu ./src/crypters/tutorial/decrypter.c 
-      -o ./src/crypters/tutorial/decrypter.exe  "-Wl,--entry=__start"  
+      -o ./src/crypters/tutorial/decrypter.exe  "-Wl,--entry=__start" 
       -nostartfiles -nostdlib -lkernel32 && python3 
       ./src/crypters/tutorial/crypter.py
     deps:
@@ -17,3 +17,15 @@ stages:
     - ./src/crypters/tutorial/decrypter.c
     outs:
     - ./data/crypters/exe/x86/tutorial/
+  custom_ablation:
+    cmd: ./src/custom/ablation/do_all_folders.sh
+    deps:
+    - ./data/crypters/exe/x86/tutorial/
+    - ./data/packed/exe/x86/mpress/
+    - ./data/packed/exe/x86/petite/
+    - ./data/packed/exe/x86/upx/default/
+    - ./data/packed/exe/x86/upx/lzma/
+    - ./src/custom/ablation/
+    - ./src/custom/ablation/do_all_folders.sh
+    outs:
+    - data/custom/ablation/
