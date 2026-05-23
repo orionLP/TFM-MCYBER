@@ -118,7 +118,7 @@ pe_file *pe_file_open(char *path, char *mode){
 
     new_file->contents = fopen(path, mode);
     if(new_file->contents == NULL){
-        pe_file_destructor(new_file);
+        free(new_file);
         return NULL;
     }
 
