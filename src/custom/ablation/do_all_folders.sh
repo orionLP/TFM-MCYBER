@@ -8,7 +8,7 @@ source_directories=(
     "./data/packed/exe/x86/upx/default/"
     "./data/packed/exe/x86/upx/lzma/"
 )
-
+ 
 destination_directories=(
     "./data/custom/ablation/raw/"
     "./data/custom/ablation/tutorial/"
