@@ -189,8 +189,15 @@ int pe_file_section_size(pe_file *file, const char *name){
     return file->section_headers[number].SizeOfRawData;
 }
 
+bool in_bounds(pe_file *file, int section_number, int amount, int offset){
+    return amount + offset <= file->section_headers[section_number].SizeOfRawData;
+}
+
 int pe_file_write_constant(pe_file *file, const char *name, uint8_t value, int amount, int offset){
     int number = pe_file_section_number(file, name);
+    if(!in_bounds(file, number, amount, offset) == -1)
+        return -1;
+
     int start_pointer = file->section_headers[number].PointerToRawData;
     TRY_IO(fseek(file->contents, start_pointer + offset, SEEK_SET), 0, error);
     for(int i = 0; i < amount; i++)
