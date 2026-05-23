@@ -1,26 +1,33 @@
 #!/bin/bash
 
-list1=(
-    "/path/to/dir1"
-    "/path/to/dir2"
-    "/path/to/dir3"
+source_directories=(
+    "./data/raw/exe/x86/"
+    "./data/crypters/exe/x86/tutorial/"
+    "./data/packed/exe/x86/mpress/"
+    "./data/packed/exe/x86/petite/"
+    "./data/packed/exe/x86/upx/default/"
+    "./data/packed/exe/x86/upx/lzma/"
 )
 
-list2=(
-    "/path/to/other1"
-    "/path/to/other2"
-    "/path/to/other3"
+destination_directories=(
+    "./data/custom/ablation/raw/"
+    "./data/custom/ablation/tutorial/"
+    "./data/custom/ablation/mpress/"
+    "./data/custom/ablation/petite/"
+    "./data/custom/ablation/upx/default/"
+    "./data/custom/ablation/upx/lzma/"
 )
 
-executable="/path/to/your/executable"
+gcc ./src/custom/ablation/main.c ./src/custom/ablation/pe_file.c -o ./src/custom/ablation/ablation
+executable="./src/custom/ablation/ablation"
 
-if [ "${#list1[@]}" -ne "${#list2[@]}" ]; then
-    echo "error: lists have different lengths (${#list1[@]} vs ${#list2[@]})"
+if [ "${#source_directories[@]}" -ne "${#destination_directories[@]}" ]; then
+    echo "error: lists have different lengths (${#source_directories[@]} vs ${#destination_directories[@]})"
     exit 1
 fi
 
-for i in "${!list1[@]}"; do
-    mkdir -p "${list1[$i]}"
-    find "${list1[$i]}" -mindepth 1 -delete
-    "$executable" "${list1[$i]}" "${list2[$i]}"
+for i in "${!source_directories[@]}"; do
+    mkdir -p "${source_directories[$i]}"
+    find "${source_directories[$i]}" -mindepth 1 -delete
+    "$executable" "${source_directories[$i]}" "${destination_directories[$i]}"
 done
