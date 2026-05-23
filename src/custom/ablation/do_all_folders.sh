@@ -1,5 +1,5 @@
 #!/bin/bash
- 
+
 source_directories=(
     "./data/raw/exe/x86/"
     "./data/crypters/exe/x86/tutorial/"
