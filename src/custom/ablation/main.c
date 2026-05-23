@@ -33,74 +33,67 @@ int copy_binary_file(const char *source, const char *dest){
     return 0;
 }
 
-int copy_directory_files(const char *source, const char *dest){
-    DIR *input_dir = opendir(source);
-    if(input_dir == NULL){
-        printf("Cannot open input directory\n");
-        exit(-1);
-    }
+// int copy_directory_files(const char *source, const char *dest){
+//     DIR *input_dir = opendir(source);
+//     if(input_dir == NULL){
+//         printf("Cannot open input directory\n");
+//         exit(-1);
+//     }
     
-    struct dirent *ep;
-    errno = 0;
-    while((ep = readdir(input_dir)) != NULL){
-        if(strcmp(ep->d_name, ".") == 0 || strcmp(ep->d_name, "..") == 0)
-        continue;
+//     struct dirent *ep;
+//     errno = 0;
+//     while((ep = readdir(input_dir)) != NULL){
+//         if(strcmp(ep->d_name, ".") == 0 || strcmp(ep->d_name, "..") == 0)
+//         continue;
 
-        int source_len = strlen(source) + strlen(ep->d_name) + 1;
-        int dest_len = strlen(dest) + strlen(ep->d_name) + 1;
+//         int source_len = strlen(source) + strlen(ep->d_name) + 1;
+//         int dest_len = strlen(dest) + strlen(ep->d_name) + 1;
         
-        char *full_source = malloc(source_len * sizeof(char));
-        if(full_source == NULL)
-            return -1;
-        char *full_dest = malloc(dest_len * sizeof(char));
-        if(full_dest == NULL){
-            free(full_source);
-            return -1;
-        }
+//         char *full_source = malloc(source_len * sizeof(char));
+//         if(full_source == NULL)
+//             return -1;
+//         char *full_dest = malloc(dest_len * sizeof(char));
+//         if(full_dest == NULL){
+//             free(full_source);
+//             return -1;
+//         }
 
-        strcpy(full_dest, dest);
-        strcpy(full_source, source);
-        strcat(full_dest, ep->d_name);
-        strcat(full_source, ep->d_name);
+//         strcpy(full_dest, dest);
+//         strcpy(full_source, source);
+//         strcat(full_dest, ep->d_name);
+//         strcat(full_source, ep->d_name);
 
-        if(copy_binary_file(full_source, full_dest) == -1){
-            free(full_source);
-            free(full_dest);
-            return -1;
-        }
+//         if(copy_binary_file(full_source, full_dest) == -1){
+//             free(full_source);
+//             free(full_dest);
+//             return -1;
+//         }
 
-        free(full_source);
-        free(full_dest);
-    }
-    if(errno != 0){
-        closedir(input_dir);
-        return -1;
-    }
-    return 0;    
-}
+//         free(full_source);
+//         free(full_dest);
+//     }
+//     if(errno != 0){
+//         closedir(input_dir);
+//         return -1;
+//     }
+//     return 0;    
+// }
 
 
 void create_combination_name(char *buff, const char *filepath, pe_file *file, const bool *combination, const int number_of_sections){
     strcpy(buff, filepath);
     if(combination[0])
-        strcat(buff, "_header_");
+        strcat(buff, "._header_");
     for(int i = 0; i < number_of_sections; i++)
         if(combination[i + 1])
             strcat(buff, pe_file_section_name(file, i));
 }
 
-void do_combination(const char *filepath, pe_file *file, bool *combination, const int n, int k, int remaining){
+void do_combination(const char *source_file, const char *destination_file, pe_file *file, bool *combination, const int n, int k, int remaining){
     if(remaining == 0){
         char final_name[256] = {0};
-        create_combination_name(final_name, filepath, file, combination, n - 1);
-        copy_binary_file(filepath, final_name);
-        
-        printf("%s\n", final_name);
-        for(int i = 0; i < n; i++){
-            printf(" %s ", combination[i] ? "x" : "o");
-        }
-        printf("\nn: %d, k: %d, remain: %d \n", n, k, remaining);
-
+        create_combination_name(final_name, destination_file, file, combination, n - 1);
+        copy_binary_file(source_file, final_name);
         if(combination[0])
             pe_file_header_write_constant(file, 0, pe_file_header_size(file), 0);
         for(int i = 1; i < n; i++){
@@ -112,7 +105,7 @@ void do_combination(const char *filepath, pe_file *file, bool *combination, cons
     } else{
         for(int i = k; i < (n - remaining + 1); i++){
             combination[i] = true;
-            do_combination(filepath, file, combination, n, i + 1, remaining - 1);
+            do_combination(source_file, destination_file, file, combination, n, i + 1, remaining - 1);
             combination[i] = false;
         }
     }
@@ -124,55 +117,52 @@ int main(int argc, char **argv){
         exit(-1);
     }
     
-    if(copy_directory_files(argv[1],argv[2]) == -1){
-        printf("Error copying directory\n");
+    // if(copy_directory_files(argv[1],argv[2]) == -1){
+    //     printf("Error copying directory\n");
+    //     exit(-1);
+    // }
+    
+    DIR *input_dir = opendir(argv[1]);
+    if(input_dir == NULL){
+        printf("Cannot open the input directory\n");
         exit(-1);
     }
     
-    DIR *output_dir = opendir(argv[2]);
-    if(output_dir == NULL){
-        printf("Cannot open the output directory\n");
-        exit(-1);
-    }
-    
-    char buff[256] = {0};
+    char source_file[256] = {0};
+    char destination_file[256] = {0};
     struct dirent *ep;
     errno = 0;
-    while((ep = readdir(output_dir)) != NULL){
+    while((ep = readdir(input_dir)) != NULL){
         if(strcmp(ep->d_name, ".") == 0 || strcmp(ep->d_name, "..") == 0)
             continue;
 
-        strcpy(buff, argv[2]);
-        strcat(buff, ep->d_name);
+        strcpy(source_file, argv[1]);
+        strcat(source_file, ep->d_name);
 
-        pe_file *next_file = pe_file_open(buff, PE_READWRITE_MODE);
+        pe_file *next_file = pe_file_open(source_file, PE_READ_MODE);
         int number_sections = pe_file_number_of_sections(next_file);
         // int number_combinations = 2 << number_sections; // do a power of 2 ** (number_sections + 1)
 
-    
         bool *combination = calloc((number_sections + 1), sizeof(bool));
-        printf("The vector before anything, with n being %d: ", number_sections + 1);
-        for(int i = 0; i < number_sections + 1; i++){
-            printf(" %d ", combination[i]);
-        }
-        printf("\n");
-
         if(combination == NULL){
             pe_file_destructor(next_file);
             return -1;
         }
 
-        for(int i = 0; i <= number_sections; i++)
-            do_combination(buff, next_file, combination, number_sections + 1, 0, i);
+        strcpy(destination_file, argv[2]);
+        strcat(destination_file, ep->d_name);
+
+        for(int i = 0; i <= number_sections + 1; i++)
+            do_combination(source_file, destination_file, next_file, combination, number_sections + 1, 0, i);
         
         pe_file_destructor(next_file);
         free(combination);
     }
     if(errno != 0){
-        closedir(output_dir);
+        closedir(input_dir);
         return -1;
     }
 
-    closedir(output_dir);
+    closedir(input_dir);
     return 0;
 }
