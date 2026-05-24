@@ -5,24 +5,7 @@ file headers:
 
 surviving files:
 
-avast_free
-
-
-
-
-
-
-
-
-/media/sf_shared_data/:
-total 208
-drwxrwx--- 1 root vboxsf  4096 May 24 12:06 .
-drwxr-xr-x 4 root root    4096 May 21 15:17 ..
-drwxrwx--- 1 root vboxsf 12288 May 24 12:01 mpress
-drwxrwx--- 1 root vboxsf  4096 May 24 11:42 petite
-drwxrwx--- 1 root vboxsf 86016 May 24 11:57 raw
-drwxrwx--- 1 root vboxsf 90112 May 24 11:37 tutorial
-drwxrwx--- 1 root vboxsf  4096 May 24 11:37 upx
+avast_free:
 
 /media/sf_shared_data/mpress:
 total 2560
@@ -1391,13 +1374,6 @@ drwxrwx--- 1 root vboxsf   4096 May 24 12:06 ..
 -rwxrwx--- 1 root vboxsf  15796 May 24 11:37 windows_shell_reverse_tcp_rc4.exe.text.reloc
 -rwxrwx--- 1 root vboxsf  15796 May 24 11:37 windows_shell_reverse_tcp_rc4.exe.text.reloc.packed
 
-/media/sf_shared_data/upx:
-total 48
-drwxrwx--- 1 root vboxsf  4096 May 24 11:37 .
-drwxrwx--- 1 root vboxsf  4096 May 24 12:06 ..
-drwxrwx--- 1 root vboxsf 20480 May 24 11:59 default
-drwxrwx--- 1 root vboxsf 20480 May 24 12:00 lzma
-
 /media/sf_shared_data/upx/default:
 total 5320
 drwxrwx--- 1 root vboxsf  20480 May 24 11:59 .
@@ -1734,36 +1710,7 @@ drwxrwx--- 1 root vboxsf  4096 May 24 11:37 ..
 -rwxrwx--- 1 root vboxsf  5120 May 24 11:37 windows_shell_reverse_tcp_rc4.exeUPX0UPX1UPX2
 -rwxrwx--- 1 root vboxsf  5120 May 24 11:37 windows_shell_reverse_tcp_rc4.exeUPX1UPX2
 
-
-
-
-
-
-
-
-
-
-
 avg_free:
-
-
-
-
-
-
-
-
-
-
-/media/sf_shared_data/:
-total 212
-drwxrwx--- 1 root vboxsf  4096 May 24 13:24 .
-drwxr-xr-x 4 root root    4096 May 21 15:17 ..
-drwxrwx--- 1 root vboxsf 12288 May 24 13:19 mpress
-drwxrwx--- 1 root vboxsf  4096 May 24 12:55 petite
-drwxrwx--- 1 root vboxsf 86016 May 24 13:15 raw
-drwxrwx--- 1 root vboxsf 94208 May 24 12:58 tutorial
-drwxrwx--- 1 root vboxsf  4096 May 24 12:43 upx
 
 /media/sf_shared_data/mpress:
 total 2560
@@ -3008,13 +2955,6 @@ drwxrwx--- 1 root vboxsf   4096 May 24 13:24 ..
 -rwxrwx--- 1 root vboxsf  15796 May 24 12:43 windows_shell_reverse_tcp_rc4.exe.text.reloc
 -rwxrwx--- 1 root vboxsf  15796 May 24 12:43 windows_shell_reverse_tcp_rc4.exe.text.reloc.packed
 
-/media/sf_shared_data/upx:
-total 52
-drwxrwx--- 1 root vboxsf  4096 May 24 12:43 .
-drwxrwx--- 1 root vboxsf  4096 May 24 13:24 ..
-drwxrwx--- 1 root vboxsf 20480 May 24 13:17 default
-drwxrwx--- 1 root vboxsf 20480 May 24 13:19 lzma
-
 /media/sf_shared_data/upx/default:
 total 5324
 drwxrwx--- 1 root vboxsf  20480 May 24 13:17 .
@@ -3351,23 +3291,7 @@ drwxrwx--- 1 root vboxsf  4096 May 24 12:43 ..
 -rwxrwx--- 1 root vboxsf  5120 May 24 12:43 windows_shell_reverse_tcp_rc4.exeUPX0UPX1UPX2
 -rwxrwx--- 1 root vboxsf  5120 May 24 12:43 windows_shell_reverse_tcp_rc4.exeUPX1UPX2
 
-
-
-
-
-
-
-
 kaspersky:
-
-
-
-
-
-
-
-
-
 
 /media/sf_shared_data/mpress:
 total 2928
@@ -5172,13 +5096,6 @@ drwxrwx--- 1 root vboxsf   4096 May 24 15:51 ..
 -rwxrwx--- 1 root vboxsf  15796 May 24 15:40 windows_shell_reverse_tcp_rc4.exe.text.reloc
 -rwxrwx--- 1 root vboxsf  15796 May 24 15:40 windows_shell_reverse_tcp_rc4.exe.text.reloc.packed
 
-/media/sf_shared_data/upx:
-total 52
-drwxrwx--- 1 root vboxsf  4096 May 24 15:40 .
-drwxrwx--- 1 root vboxsf  4096 May 24 15:51 ..
-drwxrwx--- 1 root vboxsf 20480 May 24 15:48 default
-drwxrwx--- 1 root vboxsf 20480 May 24 15:40 lzma
-
 /media/sf_shared_data/upx/default:
 total 5404
 drwxrwx--- 1 root vboxsf  20480 May 24 15:48 .
@@ -5609,20 +5526,7 @@ drwxrwx--- 1 root vboxsf  4096 May 24 15:40 ..
 -rwxrwx--- 1 root vboxsf  5120 May 24 15:40 windows_shell_reverse_tcp_rc4.exeUPX1UPX2
 -rwxrwx--- 1 root vboxsf  5120 May 24 15:40 windows_shell_reverse_tcp_rc4.exeUPX2
 
-
-
-
-
-
 norton:
-
-
-
-
-
-
-
-
 
 /media/sf_shared_data/mpress:
 total 2560
@@ -6867,13 +6771,6 @@ drwxrwx--- 1 root vboxsf   4096 May 24 17:55 ..
 -rwxrwx--- 1 root vboxsf  15796 May 24 16:58 windows_shell_reverse_tcp_rc4.exe.text.reloc
 -rwxrwx--- 1 root vboxsf  15796 May 24 16:58 windows_shell_reverse_tcp_rc4.exe.text.reloc.packed
 
-/media/sf_shared_data/upx:
-total 52
-drwxrwx--- 1 root vboxsf  4096 May 24 16:58 .
-drwxrwx--- 1 root vboxsf  4096 May 24 17:55 ..
-drwxrwx--- 1 root vboxsf 20480 May 24 17:49 default
-drwxrwx--- 1 root vboxsf 20480 May 24 17:52 lzma
-
 /media/sf_shared_data/upx/default:
 total 5324
 drwxrwx--- 1 root vboxsf  20480 May 24 17:49 .
@@ -7210,44 +7107,7 @@ drwxrwx--- 1 root vboxsf  4096 May 24 16:58 ..
 -rwxrwx--- 1 root vboxsf  5120 May 24 16:58 windows_shell_reverse_tcp_rc4.exeUPX0UPX1UPX2
 -rwxrwx--- 1 root vboxsf  5120 May 24 16:58 windows_shell_reverse_tcp_rc4.exeUPX1UPX2
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 bitdefender:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /media/sf_shared_data/mpress:
 total 2548
@@ -8830,13 +8690,6 @@ drwxrwx--- 1 root vboxsf   4096 May 24 18:22 ..
 -rwxrwx--- 1 root vboxsf  15796 May 24 18:12 windows_shell_reverse_tcp_rc4.exe.text.rdata.reloc.packed
 -rwxrwx--- 1 root vboxsf  15796 May 24 18:12 windows_shell_reverse_tcp_rc4.exe.text.reloc
 -rwxrwx--- 1 root vboxsf  15796 May 24 18:12 windows_shell_reverse_tcp_rc4.exe.text.reloc.packed
-
-/media/sf_shared_data/upx:
-total 52
-drwxrwx--- 1 root vboxsf  4096 May 24 18:12 .
-drwxrwx--- 1 root vboxsf  4096 May 24 18:22 ..
-drwxrwx--- 1 root vboxsf 20480 May 24 18:16 default
-drwxrwx--- 1 root vboxsf 20480 May 24 18:16 lzma
 
 /media/sf_shared_data/upx/default:
 total 5404
