@@ -1,5 +1,14 @@
 dataset version v1.0.0
 
+relations:
+
+data/packed/exe/x86/mpress/ /media/sf_shared_data/mpress mpress
+data/packed/exe/x86/petite/ /media/sf_shared_data/petite petite
+data/raw/exe/x86/ /media/sf_shared_data/raw raw
+data/crypters/exe/x86/tutorial/ /media/sf_shared_data/tutorial tutorial
+data/packed/exe/x86/upx/default/ /media/sf_shared_data/upx/default default
+data/packed/exe/x86/upx/lzma/ /media/sf_shared_data/upx/lzma lzma
+
 file headers:
 
 data/raw/exe/x86/windows_encrypted_shell_reverse_tcp.exe ._header_ .text .rdata .data .reloc .fxal
