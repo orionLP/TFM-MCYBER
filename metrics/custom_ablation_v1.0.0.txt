@@ -2,6 +2,96 @@ dataset version v1.0.0
 
 file headers:
 
+data/raw/exe/x86/windows_encrypted_shell_reverse_tcp.exe ._header_ .text .rdata .data .reloc .fxal
+data/raw/exe/x86/windows_exec.exe ._header_ .text .rdata .data .reloc .toou
+data/raw/exe/x86/windows_meterpreter_bind_tcp.exe ._header_ .text .rdata .data .reloc .liuh
+data/raw/exe/x86/windows_meterpreter_reverse_http.exe ._header_ .text .rdata .data .reloc .oaxh
+data/raw/exe/x86/windows_meterpreter_reverse_https.exe ._header_ .text .rdata .data .reloc .yqla
+data/raw/exe/x86/windows_meterpreter_reverse_tcp.exe ._header_ .text .rdata .data .reloc .gbhh
+data/raw/exe/x86/windows_pingback_bind_tcp.exe ._header_ .text .rdata .data .reloc .bgjd
+data/raw/exe/x86/windows_pingback_reverse_tcp.exe ._header_ .text .rdata .data .reloc .lmie
+data/raw/exe/x86/windows_powershell_bind_tcp.exe ._header_ .text .rdata .data .reloc .tuzm
+data/raw/exe/x86/windows_powershell_reverse_tcp.exe ._header_ .text .rdata .data .reloc .rpsj
+data/raw/exe/x86/windows_powershell_reverse_tcp_ssl.exe ._header_ .text .rdata .data .reloc .lkjb
+data/raw/exe/x86/windows_shell_bind_hidden_ipknock_tcp.exe ._header_ .text .rdata .data .reloc .hhtk
+data/raw/exe/x86/windows_shell_bind_tcp.exe ._header_ .text .rdata .data .reloc .hptz
+data/raw/exe/x86/windows_shell_hidden_bind_tcp.exe ._header_ .text .rdata .data .reloc .blcn
+data/raw/exe/x86/windows_shell_reverse_tcp_rc4.exe ._header_ .text .rdata .data .reloc .gwve
+data/packed/exe/x86/mpress/windows_encrypted_shell_reverse_tcp.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_exec.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_meterpreter_bind_tcp.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_meterpreter_reverse_http.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_meterpreter_reverse_https.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_meterpreter_reverse_tcp.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_pingback_bind_tcp.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_pingback_reverse_tcp.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_powershell_bind_tcp.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_powershell_reverse_tcp.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_powershell_reverse_tcp_ssl.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_shell_bind_hidden_ipknock_tcp.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_shell_bind_tcp.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_shell_hidden_bind_tcp.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/mpress/windows_shell_reverse_tcp_rc4.exe ._header_ .MPRESS1 .MPRESS2
+data/packed/exe/x86/petite/windows_encrypted_shell_reverse_tcp.exe ._header_  petite
+data/packed/exe/x86/petite/windows_exec.exe ._header_  petite
+data/packed/exe/x86/petite/windows_meterpreter_bind_tcp.exe ._header_  petite
+data/packed/exe/x86/petite/windows_meterpreter_reverse_http.exe ._header_  petite
+data/packed/exe/x86/petite/windows_meterpreter_reverse_https.exe ._header_  petite
+data/packed/exe/x86/petite/windows_meterpreter_reverse_tcp.exe ._header_  petite
+data/packed/exe/x86/petite/windows_pingback_bind_tcp.exe ._header_  petite
+data/packed/exe/x86/petite/windows_pingback_reverse_tcp.exe ._header_  petite
+data/packed/exe/x86/petite/windows_powershell_bind_tcp.exe ._header_  petite
+data/packed/exe/x86/petite/windows_powershell_reverse_tcp.exe ._header_  petite
+data/packed/exe/x86/petite/windows_powershell_reverse_tcp_ssl.exe ._header_  petite
+data/packed/exe/x86/petite/windows_shell_bind_hidden_ipknock_tcp.exe ._header_  petite
+data/packed/exe/x86/petite/windows_shell_bind_tcp.exe ._header_  petite
+data/packed/exe/x86/petite/windows_shell_hidden_bind_tcp.exe ._header_  petite
+data/packed/exe/x86/petite/windows_shell_reverse_tcp_rc4.exe ._header_  petite
+data/packed/exe/x86/upx/default/windows_encrypted_shell_reverse_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_exec.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_meterpreter_bind_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_meterpreter_reverse_http.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_meterpreter_reverse_https.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_meterpreter_reverse_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_pingback_bind_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_pingback_reverse_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_powershell_bind_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_powershell_reverse_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_powershell_reverse_tcp_ssl.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_shell_bind_hidden_ipknock_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_shell_bind_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_shell_hidden_bind_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/default/windows_shell_reverse_tcp_rc4.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_encrypted_shell_reverse_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_exec.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_meterpreter_bind_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_meterpreter_reverse_http.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_meterpreter_reverse_https.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_meterpreter_reverse_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_pingback_bind_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_pingback_reverse_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_powershell_bind_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_powershell_reverse_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_powershell_reverse_tcp_ssl.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_shell_bind_hidden_ipknock_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_shell_bind_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_shell_hidden_bind_tcp.exe ._header_ UPX0 UPX1 UPX2
+data/packed/exe/x86/upx/lzma/windows_shell_reverse_tcp_rc4.exe ._header_ UPX0 UPX1 UPX2
+data/crypters/exe/x86/tutorial/windows_encrypted_shell_reverse_tcp.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_exec.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_meterpreter_bind_tcp.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_meterpreter_reverse_http.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_meterpreter_reverse_https.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_meterpreter_reverse_tcp.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_pingback_bind_tcp.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_pingback_reverse_tcp.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_powershell_bind_tcp.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_powershell_reverse_tcp.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_powershell_reverse_tcp_ssl.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_shell_bind_hidden_ipknock_tcp.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_shell_bind_tcp.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_shell_hidden_bind_tcp.exe ._header_ .text .rdata .idata .reloc .packed
+data/crypters/exe/x86/tutorial/windows_shell_reverse_tcp_rc4.exe ._header_ .text .rdata .idata .reloc .packed
 
 surviving files:
 
