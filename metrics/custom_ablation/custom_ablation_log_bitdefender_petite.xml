@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ScanSession creator="" name="Custom Scan" installPath="C:\Program Files\Bitdefender\Bitdefender Security\" creationDate="Tuesday, May 26, 2026 3:39:21 PM" originalPath="C:\ProgramData\Bitdefender\Desktop\Profiles\Logs\S-1-5-21-1029196183-2856819674-245029391-1000\d334c293-f935-4dfa-4533-e052769b4ebe\1779831494_1_02_1.xml" >
+	<ScanSettings 
+		statisticsRefreshInterval="1000"
+		scanSpeed="1.000000"
+		lowPriority="0"
+		enableExclusions="1"
+		scanAdware="1"
+		scanSpyware="1"
+		scanApplications="1"
+		scanDialers="1"
+		scanKeyloggers="0"
+		scanFiles="1"
+		scanAllFiles="1"
+		scanProgramsOnly="0"
+		useCustomPrograms="0"
+		customPrograms=""
+		scanUserDefined="0"
+		scanPacked="1"
+		scanArchives="1"
+		useSmartScan="0"
+		scanEmails="0"
+		scanRootkits="0"
+		scanAllRootkits="0"
+		scanBoot="0"
+		scanMemory="0"
+		scanRegistry="0"
+		quickScan="0"
+		scanCookies="0"
+		scanUefi="0"
+		shutdownAfter="0"
+		passwordPrompt="0"
+		onlyAllowedActions="0"
+		deepArchiveScan="1"
+		maxArchiveLevel="15"
+		maxArchiveSize="10485760"
+		infectedAction1="1"
+		infectedAction2="1"
+		suspectAction1="1"
+		suspectAction2="1"
+		rootkitAction="3"
+		userDefinedExtensions=""
+		scanPua="1"
+		computeSha256Hash="0"
+		computeMd5Hash="0"
+		disableIndexer="1"
+		enableCertReport="0"
+		scanCloudFiles="0"
+		paranoidAction="1"
+		alterLastAccessTime="0"
+		actionOnPua="0"
+		useCustomPuaAction="0"
+		maxActiveThreads="0"
+	>
+
+		<Paranoid>
+		</Paranoid>
+
+		<ScanPaths>
+			<path>\\VBoxSvr\machine_malware\</path>
+		</ScanPaths>
+
+		<ExcludedPaths>
+			<path>c:\programdata\bitdefender\desktop\enginestemp\</path>
+		</ExcludedPaths>
+
+		<ExcludedCertificateHashes>
+		</ExcludedCertificateHashes>
+
+		<ExcludedFileHash>
+		</ExcludedFileHash>
+
+		<ExcludedExtensions>
+		</ExcludedExtensions>
+
+		<ExcludedCmdlineParams>
+		</ExcludedCmdlineParams>
+
+		<ExcludedThreatNames>
+		</ExcludedThreatNames>
+
+	</ScanSettings>
+
+	<EngineSummary
+		totalSignatures="12491897"
+		enginesVersion="11.0.1.21"
+		/>
+
+	<ScanSummary
+		scannedArchives="0"
+		scannedPacked="0"
+		startTime="1779831494"
+		duration="41078"
+		userDefinedExtensions="">
+
+		<TypeSummary type="1"
+			scanned="0"
+			infected="0"
+			suspicious="0"
+			disinfected="0"
+			deleted="0"
+			moved="0"
+			moved_reboot="0"
+			delete_reboot="0"
+			renamed="0"
+			hidden="0"
+		/>
+
+		<TypeSummary type="4"
+			scanned="0"
+			infected="0"
+			suspicious="0"
+			disinfected="0"
+			deleted="0"
+			moved="0"
+			moved_reboot="0"
+			delete_reboot="0"
+			renamed="0"
+			hidden="0"
+		/>
+
+		<TypeSummary type="0"
+			scanned="122"
+			infected="20"
+			suspicious="0"
+			disinfected="0"
+			deleted="20"
+			moved="0"
+			moved_reboot="0"
+			delete_reboot="0"
+			renamed="0"
+			hidden="0"
+		/>
+
+		<TypeSummary type="5"
+			scanned="0"
+			infected="0"
+			suspicious="0"
+			disinfected="0"
+			deleted="0"
+			moved="0"
+			moved_reboot="0"
+			delete_reboot="0"
+			renamed="0"
+			hidden="0"
+		/>
+
+		<TypeSummary type="2"
+			scanned="0"
+			infected="0"
+			suspicious="0"
+			disinfected="0"
+			deleted="0"
+			moved="0"
+			moved_reboot="0"
+			delete_reboot="0"
+			renamed="0"
+			hidden="0"
+		/>
+
+		<TypeSummary type="3"
+			scanned="0"
+			infected="0"
+			suspicious="0"
+			disinfected="0"
+			deleted="0"
+			moved="0"
+			moved_reboot="0"
+			delete_reboot="0"
+			renamed="0"
+			hidden="0"
+		/>
+
+		<TypeSummary type="6"
+			scanned="0"
+			infected="0"
+			suspicious="0"
+			disinfected="0"
+			deleted="0"
+			moved="0"
+			moved_reboot="0"
+			delete_reboot="0"
+			renamed="0"
+			hidden="0"
+		/>
+
+		<TypeSummary type="7"
+			scanned="0"
+			infected="0"
+			suspicious="0"
+			disinfected="0"
+			deleted="0"
+			moved="0"
+			moved_reboot="0"
+			delete_reboot="0"
+			renamed="0"
+			hidden="0"
+		/>
+
+		<TypeSummary type="100"
+			scanned="0"
+			infected="0"
+			suspicious="0"
+			disinfected="0"
+			deleted="0"
+			moved="0"
+			moved_reboot="0"
+			delete_reboot="0"
+			renamed="0"
+			hidden="0"
+		/>
+
+	</ScanSummary>
+
+	<ScanDetails>
+		<UnresolvedDetails>
+		</UnresolvedDetails>
+
+		<ResolvedDetails>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_shell_hidden_bind_tcp.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.H.0B15E4E7" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="3346" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_meterpreter_reverse_tcp.exepetite" threatType="0" threatName="Gen:Variant.Mikey.182642" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="99602" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_shell_bind_hidden_ipknock_tcp.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.H.44EFB0A5" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="3346" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_encrypted_shell_reverse_tcp.exe" threatType="0" threatName="Gen:Variant.Razy.679441" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="5394" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_meterpreter_reverse_https.exepetite" threatType="0" threatName="Gen:Variant.Mikey.182642" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="99602" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_meterpreter_bind_tcp.exepetite" threatType="0" threatName="Gen:Variant.Mikey.182642" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="99602" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_meterpreter_reverse_https.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.2.0D59F950" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="99602" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_meterpreter_bind_tcp.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.2.960ADD97" action="5" allActions="1 5" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="99602" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_shell_bind_tcp.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.H.DE49E6E5" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="3346" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_meterpreter_reverse_http.exepetite" threatType="0" threatName="Gen:Variant.Mikey.182642" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="100114" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_encrypted_shell_reverse_tcp.exepetite" threatType="0" threatName="Gen:Trojan.Heur.GZ.aiW@b0kY4ub" action="5" allActions="1 5" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="5394" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_powershell_reverse_tcp_ssl.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.H.E6E0275E" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="4370" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_powershell_reverse_tcp.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.H.DE6776BF" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="4370" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_powershell_bind_tcp.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.H.9B82E871" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="4370" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_exec.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.H.8077D5BE" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="2834" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_meterpreter_reverse_tcp.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.2.518F47C1" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="99602" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_meterpreter_reverse_http.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.2.788E708B" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="100114" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_pingback_bind_tcp.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.3.123590ED" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="3346" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_pingback_reverse_tcp.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.3.74385CA3" action="3" allActions="1 5 1 3" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="3346" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+			<Item type="0" objectType="0" path="\\VBoxSvr\machine_malware\windows_shell_reverse_tcp_rc4.exe" threatType="0" threatName="Dump:Generic.ShellCode.Marte.3.C8127464" action="5" allActions="1 5" initialStatus="3" finalStatus="5" quarId="" failReason="0" itemHash="no_hash" chainHash="no_hash" family="" rtvrType="" isPua="0"><FileInfo itemMd5Hash="no_hash" chainMd5Hash="no_hash" fileSize="3346" certIssuer="" certSubject="" certSerial="" certTimestamp="0"/></Item>
+		</ResolvedDetails>
+
+		<IgnoredDetails>
+		</IgnoredDetails>
+
+		<NotScannedDetails
+			skipped="0"
+			ioerrors="0"
+			archiveBombs="0"
+			passwordProtected="0"
+		>
+
+		</NotScannedDetails>
+	</ScanDetails>
+
+</ScanSession>
