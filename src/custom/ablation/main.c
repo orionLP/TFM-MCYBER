@@ -113,7 +113,7 @@ int do_combination(const char *source_file, const char *destination_file, const 
             int bytes_to_write = pe_file_header_size(new_file);
             TRY_IO_GOTO(
                 pe_file_header_write_constant(new_file, 0, bytes_to_write, 0),
-                bytes_to_write,
+                PE_FILE_SUCCESS,
                 error_file
             );
         }
@@ -123,12 +123,12 @@ int do_combination(const char *source_file, const char *destination_file, const 
                 int bytes_to_write = pe_file_section_size(new_file, section_name);
                 TRY_IO_GOTO(
                     pe_file_section_write_constant(new_file, section_name, 0, bytes_to_write, 0),
-                    bytes_to_write,
+                    PE_FILE_SUCCESS,
                     error_file
                 );
             }
         }
-        
+        printf("got here %s\n", tmpbuff);
         pe_file_destructor(new_file);
         return MAIN_SUCCESS;
 error_file:
@@ -144,7 +144,7 @@ error_file:
         }
     }
 
-    return MAIN_ERROR;
+    return MAIN_SUCCESS;
 }
 
 int main(int argc, char **argv){

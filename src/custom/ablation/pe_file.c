@@ -148,9 +148,12 @@ const char *pe_file_section_name(const pe_file *file, int number){
 }
 
 int pe_file_section_number(const pe_file *file, const char *name){
-    for(int i = 0; i < pe_file_number_of_sections(file); i++)
+    for(int i = 0; i < pe_file_number_of_sections(file); i++){
+        // printf("The name in section number is %s, the name of section %d is %s, and strcmp is %d\n", name, i, pe_file_section_name(file, i), strcmp(name, pe_file_section_name(file, i)) == 0);
         if(strcmp(name, pe_file_section_name(file, i)) == 0)
             return i;
+            
+    }
 
     return PE_FILE_SECTION_NOT_FOUND;
 }
@@ -202,26 +205,28 @@ int pe_file_header_write_constant(pe_file *file, uint8_t value, int amount, int 
 
 int pe_file_section_write_constant(pe_file *file, const char *name, uint8_t value, int amount, int offset){
     int number = pe_file_section_number(file, name);
+    // printf("name: %s\n", name);
+    // printf("number: %d\n", number);
     if(number == PE_FILE_SECTION_NOT_FOUND)
         return PE_FILE_SECTION_NOT_FOUND;
-    
+        
     if(!in_bounds(file, file->section_headers[number].SizeOfRawData, amount, offset))
         return PE_FILE_OUT_OF_BOUNDS;
-
+        
     int start_pointer = file->section_headers[number].PointerToRawData;
     TRY_IO_RETURN(
         fseek(file->contents, start_pointer + offset, SEEK_SET), 
         0, 
         PE_FILE_IO_ERROR
     );
-
+    
     for(int i = 0; i < amount; i++)
-        TRY_IO_RETURN(
-            fwrite(&value, sizeof(value), 1, file->contents), 
-            1, 
-            PE_FILE_IO_ERROR
-        );
-
+    TRY_IO_RETURN(
+        fwrite(&value, sizeof(value), 1, file->contents), 
+        1, 
+        PE_FILE_IO_ERROR
+    );
+        
     return PE_FILE_SUCCESS;
 }
 
