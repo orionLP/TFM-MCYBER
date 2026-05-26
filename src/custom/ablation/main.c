@@ -128,7 +128,6 @@ int do_combination(const char *source_file, const char *destination_file, const 
                 );
             }
         }
-        printf("got here %s\n", tmpbuff);
         pe_file_destructor(new_file);
         return MAIN_SUCCESS;
 error_file:
