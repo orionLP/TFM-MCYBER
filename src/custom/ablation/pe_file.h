@@ -5,7 +5,7 @@
 
 #define PE_READ_MODE "rb"
 #define PE_WRITE_MODE "wb"
-#define PE_READWRITE_MODE "rb+"
+#define PE_RW_TRUNC_MODE "rb+"
 
 typedef struct pe_file pe_file;
 
