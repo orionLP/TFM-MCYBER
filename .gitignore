@@ -1,5 +1,5 @@
 venv/
 *.exe
-metrics/formatter.py
+metrics/*.py
 *.out
 src/custom/ablation/ablation

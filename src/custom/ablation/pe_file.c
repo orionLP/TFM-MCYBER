@@ -7,6 +7,7 @@
 #include "pe_file.h"
 #include "io_handling.h"
 
+// pe file structure holding stream and header information
 struct pe_file{
     FILE *contents;
     IMAGE_DOS_HEADER dos_header;
@@ -16,43 +17,73 @@ struct pe_file{
     char **section_names;
 };
 
-static bool is_mode(char *mode){
-    return ((strcmp(mode, PE_READ_MODE) == 0) ||\
-        (strcmp(mode, PE_WRITE_MODE) == 0) ||\
-        (strcmp(mode, PE_RW_TRUNC_MODE) == 0));
+/// @brief check if mode exists
+/// @param mode the mode
+/// @return true if mode exists, false otherwise
+static bool is_mode(const char *mode){
+    return ((strcmp(mode, PE_FILE_READ_MODE) == 0) ||\
+        (strcmp(mode, PE_FILE_WRITE_MODE) == 0) ||\
+        (strcmp(mode, PE_FILE_RW_TRUNC_MODE) == 0));
 }
 
+/// @brief read the headers of a pe file
+/// @param file the pe file
+/// @return either PE_FILE_SUCCESS if success, PE_FILE_IO_ERROR or PE_FILE_ERROR in cases of error
 static int read_data_structures(pe_file *file){
-    TRY_IO(fread(&(file->dos_header), sizeof(IMAGE_DOS_HEADER), 1, file->contents), 1, error);
-    TRY_IO(fseek(file->contents, (long int) file->dos_header.e_lfanew, SEEK_SET), 0, error);
-    TRY_IO(fread(&(file->signature), sizeof(DWORD), 1, file->contents), 1, error);
-    TRY_IO(fread(&(file->file_header), sizeof(IMAGE_FILE_HEADER), 1, file->contents), 1, error);
-    TRY_IO(fseek(file->contents, (long int) (file->dos_header.e_lfanew + sizeof(DWORD) + sizeof(IMAGE_FILE_HEADER) + file->file_header.SizeOfOptionalHeader), SEEK_SET), 0, error);
+    TRY_IO_RETURN(
+        fread(&(file->dos_header), sizeof(file->dos_header), 1, file->contents),
+        1, 
+        PE_FILE_IO_ERROR
+    );
+
+    TRY_IO_RETURN(
+        fseek(file->contents, (long int) file->dos_header.e_lfanew, SEEK_SET), 
+        0, 
+        PE_FILE_IO_ERROR
+    );
     
-    file->section_headers = malloc(sizeof(IMAGE_SECTION_HEADER) * file->file_header.NumberOfSections);
+    TRY_IO_RETURN(
+        fread(&(file->signature), sizeof(file->signature), 1, file->contents), 
+        1, 
+        PE_FILE_IO_ERROR
+    );
+    
+    TRY_IO_RETURN(
+        fread(&(file->file_header), sizeof(file->file_header), 1, file->contents), 
+        1, 
+        PE_FILE_IO_ERROR
+    );
+
+    TRY_IO_RETURN(
+        fseek(file->contents, (long int) (file->dos_header.e_lfanew + sizeof(DWORD) + sizeof(IMAGE_FILE_HEADER) + file->file_header.SizeOfOptionalHeader), SEEK_SET), 
+        0, 
+        PE_FILE_IO_ERROR
+    );
+    
+    file->section_headers = malloc(sizeof(*(file->section_headers)) * file->file_header.NumberOfSections);
     if(file->section_headers == NULL) 
-        goto error;
+        return PE_FILE_ERROR;
 
-    TRY_IO(fread(file->section_headers, sizeof(IMAGE_SECTION_HEADER), file->file_header.NumberOfSections, file->contents), file->file_header.NumberOfSections, error_free);
+    TRY_IO_GOTO(
+        fread(file->section_headers, sizeof(*(file->section_headers)), file->file_header.NumberOfSections, file->contents), 
+        file->file_header.NumberOfSections, 
+        error_free
+    );
 
-    return 0;
-error:
-    return -1;
+    return PE_FILE_SUCCESS;
 error_free:
     free(file->section_headers);
     file->section_headers = NULL;
-    return -1;
+    return PE_FILE_IO_ERROR;
 }
 
-pe_file *pe_file_open(char *path, char *mode){
-    if(!is_mode(mode)){
+pe_file *pe_file_open(const char *path, const char *mode){
+    if(!is_mode(mode))
         return NULL;
-    }
     
     pe_file *new_file = malloc(sizeof(pe_file));
-    if(new_file == NULL){
+    if(new_file == NULL)
         return NULL;
-    }
     
     new_file->contents = NULL;
     new_file->section_headers = NULL;
@@ -64,19 +95,18 @@ pe_file *pe_file_open(char *path, char *mode){
         return NULL;
     }
 
-    if(read_data_structures(new_file) != 0){
+    if(read_data_structures(new_file) != PE_FILE_SUCCESS){
         pe_file_destructor(new_file);
         return NULL;
     }
 
-    new_file->section_names = malloc(sizeof(char *) * new_file->file_header.NumberOfSections);
+    new_file->section_names = malloc(sizeof(new_file->section_names) * new_file->file_header.NumberOfSections);
     if(new_file->section_names != NULL){
-        for(int i = 0; i < new_file->file_header.NumberOfSections; i++){
+        for(int i = 0; i < new_file->file_header.NumberOfSections; i++)
             new_file->section_names[i] = NULL;
-        }
 
         for(int i = 0; i < new_file->file_header.NumberOfSections; i++){
-            new_file->section_names[i] = malloc(sizeof(char) * (IMAGE_SIZEOF_SHORT_NAME + 1));
+            new_file->section_names[i] = malloc(sizeof(*(new_file->section_names[i])) * (IMAGE_SIZEOF_SHORT_NAME + 1));
             if(new_file->section_names[i] != NULL){
                 for(int j = 0; j < IMAGE_SIZEOF_SHORT_NAME; j++)
                     new_file->section_names[i][j] = new_file->section_headers[i].Name[j];
@@ -107,78 +137,107 @@ void pe_file_destructor(pe_file *file){
     free(file);
 }
 
-int pe_file_number_of_sections(pe_file *file){
+int pe_file_number_of_sections(const pe_file *file){
     return file->file_header.NumberOfSections;
 }
 
-const char *pe_file_section_name(pe_file *file, int number){
+const char *pe_file_section_name(const pe_file *file, int number){
+    if(number < 0 || number >= pe_file_number_of_sections(file))
+        return NULL;
     return file->section_names[number];
 }
 
-int pe_file_section_number(pe_file *file, const char *name){
-    for(int i = 0; i < pe_file_number_of_sections(file); i++){
-        if(strcmp(name, pe_file_section_name(file, i)) == 0){
+int pe_file_section_number(const pe_file *file, const char *name){
+    for(int i = 0; i < pe_file_number_of_sections(file); i++)
+        if(strcmp(name, pe_file_section_name(file, i)) == 0)
             return i;
-        }
-    }
-    return -1;
+
+    return PE_FILE_SECTION_NOT_FOUND;
 }
 
-int pe_file_section_size(pe_file *file, const char *name){
+int pe_file_section_size(const pe_file *file, const char *name){
     int number = pe_file_section_number(file, name);
-    if(number == -1)
-        return -1;
+    if(number == PE_FILE_SECTION_NOT_FOUND)
+        return PE_FILE_SECTION_NOT_FOUND;
     return file->section_headers[number].SizeOfRawData;
 }
 
+/// @brief check that write is within size bounds of a part of the pe file
+/// @param file the pe file
+/// @param part_size the size of the part
+/// @param amount how many bytes to write 
+/// @param offset offset within the part
+/// @return true if write is in bounds otherwise false
 static bool in_bounds(pe_file *file, int part_size, int amount, int offset){
-    return amount + offset <= part_size;
+    return (offset > 0) && (amount + offset <= part_size);
 }
 
-int pe_file_header_size(pe_file *file){
+int pe_file_header_size(const pe_file *file){
     return file->dos_header.e_lfanew + 
-        sizeof(DWORD) + 
-        sizeof(IMAGE_FILE_HEADER) + 
+        sizeof(file->signature) + 
+        sizeof(file->file_header) + 
         file->file_header.SizeOfOptionalHeader +
-        file->file_header.NumberOfSections * sizeof(IMAGE_SECTION_HEADER);
+        file->file_header.NumberOfSections * sizeof(*(file->section_headers));
 }
 
 int pe_file_header_write_constant(pe_file *file, uint8_t value, int amount, int offset){
     if(!in_bounds(file, pe_file_header_size(file), amount, offset))
-        return -1;
+        return PE_FILE_OUT_OF_BOUNDS;
     
-    TRY_IO(fseek(file->contents, 0, SEEK_SET), 0, error);
+    TRY_IO_RETURN(
+        fseek(file->contents, 0, SEEK_SET), 
+        0, 
+        PE_FILE_IO_ERROR
+    );
+    
     for(int i = 0; i < amount; i++)
-        TRY_IO(fwrite(&value, sizeof(value), 1, file->contents), 1, error);
-    return 0;
-error:
-    return -1;
+        TRY_IO_RETURN(
+            fwrite(&value, sizeof(value), 1, file->contents), 
+            1, 
+            PE_FILE_IO_ERROR
+        );
+
+    return PE_FILE_SUCCESS;
 }
 
 int pe_file_section_write_constant(pe_file *file, const char *name, uint8_t value, int amount, int offset){
     int number = pe_file_section_number(file, name);
-    if(!in_bounds(file, file->section_headers[number].SizeOfRawData, amount, offset) == -1)
-        return -1;
+    if(number == PE_FILE_SECTION_NOT_FOUND)
+        return PE_FILE_SECTION_NOT_FOUND;
+    
+    if(!in_bounds(file, file->section_headers[number].SizeOfRawData, amount, offset))
+        return PE_FILE_OUT_OF_BOUNDS;
 
     int start_pointer = file->section_headers[number].PointerToRawData;
-    TRY_IO(fseek(file->contents, start_pointer + offset, SEEK_SET), 0, error);
+    TRY_IO_RETURN(
+        fseek(file->contents, start_pointer + offset, SEEK_SET), 
+        0, 
+        PE_FILE_IO_ERROR
+    );
+
     for(int i = 0; i < amount; i++)
-        TRY_IO(fwrite(&value, sizeof(value), 1, file->contents), 1, error);
-    return 0;
-error:
-    return -1;
+        TRY_IO_RETURN(
+            fwrite(&value, sizeof(value), 1, file->contents), 
+            1, 
+            PE_FILE_IO_ERROR
+        );
+
+    return PE_FILE_SUCCESS;
 }
 
-static void print_hex_contents(uint8_t *from, int times){
+/// @brief print in hex byte per byte the contents of an array
+/// @param from the contents to print
+/// @param times the size of the array
+static void print_hex_contents(const uint8_t *from, int times){
     for(int i = 0; i < times; i++){
         printf("%02x ", *(from + i));
     }
     printf("\n");
 }
 
-void pe_file_print_headers(pe_file *file){
+void pe_file_print_headers(const pe_file *file){
     printf("The DOS header has the following bytes:\n");
-    print_hex_contents((uint8_t *) &(file->dos_header), sizeof(IMAGE_DOS_HEADER));
+    print_hex_contents((uint8_t *) &(file->dos_header), sizeof(file->dos_header));
 
     printf("The bytes of the signature are:\n");
     print_hex_contents((uint8_t *) &(file->signature), sizeof(file->signature));
@@ -189,7 +248,7 @@ void pe_file_print_headers(pe_file *file){
     printf("The bytes of the sections are the following:\n");
     for(int i = 0; i < file->file_header.NumberOfSections; i++){
         printf("Section %d %s:\n", i, file->section_headers[i].Name);
-        print_hex_contents((uint8_t *) (file->section_headers + i), sizeof(IMAGE_SECTION_HEADER));
+        print_hex_contents((uint8_t *) (file->section_headers + i), sizeof(*(file->section_headers)));
         printf("%s\n", file->section_names[i]);
     }
 }
