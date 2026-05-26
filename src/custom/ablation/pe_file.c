@@ -169,7 +169,7 @@ int pe_file_section_size(const pe_file *file, const char *name){
 /// @param offset offset within the part
 /// @return true if write is in bounds otherwise false
 static bool in_bounds(pe_file *file, int part_size, int amount, int offset){
-    return (offset > 0) && (amount + offset <= part_size);
+    return (offset >= 0) && (amount + offset <= part_size);
 }
 
 int pe_file_header_size(const pe_file *file){

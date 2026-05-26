@@ -173,7 +173,7 @@ int main(int argc, char **argv){
         
         strcpy(source_file, argv[1]);
         strcat(source_file, ep->d_name);
-
+    
         pe_file *next_file = pe_file_open(source_file, PE_FILE_READ_MODE);
         if(next_file == NULL){
             printf("Unable to open file %s to process headers\n", ep->d_name);
