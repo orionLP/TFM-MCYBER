@@ -1,401 +1,400 @@
+dataset version v1.0.0
+
+relations:
+
+data/packed/exe/x86/petite/ /media/sf_shared_data/petite/ petite
+
+file headers:
+
+data/packed/exe/x86/petite/windows_encrypted_shell_reverse_tcp.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_exec.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_meterpreter_bind_tcp.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_meterpreter_reverse_http.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_meterpreter_reverse_https.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_meterpreter_reverse_tcp.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_pingback_bind_tcp.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_pingback_reverse_tcp.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_powershell_bind_tcp.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_powershell_reverse_tcp.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_powershell_reverse_tcp_ssl.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_shell_bind_hidden_ipknock_tcp.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_shell_bind_tcp.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_shell_hidden_bind_tcp.exe ._header_ 00000001 petite
+data/packed/exe/x86/petite/windows_shell_reverse_tcp_rc4.exe ._header_ 00000001 petite
+
+surviving files:
+
 avast_free:
 
-total 1856
-drwxrwx--- 1 root vboxsf  12288 May 26 20:32 .
-drwxr-xr-x 3 root root     4096 May 25 18:37 ..
--rwxrwx--- 1 root vboxsf   5394 May 26 20:19 windows_encrypted_shell_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   5394 May 26 20:19 windows_encrypted_shell_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   5394 May 26 20:19 windows_encrypted_shell_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   5394 May 26 20:19 windows_encrypted_shell_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   2834 May 26 20:19 windows_exec.exe._header_
--rwxrwx--- 1 root vboxsf   2834 May 26 20:19 windows_exec.exe._header_00000001
--rwxrwx--- 1 root vboxsf   2834 May 26 20:19 windows_exec.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   2834 May 26 20:19 windows_exec.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf 100114 May 26 20:19 windows_meterpreter_reverse_http.exe._header_
--rwxrwx--- 1 root vboxsf 100114 May 26 20:19 windows_meterpreter_reverse_http.exe._header_00000001
--rwxrwx--- 1 root vboxsf 100114 May 26 20:19 windows_meterpreter_reverse_http.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf 100114 May 26 20:19 windows_meterpreter_reverse_http.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_reverse_https.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_reverse_https.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_reverse_https.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_reverse_https.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 20:19 windows_meterpreter_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_pingback_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_pingback_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_pingback_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_pingback_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_pingback_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_pingback_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_pingback_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_pingback_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_reverse_tcp_ssl.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_reverse_tcp_ssl.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_reverse_tcp_ssl.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 20:19 windows_powershell_reverse_tcp_ssl.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_bind_hidden_ipknock_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_bind_hidden_ipknock_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_hidden_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_hidden_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_hidden_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_hidden_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_reverse_tcp_rc4.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_reverse_tcp_rc4.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_reverse_tcp_rc4.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 20:19 windows_shell_reverse_tcp_rc4.exe._header_petite
-
-
+/media/sf_shared_data/petite:
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_exec.exe._header_
+/media/sf_shared_data/petite/windows_exec.exe._header_00000001
+/media/sf_shared_data/petite/windows_exec.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_exec.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_petite
 
 avg_free:
 
-
-
-
-total 1856
-drwxrwx--- 1 root vboxsf  12288 May 26 22:24 .
-drwxr-xr-x 3 root root     4096 May 25 18:37 ..
--rwxrwx--- 1 root vboxsf   5394 May 26 22:15 windows_encrypted_shell_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   5394 May 26 22:15 windows_encrypted_shell_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   5394 May 26 22:15 windows_encrypted_shell_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   5394 May 26 22:15 windows_encrypted_shell_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   2834 May 26 22:15 windows_exec.exe._header_
--rwxrwx--- 1 root vboxsf   2834 May 26 22:15 windows_exec.exe._header_00000001
--rwxrwx--- 1 root vboxsf   2834 May 26 22:15 windows_exec.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   2834 May 26 22:15 windows_exec.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf 100114 May 26 22:15 windows_meterpreter_reverse_http.exe._header_
--rwxrwx--- 1 root vboxsf 100114 May 26 22:15 windows_meterpreter_reverse_http.exe._header_00000001
--rwxrwx--- 1 root vboxsf 100114 May 26 22:15 windows_meterpreter_reverse_http.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf 100114 May 26 22:15 windows_meterpreter_reverse_http.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_reverse_https.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_reverse_https.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_reverse_https.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_reverse_https.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:15 windows_meterpreter_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_pingback_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_pingback_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_pingback_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_pingback_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_pingback_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_pingback_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_pingback_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_pingback_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_reverse_tcp_ssl.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_reverse_tcp_ssl.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_reverse_tcp_ssl.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:15 windows_powershell_reverse_tcp_ssl.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_bind_hidden_ipknock_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_bind_hidden_ipknock_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_hidden_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_hidden_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_hidden_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_hidden_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_reverse_tcp_rc4.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_reverse_tcp_rc4.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_reverse_tcp_rc4.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:15 windows_shell_reverse_tcp_rc4.exe._header_petite
+/media/sf_shared_data/petite:
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_exec.exe._header_
+/media/sf_shared_data/petite/windows_exec.exe._header_00000001
+/media/sf_shared_data/petite/windows_exec.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_exec.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_petite
 
 kaspersky
 
-total 2316
-drwxrwx--- 1 root vboxsf  12288 May 26 22:43 .
-drwxr-xr-x 3 root root     4096 May 25 18:37 ..
--rwxrwx--- 1 root vboxsf   5394 May 26 22:32 windows_encrypted_shell_reverse_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   5394 May 26 22:32 windows_encrypted_shell_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   5394 May 26 22:32 windows_encrypted_shell_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   5394 May 26 22:32 windows_encrypted_shell_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   5394 May 26 22:32 windows_encrypted_shell_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   2834 May 26 22:32 windows_exec.exe00000001
--rwxrwx--- 1 root vboxsf   2834 May 26 22:32 windows_exec.exe._header_
--rwxrwx--- 1 root vboxsf   2834 May 26 22:32 windows_exec.exe._header_00000001
--rwxrwx--- 1 root vboxsf   2834 May 26 22:32 windows_exec.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   2834 May 26 22:32 windows_exec.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_bind_tcp.exe00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf 100114 May 26 22:32 windows_meterpreter_reverse_http.exe00000001
--rwxrwx--- 1 root vboxsf 100114 May 26 22:32 windows_meterpreter_reverse_http.exe._header_
--rwxrwx--- 1 root vboxsf 100114 May 26 22:32 windows_meterpreter_reverse_http.exe._header_00000001
--rwxrwx--- 1 root vboxsf 100114 May 26 22:32 windows_meterpreter_reverse_http.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf 100114 May 26 22:32 windows_meterpreter_reverse_http.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_reverse_https.exe00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_reverse_https.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_reverse_https.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_reverse_https.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_reverse_https.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_reverse_tcp.exe00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:32 windows_meterpreter_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_pingback_bind_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_pingback_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_pingback_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_pingback_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_pingback_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_pingback_reverse_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_pingback_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_pingback_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_pingback_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_pingback_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_bind_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_reverse_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_reverse_tcp_ssl.exe00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_reverse_tcp_ssl.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_reverse_tcp_ssl.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_reverse_tcp_ssl.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:32 windows_powershell_reverse_tcp_ssl.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_bind_hidden_ipknock_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_bind_hidden_ipknock_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_bind_hidden_ipknock_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_bind_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_hidden_bind_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_hidden_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_hidden_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_hidden_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_hidden_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_reverse_tcp_rc4.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_reverse_tcp_rc4.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_reverse_tcp_rc4.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_reverse_tcp_rc4.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:32 windows_shell_reverse_tcp_rc4.exe._header_petite
-
+/media/sf_shared_data/petite:
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe00000001
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_exec.exe00000001
+/media/sf_shared_data/petite/windows_exec.exe._header_
+/media/sf_shared_data/petite/windows_exec.exe._header_00000001
+/media/sf_shared_data/petite/windows_exec.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_exec.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe00000001
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe00000001
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe00000001
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe00000001
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe00000001
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe00000001
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe00000001
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe00000001
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_petite
 
 norton:
 
-
-
-
-total 1856
-drwxrwx--- 1 root vboxsf  12288 May 26 23:29 .
-drwxr-xr-x 3 root root     4096 May 25 18:37 ..
--rwxrwx--- 1 root vboxsf   5394 May 26 22:48 windows_encrypted_shell_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   5394 May 26 22:48 windows_encrypted_shell_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   5394 May 26 22:48 windows_encrypted_shell_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   5394 May 26 22:48 windows_encrypted_shell_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   2834 May 26 22:48 windows_exec.exe._header_
--rwxrwx--- 1 root vboxsf   2834 May 26 22:48 windows_exec.exe._header_00000001
--rwxrwx--- 1 root vboxsf   2834 May 26 22:48 windows_exec.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   2834 May 26 22:48 windows_exec.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf 100114 May 26 22:48 windows_meterpreter_reverse_http.exe._header_
--rwxrwx--- 1 root vboxsf 100114 May 26 22:48 windows_meterpreter_reverse_http.exe._header_00000001
--rwxrwx--- 1 root vboxsf 100114 May 26 22:48 windows_meterpreter_reverse_http.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf 100114 May 26 22:48 windows_meterpreter_reverse_http.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_reverse_https.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_reverse_https.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_reverse_https.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_reverse_https.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 22:48 windows_meterpreter_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_pingback_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_pingback_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_pingback_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_pingback_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_pingback_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_pingback_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_pingback_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_pingback_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_reverse_tcp_ssl.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_reverse_tcp_ssl.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_reverse_tcp_ssl.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 22:48 windows_powershell_reverse_tcp_ssl.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_bind_hidden_ipknock_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_bind_hidden_ipknock_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_hidden_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_hidden_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_hidden_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_hidden_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_reverse_tcp_rc4.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_reverse_tcp_rc4.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_reverse_tcp_rc4.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 22:48 windows_shell_reverse_tcp_rc4.exe._header_petite
-
-
-
+/media/sf_shared_data/petite:
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_exec.exe._header_
+/media/sf_shared_data/petite/windows_exec.exe._header_00000001
+/media/sf_shared_data/petite/windows_exec.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_exec.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_petite
 
 bitdefender:
 
-
-
-
-
-
-total 2828
-drwxrwx--- 1 root vboxsf  12288 May 26  2026 .
-drwxr-xr-x 3 root root     4096 May 25 18:37 ..
--rwxrwx--- 1 root vboxsf   5394 May 26 23:34 windows_encrypted_shell_reverse_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   5394 May 26 23:34 windows_encrypted_shell_reverse_tcp.exe00000001petite
--rwxrwx--- 1 root vboxsf   5394 May 26 23:34 windows_encrypted_shell_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   5394 May 26 23:34 windows_encrypted_shell_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   5394 May 26 23:34 windows_encrypted_shell_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   5394 May 26 23:34 windows_encrypted_shell_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   2834 May 26 23:34 windows_exec.exe00000001
--rwxrwx--- 1 root vboxsf   2834 May 26 23:34 windows_exec.exe00000001petite
--rwxrwx--- 1 root vboxsf   2834 May 26 23:34 windows_exec.exe._header_
--rwxrwx--- 1 root vboxsf   2834 May 26 23:34 windows_exec.exe._header_00000001
--rwxrwx--- 1 root vboxsf   2834 May 26 23:34 windows_exec.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   2834 May 26 23:34 windows_exec.exe._header_petite
--rwxrwx--- 1 root vboxsf   2834 May 26 23:34 windows_exec.exepetite
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_bind_tcp.exe00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_bind_tcp.exe00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf 100114 May 26 23:34 windows_meterpreter_reverse_http.exe00000001
--rwxrwx--- 1 root vboxsf 100114 May 26 23:34 windows_meterpreter_reverse_http.exe00000001petite
--rwxrwx--- 1 root vboxsf 100114 May 26 23:34 windows_meterpreter_reverse_http.exe._header_
--rwxrwx--- 1 root vboxsf 100114 May 26 23:34 windows_meterpreter_reverse_http.exe._header_00000001
--rwxrwx--- 1 root vboxsf 100114 May 26 23:34 windows_meterpreter_reverse_http.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf 100114 May 26 23:34 windows_meterpreter_reverse_http.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_https.exe00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_https.exe00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_https.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_https.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_https.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_https.exe._header_petite
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_tcp.exe00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_tcp.exe00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf  99602 May 26 23:34 windows_meterpreter_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_bind_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_bind_tcp.exe00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_bind_tcp.exepetite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_reverse_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_reverse_tcp.exe00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_pingback_reverse_tcp.exepetite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_bind_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_bind_tcp.exe00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_bind_tcp.exepetite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp.exe00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp.exepetite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp_ssl.exe00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp_ssl.exe00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp_ssl.exe._header_
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp_ssl.exe._header_00000001
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp_ssl.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp_ssl.exe._header_petite
--rwxrwx--- 1 root vboxsf   4370 May 26 23:34 windows_powershell_reverse_tcp_ssl.exepetite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_hidden_ipknock_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_hidden_ipknock_tcp.exe00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_hidden_ipknock_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_hidden_ipknock_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_hidden_ipknock_tcp.exepetite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_tcp.exe00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_bind_tcp.exepetite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_hidden_bind_tcp.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_hidden_bind_tcp.exe00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_hidden_bind_tcp.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_hidden_bind_tcp.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_hidden_bind_tcp.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_hidden_bind_tcp.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_hidden_bind_tcp.exepetite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_reverse_tcp_rc4.exe00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_reverse_tcp_rc4.exe00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_reverse_tcp_rc4.exe._header_
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_reverse_tcp_rc4.exe._header_00000001
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_reverse_tcp_rc4.exe._header_00000001petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_reverse_tcp_rc4.exe._header_petite
--rwxrwx--- 1 root vboxsf   3346 May 26 23:34 windows_shell_reverse_tcp_rc4.exepetite
+/media/sf_shared_data/petite:
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe00000001
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe00000001petite
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_encrypted_shell_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_exec.exe00000001
+/media/sf_shared_data/petite/windows_exec.exe00000001petite
+/media/sf_shared_data/petite/windows_exec.exe._header_
+/media/sf_shared_data/petite/windows_exec.exe._header_00000001
+/media/sf_shared_data/petite/windows_exec.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_exec.exe._header_petite
+/media/sf_shared_data/petite/windows_exec.exepetite
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe00000001
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_http.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_https.exe._header_petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_meterpreter_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe00000001
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe00000001petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_pingback_bind_tcp.exepetite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe00000001
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe00000001petite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_pingback_reverse_tcp.exepetite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe00000001
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe00000001petite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_bind_tcp.exepetite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp.exepetite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_00000001
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exe._header_petite
+/media/sf_shared_data/petite/windows_powershell_reverse_tcp_ssl.exepetite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe00000001
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_bind_hidden_ipknock_tcp.exepetite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe00000001
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_bind_tcp.exepetite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe00000001
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe00000001petite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_hidden_bind_tcp.exepetite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe00000001
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe00000001petite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_00000001
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_00000001petite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exe._header_petite
+/media/sf_shared_data/petite/windows_shell_reverse_tcp_rc4.exepetite
