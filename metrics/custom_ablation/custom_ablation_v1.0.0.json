@@ -198,48 +198,63 @@
         },
         "petite": {
             "windows_encrypted_shell_reverse_tcp.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_exec.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_meterpreter_bind_tcp.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_meterpreter_reverse_http.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_meterpreter_reverse_https.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_meterpreter_reverse_tcp.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_pingback_bind_tcp.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_pingback_reverse_tcp.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_powershell_bind_tcp.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_powershell_reverse_tcp.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_powershell_reverse_tcp_ssl.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_shell_bind_hidden_ipknock_tcp.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_shell_bind_tcp.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_shell_hidden_bind_tcp.exe": [
+                "00000001",
                 "petite"
             ],
             "windows_shell_reverse_tcp_rc4.exe": [
+                "00000001",
                 "petite"
             ]
         },
@@ -924,12 +939,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_exec.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -942,12 +975,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_http.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -960,12 +1011,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -978,12 +1047,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_pingback_reverse_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -996,12 +1083,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_powershell_reverse_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -1014,12 +1119,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_shell_bind_hidden_ipknock_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -1032,6 +1155,15 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
@@ -1041,12 +1173,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_shell_reverse_tcp_rc4.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -9347,12 +9497,68 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_exec.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -9365,12 +9571,68 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_http.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -9383,12 +9645,68 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -9401,12 +9719,68 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_pingback_reverse_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -9419,12 +9793,68 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_powershell_reverse_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -9437,12 +9867,68 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_shell_bind_hidden_ipknock_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -9455,6 +9941,34 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
@@ -9464,12 +9978,68 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_shell_reverse_tcp_rc4.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
+                        "petite"
+                    ],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -17356,197 +17926,317 @@
             },
             "petite": {
                 "windows_encrypted_shell_reverse_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_exec.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_bind_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_http.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_https.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_pingback_bind_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_pingback_reverse_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_powershell_bind_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_powershell_reverse_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_powershell_reverse_tcp_ssl.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_shell_bind_hidden_ipknock_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_shell_bind_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_shell_hidden_bind_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_shell_reverse_tcp_rc4.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ]
@@ -28228,12 +28918,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_exec.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -28246,12 +28954,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_http.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -28264,12 +28990,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -28282,12 +29026,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_pingback_reverse_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -28300,12 +29062,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_powershell_reverse_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -28318,12 +29098,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_shell_bind_hidden_ipknock_tcp.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -28336,6 +29134,15 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
@@ -28345,12 +29152,30 @@
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
+                    ],
+                    [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_shell_reverse_tcp_rc4.exe": [
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -36214,22 +37039,49 @@
             },
             "petite": {
                 "windows_encrypted_shell_reverse_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_exec.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -36240,61 +37092,124 @@
                     ]
                 ],
                 "windows_meterpreter_bind_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_http.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_https.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_meterpreter_reverse_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
                     ],
                     [
                         "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
                         "petite"
                     ],
                     [
+                        "._header_",
                         "petite"
                     ]
                 ],
                 "windows_pingback_bind_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -36305,9 +37220,24 @@
                     ]
                 ],
                 "windows_pingback_reverse_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -36318,9 +37248,24 @@
                     ]
                 ],
                 "windows_powershell_bind_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -36331,9 +37276,24 @@
                     ]
                 ],
                 "windows_powershell_reverse_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -36344,9 +37304,24 @@
                     ]
                 ],
                 "windows_powershell_reverse_tcp_ssl.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -36357,9 +37332,24 @@
                     ]
                 ],
                 "windows_shell_bind_hidden_ipknock_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -36370,9 +37360,24 @@
                     ]
                 ],
                 "windows_shell_bind_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -36383,9 +37388,24 @@
                     ]
                 ],
                 "windows_shell_hidden_bind_tcp.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
@@ -36396,9 +37416,24 @@
                     ]
                 ],
                 "windows_shell_reverse_tcp_rc4.exe": [
-                    [],
+                    [
+                        "00000001"
+                    ],
+                    [
+                        "00000001",
+                        "petite"
+                    ],
                     [
                         "._header_"
+                    ],
+                    [
+                        "._header_",
+                        "00000001"
+                    ],
+                    [
+                        "._header_",
+                        "00000001",
+                        "petite"
                     ],
                     [
                         "._header_",
