@@ -2758,7 +2758,6 @@
             },
             "tutorial": {
                 "windows_encrypted_shell_reverse_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -2952,12 +2951,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -2974,26 +2967,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -3079,7 +3052,6 @@
                     ]
                 ],
                 "windows_exec.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -3273,12 +3245,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -3295,26 +3261,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -3400,7 +3346,6 @@
                     ]
                 ],
                 "windows_meterpreter_bind_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -3594,12 +3539,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -3616,26 +3555,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -3721,7 +3640,6 @@
                     ]
                 ],
                 "windows_meterpreter_reverse_http.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -3899,15 +3817,8 @@
                         ".packed"
                     ],
                     [
-                        ".idata"
-                    ],
-                    [
                         ".idata",
                         ".packed"
-                    ],
-                    [
-                        ".idata",
-                        ".reloc"
                     ],
                     [
                         ".idata",
@@ -3915,16 +3826,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
-                        ".rdata",
-                        ".idata"
-                    ],
-                    [
                         ".rdata",
                         ".idata",
                         ".packed"
@@ -3932,31 +3833,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -4042,7 +3918,6 @@
                     ]
                 ],
                 "windows_meterpreter_reverse_https.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -4236,12 +4111,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -4258,26 +4127,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -4363,7 +4212,6 @@
                     ]
                 ],
                 "windows_meterpreter_reverse_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -4557,12 +4405,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -4579,26 +4421,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -4684,7 +4506,6 @@
                     ]
                 ],
                 "windows_pingback_bind_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -4878,12 +4699,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -4900,26 +4715,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -5005,7 +4800,6 @@
                     ]
                 ],
                 "windows_pingback_reverse_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -5199,12 +4993,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -5221,26 +5009,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -5326,7 +5094,6 @@
                     ]
                 ],
                 "windows_powershell_bind_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -5520,12 +5287,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -5542,26 +5303,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -5647,7 +5388,6 @@
                     ]
                 ],
                 "windows_powershell_reverse_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -5841,12 +5581,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -5863,26 +5597,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -5968,7 +5682,6 @@
                     ]
                 ],
                 "windows_powershell_reverse_tcp_ssl.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -6162,12 +5875,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -6184,26 +5891,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -6289,7 +5976,6 @@
                     ]
                 ],
                 "windows_shell_bind_hidden_ipknock_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -6483,12 +6169,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -6505,26 +6185,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -6610,7 +6270,6 @@
                     ]
                 ],
                 "windows_shell_bind_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -6804,12 +6463,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -6826,26 +6479,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -6931,7 +6564,6 @@
                     ]
                 ],
                 "windows_shell_hidden_bind_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -7125,12 +6757,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -7147,26 +6773,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
@@ -7252,7 +6858,6 @@
                     ]
                 ],
                 "windows_shell_reverse_tcp_rc4.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -7446,12 +7051,6 @@
                         ".packed"
                     ],
                     [
-                        ".packed"
-                    ],
-                    [
-                        ".rdata"
-                    ],
-                    [
                         ".rdata",
                         ".idata"
                     ],
@@ -7468,26 +7067,6 @@
                     [
                         ".rdata",
                         ".idata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".packed"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc"
-                    ],
-                    [
-                        ".rdata",
-                        ".reloc",
-                        ".packed"
-                    ],
-                    [
-                        ".reloc"
-                    ],
-                    [
                         ".reloc",
                         ".packed"
                     ],
