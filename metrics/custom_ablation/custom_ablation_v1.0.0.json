@@ -26818,7 +26818,6 @@
             },
             "lzma": {
                 "windows_encrypted_shell_reverse_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -26856,34 +26855,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_exec.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -26921,34 +26900,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_meterpreter_bind_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -26986,34 +26945,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_meterpreter_reverse_http.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27051,34 +26990,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_meterpreter_reverse_https.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27116,34 +27035,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_meterpreter_reverse_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27181,34 +27080,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_pingback_bind_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27246,34 +27125,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_pingback_reverse_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27311,34 +27170,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_powershell_bind_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27376,34 +27215,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_powershell_reverse_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27441,34 +27260,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_powershell_reverse_tcp_ssl.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27506,34 +27305,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_shell_bind_hidden_ipknock_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27571,34 +27350,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_shell_bind_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27636,34 +27395,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_shell_hidden_bind_tcp.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27701,34 +27440,14 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ],
                 "windows_shell_reverse_tcp_rc4.exe": [
-                    [],
                     [
                         "._header_"
                     ],
@@ -27766,30 +27485,11 @@
                         "UPX2"
                     ],
                     [
-                        "UPX0"
-                    ],
-                    [
                         "UPX0",
                         "UPX1"
                     ],
                     [
-                        "UPX0",
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX0",
-                        "UPX2"
-                    ],
-                    [
                         "UPX1"
-                    ],
-                    [
-                        "UPX1",
-                        "UPX2"
-                    ],
-                    [
-                        "UPX2"
                     ]
                 ]
             }
