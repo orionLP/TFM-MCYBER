@@ -29,6 +29,9 @@ def matrix_mul(mat1, mat2):
             mul_result[i][j] = mul_result[i][j] % 256
     return mul_result
 
+def array_sub(array1, array2):
+    return [(array1[i] - array2[i]) % 256 for i in range(16)]
+
 key_matrix = [
     [  112,    42,   123,   202 ],
     [  153,   128,   168,    93 ],
@@ -56,6 +59,9 @@ def pack_data(data):
             for j in range(k * 4, (k+1) * 4):
                 result[j] = last_matrix[(j % 16) // 4][(j%16) % 4]
 
+    for i in range(number_multiplications - 1):
+        result[i * 16:(i+1) * 16] = array_sub(result[i * 16:(i+1) * 16], result[(number_multiplications - 1) * 16: number_multiplications * 16])
+    
     for i in range(0, bytes_remaining // 4 + 1):
         j_range = 4
         if i == (bytes_remaining // 4):

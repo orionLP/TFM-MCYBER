@@ -56,10 +56,21 @@ void matrix_mul(int (*matrix_1)[NUM_COLUMNS], int (*matrix_2)[NUM_COLUMNS], int 
         }
 }
 
+void array_add(char *dest, char *adder){
+    for(int i = 0; i < 16; i++){
+        dest[i] = (dest[i] + adder[i]) % 256;
+    }
+}
+
 void unpack_data(char* src, DWORD size) {
     
     int num_multiplications = size / 16;
     int bytes_remaining = size % 16;
+
+    for(int i = 0; i < num_multiplications - 1; i++){
+        array_add(src + (i * 16), src + ((num_multiplications - 1) * 16));
+    }
+
     for(int i = 0; i < num_multiplications; i++){
         for(int k = 4 * i; k < ((i + 1) * 4); k++)
             for(int j = k * 4; j < ((k+1) * 4); j++)
