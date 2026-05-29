@@ -13,10 +13,10 @@ static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
 };
 #else
 static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
-    {124, 188, 152, 99}, 
-    {60, 88, 23, 36}, 
-    {163, 98, 190, 170},
-    {220, 89, 88, 9}
+    {101, 30, 253, 12}, 
+    {196, 83, 65, 203}, 
+    {55, 237, 18, 22},
+    {48, 117, 150, 244}
 };
 #endif
 

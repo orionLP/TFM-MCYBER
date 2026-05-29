@@ -39,6 +39,13 @@ key_matrix = [
     [  247,   192,   100,   116 ]
 ]
 
+key_matrix_2 = [
+    [  86,    50,    61,   169 ],
+    [  10,    80,   242,    15 ],
+    [  23,   242,   243,    61 ],
+    [ 217,    37,     9,   134 ]
+]
+
 def pack_data(data):
     result = [byte_data for byte_data in data]
 
