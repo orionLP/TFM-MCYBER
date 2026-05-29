@@ -1,45 +1,45 @@
 #include "crypto_interface.h"
 
 #ifdef KEY_1
-const unsigned char constant_1 = 214;
-const unsigned char constant_2_inverse = 161;
+static const unsigned char constant_1 = 214;
+static const unsigned char constant_2_inverse = 161;
 #else 
-const unsigned char constant_1 = 214;
-const unsigned char constant_2_inverse = 161;
+static const unsigned char constant_1 = 214;
+static const unsigned char constant_2_inverse = 161;
 #endif
 
 
-unsigned char last_cypher_block[16];
-unsigned char tmp_buff[16];
+static unsigned char last_cypher_block[16];
+static unsigned char tmp_buff[16];
 
-unsigned int sum(unsigned char *source, int amount){
+static unsigned int sum(unsigned char *source, int amount){
     unsigned int result = 0;
     for(int i = 0; i < amount; i++)
         result += source[i];
     return result;  
 }
 
-void array_sub(unsigned char *dest, unsigned char constant, int amount){
+static void array_sub(unsigned char *dest, unsigned char constant, int amount){
     for(int i = 0; i < amount; i++)
         dest[i] -= constant;
 }
 
-void array_mult(unsigned char *dest, unsigned char constant, int amount){
+static void array_mult(unsigned char *dest, unsigned char constant, int amount){
     for(int i = 0; i < amount; i++)
         dest[i] *= constant;
 }
 
-void arrays_xor(unsigned char *dest, unsigned char *source, int amount){
+static void arrays_xor(unsigned char *dest, unsigned char *source, int amount){
     for(int i = 0; i < amount; i++)
         dest[i] ^= source[i];
 }
 
-void array_xor(unsigned char *dest, unsigned char constant, int amount){
+static void array_xor(unsigned char *dest, unsigned char constant, int amount){
     for(int i = 0; i < amount; i++)
         dest[i] ^= constant;
 }
 
-void unpack_data(char* src, DWORD size) {
+void decrypt_data(char* src, DWORD size) {
     int num_iterations = size / 16;
     int bytes_remaining = size % 16;
 

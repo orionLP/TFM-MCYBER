@@ -5,14 +5,14 @@
 #define NUM_COLUMNS (4)
 
 #ifdef KEY_1
-int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
+static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
     {124, 188, 152, 99}, 
     {60, 88, 23, 36}, 
     {163, 98, 190, 170},
     {220, 89, 88, 9}
 };
 #else
-int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
+static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
     {124, 188, 152, 99}, 
     {60, 88, 23, 36}, 
     {163, 98, 190, 170},
@@ -20,17 +20,17 @@ int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
 };
 #endif
 
-int data_matrix[NUM_ROWS][NUM_COLUMNS] = {0};
-int last_matrix[NUM_ROWS][NUM_COLUMNS] = {0};
-int tmp_matrix[NUM_ROWS][NUM_COLUMNS] = {0};
+static int data_matrix[NUM_ROWS][NUM_COLUMNS] = {0};
+static int last_matrix[NUM_ROWS][NUM_COLUMNS] = {0};
+static int tmp_matrix[NUM_ROWS][NUM_COLUMNS] = {0};
 
-void matrix_xor(int (*matrix_1)[NUM_COLUMNS], int (*matrix_2)[NUM_COLUMNS], int (*matrix_result)[NUM_COLUMNS]){
+static void matrix_xor(int (*matrix_1)[NUM_COLUMNS], int (*matrix_2)[NUM_COLUMNS], int (*matrix_result)[NUM_COLUMNS]){
     for(int i = 0; i < NUM_ROWS; i++)
         for(int j = 0; j < NUM_COLUMNS; j++)
             matrix_result[i][j] = matrix_1[i][j] ^ matrix_2[i][j];
 }
 
-void matrix_mul(int (*matrix_1)[NUM_COLUMNS], int (*matrix_2)[NUM_COLUMNS], int (*matrix_result)[NUM_COLUMNS]){
+static void matrix_mul(int (*matrix_1)[NUM_COLUMNS], int (*matrix_2)[NUM_COLUMNS], int (*matrix_result)[NUM_COLUMNS]){
     for(int i = 0; i < NUM_ROWS; i++)
         for(int j = 0; j < NUM_COLUMNS; j++){
             matrix_result[i][j] = 0;
@@ -40,7 +40,7 @@ void matrix_mul(int (*matrix_1)[NUM_COLUMNS], int (*matrix_2)[NUM_COLUMNS], int 
         }
 }
 
-void array_add(char *dest, char *adder){
+static void array_add(char *dest, char *adder){
     for(int i = 0; i < 16; i++){
         dest[i] = (dest[i] + adder[i]) % 256;
     }
