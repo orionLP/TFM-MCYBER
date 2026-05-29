@@ -68,14 +68,15 @@ key2_matrix = [
     [ 217,    37,     9,   134 ]
 ]
 
-key1_constant_1 = 214
-key1_constant_2 = 97
+def enc_algo1(data, use_second_key):
+    print(f'Running matrix algorithm')
+    print(f'Second key will be used? {use_second_key}')
+    print(' ')
 
-key2_constant_1 = 46
-key2_constant_2 = 217
-
-def pack_data(data):
     key_matrix = key1_matrix
+    if use_second_key:
+        key_matrix = key2_matrix
+    
     result = [byte_data for byte_data in data]
 
     number_multiplications = len(data) // 16
@@ -104,14 +105,28 @@ def pack_data(data):
 
     return result
 
-def pack_data(data):
+key1_constant_1 = 214
+key1_constant_2 = 97
+
+key2_constant_1 = 46
+key2_constant_2 = 217
+
+def enc_algo2(data, use_second_key):
+    print(f'Running constants algorithm')
+    print(f'Second key will be used? {use_second_key}')
+    print(' ')
+
+    constant_1 = key1_constant_1
+    constant_2 = key1_constant_2
+    if use_second_key:
+        constant_1 = key2_constant_1
+        constant_2 = key2_constant_2
+
     result = [byte_data for byte_data in data]
 
     number_iterations = len(data) // 16
     bytes_remaining = len(data) % 16
     
-    constant_1 = 214
-    constant_2 = 97
 
     for i in range(number_iterations):
         if i != 0:
@@ -131,17 +146,33 @@ def pack_data(data):
 
     return result
 
+parser = argparse.ArgumentParser(description='Pack PE binary')
+parser.add_argument('input', metavar="FILE", help='input file')
+parser.add_argument('-p', metavar="UNPACKER", help='unpacker .exe')
+parser.add_argument('-o', metavar="FILE", help='output', default="packed.exe")
+parser.add_argument("--KEY2", action="store_true")
+parser.add_argument("--algo2", action="store_true")
 
-# parser = argparse.ArgumentParser(description='Pack PE binary')
-# parser.add_argument('input', metavar="FILE", help='input file')
-# parser.add_argument('-p', metavar="UNPACKER", help='unpacker .exe', required=True)
-# parser.add_argument('-o', metavar="FILE", help='output', default="packed.exe")
+args = parser.parse_args()
 
-# args = parser.parse_args()
+input_directory = args.input      # "data/raw/exe/x86"
+output_directory = args.p         # "data/crypters/exe/x86/multiple_information_reveal/algo1"
+unpacker_path = args.o            # "src/crypters/multiple_information_reveal/decrypter.exe"
+key2_use = args.KEY2
+algo2_use = args.algo2
 
-input_directory = "data/raw/exe/x86"
-output_directory = "data/crypters/exe/x86/multiple_information_reveal/algo1"
-unpacker_path = "src/crypters/multiple_information_reveal/decrypter.exe"
+print('----------------------------INPUTS-----------------------------')
+print(' ')
+
+print(f'The selected data is {input_directory}')
+print(f'The output directory is {output_directory}')
+print(f'The selected decryption/unpacking executable is {unpacker_path}')
+print(f'Key number 2 will be used {key2_use}, default is key 1')
+print(f'Constant encryption will be used {algo2_use}, default is matrix')
+
+print(' ')
+print('--------------------------RUNNING------------------------------')
+print(' ')
 
 os.makedirs(output_directory, exist_ok=True)
 
@@ -161,7 +192,10 @@ for file in os.listdir(input_directory):
         input_PE_data = f.read()
 
     packed_data = list(input_PE_data) # lief expects a list, not a "bytes" object.
-    packed_data = pack_data(packed_data)
+    if algo2_use:
+        packed_data = enc_algo2(packed_data, key2_use)
+    else:
+        packed_data = enc_algo1(packed_data, key2_use)
     packed_data = pad_data(packed_data, file_alignment) # pad with 0 to align with file alignment (removes a lief warning)
 
     packed_section = lief.PE.Section(".packed")
