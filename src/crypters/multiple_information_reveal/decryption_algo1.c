@@ -1,6 +1,5 @@
 #include "crypto_interface.h"
 
-#define DWORD uint32_t
 #define NUM_ROWS (4)
 #define NUM_COLUMNS (4)
 
