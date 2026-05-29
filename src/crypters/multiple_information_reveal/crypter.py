@@ -32,28 +32,54 @@ def matrix_mul(mat1, mat2):
 def array_sub(array1, array2):
     return [(array1[i] - array2[i]) % 256 for i in range(16)]
 
-key_matrix = [
+def pad_data(data, al):
+    """ return <data> padded with 0 to a size aligned with <al> """
+    return data + ([0] * (align(len(data), al) - len(data)))
+
+def array_add(dest, constant, start_index, amount):
+    for i in range(amount):
+        dest[i + start_index] += constant
+        dest[i + start_index] %= 256
+    
+def array_mult(dest, constant, start_index, amount):
+    for i in range(amount):
+        dest[i + start_index] *= constant
+        dest[i + start_index] %= 256
+
+def arrays_xor(dest, source, dest_index_start, source_index_start, amount):
+    for i in range(amount):
+        dest[dest_index_start + i] ^= source[source_index_start + i]
+
+def array_xor(dest, constant, start_index, amount):
+    for i in range(amount):
+        dest[i + start_index] ^= constant
+
+key1_matrix = [
     [  112,    42,   123,   202 ],
     [  153,   128,   168,    93 ],
     [  116,   191,     4,   160 ],
     [  247,   192,   100,   116 ]
 ]
 
-key_matrix_2 = [
+key2_matrix = [
     [  86,    50,    61,   169 ],
     [  10,    80,   242,    15 ],
     [  23,   242,   243,    61 ],
     [ 217,    37,     9,   134 ]
 ]
 
+key1_constant_1 = 214
+key1_constant_2 = 97
+
+key2_constant_1 = 46
+key2_constant_2 = 217
+
 def pack_data(data):
+    key_matrix = key1_matrix
     result = [byte_data for byte_data in data]
 
     number_multiplications = len(data) // 16
     bytes_remaining = len(data) % 16
-    
-    print(f'number_multiplications {number_multiplications}')
-    print(f'bytes_remaining {bytes_remaining}')
 
     data_matrix = None
     last_matrix = None
@@ -77,6 +103,34 @@ def pack_data(data):
             result[(len(data) - (len(data) % 16)) + (i * 4) + j] = result[(len(data) - (len(data) % 16)) + (i * 4) + j] ^ last_matrix[i][j] 
 
     return result
+
+def pack_data(data):
+    result = [byte_data for byte_data in data]
+
+    number_iterations = len(data) // 16
+    bytes_remaining = len(data) % 16
+    
+    constant_1 = 214
+    constant_2 = 97
+
+    for i in range(number_iterations):
+        if i != 0:
+            arrays_xor(result, result, i * 16, (i - 1) * 16, 16)
+
+        array_add(result, constant_1, i * 16, 16)
+        array_mult(result, constant_2, i * 16, 16)
+
+    array_add(result, constant_1, number_iterations * 16, bytes_remaining)
+    array_mult(result, constant_2, number_iterations * 16, bytes_remaining)
+    arrays_xor(result, result, number_iterations * 16, (number_iterations - 1) * 16, bytes_remaining)
+
+    sum_constant = sum(result[(number_iterations - 1) * 16:(number_iterations) * 16]) % 256
+    for i in range(number_iterations - 1):
+        arrays_xor(result, result, i * 16, (number_iterations - 1) * 16, 16)
+        array_xor(result, sum_constant, i * 16, 16)
+
+    return result
+
 
 # parser = argparse.ArgumentParser(description='Pack PE binary')
 # parser.add_argument('input', metavar="FILE", help='input file')

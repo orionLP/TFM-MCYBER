@@ -4,8 +4,8 @@
 static const unsigned char constant_1 = 214;
 static const unsigned char constant_2_inverse = 161;
 #else 
-static const unsigned char constant_1 = 214;
-static const unsigned char constant_2_inverse = 161;
+static const unsigned char constant_1 = 46;
+static const unsigned char constant_2_inverse = 105;
 #endif
 
 
