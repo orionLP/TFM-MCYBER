@@ -63,6 +63,9 @@ void array_add(char *dest, char *adder){
 }
 
 void unpack_data(char* src, DWORD size) {
+    DWORD oldProtect;
+    //make sure we can write on the destination
+    VirtualProtect(src, size, PAGE_READWRITE, &oldProtect);
     
     int num_multiplications = size / 16;
     int bytes_remaining = size % 16;
