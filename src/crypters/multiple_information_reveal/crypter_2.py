@@ -66,8 +66,8 @@ def pack_data(data):
 # args = parser.parse_args()
 
 input_directory = "data/raw/exe/x86"
-output_directory = "data/crypters/exe/x86/multiple_information_reveal"
-unpacker_path = "src/crypters/multiple_information_reveal/decrypter.exe"
+output_directory = "data/crypters/exe/x86/multiple_information_reveal/algo2"
+unpacker_path = "src/crypters/multiple_information_reveal/decrypter_2.exe"
 
 os.makedirs(output_directory, exist_ok=True)
 
