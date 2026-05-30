@@ -89,7 +89,3 @@ void decrypt_data(char* src, DWORD size) {
             src[(size - (size % 16)) + (i * 4) + j] ^= last_matrix[i][j];
     }
 }
-
-// int main(void){
-//     return 0;
-// }
