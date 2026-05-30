@@ -53,5 +53,6 @@ STEP 8: 20:16 update systems and redo scans
     20:18 update AVG
     20:34 scan made by AVG, saved result to log_avg3.txt
     20:40 update AVAST
-    20:48 scan made by avast, saved result to log_avast4.txt
-    
+    20:48 scan made by AVAST, saved result to log_avast4.txt
+    20:57 update NORTON
+    22:15 scan made by NORTON, saved result to log_norton3.txt
