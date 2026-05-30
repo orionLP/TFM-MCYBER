@@ -42,3 +42,13 @@ RESULT:
     19:39: scan made by AVAST, no new malware found, log saved at log_avast3.txt
     19:57: scan made by AVG, no new malware found, log saved at log_avg2.txt
     20:06: scan made by NORTON, no new malware found, log saved at log_norton2.txt
+
+STEP 7: 20:11 execute files within algo1_v2/KEY2 with AVG
+RESULT:
+    20:12: execute windows_pinback_reverse_tcp.exe
+    20:14: execute windows_exec.exe
+    20:14: execute windows_meterpreter_reverse_http.exe
+
+STEP 8: 20:16 update systems and redo scans
+    20:18 update AVG
+    20:34 scan made by AVG, saved result to log_avg3.txt
