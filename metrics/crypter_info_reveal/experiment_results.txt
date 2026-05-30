@@ -33,3 +33,10 @@ RESULT:
     15:30: repeat scan with AVG, log saved at log_avg1.txt
     15:39: update NORTON
     15:43: repeat scan with NORTON, log saved at log_norton1.txt
+
+STEP 6: 19:20 redo scans a few hours after
+RESULT:
+    19:23: update AVAST 
+    19:24: update AVG 
+    19:32: update NORTON
+    19:39: scan made by AVAST, no new malware found, log saved at log_avast3.txt
