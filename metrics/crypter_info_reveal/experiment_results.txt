@@ -40,3 +40,4 @@ RESULT:
     19:24: update AVG 
     19:32: update NORTON
     19:39: scan made by AVAST, no new malware found, log saved at log_avast3.txt
+    19:57: scan made by AVG, no new malware found, log saved at log_avg2.txt
