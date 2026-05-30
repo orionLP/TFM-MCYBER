@@ -164,7 +164,7 @@ def enc_algo2(data, key2_use):
     return result
 
 parser = argparse.ArgumentParser(description='Pack PE binary')
-parser.add_argument('input', metavar="DIR", help='input directory')
+parser.add_argument('input', metavar="INDIR", help='input directory')
 parser.add_argument('-p', metavar="DECRYPTER", help='decrypter exe')
 parser.add_argument('-o', metavar="DIR", help='output_directory')
 parser.add_argument(
