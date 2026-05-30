@@ -1,5 +1,8 @@
 #!/bin/bash
 
+rm -rf ./src/crypters/multiple_information_reveal/*.exe
+rm -rf ./data/crypters/exe/x86/multiple_information_reveal/*
+
 clang --target=i686-pc-windows-gnu ./src/crypters/multiple_information_reveal/decryption_algo1.c ./src/crypters/multiple_information_reveal/malware_decryptor.c -o ./src/crypters/multiple_information_reveal/decrypter_algo1_KEY1.exe  "-Wl,--entry=__start" -nostartfiles -nostdlib -lkernel32 -DKEY1
 clang --target=i686-pc-windows-gnu ./src/crypters/multiple_information_reveal/decryption_algo1.c ./src/crypters/multiple_information_reveal/malware_decryptor.c -o ./src/crypters/multiple_information_reveal/decrypter_algo1_KEY2.exe  "-Wl,--entry=__start" -nostartfiles -nostdlib -lkernel32 -DKEY2
 clang --target=i686-pc-windows-gnu ./src/crypters/multiple_information_reveal/decryption_algo1.c ./src/crypters/multiple_information_reveal/malware_decryptor.c -o ./src/crypters/multiple_information_reveal/decrypter_algo1_KEY3.exe  "-Wl,--entry=__start" -nostartfiles -nostdlib -lkernel32 -DKEY3
