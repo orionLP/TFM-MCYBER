@@ -1,0 +1,13 @@
+decryption_algo1_v2
+
+Flatten todas las funciones
+
+randomize arguments all functions except decrypt data with 7 extra arguments
+
+tigress --Verbosity=1 --Compiler=/usr/bin/clang --Environment=x86_32:Windows:Clang:19.1.7 --Transform=Inline --Functions=matrix_xor,matrix_mul,array_add  decryption_algo1.c --out=result.c -v
+
+-----
+
+tigress --Verbosity=1 --Compiler=/usr/bin/clang --Environment=x86_32:Windows:Clang:19.1.7 --Transform=Flatten --Functions=sum,array_sub,array_mult,arrays_xor,array_xor,decrypt_data --Transform=RndArgs --RndArgsBogusNo=7 --Functions=sum,array_sub,array_mult,arrays_xor,array_xor decryption_algo2.c --out=result.c -v
+
+tigress --Verbosity=1 --Compiler=/usr/bin/clang --Environment=x86_32:Windows:Clang:19.1.7 --Transform=Inline --Functions=sum,array_sub,array_mult,arrays_xor,array_xor  decryption_algo2.c --out=result.c -v

@@ -29,3 +29,10 @@ stages:
     - ./src/custom/ablation/do_all_folders.sh
     outs:
     - data/custom/ablation/
+  multiple_crypters_information_reveal:
+    cmd: ./src/crypters/multiple_information_reveal/do_all.sh
+    deps:
+    - data/raw/exe/x86
+    - src/crypters/multiple_information_reveal
+    outs:
+    - data/crypters/exe/x86/multiple_information_reveal/

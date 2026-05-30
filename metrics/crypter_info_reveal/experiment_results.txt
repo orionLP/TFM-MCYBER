@@ -1,0 +1,58 @@
+TEST LOG FOR AVAST, AVG, NORTON 30/May/2026
+
+STEP 0: 14:20: Update AV systems
+RESULT: 
+    14:20: AVAST updated
+    14:27: AVG updated
+    14:37: NORTON updated
+
+STEP 1: 14:47: confirm that no AV of the tested ones detects the current dataset
+RESULT: 
+    14:50: scan by AVAST, no malware was found
+    14:53: scan by AVG, no malware was found
+    14:56: scan by NORTON, no malware was found
+
+STEP 2: 15:00: execute sample /algo1/KEY1/windows_exec.exe in AVAST
+RESULT:
+    15:03: file got captured by cyberguard
+
+SETP 3: 15:04: redo updates of all avs and redo scans of folder
+    15:05: updated AVAST av 
+    15:09: scanned by AVAST, nothing found
+
+STEP 4: 15:09: redo executions of more files of algo1/KEY1 in AVAST
+RESULT:
+    15:11: executed windows_shell_bind_tcp.exe, got detected
+    15:14: update AVAST
+    15:15: repeat scan with AVAST, threats were found, log saved at log_avast1.txt
+
+STEP 5: 15:20 redo scans of all AV systems
+RESULT:
+    15:25: repeat scan with AVAST, log saved at log_avast2.txt
+    15:28: update AVG
+    15:30: repeat scan with AVG, log saved at log_avg1.txt
+    15:39: update NORTON
+    15:43: repeat scan with NORTON, log saved at log_norton1.txt
+
+STEP 6: 19:20 redo scans a few hours after
+RESULT:
+    19:23: update AVAST 
+    19:24: update AVG 
+    19:32: update NORTON
+    19:39: scan made by AVAST, no new malware found, log saved at log_avast3.txt
+    19:57: scan made by AVG, no new malware found, log saved at log_avg2.txt
+    20:06: scan made by NORTON, no new malware found, log saved at log_norton2.txt
+
+STEP 7: 20:11 execute files within algo1_v2/KEY2 with AVG
+RESULT:
+    20:12: execute windows_pinback_reverse_tcp.exe
+    20:14: execute windows_exec.exe
+    20:14: execute windows_meterpreter_reverse_http.exe
+
+STEP 8: 20:16 update systems and redo scans
+    20:18 update AVG
+    20:34 scan made by AVG, saved result to log_avg3.txt
+    20:40 update AVAST
+    20:48 scan made by AVAST, saved result to log_avast4.txt
+    20:57 update NORTON
+    22:15 scan made by NORTON, saved result to log_norton3.txt
