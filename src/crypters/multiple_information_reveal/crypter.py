@@ -75,15 +75,18 @@ key3_matrix = [
     [ 126,  84,   75,    149 ]
 ]
 
-def enc_algo1(data, use_second_key):
+def enc_algo1(data, key2_use):
     print(f'Running matrix algorithm')
-    print(f'Second key will be used? {use_second_key}')
+    print(f'Which key will be used? {key2_use}')
     print(' ')
 
     key_matrix = key1_matrix
-    if use_second_key:
+
+    if key2_use == 2:
         key_matrix = key2_matrix
-    
+    if key2_use == 3:
+        key_matrix = key3_matrix
+
     result = [byte_data for byte_data in data]
 
     number_multiplications = len(data) // 16
@@ -121,16 +124,20 @@ key2_constant_2 = 217
 key3_constant_1 = 1
 key3_constant_2 = 127
 
-def enc_algo2(data, use_second_key):
+def enc_algo2(data, key2_use):
     print(f'Running constants algorithm')
-    print(f'Second key will be used? {use_second_key}')
+    print(f'Which key will be used? {key2_use}')
     print(' ')
 
     constant_1 = key1_constant_1
     constant_2 = key1_constant_2
-    if use_second_key:
+    if key2_use == 2:
         constant_1 = key2_constant_1
         constant_2 = key2_constant_2
+    if key2_use == 3:
+        constant_1 = key3_constant_1
+        constant_2 = key3_constant_2
+
 
     result = [byte_data for byte_data in data]
 
@@ -157,18 +164,24 @@ def enc_algo2(data, use_second_key):
     return result
 
 parser = argparse.ArgumentParser(description='Pack PE binary')
-parser.add_argument('input', metavar="FILE", help='input file')
-parser.add_argument('-p', metavar="UNPACKER", help='unpacker .exe')
-parser.add_argument('-o', metavar="FILE", help='output', default="packed.exe")
-parser.add_argument("--KEY2", action="store_true")
+parser.add_argument('input', metavar="DIR", help='input directory')
+parser.add_argument('-p', metavar="DECRYPTER", help='decrypter exe')
+parser.add_argument('-o', metavar="DIR", help='output_directory')
+parser.add_argument(
+    "--KEY",
+    type=int,
+    choices=[1, 2, 3],
+    default=1,
+    help="Select encryption key (1, 2, or 3)"
+)
 parser.add_argument("--algo2", action="store_true")
 
 args = parser.parse_args()
 
 input_directory = args.input      # "data/raw/exe/x86"
-output_directory = args.p         # "data/crypters/exe/x86/multiple_information_reveal/algo1"
-unpacker_path = args.o            # "src/crypters/multiple_information_reveal/decrypter.exe"
-key2_use = args.KEY2
+output_directory = args.o         # "data/crypters/exe/x86/multiple_information_reveal/algo1"
+unpacker_path = args.p            # "src/crypters/multiple_information_reveal/decrypter.exe"
+key2_use = args.KEY
 algo2_use = args.algo2
 
 print('----------------------------INPUTS-----------------------------')
@@ -189,6 +202,9 @@ os.makedirs(output_directory, exist_ok=True)
 for file in os.listdir(input_directory):
     input_filepath = input_directory + "/" + file
     output_filepath = output_directory + "/" + file
+
+    print(f'Processing file {input_filepath}')
+    print(f'Output file {output_filepath}')
 
     # open the unpack.exe binary
     unpack_PE = lief.PE.parse(unpacker_path)
