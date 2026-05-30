@@ -5,7 +5,7 @@
 #define NUM_ROWS (4)
 #define NUM_COLUMNS (4)
 
-#ifdef KEY_1
+#ifdef KEY1
 static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
     {124, 188, 152, 99}, 
     {60, 88, 23, 36}, 
@@ -13,7 +13,7 @@ static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
     {220, 89, 88, 9}
 };
 #endif
-#ifdef KEY_2
+#ifdef KEY2
 static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
     {101, 30, 253, 12}, 
     {196, 83, 65, 203}, 
@@ -21,7 +21,7 @@ static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
     {48, 117, 150, 244}
 };
 #endif
-#ifdef KEY_3
+#ifdef KEY3
 static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
     {37, 111, 153, 238}, 
     {14, 43, 227, 137}, 

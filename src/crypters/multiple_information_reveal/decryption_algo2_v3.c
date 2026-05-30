@@ -2,15 +2,15 @@
 
 #include "crypto_interface.h"
 
-#ifdef KEY_1
+#ifdef KEY1
 static const unsigned char constant_1 = 214;
 static const unsigned char constant_2_inverse = 161;
 #endif
-#ifdef KEY_2 
+#ifdef KEY2 
 static const unsigned char constant_1 = 46;
 static const unsigned char constant_2_inverse = 105;
 #endif
-#ifdef KEY_3 
+#ifdef KEY3 
 static const unsigned char constant_1 = 1;
 static const unsigned char constant_2_inverse = 127;
 #endif
