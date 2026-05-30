@@ -31,3 +31,5 @@ RESULT:
     15:25: repeat scan with AVAST, log saved at log_avast2.txt
     15:28: update AVG
     15:30: repeat scan with AVG, log saved at log_avg1.txt
+    15:39: update NORTON
+    15:43: repeat scan with NORTON, log saved at log_norton1.txt
