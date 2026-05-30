@@ -1,3 +1,5 @@
+#include "tigress.h"
+
 #include "crypto_interface.h"
 
 #define NUM_ROWS (4)
@@ -10,12 +12,19 @@ static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
     {163, 98, 190, 170},
     {220, 89, 88, 9}
 };
-#else
+#elifdef KEY_2
 static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
     {101, 30, 253, 12}, 
     {196, 83, 65, 203}, 
     {55, 237, 18, 22},
     {48, 117, 150, 244}
+};
+#else 
+static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
+    {37, 111, 153, 238}, 
+    {14, 43, 227, 137}, 
+    {186, 86, 49, 204},
+    {228, 208, 175, 81}
 };
 #endif
 
@@ -80,3 +89,7 @@ void decrypt_data(char* src, DWORD size) {
             src[(size - (size % 16)) + (i * 4) + j] ^= last_matrix[i][j];
     }
 }
+
+// int main(void){
+//     return 0;
+// }

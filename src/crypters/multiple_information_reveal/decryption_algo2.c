@@ -1,11 +1,16 @@
+#include "tigress.h"
+
 #include "crypto_interface.h"
 
 #ifdef KEY_1
 static const unsigned char constant_1 = 214;
 static const unsigned char constant_2_inverse = 161;
-#else 
+#elifdef KEY_2 
 static const unsigned char constant_1 = 46;
 static const unsigned char constant_2_inverse = 105;
+#else 
+static const unsigned char constant_1 = 1;
+static const unsigned char constant_2_inverse = 127;
 #endif
 
 

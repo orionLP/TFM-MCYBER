@@ -68,6 +68,13 @@ key2_matrix = [
     [ 217,    37,     9,   134 ]
 ]
 
+key3_matrix = [
+    [ 33,   1,    241,   173 ],
+    [ 58,   53,   166,   191 ],
+    [ 194,  8,    143,   232 ],
+    [ 126,  84,   75,    149 ]
+]
+
 def enc_algo1(data, use_second_key):
     print(f'Running matrix algorithm')
     print(f'Second key will be used? {use_second_key}')
@@ -110,6 +117,9 @@ key1_constant_2 = 97
 
 key2_constant_1 = 46
 key2_constant_2 = 217
+
+key3_constant_1 = 1
+key3_constant_2 = 127
 
 def enc_algo2(data, use_second_key):
     print(f'Running constants algorithm')
