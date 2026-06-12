@@ -15,8 +15,6 @@ typedef const char*     LPCSTR;
 #define TRUE  1
 #define FALSE 0
 
-#define __declspec(x)
-#define __cdecl
 #define WINAPI __stdcall
 
 typedef unsigned int  SIZE_T;
