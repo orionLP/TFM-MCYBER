@@ -33,11 +33,11 @@ class CType(Enum):
 
 # About names:
 #
-#   __opaque_true_xxx : the variable represents a true value, any value different than 0
-#   __opaque_false_xxx : the variable represents a false value any value 
-#   __opaque_prime_xxx : the variable represents a prime value
-#   __opaque_random_xxx : the variable value is random
-#   __opaque_unusable_xxx : variable that is not meant to be used later
+#   vXXX_true_opaque : the variable represents a true value, any value different than 0
+#   vXXX_false_opaque : the variable represents a false value any value 
+#   vXXX_prime_opaque : the variable represents a prime value
+#   vXXX_random_opaque : the variable value is random
+#   vXXX_unusable_opaque : variable that is not meant to be used later
 #
 
 class OpaqueNames(StrEnum):
@@ -47,48 +47,138 @@ class OpaqueNames(StrEnum):
     RANDOM = 'random'
     UNUSABLE = 'unusable'
 
-DEFAULT_BYTE_ENTROPY = 32 
+DEFAULT_BYTE_ENTROPY = 16
 
-class OpaqueFactory(abc.ABC):
+def create_opaque_name(nametype: str) -> str:
+    return "v" + secrets.token_hex(DEFAULT_BYTE_ENTROPY) + "_" + nametype + "_opaque" 
 
-    @abc.abstractmethod
-    def create_opaque_variable(self, integer_type: CType) -> list[c_ast.Node]:
-        pass
-    
-    def create_opaque_name(self, nametype: str) -> str:
-        return "__opaque_" + nametype + "_" + secrets.token_hex(DEFAULT_BYTE_ENTROPY)
+def random_integer(low: int, high: int) -> int:
+    span = high - low + 1
+    return low + secrets.randbelow(span)
 
-    def random_integer(self, low: int, high: int) -> int:
-        span = high - low + 1
-        return low + secrets.randbelow(span)
-
-class TrueOpaqueFactory(OpaqueFactory):
-    pass
-
-class ConstantTrueOpaqueFactory(TrueOpaqueFactory):
-
-    def create_opaque_variable(self, integer_type: CType) -> list[c_ast.Node]:
-        return_value = self.random_integer(integer_type.min_val, integer_type.max_val)
-        while return_value == 0:
-            return_value = self.random_integer(integer_type.min_val, integer_type.max_val)
-
-        variable_name = self.create_opaque_name(OpaqueNames.TRUE)
-        decl = c_ast.Decl(
-            name=variable_name,
-            quals=[],
-            align=[],
-            storage=[],
-            funcspec=[],
+def create_variable_definition(variable_name: str, integer_type: CType, init: c_ast.Node) -> c_ast.Decl:
+    return c_ast.Decl(name=variable_name, quals=[], align=[], storage=[], funcspec=[],
             type=c_ast.TypeDecl(
                 declname=variable_name,
                 quals=[],
                 align=None,
                 type=c_ast.IdentifierType(names=[integer_type.cname])
-            ),
-            init=c_ast.Constant(type=integer_type.cname, value=str(return_value)),
-            bitsize=None
+            ), init=init, bitsize=None
         )
-        return [decl]
+
+
+class OpaqueTemplate(abc.ABC):
+
+    def opaque_variable_algorithm(self, integer_type: CType) -> list[c_ast.Node]:
+        self.refresh()
+        start_variables = self.define_algorithm_variables(integer_type)
+        opaque_variable = self.define_opaque_variable(integer_type)
+        compute_algorithm = self.compute_opaque(start_variables, opaque_variable)
+        return start_variables + [opaque_variable] + compute_algorithm
+
+    @abc.abstractmethod
+    def refresh(self) -> None:
+        pass 
+
+    @abc.abstractmethod
+    def define_algorithm_variables(self, integer_type: CType) -> list[c_ast.Decl]:
+        pass
+
+    @abc.abstractmethod
+    def define_opaque_variable(self, integer_type: CType) -> c_ast.Decl:
+        pass
+    
+    @abc.abstractmethod
+    def compute_opaque(self, initial_variables: list[c_ast.Decl], opaque_variable: c_ast.Decl) -> list[c_ast.Node]:
+        pass
+    
+
+class TrueOpaqueTemplate(OpaqueTemplate):
+    pass
+
+class ConstantTrueOpaqueTemplate(TrueOpaqueTemplate):
+
+    def refresh(self) -> None:
+        pass 
+    
+    def define_algorithm_variables(self, integer_type: CType) -> list[c_ast.Decl]:
+        return []
+
+    def define_opaque_variable(self, integer_type: CType) -> c_ast.Decl:
+        return_value = random_integer(integer_type.min_val, integer_type.max_val)
+        while return_value == 0:
+            return_value = random_integer(integer_type.min_val, integer_type.max_val)
+
+        variable_name = create_opaque_name(OpaqueNames.TRUE)
+        definition = create_variable_definition(
+            variable_name, 
+            integer_type,
+            c_ast.Constant(type=integer_type.cname.split(), value=str(return_value))
+        )
+        
+        return definition
+
+    def compute_opaque(self, initial_variables: list[c_ast.Decl], opaque_variable: c_ast.Decl) -> list[c_ast.Node]:
+        return []
+
+class PrimeOpaqueTemplate(OpaqueTemplate):
+    pass
+
+class RandomAddressPrimeOpaqueTemplate(PrimeOpaqueTemplate):
+
+    def refresh(self) -> None:
+        self._sentinel_name = create_opaque_name(OpaqueNames.UNUSABLE)
+        self._d_name = create_opaque_name(OpaqueNames.UNUSABLE)
+        self._i_name = create_opaque_name(OpaqueNames.UNUSABLE)
+        self._prime_name = create_opaque_name(OpaqueNames.PRIME)
+
+    def define_algorithm_variables(self, integer_type: CType) -> list[c_ast.Decl]:
+        return [
+            create_variable_definition(
+                self._sentinel_name,
+                integer_type,
+                c_ast.Constant(type=integer_type.cname.split(), value=str(random_integer(integer_type.min_val, integer_type.max_val)))
+            ), 
+            create_variable_definition(
+                self._d_name,
+                integer_type,
+                c_ast.Constant(type=integer_type.cname.split(), value=str(0))
+            ), 
+            create_variable_definition(
+                self._i_name,
+                integer_type, 
+                c_ast.Constant(type=integer_type.cname.split(), value=str(3))
+            )       
+        ]
+
+    def define_opaque_variable(self, integer_type: CType) -> c_ast.Decl:
+        addr_cast = c_ast.Cast(
+            to_type=c_ast.Typename(
+                name=None, quals=[], align=None,
+                type=c_ast.TypeDecl(
+                    declname=None, quals=[], align=None,
+                    type=c_ast.IdentifierType(names=integer_type.cname.split())
+                )
+            ),
+            expr=c_ast.UnaryOp(op='&', expr=c_ast.ID(name=self._sentinel_name))
+        )
+
+        return create_variable_definition(
+            self._prime_name,
+            integer_type,
+            addr_cast 
+        )
+
+
+    def compute_opaque(self, initial_variables, opaque_variable) -> list[c_ast.Node]:
+ 
+        return []
+
+class RandomOpaqueTemplate(OpaqueTemplate):
+    pass
+
+class AddressRandomOpaqueTemplate(RandomOpaqueTemplate):
+    pass
 
 class InjectIfVisitor(c_ast.NodeVisitor):
     def visit_Compound(self, node):
@@ -100,8 +190,9 @@ class InjectIfVisitor(c_ast.NodeVisitor):
 
         if node.block_items is None:
             node.block_items = []
-        consonant = ConstantTrueOpaqueFactory().create_opaque_variable(CType.INT)[0]
-        node.block_items.insert(0, consonant)
+        consonant = RandomAddressPrimeOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
+        for i in reversed(consonant):
+            node.block_items.insert(0, i)
 
 parser = pycparser.CParser()
 ast = parser.parse("""
