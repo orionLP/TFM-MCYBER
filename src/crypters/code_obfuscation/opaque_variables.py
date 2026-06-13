@@ -385,12 +385,53 @@ class OpaqueIf(ABC):
     
 class JunkOpaqueIf(ABC):
 
+    def junk(self, variable1: c_ast.Decl, variable2: c_ast.Decl, variable3: c_ast.Decl) -> c_ast.Assignment:
+        name_var1 = variable1.type.type.name
+        name_var2 = variable2.type.type.name
+        name_var3 = variable3.type.type.name
+
+        op_choice = secrets.randbelow(3)
+        rvalue = None
+        if op_choice == 0:
+            # x = x + random
+            rvalue = c_ast.BinaryOp('+', c_ast.ID(name=name_var1), c_ast.ID(name=name_var2))
+        elif op_choice == 1:
+            # x = x - random
+            rvalue = c_ast.BinaryOp('-', c_ast.ID(name=name_var1), c_ast.ID(name=name_var2))
+        elif op_choice == 2:
+            # x = x * random (odd to avoid zeroing)
+            rvalue = c_ast.BinaryOp('*', c_ast.ID(name=name_var1), c_ast.ID(name=name_var2))
+        
+        return c_ast.Assignment(op='=', lvalue=c_ast.ID(name=name_var3), rvalue=rvalue)
+
+    def select_3_vars(self, variables_in_scope: list[list[c_ast.Decl]]) -> tuple[c_ast.Decl, c_ast.Decl, c_ast.Decl]:
+        resulting_tuple = ()
+        for i in range(3):
+            selected_block = []
+            while len(selected_block) < 1:
+                selected_block = secrets.choice(variables_in_scope)
+            selected_variable = secrets.choice(selected_block)
+            resulting_tuple = resulting_tuple + (selected_variable,)
+        return resulting_tuple
+
     def insert_opaque_if(self, variables_in_scope: list[list[c_ast.Decl]], variables_for_predicate: list[c_ast.Decl], block: list[c_ast.Node]) -> bool:
         if len(variables_for_predicate) < self.predicate.num_variables_needed:
             return False
         
         chosen_variable = secrets.choice(variables_for_predicate)
         generated_predicate = self.predicate.generated_predicate([chosen_variable])
+
+        num_junk_instructions = secrets.randbelow(0, AGGRESSIVENESS * 100)
+        useless_computations = []
+        for i in range(num_junk_instructions):
+            variable1, variable2, variable3 = self.select_3_vars(variables_in_scope)
+            useless_computations.append(self.junk(variable1, variable2, variable3))
+
+        return c_ast.If(
+            cond=generated_predicate,
+            iftrue=c_ast.Compound(block_items=useless_computations),
+            iffalse=None
+        )
 
 class MyVisitor(c_ast.NodeVisitor):
 
