@@ -322,22 +322,9 @@ class AddressRandomOpaqueTemplate(RandomOpaqueTemplate):
         return []
 
 
-class InjectIfVisitor(c_ast.NodeVisitor):
-    def visit_Compound(self, node):
-        self.generic_visit(node)  
-
-        cond    = c_ast.Constant(type='int', value='1')
-        body    = c_ast.Compound(block_items=[])
-        if_node = c_ast.If(cond=cond, iftrue=body, iffalse=None)
-
-        if node.block_items is None:
-            node.block_items = []
-        consonant = RandomAddressPrimeOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
-        for i in reversed(consonant):
-            node.block_items.insert(0, i)
 
 
-class PredicateTemplate(ABC):
+class PredicateTemplate(abc.ABC):
 
     def __init__(self) -> None:
         self.needed_type = OpaqueNames.TRUE
@@ -374,21 +361,21 @@ class IsOddOrTwoPredicateTemplate(PredicateTemplate):
             )
         )
 
-class OpaqueIf(ABC):
+class OpaqueIf(abc.ABC):
 
-    def __init__(self, predicate: Predicate) -> None:
+    def __init__(self, predicate: PredicateTemplate) -> None:
         self.predicate = predicate
     
     @abc.abstractmethod
-    def insert_opaque_if(self, variables_in_scope: list[list[c_ast.Decl]], variables_for_predicate: list[c_ast.Decl], block: list[c_ast.Node]) -> bool:
+    def insert_opaque_if(self, variables_in_scope: list[list[c_ast.Decl]], variables_for_predicate: list[c_ast.Decl], block: list[c_ast.Node], min_index: int) -> bool:
         pass
     
-class JunkOpaqueIf(ABC):
+class JunkOpaqueIf(OpaqueIf):
 
     def junk(self, variable1: c_ast.Decl, variable2: c_ast.Decl, variable3: c_ast.Decl) -> c_ast.Assignment:
-        name_var1 = variable1.type.type.name
-        name_var2 = variable2.type.type.name
-        name_var3 = variable3.type.type.name
+        name_var1 = variable1.name
+        name_var2 = variable2.name
+        name_var3 = variable3.name
 
         op_choice = secrets.randbelow(3)
         rvalue = None
@@ -414,24 +401,28 @@ class JunkOpaqueIf(ABC):
             resulting_tuple = resulting_tuple + (selected_variable,)
         return resulting_tuple
 
-    def insert_opaque_if(self, variables_in_scope: list[list[c_ast.Decl]], variables_for_predicate: list[c_ast.Decl], block: list[c_ast.Node]) -> bool:
+    def insert_opaque_if(self, variables_in_scope: list[list[c_ast.Decl]], variables_for_predicate: list[c_ast.Decl], block: list[c_ast.Node], min_index: int) -> bool:
         if len(variables_for_predicate) < self.predicate.num_variables_needed:
             return False
         
         chosen_variable = secrets.choice(variables_for_predicate)
-        generated_predicate = self.predicate.generated_predicate([chosen_variable])
+        generated_predicate = c_ast.UnaryOp('!', self.predicate.create_predicate([chosen_variable]))
 
-        num_junk_instructions = secrets.randbelow(0, AGGRESSIVENESS * 100)
+        num_junk_instructions = secrets.randbelow(int(AGGRESSIVENESS * 100))
         useless_computations = []
         for i in range(num_junk_instructions):
             variable1, variable2, variable3 = self.select_3_vars(variables_in_scope)
             useless_computations.append(self.junk(variable1, variable2, variable3))
 
-        return c_ast.If(
-            cond=generated_predicate,
-            iftrue=c_ast.Compound(block_items=useless_computations),
-            iffalse=None
+        block.insert(
+            min_index, 
+            c_ast.If(
+                cond=generated_predicate,
+                iftrue=c_ast.Compound(block_items=useless_computations),
+                iffalse=None
+            )
         )
+        return True
 
 class MyVisitor(c_ast.NodeVisitor):
 
@@ -443,10 +434,10 @@ class MyVisitor(c_ast.NodeVisitor):
         return_variables = []
         for block in variables_in_scope:
             for variable_in_block in block:
-                variable_name = variable_in_block.type.type.name
+                variable_name = variable_in_block.name
 
                 for available_type in OpaqueNames:
-                    if variable_name.endswith(f'_{available_type}_opaque')
+                    if variable_name.endswith(f'_{available_type}_opaque'):
                         return_variables.append(variable_in_block)
 
         return return_variables
@@ -466,31 +457,44 @@ class MyVisitor(c_ast.NodeVisitor):
             if isinstance(statement, c_ast.Decl) and statement.name is not None:
                 self._variables_in_scope[-1].append(statement)
             
-            if not used_in_block and secrets.randbelow(0, 101) <= AGGRESSIVENESS * 100:
-                variables_to_use = self.available_variables(self._variables_in_scope, modifier.predicate.needed_type)
+            if not used_in_block and secrets.randbelow(101) <= AGGRESSIVENESS * 100:
+                variables_to_use = self.available_variables(self._variables_in_scope, self._modifier.predicate.needed_type)
                 if len(variables_to_use) > 0:
-                    used_in_block = self._modifier(variables_to_use, node.block_items) # commit if changes were made
+                    used_in_block = self._modifier.insert_opaque_if(self._variables_in_scope, variables_to_use, node.block_items, i + 1) # commit if changes were made
 
             self.visit(statement)   # descend into nested blocks
             i += 1
 
         self._variables_in_scope.pop()
 
+class InjectIfVisitor(c_ast.NodeVisitor):
+    def visit_Compound(self, node):
+        self.generic_visit(node)  
+
+        cond    = c_ast.Constant(type='int', value='1')
+        body    = c_ast.Compound(block_items=[])
+        if_node = c_ast.If(cond=cond, iftrue=body, iffalse=None)
+
+        if node.block_items is None:
+            node.block_items = []
+        consonant = RandomAddressPrimeOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
+        for i in reversed(consonant):
+            node.block_items.insert(0, i)
 
 parser = pycparser.CParser()
 ast = parser.parse("""
     int main(void){
         int x = 3;
-        if(x < 1){
+        if(x > 0){
             return -1;
         }
         return 0;
     }
 """)
 
-
-
 InjectIfVisitor().visit(ast)
+MyVisitor(JunkOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
+
 
 gen = c_generator.CGenerator()
 print(gen.visit(ast))
