@@ -58,7 +58,7 @@ class OpaqueFactory(abc.ABC):
     def create_opaque_name(self, nametype: str) -> str:
         return "__opaque_" + nametype + "_" + secrets.token_hex(DEFAULT_BYTE_ENTROPY)
 
-    def random_integer(low: int, high: int) -> int:
+    def random_integer(self, low: int, high: int) -> int:
         span = high - low + 1
         return low + secrets.randbelow(span)
 
@@ -85,7 +85,7 @@ class ConstantTrueOpaqueFactory(TrueOpaqueFactory):
                 align=None,
                 type=c_ast.IdentifierType(names=[integer_type.cname])
             ),
-            init=c_ast.Constant(type=integer_type.cname, value=return_value),
+            init=c_ast.Constant(type=integer_type.cname, value=str(return_value)),
             bitsize=None
         )
         return [decl]
@@ -100,7 +100,8 @@ class InjectIfVisitor(c_ast.NodeVisitor):
 
         if node.block_items is None:
             node.block_items = []
-        node.block_items.insert(0, if_node)
+        consonant = ConstantTrueOpaqueFactory().create_opaque_variable(CType.INT)[0]
+        node.block_items.insert(0, consonant)
 
 parser = pycparser.CParser()
 ast = parser.parse("""
