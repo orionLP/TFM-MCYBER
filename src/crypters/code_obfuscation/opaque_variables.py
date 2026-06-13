@@ -45,7 +45,8 @@ class OpaqueNames(StrEnum):
     FALSE = 'false'
     PRIME = 'prime'
     RANDOM = 'random'
-    UNUSABLE = 'unusable'
+    USELESS = 'useless'
+    COMPUTATION = 'computation'
 
 DEFAULT_BYTE_ENTROPY = 16
 
@@ -73,7 +74,7 @@ class OpaqueTemplate(abc.ABC):
         start_variables = self.define_algorithm_variables(integer_type)
         opaque_variable = self.define_opaque_variable(integer_type)
         compute_algorithm = self.compute_opaque(integer_type, start_variables, opaque_variable)
-        return start_variables + [opaque_variable] + compute_algorithm
+        return start_variables + compute_algorithm + [opaque_variable]
 
     @abc.abstractmethod
     def refresh(self) -> None:
@@ -98,7 +99,8 @@ class TrueOpaqueTemplate(OpaqueTemplate):
 class QuadraticResidueTrueOpaqueTemplate(TrueOpaqueTemplate):
 
     def refresh(self) -> None:
-        self._sentinel_name = create_opaque_name(OpaqueNames.UNUSABLE)
+        self._sentinel_name = create_opaque_name(OpaqueNames.USELESS)
+        self._pointer_value_name = create_opaque_name(OpaqueNames.COMPUTATION)
         self._true_name = create_opaque_name(OpaqueNames.TRUE)
 
     def define_algorithm_variables(self, integer_type: CType) -> list[c_ast.Decl]:
@@ -107,43 +109,45 @@ class QuadraticResidueTrueOpaqueTemplate(TrueOpaqueTemplate):
                 self._sentinel_name,
                 integer_type,
                 c_ast.Constant(type=integer_type.cname.split(), value=str(random_integer(integer_type.min_val, integer_type.max_val)))
+            ),
+            create_variable_definition(
+                self._pointer_value_name,
+                integer_type,
+                c_ast.Cast(
+                    to_type=c_ast.Typename(
+                        name=None, quals=[], align=None,
+                        type=c_ast.TypeDecl(
+                            declname=None, quals=[], align=None,
+                            type=c_ast.IdentifierType(names=integer_type.cname.split())
+                        )
+                    ),
+                    expr=c_ast.UnaryOp(op='&', expr=c_ast.ID(name=self._sentinel_name))
+                )
             )
         ]
     
     def define_opaque_variable(self, integer_type: CType) -> c_ast.Decl:
+        # (x * x + x) % 2 == 0    x(x+1) always even 
         return create_variable_definition(
             self._true_name,
             integer_type,
-            c_ast.Cast(
-                to_type=c_ast.Typename(
-                    name=None, quals=[], align=None,
-                    type=c_ast.TypeDecl(
-                        declname=None, quals=[], align=None,
-                        type=c_ast.IdentifierType(names=integer_type.cname.split())
-                    )
-                ),
-                expr=c_ast.UnaryOp(op='&', expr=c_ast.ID(name=self._sentinel_name))
-            )
-        )
-
-    def compute_opaque(self, integer_type: CType, initial_variables: list[c_ast.Decl], opaque_variable: c_ast.Decl) -> list[c_ast.Node]:
-        # (x * x + x) % 2 == 0    x(x+1) always even
-        return [c_ast.Assignment(op='=',
-            lvalue=c_ast.ID(name=self._true_name),
-            rvalue=c_ast.BinaryOp('==',
+            c_ast.BinaryOp('==',
                 c_ast.BinaryOp('%',
                     c_ast.BinaryOp('+',
                         c_ast.BinaryOp('*',
-                            c_ast.ID(name=self._true_name),
-                            c_ast.ID(name=self._true_name)
+                            c_ast.ID(name=self._pointer_value_name),
+                            c_ast.ID(name=self._pointer_value_name)
                         ),
-                        c_ast.ID(name=self._true_name)
+                        c_ast.ID(name=self._pointer_value_name)
                     ),
                     c_ast.Constant(type=integer_type.cname.split(), value='2')
                 ),
                 c_ast.Constant(type=integer_type.cname.split(), value='0')
             )
-        )]
+        )
+
+    def compute_opaque(self, integer_type: CType, initial_variables: list[c_ast.Decl], opaque_variable: c_ast.Decl) -> list[c_ast.Node]:
+        return []
 
 
 class PrimeOpaqueTemplate(OpaqueTemplate):
@@ -152,9 +156,10 @@ class PrimeOpaqueTemplate(OpaqueTemplate):
 class RandomAddressPrimeOpaqueTemplate(PrimeOpaqueTemplate):
 
     def refresh(self) -> None:
-        self._sentinel_name = create_opaque_name(OpaqueNames.UNUSABLE)
-        self._d_name = create_opaque_name(OpaqueNames.UNUSABLE)
-        self._i_name = create_opaque_name(OpaqueNames.UNUSABLE)
+        self._sentinel_name = create_opaque_name(OpaqueNames.USELESS)
+        self._d_name = create_opaque_name(OpaqueNames.COMPUTATION)
+        self._i_name = create_opaque_name(OpaqueNames.COMPUTATION)
+        self._temporary_prime_name = create_opaque_name(OpaqueNames.COMPUTATION)
         self._prime_name = create_opaque_name(OpaqueNames.PRIME)
 
     def define_algorithm_variables(self, integer_type: CType) -> list[c_ast.Decl]:
@@ -173,31 +178,35 @@ class RandomAddressPrimeOpaqueTemplate(PrimeOpaqueTemplate):
                 self._i_name,
                 integer_type, 
                 c_ast.Constant(type=integer_type.cname.split(), value=str(3))
-            )       
+            ), 
+            create_variable_definition(
+                self._temporary_prime_name,
+                integer_type, 
+                c_ast.BinaryOp('|',
+                    c_ast.BinaryOp('%',
+                        c_ast.Cast(
+                            to_type=c_ast.Typename(
+                                name=None, quals=[], align=None,
+                                type=c_ast.TypeDecl(
+                                    declname=None, quals=[], align=None,
+                                    type=c_ast.IdentifierType(names=integer_type.cname.split())
+                                )
+                            ),
+                            expr=c_ast.UnaryOp(op='&', expr=c_ast.ID(name=self._sentinel_name))
+                        ),
+                        c_ast.Constant(type=integer_type.cname.split(), value='2147418112')  # 0x7FFF0000
+                    ),
+                    c_ast.Constant(type=integer_type.cname.split(), value='1')
+                )
+            )
         ]
 
     def define_opaque_variable(self, integer_type: CType) -> c_ast.Decl:
         return create_variable_definition(
             self._prime_name,
             integer_type,
-            c_ast.BinaryOp('|',
-                c_ast.BinaryOp('%',
-                    c_ast.Cast(
-                        to_type=c_ast.Typename(
-                            name=None, quals=[], align=None,
-                            type=c_ast.TypeDecl(
-                                declname=None, quals=[], align=None,
-                                type=c_ast.IdentifierType(names=integer_type.cname.split())
-                            )
-                        ),
-                        expr=c_ast.UnaryOp(op='&', expr=c_ast.ID(name=self._sentinel_name))
-                    ),
-                    c_ast.Constant(type=integer_type.cname.split(), value='2147418112')  # 0x7FFF0000
-                ),
-                c_ast.Constant(type=integer_type.cname.split(), value='1')
-            )
+            c_ast.ID(name=self._temporary_prime_name)
         )
-
 
     def compute_opaque(self, integer_type, initial_variables, opaque_variable) -> list[c_ast.Node]:
 
@@ -205,12 +214,12 @@ class RandomAddressPrimeOpaqueTemplate(PrimeOpaqueTemplate):
         inner = c_ast.While(
             cond=c_ast.BinaryOp('<=',
                 c_ast.BinaryOp('*', c_ast.ID(name=self._i_name), c_ast.ID(name=self._i_name)),
-                c_ast.ID(name=self._prime_name)
+                c_ast.ID(name=self._temporary_prime_name)
             ),
             stmt=c_ast.Compound(block_items=[
                 c_ast.If(
                     cond=c_ast.BinaryOp('==',
-                        c_ast.BinaryOp('%', c_ast.ID(name=self._prime_name), c_ast.ID(name=self._i_name)),
+                        c_ast.BinaryOp('%', c_ast.ID(name=self._temporary_prime_name), c_ast.ID(name=self._i_name)),
                         c_ast.Constant(type=integer_type.cname.split(), value='0')
                     ),
                     iftrue=c_ast.Compound(block_items=[
@@ -239,9 +248,9 @@ class RandomAddressPrimeOpaqueTemplate(PrimeOpaqueTemplate):
             ),
             stmt=c_ast.Compound(block_items=[
                 c_ast.Assignment(op='=',
-                    lvalue=c_ast.ID(name=self._prime_name),
+                    lvalue=c_ast.ID(name=self._temporary_prime_name),
                     rvalue=c_ast.BinaryOp('+',
-                        c_ast.ID(name=self._prime_name),
+                        c_ast.ID(name=self._temporary_prime_name),
                         c_ast.Constant(type=integer_type.cname.split(), value='2')
                     )
                 ),
@@ -265,7 +274,7 @@ class RandomOpaqueTemplate(OpaqueTemplate):
 class AddressRandomOpaqueTemplate(RandomOpaqueTemplate):
     
     def refresh(self) -> None:
-        self._sentinel_name = create_opaque_name(OpaqueNames.UNUSABLE)
+        self._sentinel_name = create_opaque_name(OpaqueNames.USELESS)
         self._pointer_name = create_opaque_name(OpaqueNames.RANDOM)
     
     def define_algorithm_variables(self, integer_type: CType) -> list[c_ast.Decl]:
@@ -307,7 +316,7 @@ class InjectIfVisitor(c_ast.NodeVisitor):
 
         if node.block_items is None:
             node.block_items = []
-        consonant = QuadraticResidueTrueOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
+        consonant = AddressRandomOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
         for i in reversed(consonant):
             node.block_items.insert(0, i)
 
