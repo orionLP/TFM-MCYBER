@@ -49,6 +49,7 @@ class OpaqueNames(StrEnum):
     COMPUTATION = 'computation'
 
 DEFAULT_BYTE_ENTROPY = 16
+AGGRESSIVENESS = 0.2
 
 def create_opaque_name(nametype: str) -> str:
     return "v" + secrets.token_hex(DEFAULT_BYTE_ENTROPY) + "_" + nametype + "_opaque" 
@@ -210,6 +211,7 @@ class RandomAddressPrimeOpaqueTemplate(PrimeOpaqueTemplate):
 
     def compute_opaque(self, integer_type, initial_variables, opaque_variable) -> list[c_ast.Node]:
 
+
         # inner while (i * i <= prime) { if (prime % i == 0) d = 0; i = i + 2; }
         inner = c_ast.While(
             cond=c_ast.BinaryOp('<=',
@@ -266,7 +268,21 @@ class RandomAddressPrimeOpaqueTemplate(PrimeOpaqueTemplate):
             ])
         )
 
-        return [outer]
+        guard = c_ast.If(
+            cond=c_ast.BinaryOp('<',
+                c_ast.ID(name=self._temporary_prime_name),
+                c_ast.Constant(type=integer_type.cname.split(), value='3')
+            ),
+            iftrue=c_ast.Compound(block_items=[
+                c_ast.Assignment(op='=',
+                    lvalue=c_ast.ID(name=self._temporary_prime_name),
+                    rvalue=c_ast.Constant(type=integer_type.cname.split(), value='3')
+                )
+            ]),
+            iffalse=None
+        )
+
+        return [guard, outer]
 
 class RandomOpaqueTemplate(OpaqueTemplate):
     pass
@@ -316,10 +332,48 @@ class InjectIfVisitor(c_ast.NodeVisitor):
 
         if node.block_items is None:
             node.block_items = []
-        consonant = AddressRandomOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
+        consonant = RandomAddressPrimeOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
         for i in reversed(consonant):
             node.block_items.insert(0, i)
 
+class OpaqueIf(ABC, c_ast.NodeVisitor):
+
+    def __init__(self):
+        self._variables_in_scope = []
+
+    def visit_Compound(self, node):
+        self._variables_in_scope.append([])
+
+        if node.block_items is None:
+            node.block_items = []
+
+        i = 0
+        used_in_block = False
+        while i < len(node.block_items):
+            statement = node.block_items[i]
+
+            # track variables in scope
+            if isinstance(statement, c_ast.Decl) and statement.name is not None:
+                self._variables_in_scope[-1].append(statement)
+            
+            if not used_in_block and secrets.randbelow(0, 101) <= AGGRESSIVENESS * 100:
+                used_in_block = True
+                self.do_modification(node.block_items, i + 1)
+
+            self.visit(statement)   # descend into nested blocks
+            i += 1
+
+        self._variables_in_scope.pop()
+
+    @abc.abstractmethod
+    def do_modification(self, body: c_ast.Node, min_index: int) -> None:
+        pass
+
+class InjectIfJunkRandomly(c_ast.NodeVisitor):
+
+    def do_modification(self, body: c_ast.Node, min_index: int) -> None:
+        pass
+        
 parser = pycparser.CParser()
 ast = parser.parse("""
     int main(void){
@@ -330,6 +384,8 @@ ast = parser.parse("""
         return 0;
     }
 """)
+
+
 
 InjectIfVisitor().visit(ast)
 
