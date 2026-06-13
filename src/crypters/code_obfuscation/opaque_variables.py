@@ -73,7 +73,7 @@ class OpaqueTemplate(abc.ABC):
         self.refresh()
         start_variables = self.define_algorithm_variables(integer_type)
         opaque_variable = self.define_opaque_variable(integer_type)
-        compute_algorithm = self.compute_opaque(start_variables, opaque_variable)
+        compute_algorithm = self.compute_opaque(integer_type, start_variables, opaque_variable)
         return start_variables + [opaque_variable] + compute_algorithm
 
     @abc.abstractmethod
@@ -89,7 +89,7 @@ class OpaqueTemplate(abc.ABC):
         pass
     
     @abc.abstractmethod
-    def compute_opaque(self, initial_variables: list[c_ast.Decl], opaque_variable: c_ast.Decl) -> list[c_ast.Node]:
+    def compute_opaque(self, integer_type: CType, initial_variables: list[c_ast.Decl], opaque_variable: c_ast.Decl) -> list[c_ast.Node]:
         pass
     
 
@@ -118,7 +118,7 @@ class ConstantTrueOpaqueTemplate(TrueOpaqueTemplate):
         
         return definition
 
-    def compute_opaque(self, initial_variables: list[c_ast.Decl], opaque_variable: c_ast.Decl) -> list[c_ast.Node]:
+    def compute_opaque(self, integer_type: CType, initial_variables: list[c_ast.Decl], opaque_variable: c_ast.Decl) -> list[c_ast.Node]:
         return []
 
 class PrimeOpaqueTemplate(OpaqueTemplate):
@@ -152,27 +152,84 @@ class RandomAddressPrimeOpaqueTemplate(PrimeOpaqueTemplate):
         ]
 
     def define_opaque_variable(self, integer_type: CType) -> c_ast.Decl:
-        addr_cast = c_ast.Cast(
-            to_type=c_ast.Typename(
-                name=None, quals=[], align=None,
-                type=c_ast.TypeDecl(
-                    declname=None, quals=[], align=None,
-                    type=c_ast.IdentifierType(names=integer_type.cname.split())
-                )
-            ),
-            expr=c_ast.UnaryOp(op='&', expr=c_ast.ID(name=self._sentinel_name))
-        )
-
         return create_variable_definition(
             self._prime_name,
             integer_type,
-            addr_cast 
+            c_ast.BinaryOp('|',
+                c_ast.Cast(
+                    to_type=c_ast.Typename(
+                        name=None, quals=[], align=None,
+                        type=c_ast.TypeDecl(
+                            declname=None, quals=[], align=None,
+                            type=c_ast.IdentifierType(names=integer_type.cname.split())
+                        )
+                    ),
+                    expr=c_ast.UnaryOp(op='&', expr=c_ast.ID(name=self._sentinel_name))
+                ),
+                c_ast.Constant(type=integer_type.cname.split(), value='1')
+            ) 
         )
 
 
-    def compute_opaque(self, initial_variables, opaque_variable) -> list[c_ast.Node]:
- 
-        return []
+    def compute_opaque(self, integer_type, initial_variables, opaque_variable) -> list[c_ast.Node]:
+
+        # inner while (i * i <= prime) { if (prime % i == 0) d = 0; i = i + 2; }
+        inner = c_ast.While(
+            cond=c_ast.BinaryOp('<=',
+                c_ast.BinaryOp('*', c_ast.ID(name=self._i_name), c_ast.ID(name=self._i_name)),
+                c_ast.ID(name=self._prime_name)
+            ),
+            stmt=c_ast.Compound(block_items=[
+                c_ast.If(
+                    cond=c_ast.BinaryOp('==',
+                        c_ast.BinaryOp('%', c_ast.ID(name=self._prime_name), c_ast.ID(name=self._i_name)),
+                        c_ast.Constant(type=integer_type.cname.split(), value='0')
+                    ),
+                    iftrue=c_ast.Compound(block_items=[
+                        c_ast.Assignment(op='=',
+                            lvalue=c_ast.ID(name=self._d_name),
+                            rvalue=c_ast.Constant(type=integer_type.cname.split(), value='0')
+                        )
+                    ]),
+                    iffalse=None
+                ),
+                c_ast.Assignment(op='=',
+                    lvalue=c_ast.ID(name=self._i_name),
+                    rvalue=c_ast.BinaryOp('+',
+                        c_ast.ID(name=self._i_name),
+                        c_ast.Constant(type=integer_type.cname.split(), value='2')
+                    )
+                )
+            ])
+        )
+
+        # outer while (d != 1) { prime = prime + 2; d = 1; i = 3; <inner> }
+        outer = c_ast.While(
+            cond=c_ast.BinaryOp('!=',
+                c_ast.ID(name=self._d_name),
+                c_ast.Constant(type=integer_type.cname.split(), value='1')
+            ),
+            stmt=c_ast.Compound(block_items=[
+                c_ast.Assignment(op='=',
+                    lvalue=c_ast.ID(name=self._prime_name),
+                    rvalue=c_ast.BinaryOp('+',
+                        c_ast.ID(name=self._prime_name),
+                        c_ast.Constant(type=integer_type.cname.split(), value='2')
+                    )
+                ),
+                c_ast.Assignment(op='=',
+                    lvalue=c_ast.ID(name=self._d_name),
+                    rvalue=c_ast.Constant(type=integer_type.cname.split(), value='1')
+                ),
+                c_ast.Assignment(op='=',
+                    lvalue=c_ast.ID(name=self._i_name),
+                    rvalue=c_ast.Constant(type=integer_type.cname.split(), value='3')
+                ),
+                inner
+            ])
+        )
+
+        return [outer]
 
 class RandomOpaqueTemplate(OpaqueTemplate):
     pass
@@ -198,8 +255,8 @@ parser = pycparser.CParser()
 ast = parser.parse("""
     int main(void){
         int x = 3;
-        if(x > 1){
-            exit(-1);
+        if(x < 1){
+            return -1;
         }
         return 0;
     }
