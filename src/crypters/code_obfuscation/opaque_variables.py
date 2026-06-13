@@ -336,10 +336,61 @@ class InjectIfVisitor(c_ast.NodeVisitor):
         for i in reversed(consonant):
             node.block_items.insert(0, i)
 
-class OpaqueIf(ABC, c_ast.NodeVisitor):
 
-    def __init__(self):
+class PredicateTemplate(ABC):
+
+    def __init__(self) -> None:
+        self.needed_types = [OpaqueNames.TRUE]
+
+    @abc.abstractmethod
+    def create_predicate(self, predicate_variables: list[c_ast.Decl]) -> c_ast.Node:
+        pass
+
+class IsOddOrTwoPredicateTemplate(PredicateTemplate):
+
+    def __init__(self) -> None:
+        self.needed_types = [OpaqueNames.PRIME]
+    
+    def create_predicate(self, predicate_variables: list[c_ast.Decl]) -> c_ast.Node:
+        prime_name = predicate_variables[0].name
+        prime_type = predicate_variables[0].type.type.names
+        return c_ast.BinaryOp(
+            '||',
+            c_ast.BinaryOp(
+                '!=',
+                c_ast.BinaryOp(
+                    '%',
+                    c_ast.ID(name=prime_name),
+                    c_ast.Constant(type=prime_type, value='2')
+                ),
+                c_ast.Constant(type=prime_type, value='0')
+            ),
+            c_ast.BinaryOp(
+                '==',
+                c_ast.ID(name=prime_name),
+                c_ast.Constant(type=prime_type, value='2')
+            )
+        )
+
+class OpaqueIf(ABC):
+
+    def __init__(self, predicate: Predicate) -> None:
+        self._predicate = predicate
+    
+    @abc.abstractmethod
+    def insert_opaque_if(self, variables_in_scope: list[list[c_ast.Decl]]) -> bool:
+        pass
+    
+class JunkOpaqueIf(ABC):
+
+    def insert_opaque_if(self, variables_in_scope: list[list[c_ast.Decl]]) -> bool:
+        pass
+
+class MyVisitor(c_ast.NodeVisitor):
+
+    def __init__(self, modifier: OpaqueIf):
         self._variables_in_scope = []
+        self._modifier = modifier
 
     def visit_Compound(self, node):
         self._variables_in_scope.append([])
@@ -366,14 +417,22 @@ class OpaqueIf(ABC, c_ast.NodeVisitor):
         self._variables_in_scope.pop()
 
     @abc.abstractmethod
+    def construct_predicate(self) -> list[c_ast.Node]:
+        pass
+    
+    @abc.abstractmethod
     def do_modification(self, body: c_ast.Node, min_index: int) -> None:
         pass
 
+class InjectOpaqueIfPrime(OpaqueIf):
+
+    def construct_predicate(self) -> list[c_ast.Node]:
+        return 
 class InjectIfJunkRandomly(c_ast.NodeVisitor):
 
     def do_modification(self, body: c_ast.Node, min_index: int) -> None:
         pass
-        
+
 parser = pycparser.CParser()
 ast = parser.parse("""
     int main(void){
