@@ -18,9 +18,9 @@ class CTypeInfo:
     max_val: int
 
 class CType(Enum):
-    INT           = CTypeInfo('int', -(2**31), 2**31 - 1)
+    # INT           = CTypeInfo('int', -(2**31), 2**31 - 1)
     UNSIGNED_INT  = CTypeInfo('unsigned int', 0, 2**32 - 1)
-    CHAR          = CTypeInfo('char', -128, 127)
+    # CHAR          = CTypeInfo('char', -128, 127)
     UNSIGNED_CHAR = CTypeInfo('unsigned char', 0, 255)
 
     @property
@@ -53,10 +53,9 @@ class OpaqueNames(StrEnum):
     COMPUTATION = 'computation'
 
 DEFAULT_BYTE_ENTROPY = 16
-AGGRESSIVENESS = 0.05
-EXPECTED_LENGTH_JUNK = 16
-EXPECTED_NUM_OPAQUE_VARIABLES = 2
-DO_ANYTHING_PROBABILITY = 0.1
+AGGRESSIVENESS = 0.1
+EXPECTED_LENGTH_JUNK = 32
+DO_ANYTHING_PROBABILITY = 0.3
 OPAQUE_NAME_PATTERN = re.compile(r'^v[0-9a-f]+_(' + '|'.join(OpaqueNames) + r')_opaque$')
 
 def create_opaque_name(nametype: str) -> str:
@@ -105,7 +104,7 @@ class OpaqueTemplate(abc.ABC):
 class TrueOpaqueTemplate(OpaqueTemplate):
     pass
 
-class QuadraticResidueTrueOpaqueTemplate(TrueOpaqueTemplate):
+class ResidueTrueOpaqueTemplate(TrueOpaqueTemplate):
 
     def refresh(self) -> None:
         self._sentinel_name = create_opaque_name(OpaqueNames.USELESS)
@@ -423,23 +422,23 @@ class JunkOpaqueIf(OpaqueIf):
         
         return c_ast.Assignment(op='=', lvalue=c_ast.ID(name=name_var3), rvalue=rvalue)
 
-    def select_3_vars(self, variables_in_scope: list[list[c_ast.Decl]]) -> tuple[c_ast.Decl, c_ast.Decl, c_ast.Decl]:
+    def select_3_vars(self, usable_variables: list[c_ast.Decl]) -> tuple[c_ast.Decl, c_ast.Decl, c_ast.Decl]:
         resulting_tuple = ()
         for i in range(3):
-            selected_variable = None
-            current_name = 'bogus'
-            while not OPAQUE_NAME_PATTERN.match(current_name):
-                selected_block = []
-                while len(selected_block) < 1:
-                    selected_block = secrets.choice(variables_in_scope)
-                selected_variable = secrets.choice(selected_block)
-                current_name = selected_variable.name
-            resulting_tuple = resulting_tuple + (selected_variable,)
+            resulting_tuple = resulting_tuple + (secrets.choice(usable_variables), )
 
         return resulting_tuple
 
     def insert_opaque_if(self, variables_in_scope: list[list[c_ast.Decl]], variables_for_predicate: list[c_ast.Decl], block: list[c_ast.Node], min_index: int) -> bool:
         if len(variables_for_predicate) < self.predicate.num_variables_needed:
+            return False
+        
+        usable_variables = []
+        for i in range(len(variables_in_scope)):
+            for candidate in variables_in_scope[i]:
+                if OPAQUE_NAME_PATTERN.match(candidate.name):
+                    usable_variables.append(candidate)
+        if len(usable_variables) == 0:
             return False
         
         chosen_variable = secrets.choice(variables_for_predicate)
@@ -448,7 +447,7 @@ class JunkOpaqueIf(OpaqueIf):
         num_junk_instructions = max(EXPECTED_LENGTH_JUNK + (secrets.randbelow(EXPECTED_LENGTH_JUNK) - EXPECTED_LENGTH_JUNK) // 2,1)
         useless_computations = []
         for i in range(num_junk_instructions):
-            variable1, variable2, variable3 = self.select_3_vars(variables_in_scope)
+            variable1, variable2, variable3 = self.select_3_vars(usable_variables)
             useless_computations.append(self.junk(variable1, variable2, variable3))
 
         block.insert(
@@ -475,13 +474,12 @@ class BogusFlowOpaqueIf(OpaqueIf):
         chosen_variable = secrets.choice(variables_for_predicate)
         generated_predicate = self.predicate.create_predicate([chosen_variable])
 
-        true_branch  = copy.deepcopy(statements_after)
-        false_branch = copy.deepcopy(statements_after)
+        true_branch = copy.deepcopy(statements_after)
 
         if_node = c_ast.If(
             cond=generated_predicate,
             iftrue=c_ast.Compound(block_items=true_branch),
-            iffalse=c_ast.Compound(block_items=false_branch)
+            iffalse=None
         )
 
         del block[min_index:]
@@ -490,7 +488,7 @@ class BogusFlowOpaqueIf(OpaqueIf):
 
 class MyOpaqueIfVisitor(c_ast.NodeVisitor):
 
-    def __init__(self, modifier: OpaqueIf, max_depth: int = 16):
+    def __init__(self, modifier: OpaqueIf, max_depth: int = 6):
         self._variables_in_scope = []
         self._modifier = modifier
         self._depth = max_depth
@@ -538,7 +536,7 @@ class MyOpaqueIfVisitor(c_ast.NodeVisitor):
 
 class MyOpaqueVariableVisitor(c_ast.NodeVisitor):
 
-    def __init__(self, opaque_variable: OpaqueTemplate, max_depth: int = 16) -> None:
+    def __init__(self, opaque_variable: OpaqueTemplate, max_depth: int = 6) -> None:
         self._opaque_variable = opaque_variable
         self._depth = max_depth
 
@@ -550,7 +548,7 @@ class MyOpaqueVariableVisitor(c_ast.NodeVisitor):
         if node.block_items is None:
             node.block_items = []
         
-        for i in range(EXPECTED_NUM_OPAQUE_VARIABLES + ((secrets.randbelow(EXPECTED_NUM_OPAQUE_VARIABLES) - EXPECTED_NUM_OPAQUE_VARIABLES) // 2)):
+        if secrets.randbelow(101) <= DO_ANYTHING_PROBABILITY * 100:
             new_variable_block = self._opaque_variable.opaque_variable_algorithm(CType.UNSIGNED_INT)
             for block in reversed(new_variable_block):
                 node.block_items.insert(0, block)
@@ -576,21 +574,30 @@ if __name__ == '__main__':
         cpp_args=['-I./fake_imports']
     )
 
-    for i in range(16):
-        print(f'iteration {i}')
-
+    for i in range(8):
         if general_probability():
-            MyOpaqueVariableVisitor(QuadraticResidueTrueOpaqueTemplate()).visit(ast)
+            MyOpaqueVariableVisitor(ResidueTrueOpaqueTemplate()).visit(ast)
         if general_probability():
             MyOpaqueVariableVisitor(RandomAddressPrimeOpaqueTemplate()).visit(ast)
         if general_probability():
             MyOpaqueVariableVisitor(AddressRandomOpaqueTemplate()).visit(ast)
+    for i in range(3):
         if general_probability():
-            MyOpaqueIfVisitor(JunkOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
+            MyOpaqueIfVisitor(BogusFlowOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
         if general_probability():
-            MyOpaqueIfVisitor(JunkOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
+            MyOpaqueIfVisitor(BogusFlowOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
         if general_probability():
-            MyOpaqueIfVisitor(JunkOpaqueIf(TruePredicateTemplate())).visit(ast)
+            MyOpaqueIfVisitor(BogusFlowOpaqueIf(TruePredicateTemplate())).visit(ast)
+
+    # for i in range(2):
+    #     if general_probability():
+    #         MyOpaqueIfVisitor(JunkOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
+    #     if general_probability():
+    #         MyOpaqueIfVisitor(JunkOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
+    #     if general_probability():
+    #         MyOpaqueIfVisitor(JunkOpaqueIf(TruePredicateTemplate())).visit(ast)
+
+
 
 
     gen = c_generator.CGenerator()
