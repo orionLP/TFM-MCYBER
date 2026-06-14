@@ -52,6 +52,7 @@ class OpaqueNames(StrEnum):
 DEFAULT_BYTE_ENTROPY = 16
 AGGRESSIVENESS = 0.1
 EXPECTED_LENGTH_JUNK = 16
+EXPECTED_NUM_OPAQUE_VARIABLES = 2
 
 def create_opaque_name(nametype: str) -> str:
     return "v" + secrets.token_hex(DEFAULT_BYTE_ENTROPY) + "_" + nametype + "_opaque" 
@@ -477,7 +478,7 @@ class BogusFlowOpaqueIf(OpaqueIf):
         block.insert(min_index, if_node)
         return True
 
-class MyVisitor(c_ast.NodeVisitor):
+class MyOpaqueIfVisitor(c_ast.NodeVisitor):
 
     def __init__(self, modifier: OpaqueIf):
         self._variables_in_scope = []
@@ -520,19 +521,22 @@ class MyVisitor(c_ast.NodeVisitor):
 
         self._variables_in_scope.pop()
 
-class InjectIfVisitor(c_ast.NodeVisitor):
-    def visit_Compound(self, node):
-        self.generic_visit(node)  
+class MyOpaqueVariableVisitor(c_ast.NodeVisitor):
 
-        cond    = c_ast.Constant(type='int', value='1')
-        body    = c_ast.Compound(block_items=[])
-        if_node = c_ast.If(cond=cond, iftrue=body, iffalse=None)
+    def __init__(self, opaque_variable: OpaqueTemplate) -> None:
+        self._opaque_variable = opaque_variable
+    
+    def visit_Compound(self, node):
 
         if node.block_items is None:
             node.block_items = []
-        consonant = QuadraticResidueTrueOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
-        for i in reversed(consonant):
-            node.block_items.insert(0, i)
+        
+        for i in range(EXPECTED_NUM_OPAQUE_VARIABLES + ((secrets.randbelow(EXPECTED_NUM_OPAQUE_VARIABLES) - EXPECTED_NUM_OPAQUE_VARIABLES) // 2)):
+            new_variable_block = self._opaque_variable.opaque_variable_algorithm(CType.UNSIGNED_INT)
+            for block in reversed(new_variable_block):
+                node.block_items.insert(0, block)
+
+        self.generic_visit(node)  
 
 parser = pycparser.CParser()
 ast = parser.parse("""
