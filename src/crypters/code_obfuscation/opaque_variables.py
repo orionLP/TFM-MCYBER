@@ -5,6 +5,7 @@ import secrets
 from enum import StrEnum
 
 from enum import Enum
+import copy
 from dataclasses import dataclass
 
 @dataclass
@@ -50,6 +51,7 @@ class OpaqueNames(StrEnum):
 
 DEFAULT_BYTE_ENTROPY = 16
 AGGRESSIVENESS = 0.1
+EXPECTED_LENGTH_JUNK = 16
 
 def create_opaque_name(nametype: str) -> str:
     return "v" + secrets.token_hex(DEFAULT_BYTE_ENTROPY) + "_" + nametype + "_opaque" 
@@ -407,13 +409,10 @@ class JunkOpaqueIf(OpaqueIf):
         op_choice = secrets.randbelow(3)
         rvalue = None
         if op_choice == 0:
-            # x = x + random
             rvalue = c_ast.BinaryOp('+', c_ast.ID(name=name_var1), c_ast.ID(name=name_var2))
         elif op_choice == 1:
-            # x = x - random
             rvalue = c_ast.BinaryOp('-', c_ast.ID(name=name_var1), c_ast.ID(name=name_var2))
         elif op_choice == 2:
-            # x = x * random (odd to avoid zeroing)
             rvalue = c_ast.BinaryOp('*', c_ast.ID(name=name_var1), c_ast.ID(name=name_var2))
         
         return c_ast.Assignment(op='=', lvalue=c_ast.ID(name=name_var3), rvalue=rvalue)
@@ -435,7 +434,7 @@ class JunkOpaqueIf(OpaqueIf):
         chosen_variable = secrets.choice(variables_for_predicate)
         generated_predicate = c_ast.UnaryOp('!', self.predicate.create_predicate([chosen_variable]))
 
-        num_junk_instructions = max(secrets.randbelow(int(AGGRESSIVENESS * 100)),1)
+        num_junk_instructions = max(EXPECTED_LENGTH_JUNK + (secrets.randbelow(EXPECTED_LENGTH_JUNK) - EXPECTED_LENGTH_JUNK) // 2,1)
         useless_computations = []
         for i in range(num_junk_instructions):
             variable1, variable2, variable3 = self.select_3_vars(variables_in_scope)
@@ -449,6 +448,33 @@ class JunkOpaqueIf(OpaqueIf):
                 iffalse=None
             )
         )
+        return True
+
+class BogusFlowOpaqueIf(OpaqueIf):
+
+    def insert_opaque_if(self, variables_in_scope: list[list[c_ast.Decl]], variables_for_predicate: list[c_ast.Decl], block: list[c_ast.Node], min_index: int) -> bool:
+        if len(variables_for_predicate) < self.predicate.num_variables_needed:
+            return False
+
+        # statements after min_index are the ones to duplicate
+        statements_after = block[min_index:]
+        if len(statements_after) == 0:
+            return False
+
+        chosen_variable = secrets.choice(variables_for_predicate)
+        generated_predicate = self.predicate.create_predicate([chosen_variable])
+
+        true_branch  = copy.deepcopy(statements_after)
+        false_branch = copy.deepcopy(statements_after)
+
+        if_node = c_ast.If(
+            cond=generated_predicate,
+            iftrue=c_ast.Compound(block_items=true_branch),
+            iffalse=c_ast.Compound(block_items=false_branch)
+        )
+
+        del block[min_index:]
+        block.insert(min_index, if_node)
         return True
 
 class MyVisitor(c_ast.NodeVisitor):
@@ -520,7 +546,7 @@ ast = parser.parse("""
 """)
 
 InjectIfVisitor().visit(ast)
-MyVisitor(JunkOpaqueIf(TruePredicateTemplate())).visit(ast)
+MyVisitor(BogusFlowOpaqueIf(TruePredicateTemplate())).visit(ast)
 
 
 gen = c_generator.CGenerator()
