@@ -54,7 +54,7 @@ class OpaqueNames(StrEnum):
 
 DEFAULT_BYTE_ENTROPY = 16
 AGGRESSIVENESS = 0.3
-EXPECTED_LENGTH_JUNK = 32
+EXPECTED_LENGTH_JUNK = 16
 DO_ANYTHING_PROBABILITY = 0.3
 OPAQUE_NAME_PATTERN = re.compile(r'^v[0-9a-f]+_(' + '|'.join(OpaqueNames) + r')_opaque$')
 
