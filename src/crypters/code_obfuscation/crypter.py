@@ -102,12 +102,25 @@ encrypted_data = enc_algo1(encrypted_data)
 size = len(encrypted_data)
 bytes_str = "".join(f"\\x{b:02x}" for b in encrypted_data)
 
-c_source = f'#include "executable.h"\n'
-c_source += f'char executable_pe[] = "{bytes_str}";\n'
-c_source += f'DWORD executable_size = {size};\n'
+with open(output_file, "r") as f:
+    source = f.read()
+
+# Replace the string literal content inside executable_pe[]
+source = re.sub(
+    r'(char executable_pe\[\]\s*=\s*")[^"]*(")',
+    f'\\g<1>{bytes_str}\\g<2>',
+    source
+)
+
+# Replace the size value
+source = re.sub(
+    r'(DWORD executable_size\s*=\s*)\d+(\s*;)',
+    f'\\g<1>{size}\\2',
+    source
+)
 
 with open(output_file, "w") as f:
-    f.write(c_source)
+    f.write(source)
 
 print(f'Written {size} bytes to {output_file}')
 print(' ')

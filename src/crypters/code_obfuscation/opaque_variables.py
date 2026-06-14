@@ -54,7 +54,7 @@ class OpaqueNames(StrEnum):
 
 DEFAULT_BYTE_ENTROPY = 16
 AGGRESSIVENESS = 0.3
-EXPECTED_LENGTH_JUNK = 16
+EXPECTED_LENGTH_JUNK = 4
 DO_ANYTHING_PROBABILITY = 0.3
 OPAQUE_NAME_PATTERN = re.compile(r'^v[0-9a-f]+_(' + '|'.join(OpaqueNames) + r')_opaque$')
 
@@ -574,27 +574,17 @@ if __name__ == '__main__':
         cpp_args=['-I./fake_imports']
     )
 
-    for i in range(4):
-        if general_probability():
-            MyOpaqueVariableVisitor(ResidueTrueOpaqueTemplate()).visit(ast)
-        if general_probability():
-            MyOpaqueVariableVisitor(RandomAddressPrimeOpaqueTemplate()).visit(ast)
-        if general_probability():
-            MyOpaqueVariableVisitor(AddressRandomOpaqueTemplate()).visit(ast)
-    for i in range(3):
-        if general_probability():
-            MyOpaqueIfVisitor(BogusFlowOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
-        if general_probability():
-            MyOpaqueIfVisitor(BogusFlowOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
-        if general_probability():
-            MyOpaqueIfVisitor(BogusFlowOpaqueIf(TruePredicateTemplate())).visit(ast)
-    for i in range(3):
-        if general_probability():
-            MyOpaqueIfVisitor(JunkOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
-        if general_probability():
-            MyOpaqueIfVisitor(JunkOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
-        if general_probability():
-            MyOpaqueIfVisitor(JunkOpaqueIf(TruePredicateTemplate())).visit(ast)
+    MyOpaqueVariableVisitor(ResidueTrueOpaqueTemplate()).visit(ast)
+    MyOpaqueVariableVisitor(RandomAddressPrimeOpaqueTemplate()).visit(ast)
+    MyOpaqueVariableVisitor(AddressRandomOpaqueTemplate()).visit(ast)
+
+    MyOpaqueIfVisitor(BogusFlowOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
+    MyOpaqueIfVisitor(BogusFlowOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
+    MyOpaqueIfVisitor(BogusFlowOpaqueIf(TruePredicateTemplate())).visit(ast)
+
+    MyOpaqueIfVisitor(JunkOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
+    MyOpaqueIfVisitor(JunkOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
+    MyOpaqueIfVisitor(JunkOpaqueIf(TruePredicateTemplate())).visit(ast)
 
     gen = c_generator.CGenerator()
     result = gen.visit(ast)
