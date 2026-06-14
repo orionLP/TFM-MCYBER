@@ -42,14 +42,14 @@ class CType(Enum):
 
 class OpaqueNames(StrEnum):
     TRUE = 'true'
-    FALSE = 'false'
+    # FALSE = 'false'
     PRIME = 'prime'
     RANDOM = 'random'
     USELESS = 'useless'
     COMPUTATION = 'computation'
 
 DEFAULT_BYTE_ENTROPY = 16
-AGGRESSIVENESS = 0.3
+AGGRESSIVENESS = 0.1
 
 def create_opaque_name(nametype: str) -> str:
     return "v" + secrets.token_hex(DEFAULT_BYTE_ENTROPY) + "_" + nametype + "_opaque" 
@@ -332,7 +332,7 @@ class PredicateTemplate(abc.ABC):
         pass
 
 class IsOddOrTwoPredicateTemplate(PredicateTemplate):
-
+    # Always returns true
     def __init__(self) -> None:
         self.needed_type = OpaqueNames.PRIME
         self.num_variables_needed = 1
@@ -359,6 +359,7 @@ class IsOddOrTwoPredicateTemplate(PredicateTemplate):
         )
 
 class PythagoreanTriplePredicateTemplate(PredicateTemplate):
+    # Always returns true
     def __init__(self) -> None:
         self.needed_type = OpaqueNames.RANDOM
         self.num_variables_needed = 1
@@ -375,6 +376,17 @@ class PythagoreanTriplePredicateTemplate(PredicateTemplate):
             ),
             c_ast.BinaryOp('*', c_ast.Constant(type=ptype, value='25'), xx)
         )
+
+class TruePredicateTemplate(PredicateTemplate):
+    # Always returns true
+    def __init__(self) -> None:
+        self.needed_type = OpaqueNames.TRUE
+        self.num_variables_needed = 1
+
+    def create_predicate(self, predicate_variables: list[c_ast.Decl]) -> c_ast.Node:
+        name = predicate_variables[0].name
+        return c_ast.ID(name=name)
+
 
 class OpaqueIf(abc.ABC):
 
@@ -492,7 +504,7 @@ class InjectIfVisitor(c_ast.NodeVisitor):
 
         if node.block_items is None:
             node.block_items = []
-        consonant = AddressRandomOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
+        consonant = QuadraticResidueTrueOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
         for i in reversed(consonant):
             node.block_items.insert(0, i)
 
@@ -508,7 +520,7 @@ ast = parser.parse("""
 """)
 
 InjectIfVisitor().visit(ast)
-MyVisitor(JunkOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
+MyVisitor(JunkOpaqueIf(TruePredicateTemplate())).visit(ast)
 
 
 gen = c_generator.CGenerator()
