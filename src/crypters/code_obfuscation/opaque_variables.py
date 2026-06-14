@@ -49,7 +49,7 @@ class OpaqueNames(StrEnum):
     COMPUTATION = 'computation'
 
 DEFAULT_BYTE_ENTROPY = 16
-AGGRESSIVENESS = 0.2
+AGGRESSIVENESS = 0.3
 
 def create_opaque_name(nametype: str) -> str:
     return "v" + secrets.token_hex(DEFAULT_BYTE_ENTROPY) + "_" + nametype + "_opaque" 
@@ -321,9 +321,6 @@ class AddressRandomOpaqueTemplate(RandomOpaqueTemplate):
     def compute_opaque(self, integer_type, initial_variables, opaque_variable) -> list[c_ast.Node]:
         return []
 
-
-
-
 class PredicateTemplate(abc.ABC):
 
     def __init__(self) -> None:
@@ -359,6 +356,24 @@ class IsOddOrTwoPredicateTemplate(PredicateTemplate):
                 c_ast.ID(name=prime_name),
                 c_ast.Constant(type=prime_type, value='2')
             )
+        )
+
+class PythagoreanTriplePredicateTemplate(PredicateTemplate):
+    def __init__(self) -> None:
+        self.needed_type = OpaqueNames.RANDOM
+        self.num_variables_needed = 1
+
+    def create_predicate(self, predicate_variables: list[c_ast.Decl]) -> c_ast.Node:
+        name = predicate_variables[0].name
+        ptype = predicate_variables[0].type.type.names
+        # 9*x*x + 16*x*x == 25*x*x — always true (overflow safe, both sides identical mod 2^32)
+        xx = c_ast.BinaryOp('*', c_ast.ID(name=name), c_ast.ID(name=name))
+        return c_ast.BinaryOp('==',
+            c_ast.BinaryOp('+',
+                c_ast.BinaryOp('*', c_ast.Constant(type=ptype, value='9'), xx),
+                c_ast.BinaryOp('*', c_ast.Constant(type=ptype, value='16'), xx)
+            ),
+            c_ast.BinaryOp('*', c_ast.Constant(type=ptype, value='25'), xx)
         )
 
 class OpaqueIf(abc.ABC):
@@ -408,7 +423,7 @@ class JunkOpaqueIf(OpaqueIf):
         chosen_variable = secrets.choice(variables_for_predicate)
         generated_predicate = c_ast.UnaryOp('!', self.predicate.create_predicate([chosen_variable]))
 
-        num_junk_instructions = secrets.randbelow(int(AGGRESSIVENESS * 100))
+        num_junk_instructions = max(secrets.randbelow(int(AGGRESSIVENESS * 100)),1)
         useless_computations = []
         for i in range(num_junk_instructions):
             variable1, variable2, variable3 = self.select_3_vars(variables_in_scope)
@@ -437,7 +452,7 @@ class MyVisitor(c_ast.NodeVisitor):
                 variable_name = variable_in_block.name
 
                 for available_type in OpaqueNames:
-                    if variable_name.endswith(f'_{available_type}_opaque'):
+                    if variable_name.endswith(f'_{type_needed}_opaque'):
                         return_variables.append(variable_in_block)
 
         return return_variables
@@ -477,7 +492,7 @@ class InjectIfVisitor(c_ast.NodeVisitor):
 
         if node.block_items is None:
             node.block_items = []
-        consonant = RandomAddressPrimeOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
+        consonant = AddressRandomOpaqueTemplate().opaque_variable_algorithm(CType.UNSIGNED_INT)
         for i in reversed(consonant):
             node.block_items.insert(0, i)
 
@@ -493,7 +508,7 @@ ast = parser.parse("""
 """)
 
 InjectIfVisitor().visit(ast)
-MyVisitor(JunkOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
+MyVisitor(JunkOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
 
 
 gen = c_generator.CGenerator()
