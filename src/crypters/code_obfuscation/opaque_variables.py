@@ -7,6 +7,8 @@ from enum import StrEnum
 from enum import Enum
 import copy
 from dataclasses import dataclass
+import sys
+import re
 
 @dataclass
 class CTypeInfo:
@@ -50,9 +52,11 @@ class OpaqueNames(StrEnum):
     COMPUTATION = 'computation'
 
 DEFAULT_BYTE_ENTROPY = 16
-AGGRESSIVENESS = 0.1
+AGGRESSIVENESS = 0.05
 EXPECTED_LENGTH_JUNK = 16
 EXPECTED_NUM_OPAQUE_VARIABLES = 2
+DO_ANYTHING_PROBABILITY = 0.1
+OPAQUE_NAME_PATTERN = re.compile(r'^v[0-9a-f]+_(' + '|'.join(OpaqueNames) + r')_opaque$')
 
 def create_opaque_name(nametype: str) -> str:
     return "v" + secrets.token_hex(DEFAULT_BYTE_ENTROPY) + "_" + nametype + "_opaque" 
@@ -421,10 +425,14 @@ class JunkOpaqueIf(OpaqueIf):
     def select_3_vars(self, variables_in_scope: list[list[c_ast.Decl]]) -> tuple[c_ast.Decl, c_ast.Decl, c_ast.Decl]:
         resulting_tuple = ()
         for i in range(3):
-            selected_block = []
-            while len(selected_block) < 1:
-                selected_block = secrets.choice(variables_in_scope)
-            selected_variable = secrets.choice(selected_block)
+            selected_variable = None
+            current_name = 'bogus'
+            while not OPAQUE_NAME_PATTERN.match(current_name):
+                selected_block = []
+                while len(selected_block) < 1:
+                    selected_block = secrets.choice(variables_in_scope)
+                selected_variable = secrets.choice(selected_block)
+                current_name = selected_variable.name
             resulting_tuple = resulting_tuple + (selected_variable,)
         return resulting_tuple
 
@@ -538,20 +546,49 @@ class MyOpaqueVariableVisitor(c_ast.NodeVisitor):
 
         self.generic_visit(node)  
 
-parser = pycparser.CParser()
-ast = parser.parse("""
-    int main(void){
-        int x = 3;
-        if(x > 0){
-            return -1;
-        }
-        return 0;
-    }
-""")
+def general_probability():
+    return secrets.randbelow(101) <= DO_ANYTHING_PROBABILITY * 100
 
-InjectIfVisitor().visit(ast)
-MyVisitor(BogusFlowOpaqueIf(TruePredicateTemplate())).visit(ast)
+if __name__ == '__main__':
+    if len(sys.argv) < 3:
+        print(f"Usage: {sys.argv[0]} <input.c> <output.c>")
+        sys.exit(1)
+
+    input_file  = sys.argv[1]
+    output_file = sys.argv[2]
+
+    ast = pycparser.parse_file(
+        input_file,
+        use_cpp=True,
+        cpp_path='cpp',
+        cpp_args=['-I./fake_imports']
+    )
+
+    for i in range(16):
+        if general_probability():
+            MyOpaqueVariableVisitor(QuadraticResidueTrueOpaqueTemplate()).visit(ast)
+        if general_probability():
+            MyOpaqueVariableVisitor(RandomAddressPrimeOpaqueTemplate()).visit(ast)
+        if general_probability():
+            MyOpaqueVariableVisitor(AddressRandomOpaqueTemplate()).visit(ast)
+        if general_probability():
+            MyOpaqueIfVisitor(JunkOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
+        if general_probability():
+            MyOpaqueIfVisitor(JunkOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
+        if general_probability():
+            MyOpaqueIfVisitor(JunkOpaqueIf(TruePredicateTemplate())).visit(ast)
+        if general_probability():
+            MyOpaqueIfVisitor(BogusFlowOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
+        if general_probability():
+            MyOpaqueIfVisitor(BogusFlowOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
+        if general_probability():
+            MyOpaqueIfVisitor(BogusFlowOpaqueIf(TruePredicateTemplate())).visit(ast)
 
 
-gen = c_generator.CGenerator()
-print(gen.visit(ast))
+    gen = c_generator.CGenerator()
+    result = gen.visit(ast)
+
+    with open(output_file, 'w') as f:
+        f.write(result)
+
+    print(f"Written to {output_file}")
