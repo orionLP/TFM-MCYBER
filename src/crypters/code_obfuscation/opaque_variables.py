@@ -53,7 +53,7 @@ class OpaqueNames(StrEnum):
     COMPUTATION = 'computation'
 
 DEFAULT_BYTE_ENTROPY = 16
-AGGRESSIVENESS = 0.1
+AGGRESSIVENESS = 0.3
 EXPECTED_LENGTH_JUNK = 32
 DO_ANYTHING_PROBABILITY = 0.3
 OPAQUE_NAME_PATTERN = re.compile(r'^v[0-9a-f]+_(' + '|'.join(OpaqueNames) + r')_opaque$')
@@ -574,7 +574,7 @@ if __name__ == '__main__':
         cpp_args=['-I./fake_imports']
     )
 
-    for i in range(8):
+    for i in range(4):
         if general_probability():
             MyOpaqueVariableVisitor(ResidueTrueOpaqueTemplate()).visit(ast)
         if general_probability():
@@ -588,14 +588,13 @@ if __name__ == '__main__':
             MyOpaqueIfVisitor(BogusFlowOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
         if general_probability():
             MyOpaqueIfVisitor(BogusFlowOpaqueIf(TruePredicateTemplate())).visit(ast)
-
-    # for i in range(2):
-    #     if general_probability():
-    #         MyOpaqueIfVisitor(JunkOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
-    #     if general_probability():
-    #         MyOpaqueIfVisitor(JunkOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
-    #     if general_probability():
-    #         MyOpaqueIfVisitor(JunkOpaqueIf(TruePredicateTemplate())).visit(ast)
+    for i in range(2):
+        if general_probability():
+            MyOpaqueIfVisitor(JunkOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
+        if general_probability():
+            MyOpaqueIfVisitor(JunkOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
+        if general_probability():
+            MyOpaqueIfVisitor(JunkOpaqueIf(TruePredicateTemplate())).visit(ast)
 
 
 
@@ -606,4 +605,20 @@ if __name__ == '__main__':
     with open(output_file, 'w') as f:
         f.write(result)
 
+    with open(output_file, 'r') as f:
+        content = f.read()
+
+    replacements = [
+        ('BOOL VirtualProtect(',        'BOOL __stdcall VirtualProtect('),
+        ('LPVOID VirtualAlloc(',        'LPVOID __stdcall VirtualAlloc('),
+        ('HMODULE GetModuleHandleA(',   'HMODULE __stdcall GetModuleHandleA('),
+        ('HMODULE LoadLibraryA(',       'HMODULE __stdcall LoadLibraryA('),
+        ('void *GetProcAddress(',       'void * __stdcall GetProcAddress('),
+    ]
+    for old, new in replacements:
+        content = content.replace(old, new)
+
+    with open(output_file, 'w') as f:
+        f.write(content)
+    
     print(f"Written to {output_file}")
