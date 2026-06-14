@@ -36,3 +36,10 @@ stages:
     - src/crypters/multiple_information_reveal
     outs:
     - data/crypters/exe/x86/multiple_information_reveal/
+  crypter_obfuscation:
+    cmd: ./src/crypters/code_obfuscation/do_all.sh
+    deps:
+    - data/raw/exe/x86
+    - src/crypters/code_obfuscation/
+    outs:
+    - data/crypters/exe/x86/code_obfuscation/
