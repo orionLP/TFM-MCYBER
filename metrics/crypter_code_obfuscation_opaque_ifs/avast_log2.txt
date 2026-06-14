@@ -1,0 +1,34 @@
+*
+* Avast Scan Report
+* This file is generated automatically
+*
+* Scan name: Targeted Scan
+* Started on: Sunday, June 14, 2026 2:11:51 PM
+* VPS: 260614-4, 6/14/2026
+*
+
+\\VBoxSvr\machine_malware\windows_shell_reverse_tcp_rc4.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_pingback_reverse_tcp.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_pingback_bind_tcp.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_exec.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_powershell_reverse_tcp.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_powershell_bind_tcp.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_meterpreter_reverse_http.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_meterpreter_reverse_tcp.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_powershell_reverse_tcp_ssl.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_shell_bind_tcp.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_shell_bind_hidden_ipknock_tcp.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_shell_hidden_bind_tcp.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_meterpreter_bind_tcp.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_meterpreter_reverse_https.exe [L] Win32:MalwareX-gen [Misc] (0)
+\\VBoxSvr\machine_malware\windows_encrypted_shell_reverse_tcp.exe [L] Win32:MalwareX-gen [Misc] (0)
+Infected files: 15
+Total files: 15
+Total folders: 1
+Total size: 1.6 MB
+
+*
+* Scan stopped: Sunday, June 14, 2026 2:11:53 PM
+* Run-time was 2 second(s)
+*
+

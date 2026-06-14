@@ -1,0 +1,20 @@
+*
+* Avast Scan Report
+* This file is generated automatically
+*
+* Scan name: Targeted Scan
+* Started on: Sunday, June 14, 2026 1:53:52 PM
+* VPS: 260614-4, 6/14/2026
+*
+
+\\VBoxSvr\machine_malware\windows_meterpreter_reverse_http.exe [L] FileRepMalware [Misc] (0)
+Infected files: 1
+Total files: 15
+Total folders: 1
+Total size: 1.6 MB
+
+*
+* Scan stopped: Sunday, June 14, 2026 1:53:55 PM
+* Run-time was 3 second(s)
+*
+
