@@ -9,6 +9,7 @@ import copy
 from dataclasses import dataclass
 import sys
 import re
+from tqdm import tqdm
 
 @dataclass
 class CTypeInfo:
@@ -434,6 +435,7 @@ class JunkOpaqueIf(OpaqueIf):
                 selected_variable = secrets.choice(selected_block)
                 current_name = selected_variable.name
             resulting_tuple = resulting_tuple + (selected_variable,)
+
         return resulting_tuple
 
     def insert_opaque_if(self, variables_in_scope: list[list[c_ast.Decl]], variables_for_predicate: list[c_ast.Decl], block: list[c_ast.Node], min_index: int) -> bool:
@@ -488,9 +490,10 @@ class BogusFlowOpaqueIf(OpaqueIf):
 
 class MyOpaqueIfVisitor(c_ast.NodeVisitor):
 
-    def __init__(self, modifier: OpaqueIf):
+    def __init__(self, modifier: OpaqueIf, max_depth: int = 16):
         self._variables_in_scope = []
         self._modifier = modifier
+        self._depth = max_depth
 
     def available_variables(self, variables_in_scope: list[list[c_ast.Decl]], type_needed: OpaqueNames) -> list[c_ast.Decl]:
         return_variables = []
@@ -505,6 +508,9 @@ class MyOpaqueIfVisitor(c_ast.NodeVisitor):
         return return_variables
 
     def visit_Compound(self, node):
+        if self._depth == 0:
+            return
+        self._depth -= 1
         self._variables_in_scope.append([])
 
         if node.block_items is None:
@@ -528,13 +534,18 @@ class MyOpaqueIfVisitor(c_ast.NodeVisitor):
             i += 1
 
         self._variables_in_scope.pop()
+        self._depth += 1
 
 class MyOpaqueVariableVisitor(c_ast.NodeVisitor):
 
-    def __init__(self, opaque_variable: OpaqueTemplate) -> None:
+    def __init__(self, opaque_variable: OpaqueTemplate, max_depth: int = 16) -> None:
         self._opaque_variable = opaque_variable
-    
+        self._depth = max_depth
+
     def visit_Compound(self, node):
+        if self._depth == 0:
+            return
+        self._depth -= 1
 
         if node.block_items is None:
             node.block_items = []
@@ -545,6 +556,7 @@ class MyOpaqueVariableVisitor(c_ast.NodeVisitor):
                 node.block_items.insert(0, block)
 
         self.generic_visit(node)  
+        self._depth += 1
 
 def general_probability():
     return secrets.randbelow(101) <= DO_ANYTHING_PROBABILITY * 100
@@ -565,6 +577,8 @@ if __name__ == '__main__':
     )
 
     for i in range(16):
+        print(f'iteration {i}')
+
         if general_probability():
             MyOpaqueVariableVisitor(QuadraticResidueTrueOpaqueTemplate()).visit(ast)
         if general_probability():
@@ -577,12 +591,6 @@ if __name__ == '__main__':
             MyOpaqueIfVisitor(JunkOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
         if general_probability():
             MyOpaqueIfVisitor(JunkOpaqueIf(TruePredicateTemplate())).visit(ast)
-        if general_probability():
-            MyOpaqueIfVisitor(BogusFlowOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
-        if general_probability():
-            MyOpaqueIfVisitor(BogusFlowOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
-        if general_probability():
-            MyOpaqueIfVisitor(BogusFlowOpaqueIf(TruePredicateTemplate())).visit(ast)
 
 
     gen = c_generator.CGenerator()
