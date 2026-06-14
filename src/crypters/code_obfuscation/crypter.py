@@ -1,5 +1,7 @@
 import argparse
 import os
+import re
+
 
 def matrix_xor(mat1, mat2):
     xor_result = [[0 for j in range(4)] for i in range(4)]
@@ -108,14 +110,14 @@ with open(output_file, "r") as f:
 # Replace the string literal content inside executable_pe[]
 source = re.sub(
     r'(char executable_pe\[\]\s*=\s*")[^"]*(")',
-    f'\\g<1>{bytes_str}\\g<2>',
+    lambda m: m.group(1) + bytes_str + m.group(2),
     source
 )
 
 # Replace the size value
 source = re.sub(
     r'(DWORD executable_size\s*=\s*)\d+(\s*;)',
-    f'\\g<1>{size}\\2',
+    lambda m: m.group(1) + str(size) + m.group(2),
     source
 )
 

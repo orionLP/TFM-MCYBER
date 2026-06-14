@@ -571,7 +571,7 @@ if __name__ == '__main__':
         input_file,
         use_cpp=True,
         cpp_path='cpp',
-        cpp_args=['-I./fake_imports']
+        cpp_args=['-I./src/crypters/code_obfuscation/fake_imports']
     )
 
     MyOpaqueVariableVisitor(ResidueTrueOpaqueTemplate()).visit(ast)
