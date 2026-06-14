@@ -588,16 +588,13 @@ if __name__ == '__main__':
             MyOpaqueIfVisitor(BogusFlowOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
         if general_probability():
             MyOpaqueIfVisitor(BogusFlowOpaqueIf(TruePredicateTemplate())).visit(ast)
-    for i in range(2):
+    for i in range(3):
         if general_probability():
             MyOpaqueIfVisitor(JunkOpaqueIf(IsOddOrTwoPredicateTemplate())).visit(ast)
         if general_probability():
             MyOpaqueIfVisitor(JunkOpaqueIf(PythagoreanTriplePredicateTemplate())).visit(ast)
         if general_probability():
             MyOpaqueIfVisitor(JunkOpaqueIf(TruePredicateTemplate())).visit(ast)
-
-
-
 
     gen = c_generator.CGenerator()
     result = gen.visit(ast)
