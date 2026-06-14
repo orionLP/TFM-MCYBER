@@ -12,7 +12,7 @@
 #define MAIN_SUCCESS (0)
 #define MAIN_ERROR (-1)
 #define BUFF_SIZSE (1024)
-#define MAX_NUM_SECTIONS (8)
+#define MAX_NUM_SECTIONS (20)
 
 char tmpbuff[BUFF_SIZSE] = {0};
 const char *header_name = "._header_";
@@ -82,7 +82,7 @@ void create_combination_name(char *buff, const char *filepath, const pe_file *fi
     for(int i = 0; i < number_of_sections; i++)
         if(combination[i + 1]){
             const char *section_name = pe_file_section_name(file, i);
-            if(strcmp(section_name, "") == 0){
+            if(strcmp(section_name, "") == 0 || section_name[0] == '/'){
                 sprintf(iterative_name_string,"%08d",iterative_name);
                 strcat(buff, iterative_name_string);
                 iterative_name++;
