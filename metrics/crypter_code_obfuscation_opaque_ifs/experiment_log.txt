@@ -4,7 +4,7 @@ STEP 0: 20:46: Update AV systems
 RESULT:
     20:47: AVAST updated
 
-SETP 1: 20:59: Send files to computer and make sure none is detected
+STEP 1: 20:59: Send files to computer and make sure none is detected
 RESULT:
     21:01: Downloaded all files
     21:03: Performed a targeted scan, no malware was detected from any of the samples
@@ -16,6 +16,7 @@ RESULT:
     21:45: windows_meterpreter_reverse_http.exe was detected
 
 STEP 2: 21:46: Update until the windows_meterpreter_reverse_http.exe (FILE1) is detected
+RESULT:
     21:47: Update AVAST
     21:48: Scan, the file scan detected nothing?
     21:52: Execute again the exe file
@@ -23,10 +24,12 @@ STEP 2: 21:46: Update until the windows_meterpreter_reverse_http.exe (FILE1) is 
     21:59: Update AVAST
 
 STEP 3: 21:59: Execute windows_exec.exe (FILE2)
+RESULT:
     20:00: Execute windows.exe file
     20:00: File after execution was detected as malware
 
 STEP 4: 20:02: Update AV and perform another scan
+RESULT:
     20:02: Update AVAST
     20:03: Performed scan, only detected FILE1
     20:08: Noooo, the av detected all of them :( log saved at avast_log2.txt
