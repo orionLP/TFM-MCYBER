@@ -49,6 +49,16 @@ stages:
   custom_ablation:
     cmd: ./src/custom/ablation/do_all_folders.sh
     deps:
+    - path: ./data/crypters/exe/x86/code_obfuscation/opaque_ifs
+      hash: md5
+      md5: d07a729db3248e9d542f527b0d958add.dir
+      size: 1746487
+      nfiles: 15
+    - path: ./data/crypters/exe/x86/multiple_information_reveal/
+      hash: md5
+      md5: d386d268c7c58230f8e6a9ddad5cf07e.dir
+      size: 18494019
+      nfiles: 270
     - path: ./data/crypters/exe/x86/tutorial/
       hash: md5
       md5: b2f6e18f24f770980ac3971aa56c7dee.dir
@@ -76,20 +86,15 @@ stages:
       nfiles: 15
     - path: ./src/custom/ablation/
       hash: md5
-      md5: 8bd0583c33e2820276e62d58d817c7a5.dir
-      size: 45093
+      md5: 481d5e5e2b82806558801395c44149c2.dir
+      size: 47784
       nfiles: 7
-    - path: ./src/custom/ablation/do_all_folders.sh
-      hash: md5
-      md5: d4df873fd37f9ee07bc4388a98416357
-      size: 1062
-      isexec: true
     outs:
-    - path: data/custom/ablation/
+    - path: ./data/custom/ablation/
       hash: md5
-      md5: 8f00cbe3441016cef63e0fdaea6dbfda.dir
-      size: 140374896
-      nfiles: 2640
+      md5: ec14698c67575c911d324f62e8e66730.dir
+      size: 3401810672
+      nfiles: 44880
   multiple_crypters_information_reveal:
     cmd: ./src/crypters/multiple_information_reveal/do_all.sh
     deps:
@@ -119,12 +124,12 @@ stages:
       nfiles: 15
     - path: src/crypters/code_obfuscation/
       hash: md5
-      md5: a3e9e50ac33aa8c03180f375f9be7f05.dir
-      size: 360722
+      md5: 7c52009a720ec4e62d8018bc5b757eb7.dir
+      size: 340042
       nfiles: 12
     outs:
     - path: data/crypters/exe/x86/code_obfuscation/
       hash: md5
-      md5: 4bdee81fe6d67bccc4b4c6d3ad9b5371.dir
-      size: 1702455
+      md5: 9696e497e95dd73937908e43683236f7.dir
+      size: 1746487
       nfiles: 15
