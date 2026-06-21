@@ -20,15 +20,16 @@ stages:
   custom_ablation:
     cmd: ./src/custom/ablation/do_all_folders.sh
     deps:
+    - ./data/crypters/exe/x86/code_obfuscation/opaque_ifs
+    - ./data/crypters/exe/x86/multiple_information_reveal/
     - ./data/crypters/exe/x86/tutorial/
     - ./data/packed/exe/x86/mpress/
     - ./data/packed/exe/x86/petite/
     - ./data/packed/exe/x86/upx/default/
     - ./data/packed/exe/x86/upx/lzma/
     - ./src/custom/ablation/
-    - ./src/custom/ablation/do_all_folders.sh
     outs:
-    - data/custom/ablation/
+    - ./data/custom/ablation/
   multiple_crypters_information_reveal:
     cmd: ./src/crypters/multiple_information_reveal/do_all.sh
     deps:
