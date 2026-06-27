@@ -3,6 +3,9 @@ import secrets
 from Crypto.Cipher import ChaCha20
 
 class PRNG(abc.ABC):
+    '''
+    PRNG represents pseudo-random number generators. It is assumed that PRNGs need a key (seed) and optionally a nonce.
+    '''
 
     @abc.abstractmethod
     def __init__(self, key: bytes = None, nonce: bytes = None) -> None:
@@ -23,7 +26,7 @@ class PRNG(abc.ABC):
     
     @nonce.setter
     @abc.abstractmethod
-    def nonce(self, new_nonce: bytes) -> None:
+    def nonce(self, new_nonce: bytes | None) -> None:
         pass
 
     @abc.abstractmethod
@@ -38,6 +41,9 @@ CHACHA20_KEY_LENGTH = 32
 CHACHA20_NONCE_LENGTH = 12
 
 class ChaCha20PRNG(PRNG):
+    '''
+    ChaCha20PRNG is a PRNG based on the ChaCha20 algorithm. It works by simply extracting the keystream of chacha20 by encrypting 0 bytes.
+    '''
 
     def __init__(self, key: bytes = None, nonce: bytes = None) -> None:
         if key is None:
@@ -60,11 +66,14 @@ class ChaCha20PRNG(PRNG):
         self._key = new_key
 
     @PRNG.nonce.setter
-    def nonce(self, new_nonce: bytes) -> None:
-        if len(new_nonce) != CHACHA20_NONCE_LENGTH:
-            raise ValueError(f'Tried to give ChaCha20PRNG nonce with length different than {CHACHA20_NONCE_LENGTH}')
+    def nonce(self, new_nonce: bytes | None) -> None:
+        if new_nonce is None:
+            self._nonce = secrets.token_bytes(CHACHA20_NONCE_LENGTH)
+        else:
+            if len(new_nonce) != CHACHA20_NONCE_LENGTH:
+                raise ValueError(f'Tried to give ChaCha20PRNG nonce with length different than {CHACHA20_NONCE_LENGTH}')
 
-        self._nonce = new_nonce
+            self._nonce = new_nonce
 
     def _get_n_keystream_bytes(self, n: int) -> bytes:
         return self._cipher.encrypt(b'\x00' * n)
