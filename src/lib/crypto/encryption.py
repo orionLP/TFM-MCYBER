@@ -1,5 +1,8 @@
 import abc
 import secrets
+
+import numpy as np
+
 from src.lib.crypto.rng import prng
 
 class EncryptionAlgorithm(abc.ABC):
@@ -18,6 +21,10 @@ class EncryptionAlgorithm(abc.ABC):
     def key(self) -> bytes:
         return self._key
     
+    @property
+    def decrypt_key(self) -> bytes:
+        return self._decrypt_key
+    
     @key.setter
     @abc.abstractmethod
     def key(self, new_key: bytes) -> None:
@@ -31,7 +38,7 @@ class EncryptionAlgorithm(abc.ABC):
     def iv_length(self) -> int:
         if not self.iv_on:
             return 0
-        return self._iv_length
+        return self._true_iv_length
 
     @property
     def iv_on(self) -> bool:
@@ -49,14 +56,45 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
 
     def __init__(self, key: bytes | None) -> None:
         self._key_length = 16
-        self._iv_length = 16
+        self._true_iv_length = 16
         self.iv_on = True
         if key is None:
-            self.key = secrets.token_bytes(self._key_length)
+            self.key = self._generate_valid_key()
         else:
             self.key = key
+
+    def _bytes_to_matrix(self, buff: bytes) -> np.ndarray:
+        return np.frombuffer(buff, dtype=np.int32).reshape(4, 4)
+
+    def _has_inverse_mod256(self, matrix: np.ndarray) -> bool:
+        determinant = round(np.linalg.det(matrix))
+        return (determinant % 2) == 1
+
+    def _generate_valid_key(self) -> bytes:
+        key = prng.get_n_bytes(self._key_length)
+        key_matrix = self._bytes_to_matrix(key)
+        while not self._has_inverse_mod256(key_matrix):
+            key = prng.get_n_bytes(self._key_length)
+            key_matrix = self._bytes_to_matrix(key)
+        return key
+
+    def _matrix_inverse_mod256(self, matrix: np.ndarray) -> np.ndarray:
+        det = round(np.linalg.det(matrix))
+        inv_det = pow(det % 256, -1, 256)
+        adj = np.round(det * np.linalg.inv(M)).astype(np.int32)
+        return (inv_det * adj) % 256
 
     @EncryptionAlgorithm.key.setter
     def key(self, new_key: bytes) -> None:
         if len(new_key) != self._key_length:
             raise ValueError(f'Tried to give SimpleMatrixEncryptionAlgorithm key with length different than {self._key_length}')
+
+        new_matrix = np.frombuffer(new_key, dtype=np.int32).reshape(4, 4)
+
+        if not self._has_inverse_mod256(new_matrix):
+            raise ValueError(f'Tried to give SimpleMatrixEncryptionAlgorithm key which has no inverse as a matrix 4x4 mod 256')
+
+        self._key = new_key
+        self._key_matrix = new_matrix
+        self._decrypt_key_matrix = self._matrix_inverse_mod256(new_matrix)
+        self._decrypt_key = new_matrix.astype(np.uint8).tobytes()
