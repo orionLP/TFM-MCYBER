@@ -38,6 +38,10 @@ class PRNG(abc.ABC):
         pass
 
     @abc.abstractmethod
+    def get_n_bytes(self, n: int) -> bytes:
+        pass
+
+    @abc.abstractmethod
     def get_uchar(self) -> int:
         pass
     
@@ -80,11 +84,11 @@ class ChaCha20PRNG(PRNG):
 
             self._nonce = new_nonce
 
-    def _get_n_keystream_bytes(self, n: int) -> bytes:
+    def get_n_bytes(self, n: int) -> bytes:
         return self._cipher.encrypt(b'\x00' * n)
-
+        
     def get_uchar(self) -> int:
-        return int.from_bytes(self._get_n_keystream_bytes(1))
+        return int.from_bytes(self.get_n_bytes(1))
 
     def commit_changes(self) -> None:
         self._cipher = ChaCha20.new(key=self._key, nonce=self._nonce)
