@@ -24,6 +24,14 @@ class PRNG(abc.ABC):
     def nonce(self) -> bytes | None:
         return self._nonce
     
+    @property
+    def key_length(self) -> int:
+        return self._key_length
+    
+    @property
+    def nonce_length(self) -> int:
+        return self._nonce_length
+
     @nonce.setter
     @abc.abstractmethod
     def nonce(self, new_nonce: bytes | None) -> None:
@@ -37,41 +45,38 @@ class PRNG(abc.ABC):
     def commit_changes(self) -> None:
         pass
 
-CHACHA20_KEY_LENGTH = 32
-CHACHA20_NONCE_LENGTH = 12
-
 class ChaCha20PRNG(PRNG):
     '''
     ChaCha20PRNG is a PRNG based on the ChaCha20 algorithm. It works by simply extracting the keystream of chacha20 by encrypting 0 bytes.
     '''
 
     def __init__(self, key: bytes = None, nonce: bytes = None) -> None:
+        self._key_length = 32
+        self._nonce_length = 12
+
         if key is None:
-            self.key = secrets.token_bytes(CHACHA20_KEY_LENGTH)
+            self.key = secrets.token_bytes(self._key_length)
         else:
             self.key = key
         
-        if nonce is None:
-            self.nonce = secrets.token_bytes(CHACHA20_NONCE_LENGTH)
-        else:
-            self.nonce = nonce
+        self.nonce = nonce
         
         self.commit_changes()
 
     @PRNG.key.setter
     def key(self, new_key: bytes) -> None:
-        if len(new_key) != CHACHA20_KEY_LENGTH:
-            raise ValueError(f'Tried to give ChaCha20PRNG key with length different than {CHACHA20_KEY_LENGTH}')
+        if len(new_key) != self._key_length:
+            raise ValueError(f'Tried to give ChaCha20PRNG key with length different than {self._key_length}')
 
         self._key = new_key
 
     @PRNG.nonce.setter
     def nonce(self, new_nonce: bytes | None) -> None:
         if new_nonce is None:
-            self._nonce = secrets.token_bytes(CHACHA20_NONCE_LENGTH)
+            self._nonce = secrets.token_bytes(self._nonce_length)
         else:
-            if len(new_nonce) != CHACHA20_NONCE_LENGTH:
-                raise ValueError(f'Tried to give ChaCha20PRNG nonce with length different than {CHACHA20_NONCE_LENGTH}')
+            if len(new_nonce) != self._nonce_length:
+                raise ValueError(f'Tried to give ChaCha20PRNG nonce with length different than {self._nonce_length}')
 
             self._nonce = new_nonce
 
