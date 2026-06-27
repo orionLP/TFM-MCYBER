@@ -50,7 +50,7 @@ class ChaCha20PRNG(PRNG):
         else:
             self.nonce = nonce
         
-        self._cipher = ChaCha20.new(key=self._key, nonce=self._nonce)
+        self.commit_changes()
 
     @PRNG.key.setter
     def key(self, new_key: bytes) -> None:
