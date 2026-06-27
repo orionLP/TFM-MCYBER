@@ -64,32 +64,32 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
             self.key = key
 
     def _bytes_to_matrix(self, buff: bytes) -> np.ndarray:
-        return np.frombuffer(buff, dtype=np.int32).reshape(4, 4)
+        return np.astype(np.frombuffer(buff, dtype=np.uint8).reshape(4, 4), np.int32)
 
     def _has_inverse_mod256(self, matrix: np.ndarray) -> bool:
         determinant = round(np.linalg.det(matrix))
         return (determinant % 2) == 1
 
     def _generate_valid_key(self) -> bytes:
-        key = prng.get_n_bytes(self._key_length)
+        key = prng.get_n_bytes(self.key_length)
         key_matrix = self._bytes_to_matrix(key)
         while not self._has_inverse_mod256(key_matrix):
-            key = prng.get_n_bytes(self._key_length)
+            key = prng.get_n_bytes(self.key_length)
             key_matrix = self._bytes_to_matrix(key)
         return key
 
     def _matrix_inverse_mod256(self, matrix: np.ndarray) -> np.ndarray:
         det = round(np.linalg.det(matrix))
         inv_det = pow(det % 256, -1, 256)
-        adj = np.round(det * np.linalg.inv(M)).astype(np.int32)
+        adj = np.round(det * np.linalg.inv(matrix)).astype(np.int32)
         return (inv_det * adj) % 256
 
     @EncryptionAlgorithm.key.setter
     def key(self, new_key: bytes) -> None:
-        if len(new_key) != self._key_length:
+        if len(new_key) != self.key_length:
             raise ValueError(f'Tried to give SimpleMatrixEncryptionAlgorithm key with length different than {self._key_length}')
 
-        new_matrix = np.frombuffer(new_key, dtype=np.int32).reshape(4, 4)
+        new_matrix = self._bytes_to_matrix(new_key)
 
         if not self._has_inverse_mod256(new_matrix):
             raise ValueError(f'Tried to give SimpleMatrixEncryptionAlgorithm key which has no inverse as a matrix 4x4 mod 256')
@@ -97,4 +97,9 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
         self._key = new_key
         self._key_matrix = new_matrix
         self._decrypt_key_matrix = self._matrix_inverse_mod256(new_matrix)
-        self._decrypt_key = new_matrix.astype(np.uint8).tobytes()
+        self._decrypt_key = self._decrypt_key_matrix.astype(np.uint8).tobytes()
+
+    def encrypt(self, data: bytes) -> bytes:
+        new_iv = prng.get_n_bytes(self.iv_length)
+        final_data = new_iv + data
+
