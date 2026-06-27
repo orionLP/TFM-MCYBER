@@ -57,12 +57,16 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
     def __init__(self, key: bytes | None) -> None:
         self._key_length = 16
         self._true_iv_length = 16
+        self._block_size = 16
         self.iv_on = True
         if key is None:
             self.key = self._generate_valid_key()
         else:
             self.key = key
 
+    def _matrix_to_bytes(self, matrix: np.ndarray) -> bytes:
+        return matrix.astype(np.uint8).tobytes()
+    
     def _bytes_to_matrix(self, buff: bytes) -> np.ndarray:
         return np.astype(np.frombuffer(buff, dtype=np.uint8).reshape(4, 4), np.int32)
 
@@ -97,9 +101,12 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
         self._key = new_key
         self._key_matrix = new_matrix
         self._decrypt_key_matrix = self._matrix_inverse_mod256(new_matrix)
-        self._decrypt_key = self._decrypt_key_matrix.astype(np.uint8).tobytes()
+        self._decrypt_key = self._matrix_to_bytes(self._decrypt_key_matrix)
 
     def encrypt(self, data: bytes) -> bytes:
         new_iv = prng.get_n_bytes(self.iv_length)
-        final_data = new_iv + data
+        padding_needed = self._block_size - (len(data) % self._block_size)
+
+        final_data = new_iv + data + (b'\x00' * padding_needed)
+        
 
