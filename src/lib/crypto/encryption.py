@@ -120,15 +120,30 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
         num_iterations = matrix_final_data.shape[0]
         for i in range(num_iterations - 1):
             matrix_final_data[i] = (matrix_final_data[i] @ self._key_matrix) % 256
-            matrix_final_data[i + 1] = matrix_final_data[i + 1] ^  matrix_final_data[i]
+            matrix_final_data[i + 1] = (matrix_final_data[i + 1] ^  matrix_final_data[i]) % 256
         
         matrix_final_data[num_iterations - 1] = (matrix_final_data[num_iterations - 1] @ self._key_matrix) % 256
-        
         matrix_final_data[:(num_iterations - 1)] = (matrix_final_data[:(num_iterations - 1)] - matrix_final_data[num_iterations - 1]) % 256
 
         return self._matrix_to_bytes(matrix_final_data)
     
     def decrypt(self, data: bytes) -> bytes:
-        pass
+        if (len(data) % self._block_size) != 0:
+            raise ValueError(f'Tried to give SimpleMatrixEncryptionAlgorithm data to decrypt that is not of length multiple of {self._block_size}')
+
+        data_matrix = self._bytes_to_matrix(data)
+        num_blocks = data_matrix.shape[0]
         
+        data_matrix[:(num_blocks - 1)] = (data_matrix[:(num_blocks - 1)] + data_matrix[num_blocks - 1]) % 256
+        data_matrix[num_blocks - 1] = (data_matrix[num_blocks - 1] @ self._decrypt_key_matrix) % 256
+
+        for i in range(num_blocks - 2, -1, -1):
+            data_matrix[i + 1] = (data_matrix[i + 1] ^ data_matrix[i]) % 256
+            data_matrix[i] = (data_matrix[i] @ self._decrypt_key_matrix) % 256
+        
+        decrypted_data = self._matrix_to_bytes(data_matrix)        
+        padding_used = decrypted_data[-1]
+
+        return decrypted_data[self.iv_length:-padding_used]
+
 
