@@ -5,7 +5,14 @@ import dataclasses
 class Operator():
     pycparser_string: str
 
-class BinaryCOperator(enum.StrEnum):
+class AssignmentCOperator(enum.Enum):
+    ASSIGNMENT = Operator('=')
+
+class UnaryCOperator(enum.Enum):
+    ADDRESS = Operator('&')
+    DEREFERENCE = Operator('*')
+
+class BinaryCOperator(enum.Enum):
     ADDITION = Operator('+')
     SUBTRACTION = Operator('-')
     DIVISION = Operator('/')
