@@ -55,9 +55,9 @@ class EncryptionAlgorithm(abc.ABC):
 class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
 
     def __init__(self, key: bytes | None) -> None:
-        self._key_length = 16
-        self._true_iv_length = 16
         self._block_size = 16
+        self._key_length = self._block_size
+        self._true_iv_length = self._block_size
         self.iv_on = True
         if key is None:
             self.key = self._generate_valid_key()
@@ -68,7 +68,8 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
         return matrix.astype(np.uint8).tobytes()
     
     def _bytes_to_matrix(self, buff: bytes) -> np.ndarray:
-        return np.astype(np.frombuffer(buff, dtype=np.uint8).reshape(4, 4), np.int32)
+        dimension = round(self._block_size ** (1/2))
+        return np.astype(np.frombuffer(buff, dtype=np.uint8).reshape(-1, dimension, dimension), np.int32)
 
     def _has_inverse_mod256(self, matrix: np.ndarray) -> bool:
         determinant = round(np.linalg.det(matrix))
@@ -76,10 +77,10 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
 
     def _generate_valid_key(self) -> bytes:
         key = prng.get_n_bytes(self.key_length)
-        key_matrix = self._bytes_to_matrix(key)
+        key_matrix = self._bytes_to_matrix(key)[0]
         while not self._has_inverse_mod256(key_matrix):
             key = prng.get_n_bytes(self.key_length)
-            key_matrix = self._bytes_to_matrix(key)
+            key_matrix = self._bytes_to_matrix(key)[0]
         return key
 
     def _matrix_inverse_mod256(self, matrix: np.ndarray) -> np.ndarray:
@@ -93,7 +94,7 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
         if len(new_key) != self.key_length:
             raise ValueError(f'Tried to give SimpleMatrixEncryptionAlgorithm key with length different than {self._key_length}')
 
-        new_matrix = self._bytes_to_matrix(new_key)
+        new_matrix = self._bytes_to_matrix(new_key)[0]
 
         if not self._has_inverse_mod256(new_matrix):
             raise ValueError(f'Tried to give SimpleMatrixEncryptionAlgorithm key which has no inverse as a matrix 4x4 mod 256')
@@ -108,5 +109,16 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
         padding_needed = self._block_size - (len(data) % self._block_size)
 
         final_data = new_iv + data + (b'\x00' * padding_needed)
+        matrix_final_data = self._bytes_to_matrix()
+
+        num_iterations = matrix_final_data.shape[0]
+        for i in range(num_iterations - 1):
+            matrix_final_data[i] = (matrix_final_data[i] @ self._key_matrix) % 256
+            matrix_final_data[i + 1] = matrix_final_data[i + 1] ^  matrix_final_data[i]
+        
+        matrix_final_data[num_iterations - 1] = matrix_final_data[num_iterations - 1] @ self._key_matrix
+        
+        return self._matrix_to_bytes(matrix_final_data)
+
         
 
