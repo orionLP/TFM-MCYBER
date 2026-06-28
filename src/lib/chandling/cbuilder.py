@@ -31,5 +31,5 @@ class CBuilder(abc.ABC):
         pass
     
     @abc.abstractmethod
-    def declaration(self, name: str, integer_type: ctype.CTypes, initializer: pycparser.c_ast.Node) -> pycparser.c_ast.Decl:
+    def declaration(self, name: str, integer_type: ctype.CTypes, initializer: pycparser.c_ast.Node | None) -> pycparser.c_ast.Decl:
         pass
