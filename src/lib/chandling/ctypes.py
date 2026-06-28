@@ -1,6 +1,10 @@
 import enum
 import dataclasses
 
+class CTypes(enum.StrEnum):
+    UNSIGNED_INT = 'unsigned_int'
+    INT = 'int'
+
 @dataclasses.dataclass
 class CTypeInfo():
     cname: str
@@ -11,6 +15,9 @@ class CTypeInfo():
 class CTypeTable():
     unsigned_int: CTypeInfo
     int: CTypeInfo
+
+    def __getitem__(self, ctype: CTypes) -> CTypeInfo:
+        return getattr(self, ctype.value)
 
 I686PCWindowsGNU: CTypeTable = CTypeTable(
     CTypeInfo('unsigned int', 0, 2**32 - 1),
