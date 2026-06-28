@@ -51,6 +51,10 @@ class EncryptionAlgorithm(abc.ABC):
     @abc.abstractmethod
     def encrypt(self, data: bytes) -> bytes:
         pass
+    
+    @abc.abstractmethod
+    def decrypt(self, data: bytes) -> bytes:
+        pass
 
 class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
 
@@ -107,8 +111,10 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
     def encrypt(self, data: bytes) -> bytes:
         new_iv = prng.get_n_bytes(self.iv_length)
         padding_needed = self._block_size - (len(data) % self._block_size)
+        if padding_needed == 0:
+            padding_needed = self._block_size
 
-        final_data = new_iv + data + (b'\x00' * padding_needed)
+        final_data = new_iv + data + (padding_needed.to_bytes(1,byteorder='little') * padding_needed)
         matrix_final_data = self._bytes_to_matrix(final_data)
 
         num_iterations = matrix_final_data.shape[0]
@@ -121,6 +127,8 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
         matrix_final_data[:(num_iterations - 1)] = (matrix_final_data[:(num_iterations - 1)] - matrix_final_data[num_iterations - 1]) % 256
 
         return self._matrix_to_bytes(matrix_final_data)
-
+    
+    def decrypt(self, data: bytes) -> bytes:
+        pass
         
 
