@@ -54,7 +54,7 @@ class EncryptionAlgorithm(abc.ABC):
 
 class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
 
-    def __init__(self, key: bytes | None) -> None:
+    def __init__(self, key: bytes | None = None) -> None:
         self._block_size = 16
         self._key_length = self._block_size
         self._true_iv_length = self._block_size
@@ -109,15 +109,17 @@ class SimpleMatrixEncryptionAlgorithm(EncryptionAlgorithm):
         padding_needed = self._block_size - (len(data) % self._block_size)
 
         final_data = new_iv + data + (b'\x00' * padding_needed)
-        matrix_final_data = self._bytes_to_matrix()
+        matrix_final_data = self._bytes_to_matrix(final_data)
 
         num_iterations = matrix_final_data.shape[0]
         for i in range(num_iterations - 1):
             matrix_final_data[i] = (matrix_final_data[i] @ self._key_matrix) % 256
             matrix_final_data[i + 1] = matrix_final_data[i + 1] ^  matrix_final_data[i]
         
-        matrix_final_data[num_iterations - 1] = matrix_final_data[num_iterations - 1] @ self._key_matrix
+        matrix_final_data[num_iterations - 1] = (matrix_final_data[num_iterations - 1] @ self._key_matrix) % 256
         
+        matrix_final_data[:(num_iterations - 1)] = (matrix_final_data[:(num_iterations - 1)] - matrix_final_data[num_iterations - 1]) % 256
+
         return self._matrix_to_bytes(matrix_final_data)
 
         
