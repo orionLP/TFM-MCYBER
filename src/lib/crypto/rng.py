@@ -42,6 +42,10 @@ class PRNG(abc.ABC):
         pass
 
     @abc.abstractmethod
+    def get_unsigned_integer(self, number_bytes: int) -> int:
+        pass
+
+    @abc.abstractmethod
     def get_uchar(self) -> int:
         pass
     
@@ -86,9 +90,12 @@ class ChaCha20PRNG(PRNG):
 
     def get_n_bytes(self, n: int) -> bytes:
         return self._cipher.encrypt(b'\x00' * n)
-        
+    
+    def get_unsigned_integer(self, number_bytes: int) -> int:
+        return int.from_bytes(self.get_n_bytes(number_bytes), byteorder = 'little', signed = False)
+    
     def get_uchar(self) -> int:
-        return int.from_bytes(self.get_n_bytes(1))
+        return self.get_unsigned_integer(1)
 
     def commit_changes(self) -> None:
         self._cipher = ChaCha20.new(key=self._key, nonce=self._nonce)
