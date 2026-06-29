@@ -6,7 +6,7 @@ import src.lib.chandling.coperators as coperators
 
 class CBuilder(abc.ABC):
 
-    def __init__(self, integer_definitions: ctype.CTypeTable) -> None:
+    def __init__(self, integer_definitions: ctypes.CTypeTable) -> None:
         self._integer_definitions = integer_definitions
     
     @abc.abstractmethod
@@ -42,7 +42,7 @@ class CBuilder(abc.ABC):
         pass
     
     @abc.abstractmethod
-    def declaration(self, variable_name: str, integer_type: ctype.CTypes, initializer: pycparser.c_ast.Node | None = None) -> pycparser.c_ast.Decl:
+    def declaration(self, variable_name: str, integer_type: ctypes.CTypes, initializer: pycparser.c_ast.Node | None = None) -> pycparser.c_ast.Decl:
         pass
 
 class StandardCBuilder(CBuilder):
@@ -96,7 +96,7 @@ class StandardCBuilder(CBuilder):
             stmt = statement_block
         )
     
-    def declaration(self, variable_name: str, integer_type: ctype.CTypes, initializer: pycparser.c_ast.Node | None = None) -> pycparser.c_ast.Decl:
+    def declaration(self, variable_name: str, integer_type: ctypes.CTypes, initializer: pycparser.c_ast.Node | None = None) -> pycparser.c_ast.Decl:
         return pycparser.c_ast.Decl(
             name = variable_name,
             quals = [],
