@@ -42,6 +42,10 @@ class CBuilder(abc.ABC):
         pass
     
     @abc.abstractmethod
+    def cast(self, target_type: ctypes.CTypes, expression: pycparser.c_ast.Node) -> pycparser.c_ast.Cast:
+        pass
+
+    @abc.abstractmethod
     def declaration(self, variable_name: str, integer_type: ctypes.CTypes, initializer: pycparser.c_ast.Node | None = None) -> pycparser.c_ast.Decl:
         pass
 
@@ -55,7 +59,7 @@ class StandardCBuilder(CBuilder):
     def constant(self, constant_type: ctypes.CTypes, value: int) -> pycparser.c_ast.Constant:
         return pycparser.c_ast.Constant(
             type = self._integer_definitions[constant_type].cname_list,
-            value = value
+            value = str(value)
         )
     
     def unary_operation(self, operator: coperators.UnaryCOperator, operand: pycparser.c_ast.Node) -> pycparser.c_ast.Node:
@@ -96,6 +100,22 @@ class StandardCBuilder(CBuilder):
             stmt = statement_block
         )
     
+    def cast(self, target_type: ctypes.CTypes, expression: pycparser.c_ast.Node) -> pycparser.c_ast.Cast:
+        return pycparser.c_ast.Cast(
+            to_type = c_ast.Typename(
+                name=None, 
+                quals=[], 
+                align=None,
+                type=c_ast.TypeDecl(
+                    declname=None, 
+                    quals=[], 
+                    align=None,
+                    type=c_ast.IdentifierType(names=target_type.cname_list)
+                )
+            ),
+            expr = expression
+        )
+
     def declaration(self, variable_name: str, integer_type: ctypes.CTypes, initializer: pycparser.c_ast.Node | None = None) -> pycparser.c_ast.Decl:
         return pycparser.c_ast.Decl(
             name = variable_name,
@@ -113,4 +133,30 @@ class StandardCBuilder(CBuilder):
             ),
             init = initializer,
             bitsize = None
+        )
+
+class FrequentCodeCBuilder(abc.ABC):
+
+    def __init__(self, cbuilder: CBuilder, integer_definitions: ctypes.CTypeTable) -> None:
+        self._cbuilder = cbuilder
+        self._integer_definitions = integer_definitions
+
+    @abc.abstractmethod
+    def define_variable_with_value(self, value: int, name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
+        pass
+
+    @abc.abstractmethod
+    def define_varaible_as_address(self, )
+class StandardFrequentCodeCBuilder(FrequentCodeCBuilder):
+
+    def define_variable_with_value(self, value: int, name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
+        constant = self._cbuilder.constant(
+            target_type,
+            value
+        )
+
+        return self._cbuilder.declaration(
+            name,
+            target_type,
+            constant
         )
