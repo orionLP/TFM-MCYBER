@@ -142,21 +142,44 @@ class FrequentCodeCBuilder(abc.ABC):
         self._integer_definitions = integer_definitions
 
     @abc.abstractmethod
-    def define_variable_with_value(self, value: int, name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
+    def define_initialized_variable(self, value: int, variable_name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
         pass
 
     @abc.abstractmethod
-    def define_varaible_as_address(self, )
+    def define_variable_address(self, operand_name: str, variable_name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
+        pass
+
 class StandardFrequentCodeCBuilder(FrequentCodeCBuilder):
 
-    def define_variable_with_value(self, value: int, name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
+    def define_initialized_variable(self, value: int, variable_name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
         constant = self._cbuilder.constant(
             target_type,
             value
         )
 
         return self._cbuilder.declaration(
-            name,
+            variable_name,
             target_type,
             constant
+        )
+
+    def define_variable_address(self, operand_name: str, variable_name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
+        operand_variable = self._cbuilder.variable(
+            operand_name
+        )
+        
+        address_of_operand = self._cbuilder.unary_operation(
+            coperators.UnaryCOperator.ADDRESS,
+            operand_variable
+        )
+
+        built_cast = self._cbuilder.cast(
+            target_type,
+            address_of_operand
+        )
+
+        return self._cbuilder.declaration(
+            variable_name,
+            target_type,
+            built_cast
         )
