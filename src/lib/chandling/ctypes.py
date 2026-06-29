@@ -11,6 +11,7 @@ class CTypeInfo():
     cname_list: list[str]
     min_value: int
     max_value: int
+    size: int
 
 @dataclasses.dataclass
 class CTypeTable():
@@ -21,6 +22,6 @@ class CTypeTable():
         return getattr(self, ctype.value)
 
 I686PCWindowsGNU: CTypeTable = CTypeTable(
-    CTypeInfo('unsigned int', ['unsigned', 'int'], 0, 2**32 - 1),
-    CTypeInfo('int', ['int'], -(2**31), 2**31 - 1)
+    CTypeInfo('unsigned int', ['unsigned', 'int'], 0, 2**32 - 1, 4),
+    CTypeInfo('int', ['int'], -(2**31), 2**31 - 1, 4)
 )
