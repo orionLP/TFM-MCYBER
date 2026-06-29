@@ -1,7 +1,7 @@
 import enum
 import abc
 
-import src.lib.crypto.rng.prng as prng
+from src.lib.crypto.rng import prng
 
 '''
 
@@ -10,7 +10,7 @@ All names generated in this file follow the convention that they are made of CUS
 '''
 
 
-class VariableNameTypes(Enum.StrEnum):
+class VariableNameTypes(enum.StrEnum):
     TRUE = 'true'
     FALSE = 'false'
     PRIME = 'prime'

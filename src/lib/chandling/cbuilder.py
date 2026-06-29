@@ -65,13 +65,13 @@ class StandardCBuilder(CBuilder):
     
     def unary_operation(self, operator: coperators.UnaryCOperator, operand: pycparser.c_ast.Node) -> pycparser.c_ast.Node:
         return pycparser.c_ast.UnaryOp(
-            op = operator,
+            op = operator.pycparser_string,
             expr = copy.deepcopy(operand)
         )
     
     def binary_operation(self, operator: coperators.BinaryCOperator, left_operand: pycparser.c_ast.Node, right_operand: pycparser.c_ast.Node) -> pycparser.c_ast.Node:
         return pycparser.c_ast.BinaryOp(
-            op = operator,
+            op = operator.pycparser_string,
             left = copy.deepcopy(left_operand),
             right = copy.deepcopy(right_operand)
         )
@@ -83,7 +83,7 @@ class StandardCBuilder(CBuilder):
     
     def assignment(self, operator: coperators.AssignmentCOperator, left_value: pycparser.c_ast.Node, right_value: pycparser.c_ast.Node) -> pycparser.c_ast.Assignment:
         return pycparser.c_ast.Assignment(
-            op = operator,
+            op = operator.pycparser_string,
             lvalue = copy.deepcopy(left_value),
             rvalue = copy.deepcopy(right_value)
         )
@@ -103,15 +103,15 @@ class StandardCBuilder(CBuilder):
     
     def cast(self, target_type: ctypes.CTypes, expression: pycparser.c_ast.Node) -> pycparser.c_ast.Cast:
         return pycparser.c_ast.Cast(
-            to_type = c_ast.Typename(
+            to_type = pycparser.c_ast.Typename(
                 name=None, 
                 quals=[], 
                 align=None,
-                type=c_ast.TypeDecl(
+                type=pycparser.c_ast.TypeDecl(
                     declname=None, 
                     quals=[], 
                     align=None,
-                    type=c_ast.IdentifierType(names=target_type.cname_list)
+                    type=pycparser.c_ast.IdentifierType(names=self._integer_definitions[target_type].cname_list)
                 )
             ),
             expr = copy.deepcopy(expression)
