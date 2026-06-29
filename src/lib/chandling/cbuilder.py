@@ -1,5 +1,6 @@
 import abc
 import pycparser
+import copy
 
 import src.lib.chandling.ctypes as ctypes
 import src.lib.chandling.coperators as coperators
@@ -65,39 +66,39 @@ class StandardCBuilder(CBuilder):
     def unary_operation(self, operator: coperators.UnaryCOperator, operand: pycparser.c_ast.Node) -> pycparser.c_ast.Node:
         return pycparser.c_ast.UnaryOp(
             op = operator,
-            expr = operand
+            expr = copy.deepcopy(operand)
         )
     
     def binary_operation(self, operator: coperators.BinaryCOperator, left_operand: pycparser.c_ast.Node, right_operand: pycparser.c_ast.Node) -> pycparser.c_ast.Node:
         return pycparser.c_ast.BinaryOp(
             op = operator,
-            left = left_operand,
-            right = right_operand
+            left = copy.deepcopy(left_operand),
+            right = copy.deepcopy(right_operand)
         )
 
     def block(self, items_list: list[pycparser.c_ast.Node]) -> pycparser.c_ast.Compound:
         return pycparser.c_ast.Compound(
-            block_items = items_list
+            block_items = copy.deepcopy(items_list)
         )
     
     def assignment(self, operator: coperators.AssignmentCOperator, left_value: pycparser.c_ast.Node, right_value: pycparser.c_ast.Node) -> pycparser.c_ast.Assignment:
         return pycparser.c_ast.Assignment(
             op = operator,
-            lvalue = left_value,
-            rvalue = right_value
+            lvalue = copy.deepcopy(left_value),
+            rvalue = copy.deepcopy(right_value)
         )
     
     def if_block(self, condition: pycparser.c_ast.Node, true_block: pycparser.c_ast.Compound, false_block: pycparser.c_ast.Compound) -> pycparser.c_ast.If:
         return pycparser.c_ast.If(
-            cond = condition,
-            iftrue = true_block,
-            iffalse = false_block
+            cond = copy.deepcopy(condition),
+            iftrue = copy.deepcopy(true_block),
+            iffalse = copy.deepcopy(false_block)
         )
     
     def while_block(self, condition: pycparser.c_ast.Node, statement_block: pycparser.c_ast.Compound) -> pycparser.c_ast.While:
         return pycparser.c_ast.While(
-            cond = condition,
-            stmt = statement_block
+            cond = copy.deepcopy(condition),
+            stmt = copy.deepcopy(statement_block)
         )
     
     def cast(self, target_type: ctypes.CTypes, expression: pycparser.c_ast.Node) -> pycparser.c_ast.Cast:
@@ -113,7 +114,7 @@ class StandardCBuilder(CBuilder):
                     type=c_ast.IdentifierType(names=target_type.cname_list)
                 )
             ),
-            expr = expression
+            expr = copy.deepcopy(expression)
         )
 
     def declaration(self, variable_name: str, integer_type: ctypes.CTypes, initializer: pycparser.c_ast.Node | None = None) -> pycparser.c_ast.Decl:
@@ -131,7 +132,7 @@ class StandardCBuilder(CBuilder):
                     names = self._integer_definitions[integer_type].cname_list
                 )
             ),
-            init = initializer,
+            init = copy.deepcopy(initializer),
             bitsize = None
         )
 
