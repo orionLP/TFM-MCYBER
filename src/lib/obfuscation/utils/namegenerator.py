@@ -10,7 +10,7 @@ All names generated in this file follow the convention that they are made of CUS
 '''
 
 
-class NameTypes(Enum.StrEnum):
+class VariableNameTypes(Enum.StrEnum):
     TRUE = 'true'
     FALSE = 'false'
     PRIME = 'prime'
@@ -18,24 +18,24 @@ class NameTypes(Enum.StrEnum):
     USELESS = 'useless'
     COMPUTATION = 'computation'
 
-class NameGenerator(abc.ABC):
+class VariableNameGenerator(abc.ABC):
 
     def __init__(self, *args) -> None:
         pass
 
     @abc.abstractmethod
-    def generate_name(self, name_type: NameTypes) -> str:
+    def generate_name(self, name_type: VariableNameTypes) -> str:
         pass
 
-class StandardNameGenerator(NameGenerator):
+class StandardVariableNameGenerator(VariableNameGenerator):
 
     def __init__(self, *args) -> None:
         if len(args) != 1:
-            raise ValueError("StandardNameGenerator needs to be initalized with an int parameter")
+            raise ValueError("VariableNameGenerator needs to be initalized with an int parameter")
         
         self._len_random_string = args[0]
 
-    def generate_name(self, name_type: NameTypes) -> str:
+    def generate_name(self, name_type: VariableNameTypes) -> str:
         random_part = prng.get_n_bytes(self._len_random_string)
         random_part = random_part.hex()
 
