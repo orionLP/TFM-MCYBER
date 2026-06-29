@@ -65,13 +65,13 @@ class StandardCBuilder(CBuilder):
     
     def unary_operation(self, operator: coperators.UnaryCOperator, operand: pycparser.c_ast.Node) -> pycparser.c_ast.Node:
         return pycparser.c_ast.UnaryOp(
-            op = operator.pycparser_string,
+            op = operator.value.pycparser_string,
             expr = copy.deepcopy(operand)
         )
     
     def binary_operation(self, operator: coperators.BinaryCOperator, left_operand: pycparser.c_ast.Node, right_operand: pycparser.c_ast.Node) -> pycparser.c_ast.Node:
         return pycparser.c_ast.BinaryOp(
-            op = operator.pycparser_string,
+            op = operator.value.pycparser_string,
             left = copy.deepcopy(left_operand),
             right = copy.deepcopy(right_operand)
         )
@@ -83,7 +83,7 @@ class StandardCBuilder(CBuilder):
     
     def assignment(self, operator: coperators.AssignmentCOperator, left_value: pycparser.c_ast.Node, right_value: pycparser.c_ast.Node) -> pycparser.c_ast.Assignment:
         return pycparser.c_ast.Assignment(
-            op = operator.pycparser_string,
+            op = operator.value.pycparser_string,
             lvalue = copy.deepcopy(left_value),
             rvalue = copy.deepcopy(right_value)
         )
