@@ -42,7 +42,7 @@ class CBuilder(abc.ABC):
         pass
     
     @abc.abstractmethod
-    def declaration(self, name: str, integer_type: ctype.CTypes, initializer: pycparser.c_ast.Node | None) -> pycparser.c_ast.Decl:
+    def declaration(self, variable_name: str, integer_type: ctype.CTypes, initializer: pycparser.c_ast.Node | None = None) -> pycparser.c_ast.Decl:
         pass
 
 class StandardCBuilder(CBuilder):
@@ -72,7 +72,9 @@ class StandardCBuilder(CBuilder):
         )
 
     def block(self, items_list: list[pycparser.c_ast.Node]) -> pycparser.c_ast.Compound:
-        pass
+        return pycparser.c_ast.Compound(
+            block_items = items_list
+        )
     
     def assignment(self, operator: coperators.AssignmentCOperator, left_value: pycparser.c_ast.Node, right_value: pycparser.c_ast.Node) -> pycparser.c_ast.Assignment:
         return pycparser.c_ast.Assignment(
@@ -94,5 +96,21 @@ class StandardCBuilder(CBuilder):
             stmt = statement_block
         )
     
-    def declaration(self, name: str, integer_type: ctype.CTypes, initializer: pycparser.c_ast.Node | None) -> pycparser.c_ast.Decl:
-        pass
+    def declaration(self, variable_name: str, integer_type: ctype.CTypes, initializer: pycparser.c_ast.Node | None = None) -> pycparser.c_ast.Decl:
+        return pycparser.c_ast.Decl(
+            name = variable_name,
+            quals = [],
+            align = [],
+            storage = [],
+            funcspec = [],
+            type = pycparser.c_ast.TypeDecl(
+                declname = variable_name,
+                quals = [],
+                align = None,
+                type = pycparser.c_ast.IdentifierType(
+                    names = [integer_type.cname]
+                )
+            ),
+            init = initializer,
+            bitsize = None
+        )
