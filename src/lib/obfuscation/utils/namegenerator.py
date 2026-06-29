@@ -3,6 +3,13 @@ import abc
 
 import src.lib.crypto.rng.prng as prng
 
+'''
+
+All names generated in this file follow the convention that they are made of CUSTOM + _ + type + _opaque
+
+'''
+
+
 class NameTypes(Enum.StrEnum):
     TRUE = 'true'
     FALSE = 'false'
@@ -32,4 +39,4 @@ class StandardNameGenerator(NameGenerator):
         random_part = prng.get_n_bytes(self._len_random_string)
         random_part = random_part.hex()
 
-        return 'v' + random_part + '_' + name_type.value
+        return 'v' + random_part + '_' + name_type.value + '_opaque'
