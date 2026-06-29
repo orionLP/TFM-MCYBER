@@ -54,7 +54,7 @@ class StandardCBuilder(CBuilder):
     
     def constant(self, constant_type: ctypes.CTypes, value: int) -> pycparser.c_ast.Constant:
         return pycparser.c_ast.Constant(
-            type = constant_type,
+            type = self._integer_definitions[constant_type].cname_list,
             value = value
         )
     
@@ -108,7 +108,7 @@ class StandardCBuilder(CBuilder):
                 quals = [],
                 align = None,
                 type = pycparser.c_ast.IdentifierType(
-                    names = [integer_type.cname]
+                    names = self._integer_definitions[integer_type].cname_list
                 )
             ),
             init = initializer,
