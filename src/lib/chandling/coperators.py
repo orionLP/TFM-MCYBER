@@ -20,4 +20,5 @@ class BinaryCOperator(enum.Enum):
     MODULO = Operator('%')
     EQUAL = Operator('==')
     LESS = Operator('<')
+    LESSOREQUAL = Operator('<=')
     BITWISEOR = Operator('|')
