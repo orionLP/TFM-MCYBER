@@ -156,6 +156,22 @@ class RAPrimeOpaqueVariable(PrimeOpaqueVariable):
             while_block
         )
 
-    def _create_opaque_algorithm(self, target_variable_type: ctypes.CTypes) -> list[pycparser.c_ast.Node]:
+    def _outer_opaque_algorithm(self, target_variable_type: ctypes.CTypes, inner_while: pycparser.c_ast.While) -> pycparser.c_ast.While:
+        add_2_tmp_prime = self._frequent_cbuilder.add_constant(self._temp_prime_name, 2, target_variable_type)
+        assign_1_d = self._frequent_cbuilder.assign_constant(self._d_name, 1, target_variable_type)
+        assign_3_i = self._frequent_cbuilder.assign_constant(self._i_name, 3, target_variable_type)
+        outer_while_block = self._cbuilder.block([add_2_tmp_prime, assign_1_d, assign_3_i, inner_while])
 
-        return self._preamble_algorithm(target_variable_type) + [self._inner_algorithm(target_variable_type)]
+        d_variable = self._cbuilder.variable(self._d_name)
+        constant1 = self._cbuilder.constant(target_variable_type, 1)
+        is_one = self._cbuilder.binary_operation(coperators.BinaryCOperator.NOTEQUAL, d_variable, constant1)
+
+        return self._cbuilder.while_block(
+            is_one,
+            outer_while_block
+        )
+
+    def _create_opaque_algorithm(self, target_variable_type: ctypes.CTypes) -> list[pycparser.c_ast.Node]:
+        inner_while = self._inner_algorithm(target_variable_type)
+        outer_while = self._outer_opaque_algorithm(target_variable_type, inner_while)
+        return self._preamble_algorithm(target_variable_type) + [outer_while]

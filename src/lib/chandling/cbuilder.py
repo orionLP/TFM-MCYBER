@@ -150,6 +150,14 @@ class FrequentCodeCBuilder(abc.ABC):
     def define_variable_address(self, operand_name: str, variable_name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
         pass
 
+    @abc.abstractmethod
+    def assign_constant(self, variable_name: str, number: int, target_type: ctypes.CTypes) -> pycparser.c_ast.Assignment:
+        pass
+    
+    @abc.abstractmethod
+    def add_constant(self, variable_name: str, number: int, target_type: ctypes.CTypes) -> pycparser.c_ast.Assignment:
+        pass
+
 class StandardFrequentCodeCBuilder(FrequentCodeCBuilder):
 
     def define_initialized_variable(self, value: int, variable_name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
@@ -183,4 +191,22 @@ class StandardFrequentCodeCBuilder(FrequentCodeCBuilder):
             variable_name,
             target_type,
             built_cast
+        )
+
+    def assign_constant(self, variable_name: str, number: int, target_type: ctypes.CTypes) -> pycparser.c_ast.Assignment:
+        constant = self._cbuilder.constant(target_type, number)
+        variable = self._cbuilder.variable(variable_name)
+        return self._cbuilder.assignment(
+            coperators.AssignmentCOperator.ASSIGNMENT,
+            variable,
+            constant
+        )
+
+    def add_constant(self, variable_name: str, number: int, target_type: ctypes.CTypes) -> pycparser.c_ast.Assignment:
+        constant = self._cbuilder.constant(target_type, number)
+        variable = self._cbuilder.variable(variable_name)
+        return self._cbuilder.assignment(
+            coperators.AssignmentCOperator.ADDITIVEASSIGNMENT,
+            variable,
+            constant
         )

@@ -7,6 +7,7 @@ class Operator():
 
 class AssignmentCOperator(enum.Enum):
     ASSIGNMENT = Operator('=')
+    ADDITIVEASSIGNMENT = Operator('+=')
 
 class UnaryCOperator(enum.Enum):
     ADDRESS = Operator('&')
@@ -19,6 +20,7 @@ class BinaryCOperator(enum.Enum):
     MULTIPLICATION = Operator('*')
     MODULO = Operator('%')
     EQUAL = Operator('==')
+    NOTEQUAL = Operator('!=')
     LESS = Operator('<')
     LESSOREQUAL = Operator('<=')
     BITWISEOR = Operator('|')
