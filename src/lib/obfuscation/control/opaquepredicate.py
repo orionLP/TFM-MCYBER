@@ -27,9 +27,14 @@ class OpaquePredicate(abc.ABC):
             for variable in predicate_variables:
                 if namegenerator.is_type(variable, possible_type):
                     result_dict[possible_type].append(variable)
+            if len(result_dict[possible_type]) == 0:
+                del result_dict[possible_type]
         return result_dict
 
     def _check_input_variables(self, constructed_dict: dict[namegenerator.VariableNameTypes, list[str]]) -> bool:
+        for key in constructed_dict:
+            if not key in self.needed_variables:
+                return False
         for key, value in self.needed_variables.items():
             if len(constructed_dict[key]) != value:
                 return False
