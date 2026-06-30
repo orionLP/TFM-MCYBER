@@ -72,3 +72,31 @@ class IsOddOrTwoPredicateTemplate(OpaquePredicate):
             equal_2
         )
 
+class PythagoreanTriplePredicateTemplate(OpaquePredicate):
+
+    def __init__(self, used_cbuilder: cbuilder.CBuilder) -> None:
+        super().__init__(used_cbuilder)
+        self._needed_variables = {
+            namegenerator.VariableNameTypes.RANDOM: 1
+        }
+
+    def create_predicate(self, predicate_variables: list[str], used_type: ctypes.CTypes) -> pycparser.c_ast.Node:
+        available_variables = self._list_to_dict(predicate_variables)
+        if not self._check_input_variables(available_variables):
+            raise ValueError("Did not give PythagoreanTriplePredicateTemplate the necessary variables")
+
+        constant9 = self._cbuilder.constant(used_type, 9)
+        constant16 = self._cbuilder.constant(used_type, 16)
+        constant25 = self._cbuilder.constant(used_type, 25)
+
+        random_variable = self._cbuilder.variable(available_variables[namegenerator.VariableNameTypes.RANDOM][0])
+        square_random = self._cbuilder.binary_operation(coperators.BinaryCOperator.MULTIPLICATION, random_variable, random_variable)
+
+        mult_9 = self._cbuilder.binary_operation(coperators.BinaryCOperator.MULTIPLICATION, square_random, constant9)
+        mult_16 = self._cbuilder.binary_operation(coperators.BinaryCOperator.MULTIPLICATION, square_random, constant16)
+        mult_25 = self._cbuilder.binary_operation(coperators.BinaryCOperator.MULTIPLICATION, square_random, constant25)
+
+        addition_9_16 = self._cbuilder.binary_operation(coperators.BinaryCOperator.ADDITION, mult_9, mult_16)
+
+        return self._cbuilder.binary_operation(coperators.BinaryCOperator.EQUAL, addition_9_16, mult_25)
+

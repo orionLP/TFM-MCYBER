@@ -69,3 +69,14 @@ iootpt_nodes = [iootpt.create_predicate(['v6356d40cdf4563ebe31b543c4f9bc8f0_prim
 
 for node in iootpt_nodes:
     print(generator.visit(node))
+
+print('\nPythagoreanTriplePredicateTemplate\n')
+
+ptpt = opaquepredicate.PythagoreanTriplePredicateTemplate(
+    cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
+)
+
+ptpt_nodes = [ptpt.create_predicate(['vde3a5852e9ee86b89bb50b79ef143a09_random_opaque'], ctypes.CTypes.UNSIGNED_INT)]
+
+for node in ptpt_nodes:
+    print(generator.visit(node))
