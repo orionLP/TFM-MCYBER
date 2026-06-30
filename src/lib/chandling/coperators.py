@@ -18,4 +18,6 @@ class BinaryCOperator(enum.Enum):
     DIVISION = Operator('/')
     MULTIPLICATION = Operator('*')
     MODULO = Operator('%')
-    EQUAL = Operator('=')
+    EQUAL = Operator('==')
+    LESS = Operator('<')
+    BITWISEOR = Operator('|')
