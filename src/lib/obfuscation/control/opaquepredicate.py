@@ -13,30 +13,57 @@ A family of predicates that always returns true
 
 class OpaquePredicate(abc.ABC):
 
+    def __init__(self, used_cbuilder: cbuilder.CBuilder) -> None:
+        self._cbuilder = used_cbuilder
+
     @property
     def needed_variables(self) -> dict[namegenerator.VariableNameTypes, int]:
         return self._needed_variables
 
-    def _check_input_variables(self, predicate_variables: list[str]) -> bool:
+    def _list_to_dict(self, predicate_variables: list[str]) -> dict[namegenerator.VariableNameTypes, list[str]]:
+        result_dict = {}
+        for possible_type in namegenerator.VariableNameTypes:
+            result_dict[possible_type] = []
+            for variable in predicate_variables:
+                if namegenerator.is_type(variable, possible_type):
+                    result_dict[possible_type].append(variable)
+        return result_dict
+
+    def _check_input_variables(self, constructed_dict: dict[namegenerator.VariableNameTypes, list[str]]) -> bool:
         for key, value in self.needed_variables.items():
-            number_times = 0
-            for i in range(len(predicate_variables)):
-                number_times += int(namegenerator.is_type(predicate_variables[i], key))
-            if number_times != value:
+            if len(constructed_dict[key]) != value:
                 return False
         return True
     
     @abc.abstractmethod
-    def create_predicate(self, predicate_variables: list[str]) -> c_ast.Node:
+    def create_predicate(self, predicate_variables: list[str], used_type: ctypes.CTypes) -> pycparser.c_ast.Node:
         pass
 
 class IsOddOrTwoPredicateTemplate(OpaquePredicate):
 
-    def __init__(self) -> None:
+    def __init__(self, used_cbuilder: cbuilder.CBuilder) -> None:
+        super().__init__(used_cbuilder)
         self._needed_variables = {
             namegenerator.VariableNameTypes.PRIME: 1
         }
     
-    def create_predicate(self, predicate_variables: list[str]) -> c_ast.Node:
-        if not self._check_input_variables(predicate_variables):
+    def create_predicate(self, predicate_variables: list[str], used_type: ctypes.CTypes) -> pycparser.c_ast.Node:
+        available_variables = self._list_to_dict(predicate_variables)
+        if not self._check_input_variables(available_variables):
             raise ValueError("Did not give IsOddOrTwoPredicateTemplate the necessary variables")
+
+        constant0 = self._cbuilder.constant(used_type, 0)
+        constant2 = self._cbuilder.constant(used_type, 2)
+
+        prime_variable = self._cbuilder.variable(available_variables[namegenerator.VariableNameTypes.PRIME][0])
+        modulo_operation = self._cbuilder.binary_operation(coperators.BinaryCOperator.MODULO, prime_variable, constant2)
+        different_operation = self._cbuilder.binary_operation(coperators.BinaryCOperator.NOTEQUAL, modulo_operation, constant0)
+
+        equal_2 = self._cbuilder.binary_operation(coperators.BinaryCOperator.EQUAL, prime_variable, constant2)
+
+        return self._cbuilder.binary_operation(
+            coperators.BinaryCOperator.OR,
+            different_operation, 
+            equal_2
+        )
+

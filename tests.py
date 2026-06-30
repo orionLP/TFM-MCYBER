@@ -2,6 +2,7 @@ import src.lib.obfuscation.control.opaquevariable as op
 import src.lib.chandling.cbuilder as cbuilder
 import src.lib.chandling.ctypes as ctypes
 import src.lib.obfuscation.utils.namegenerator as namegenerator
+import src.lib.obfuscation.control.opaquepredicate as opaquepredicate
 
 from pycparser import c_generator
 from src.lib.crypto.rng import prng
@@ -56,4 +57,15 @@ arov = op.AddressRandomOpaqueVariable(
 arov_nodes = arov.generate_opaque_variable(ctypes.CTypes.UNSIGNED_INT)
 
 for node in arov_nodes:
+    print(generator.visit(node))
+
+print('\nIsOddOrTwoPredicateTemplate\n')
+
+iootpt = opaquepredicate.IsOddOrTwoPredicateTemplate(
+    cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
+)
+
+iootpt_nodes = [iootpt.create_predicate(['v6356d40cdf4563ebe31b543c4f9bc8f0_prime_opaque'], ctypes.CTypes.UNSIGNED_INT)]
+
+for node in iootpt_nodes:
     print(generator.visit(node))

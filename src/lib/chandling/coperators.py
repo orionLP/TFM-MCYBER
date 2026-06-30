@@ -23,4 +23,5 @@ class BinaryCOperator(enum.Enum):
     NOTEQUAL = Operator('!=')
     LESS = Operator('<')
     LESSOREQUAL = Operator('<=')
+    OR = Operator('||')
     BITWISEOR = Operator('|')
