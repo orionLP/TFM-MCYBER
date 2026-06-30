@@ -72,3 +72,10 @@ class StandardScope(Scope):
             for block_variable in block:
                 return_list.append(block_variable)
         return return_list
+
+def defined_variables_to_line(block: pycparser.c_ast.Compound, item_line: int) -> list[str]:
+    return_list = []
+    for node in block.block_items:
+        if node is pycparser.c_ast.Decl and node.init is not None:
+            return_list.append(node.name)
+    return return_list
