@@ -175,3 +175,31 @@ class RAPrimeOpaqueVariable(PrimeOpaqueVariable):
         inner_while = self._inner_algorithm(target_variable_type)
         outer_while = self._outer_opaque_algorithm(target_variable_type, inner_while)
         return self._preamble_algorithm(target_variable_type) + [outer_while]
+
+class RandomOpaqueVariable(OpaqueVariable):
+    pass
+
+class AddressRandomOpaqueVariable(RandomOpaqueVariable):
+
+    def _refresh(self) -> None:
+        self._sentinel_name = self._variable_name_generator.generate_name(namegenerator.VariableNameTypes.USELESS)
+        self._random_variable = self._variable_name_generator.generate_name(namegenerator.VariableNameTypes.RANDOM)
+
+    def _declare_algorithm_variables(self, target_variable_type: ctypes.CTypes) -> list[pycparser.c_ast.Decl]:
+        return [
+            self._frequent_cbuilder.define_initialized_variable(
+                prng.get_unsigned_integer(self._integer_definitions[target_variable_type].size),
+                self._sentinel_name,
+                target_variable_type
+            )
+        ]
+    
+    def _declare_opaque_variable(self, target_variable_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
+        return self._frequent_cbuilder.define_variable_address(
+            self._sentinel_name,
+            self._random_variable,
+            target_variable_type
+        )
+    
+    def _create_opaque_algorithm(self, target_variable_type: ctypes.CTypes) -> list[pycparser.c_ast.Node]:
+        return []
