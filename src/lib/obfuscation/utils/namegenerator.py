@@ -1,6 +1,6 @@
 import enum
 import abc
-import dataclass
+import dataclasses
 
 from src.lib.crypto.rng import prng
 
@@ -12,15 +12,18 @@ All names generated in this file follow the convention that they are made of CUS
 
 @dataclasses.dataclass
 class NameType():
-    name_string
+    name_string: str
 
-class VariableNameTypes(enum.StrEnum):
-    TRUE = NameType('true')
-    FALSE = NameType('false')
-    PRIME = NameType('prime')
-    RANDOM = NameType('random')
-    USELESS = NameType('useless')
-    COMPUTATION = NameType('computation')
+class VariableNameTypes(enum.Enum):
+    TRUE = NameType('true_opaque')
+    FALSE = NameType('false_opaque')
+    PRIME = NameType('prime_opaque')
+    RANDOM = NameType('random_opaque')
+    USELESS = NameType('useless_opaque')
+    COMPUTATION = NameType('computation_opaque')
+
+def is_type(variable_name: str, name_type: VariableNameTypes) -> bool:
+    return variable_name.endswith(name_type.value.name_string)
 
 class VariableNameGenerator(abc.ABC):
 
@@ -43,4 +46,4 @@ class StandardVariableNameGenerator(VariableNameGenerator):
         random_part = prng.get_n_bytes(self._len_random_string)
         random_part = random_part.hex()
 
-        return 'v' + random_part + '_' + name_type.value.name_string + '_opaque'
+        return 'v' + random_part + '_' + name_type.value.name_string
