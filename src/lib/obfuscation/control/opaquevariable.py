@@ -20,7 +20,7 @@ class OpaqueVariable(abc.ABC):
         
         initial_variables = self._declare_algorithm_variables(target_variable_type)
         opaque_variable = self._declare_opaque_variable(target_variable_type)
-        compute_variable_algorithm = self._create_opaque_algorithm(target_variable_type, initial_variables, opaque_variable)
+        compute_variable_algorithm = self._create_opaque_algorithm(target_variable_type)
 
         return initial_variables + compute_variable_algorithm + [opaque_variable]
 
@@ -37,7 +37,7 @@ class OpaqueVariable(abc.ABC):
         pass
     
     @abc.abstractmethod
-    def _create_opaque_algorithm(self, target_variable_type: ctypes.CTypes, initial_variables: list[pycparser.c_ast.Decl], opaque_variable: pycparser.c_ast.Decl) -> list[pycparser.c_ast.Node]:
+    def _create_opaque_algorithm(self, target_variable_type: ctypes.CTypes) -> list[pycparser.c_ast.Node]:
         pass
 
 class TrueOpaqueVariable(OpaqueVariable):
@@ -108,13 +108,19 @@ class ResidueTrueOpaqueVariable(TrueOpaqueVariable):
             constant2
         )
 
-        return self._cbuilder.binary_operation(
+        final_operation = self._cbuilder.binary_operation(
             coperators.BinaryCOperator.EQUAL,
             modulo_operation,
             constant0
         )
+
+        return self._cbuilder.declaration(
+            self._result_variable_name,
+            target_variable_type,
+            final_operation
+        )
     
-    def _create_opaque_algorithm(self, target_variable_type: ctypes.CTypes, initial_variables: list[pycparser.c_ast.Decl], opaque_variable: pycparser.c_ast.Decl) -> list[pycparser.c_ast.Node]:
+    def _create_opaque_algorithm(self, target_variable_type: ctypes.CTypes) -> list[pycparser.c_ast.Node]:
         return []
 
 class PrimeOpaqueVariable(OpaqueVariable):
@@ -157,20 +163,97 @@ class RAPrimeOpaqueVariable(PrimeOpaqueVariable):
             target_variable_type
         )
 
-        sentinel_variable = self._frequent_cbuilder.define_initialized_variable(
+        i_variable = self._frequent_cbuilder.define_initialized_variable(
             3,
             self._i_name,
             target_variable_type
         )
 
-        random_value_variable = self._frequent_cbuilder.define_variable_address(
+        temp_prime_variable = self._frequent_cbuilder.define_variable_address(
             self._sentinel_name,
             self._temp_prime_name,
             target_variable_type
         )
+
+        return [
+            sentinel_variable,
+            d_variable,
+            i_variable,
+            temp_prime_variable
+        ]
     
     def _declare_opaque_variable(self, target_variable_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
-        pass
+        temporary_prime = self._cbuilder.variable(
+            self._temp_prime_name
+        )
+
+        return self._cbuilder.declaration(
+            self._prime_name,
+            target_variable_type,
+            temporary_prime
+        )
     
-    def _create_opaque_algorithm(self, target_variable_type: ctypes.CTypes, initial_variables: list[pycparser.c_ast.Decl], opaque_variable: pycparser.c_ast.Decl) -> list[pycparser.c_ast.Node]:
-        pass
+    def _preamble_algorithm(self, target_variable_type: ctypes.CTypes) -> list[pycparser.c_ast.Node]:
+        half_max = self._cbuilder.constant(
+            target_variable_type,
+            self._integer_definitions[target_variable_type].max_value // 2
+        )
+        
+        temp_prime_variable = self._cbuilder.variable(
+            self._temp_prime_name
+        )
+
+        modulo_operation = self._cbuilder.binary_operation(
+            coperators.BinaryCOperator.MODULO,
+            temp_prime_variable,
+            half_max
+        )
+
+        constant1 = self._cbuilder.constant(
+            target_variable_type,
+            1
+        )
+
+        always_odd = self._cbuilder.binary_operation(
+            coperators.BinaryCOperator.BITWISEOR,
+            modulo_operation,
+            constant1
+        )
+
+        assignment_temp_prime = self._cbuilder.assignment(
+            coperators.AssignmentCOperator.ASSIGNMENT,
+            temp_prime_variable,
+            always_odd
+        )
+
+        constant3 = self._cbuilder.constant(
+            target_variable_type,
+            3
+        )
+
+        assign_3 = self._cbuilder.assignment(
+            coperators.AssignmentCOperator.ASSIGNMENT,
+            temp_prime_variable,
+            constant3
+        )
+
+        assign_3_block = self._cbuilder.block(
+            [assign_3]
+        )
+
+        lessthan_3 = self._cbuilder.binary_operation(
+            coperators.BinaryCOperator.LESS,
+            temp_prime_variable,
+            constant3
+        )
+
+        if_block = self._cbuilder.if_block(
+            lessthan_3,
+            assign_3_block
+        )
+
+        return [assignment_temp_prime,if_block]
+
+    def _create_opaque_algorithm(self, target_variable_type: ctypes.CTypes) -> list[pycparser.c_ast.Node]:
+
+        return self._preamble_algorithm(target_variable_type)
