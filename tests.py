@@ -43,3 +43,17 @@ rapov_nodes = rapov.generate_opaque_variable(ctypes.CTypes.UNSIGNED_INT)
 
 for node in rapov_nodes:
     print(generator.visit(node))
+
+print('\nAddressRandomOpaqueVariable\n')
+
+arov = op.AddressRandomOpaqueVariable(
+    ctypes.I686PCWindowsGNU, 
+    cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
+    cbuilder.StandardFrequentCodeCBuilder(cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), ctypes.I686PCWindowsGNU), 
+    namegenerator.StandardVariableNameGenerator(16)
+)
+
+arov_nodes = arov.generate_opaque_variable(ctypes.CTypes.UNSIGNED_INT)
+
+for node in arov_nodes:
+    print(generator.visit(node))
