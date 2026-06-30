@@ -35,7 +35,7 @@ class CBuilder(abc.ABC):
         pass
     
     @abc.abstractmethod
-    def if_block(self, condition: pycparser.c_ast.Node, true_block: pycparser.c_ast.Compound, false_block: pycparser.c_ast.Compound) -> pycparser.c_ast.If:
+    def if_block(self, condition: pycparser.c_ast.Node, true_block: pycparser.c_ast.Compound, false_block: pycparser.c_ast.Compound | None = None) -> pycparser.c_ast.If:
         pass
     
     @abc.abstractmethod
@@ -88,7 +88,7 @@ class StandardCBuilder(CBuilder):
             rvalue = copy.deepcopy(right_value)
         )
     
-    def if_block(self, condition: pycparser.c_ast.Node, true_block: pycparser.c_ast.Compound, false_block: pycparser.c_ast.Compound) -> pycparser.c_ast.If:
+    def if_block(self, condition: pycparser.c_ast.Node, true_block: pycparser.c_ast.Compound, false_block: pycparser.c_ast.Compound | None = None) -> pycparser.c_ast.If:
         return pycparser.c_ast.If(
             cond = copy.deepcopy(condition),
             iftrue = copy.deepcopy(true_block),
