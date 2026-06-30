@@ -74,8 +74,12 @@ class StandardScope(Scope):
         return return_list
 
 def defined_variables_to_line(block: pycparser.c_ast.Compound, item_line: int) -> list[str]:
+    if(item_line > len(block.block_items)):
+        raise ValueError("defined_variables_to_line given an item_line out of index")
+    
     return_list = []
-    for node in block.block_items:
-        if node is pycparser.c_ast.Decl and node.init is not None:
+    for i in range(item_line):
+        node = block.block_items[i]
+        if isinstance(node, pycparser.c_ast.Decl) and node.init is not None:
             return_list.append(node.name)
     return return_list
