@@ -26,7 +26,7 @@ def is_type(variable_name: str, name_type: VariableNameTypes) -> bool:
     return variable_name.endswith(name_type.value.name_string)
 
 def variable_type(variable_name: str) -> VariableNameTypes:
-    for avaiable_type in VariableNameTypes:
+    for available_type in VariableNameTypes:
         if is_type(variable_name, available_type):
             return available_type
     
