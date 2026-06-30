@@ -44,7 +44,7 @@ class OpaquePredicate(abc.ABC):
     def create_predicate(self, predicate_variables: list[str], used_type: ctypes.CTypes) -> pycparser.c_ast.Node:
         pass
 
-class IsOddOrTwoPredicateTemplate(OpaquePredicate):
+class IsOddOrTwoOpaquePredicate(OpaquePredicate):
 
     def __init__(self, used_cbuilder: cbuilder.CBuilder) -> None:
         super().__init__(used_cbuilder)
@@ -55,7 +55,7 @@ class IsOddOrTwoPredicateTemplate(OpaquePredicate):
     def create_predicate(self, predicate_variables: list[str], used_type: ctypes.CTypes) -> pycparser.c_ast.Node:
         available_variables = self._list_to_dict(predicate_variables)
         if not self._check_input_variables(available_variables):
-            raise ValueError("Did not give IsOddOrTwoPredicateTemplate the necessary variables")
+            raise ValueError("Did not give IsOddOrTwoOpaquePredicate the necessary variables")
 
         constant0 = self._cbuilder.constant(used_type, 0)
         constant2 = self._cbuilder.constant(used_type, 2)
@@ -72,7 +72,7 @@ class IsOddOrTwoPredicateTemplate(OpaquePredicate):
             equal_2
         )
 
-class PythagoreanTriplePredicateTemplate(OpaquePredicate):
+class PythagoreanTripleOpaquePredicate(OpaquePredicate):
 
     def __init__(self, used_cbuilder: cbuilder.CBuilder) -> None:
         super().__init__(used_cbuilder)
@@ -83,7 +83,7 @@ class PythagoreanTriplePredicateTemplate(OpaquePredicate):
     def create_predicate(self, predicate_variables: list[str], used_type: ctypes.CTypes) -> pycparser.c_ast.Node:
         available_variables = self._list_to_dict(predicate_variables)
         if not self._check_input_variables(available_variables):
-            raise ValueError("Did not give PythagoreanTriplePredicateTemplate the necessary variables")
+            raise ValueError("Did not give PythagoreanTripleOpaquePredicate the necessary variables")
 
         constant9 = self._cbuilder.constant(used_type, 9)
         constant16 = self._cbuilder.constant(used_type, 16)
@@ -100,3 +100,17 @@ class PythagoreanTriplePredicateTemplate(OpaquePredicate):
 
         return self._cbuilder.binary_operation(coperators.BinaryCOperator.EQUAL, addition_9_16, mult_25)
 
+class TrueOpaquePredicate(OpaquePredicate):
+
+    def __init__(self, used_cbuilder: cbuilder.CBuilder) -> None:
+        super().__init__(used_cbuilder)
+        self._needed_variables = {
+            namegenerator.VariableNameTypes.TRUE: 1
+        }
+
+    def create_predicate(self, predicate_variables: list[str], used_type: ctypes.CTypes) -> pycparser.c_ast.Node:
+        available_variables = self._list_to_dict(predicate_variables)
+        if not self._check_input_variables(available_variables):
+            raise ValueError("Did not give TrueOpaquePredicate the necessary variables")
+
+        return self._cbuilder.variable(available_variables[namegenerator.VariableNameTypes.TRUE][0])

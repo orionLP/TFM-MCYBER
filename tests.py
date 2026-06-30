@@ -61,7 +61,7 @@ for node in arov_nodes:
 
 print('\nIsOddOrTwoPredicateTemplate\n')
 
-iootpt = opaquepredicate.IsOddOrTwoPredicateTemplate(
+iootpt = opaquepredicate.IsOddOrTwoOpaquePredicate(
     cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
 )
 
@@ -72,11 +72,22 @@ for node in iootpt_nodes:
 
 print('\nPythagoreanTriplePredicateTemplate\n')
 
-ptpt = opaquepredicate.PythagoreanTriplePredicateTemplate(
+ptpt = opaquepredicate.PythagoreanTripleOpaquePredicate(
     cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
 )
 
 ptpt_nodes = [ptpt.create_predicate(['vde3a5852e9ee86b89bb50b79ef143a09_random_opaque'], ctypes.CTypes.UNSIGNED_INT)]
 
 for node in ptpt_nodes:
+    print(generator.visit(node))
+
+print('\nTrueOpaquePredicate\n')
+
+top = opaquepredicate.TrueOpaquePredicate(
+    cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
+)
+
+top_nodes = [top.create_predicate(['vf4128ee24a084c6b102476805b91797a_true_opaque'], ctypes.CTypes.UNSIGNED_INT)]
+
+for node in top_nodes:
     print(generator.visit(node))
