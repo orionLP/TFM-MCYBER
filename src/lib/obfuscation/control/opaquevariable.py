@@ -199,9 +199,7 @@ class RAPrimeOpaqueVariable(PrimeOpaqueVariable):
             self._integer_definitions[target_variable_type].max_value // 2
         )
         
-        temp_prime_variable = self._cbuilder.variable(
-            self._temp_prime_name
-        )
+        temp_prime_variable = self._cbuilder.variable(self._temp_prime_name)
 
         modulo_operation = self._cbuilder.binary_operation(
             coperators.BinaryCOperator.MODULO,
@@ -209,10 +207,7 @@ class RAPrimeOpaqueVariable(PrimeOpaqueVariable):
             half_max
         )
 
-        constant1 = self._cbuilder.constant(
-            target_variable_type,
-            1
-        )
+        constant1 = self._cbuilder.constant(target_variable_type, 1)
 
         always_odd = self._cbuilder.binary_operation(
             coperators.BinaryCOperator.BITWISEOR,
@@ -226,10 +221,7 @@ class RAPrimeOpaqueVariable(PrimeOpaqueVariable):
             always_odd
         )
 
-        constant3 = self._cbuilder.constant(
-            target_variable_type,
-            3
-        )
+        constant3 = self._cbuilder.constant(target_variable_type, 3)
 
         assign_3 = self._cbuilder.assignment(
             coperators.AssignmentCOperator.ASSIGNMENT,
@@ -237,9 +229,7 @@ class RAPrimeOpaqueVariable(PrimeOpaqueVariable):
             constant3
         )
 
-        assign_3_block = self._cbuilder.block(
-            [assign_3]
-        )
+        assign_3_block = self._cbuilder.block([assign_3])
 
         lessthan_3 = self._cbuilder.binary_operation(
             coperators.BinaryCOperator.LESS,
@@ -247,13 +237,40 @@ class RAPrimeOpaqueVariable(PrimeOpaqueVariable):
             constant3
         )
 
-        if_block = self._cbuilder.if_block(
-            lessthan_3,
-            assign_3_block
-        )
+        if_block = self._cbuilder.if_block(lessthan_3, assign_3_block)
 
         return [assignment_temp_prime,if_block]
 
+    def _inner_algorithm(self, target_variable_type: ctypes.CTypes) -> pycparser.c_ast.While:
+        d_variable = self._cbuilder.variable(self._d_name)
+        i_variable = self._cbuilder.variable(self._i_name)
+        temp_prime_variable = self._cbuilder.variable(self._temp_prime_name)
+        
+        constant0 = self._cbuilder.constant(target_variable_type, 0)
+        constant2 = self._cbuilder.constant(target_variable_type, 2)
+
+        square_result = self._cbuilder.binary_operation(coperators.BinaryCOperator.MULTIPLICATION, i_variable, i_variable)
+        inner_predicate = self._cbuilder.binary_operation(coperators.BinaryCOperator.LESSOREQUAL, square_result, temp_prime_variable)
+
+        prime_divisible_i = self._cbuilder.binary_operation(coperators.BinaryCOperator.MODULO, temp_prime_variable, i_variable)
+        prime_predicate = self._cbuilder.binary_operation(coperators.BinaryCOperator.EQUAL, prime_divisible_i, constant0)
+
+        d_assign_0 = self._cbuilder.assignment(coperators.AssignmentCOperator.ASSIGNMENT, d_variable, constant0)
+        d_assign_block = self._cbuilder.block([d_assign_0])
+
+        inner_if_block = self._cbuilder.if_block(prime_predicate, d_assign_block) 
+
+        add_i_2 = self._cbuilder.binary_operation(coperators.BinaryCOperator.ADDITION, i_variable, constant2)
+        assign_i = self._cbuilder.assignment(coperators.AssignmentCOperator.ASSIGNMENT, i_variable, add_i_2)
+
+        while_block = self._cbuilder.block([inner_if_block, assign_i])
+
+        return self._cbuilder.while_block(
+            inner_predicate,
+            while_block
+        )
+
+
     def _create_opaque_algorithm(self, target_variable_type: ctypes.CTypes) -> list[pycparser.c_ast.Node]:
 
-        return self._preamble_algorithm(target_variable_type)
+        return self._preamble_algorithm(target_variable_type) + [self._inner_algorithm(target_variable_type)]
