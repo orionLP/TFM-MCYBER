@@ -3,6 +3,7 @@ import src.lib.chandling.cbuilder as cbuilder
 import src.lib.chandling.ctypes as ctypes
 import src.lib.obfuscation.utils.namegenerator as namegenerator
 import src.lib.obfuscation.control.opaquepredicate as opaquepredicate
+import src.lib.obfuscation.utils.scope as scope
 
 from pycparser import c_generator
 from src.lib.crypto.rng import prng
@@ -91,3 +92,10 @@ top_nodes = [top.create_predicate(['vf4128ee24a084c6b102476805b91797a_true_opaqu
 
 for node in top_nodes:
     print(generator.visit(node))
+
+print('\ndefined_variables_to_line\n')
+
+created_block = cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU).block(rapov_nodes)
+
+print(created_block)
+print(scope.defined_variables_to_line(created_block,5))
