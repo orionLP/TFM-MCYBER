@@ -1,11 +1,14 @@
 import abc
 import pycparser
+import copy
 
 from src.lib.crypto.rng import prng
+
 import src.lib.chandling.ctypes as ctypes
 import src.lib.chandling.cbuilder as cbuilder
 import src.lib.chandling.coperators as coperators
 import src.lib.obfuscation.utils.namegenerator as namegenerator
+import src.lib.obfuscation.utils.scope as scope
 
 '''
 A family of predicates that always returns true
@@ -19,6 +22,22 @@ class OpaquePredicate(abc.ABC):
     @property
     def needed_variables(self) -> dict[namegenerator.VariableNameTypes, int]:
         return self._needed_variables
+
+    def chosen_variables(self, used_scope: scope.Scope) -> list[str] | None:
+        available_variables = used_scope.scope_dict
+
+        return_list = []
+
+        for vartype in self.needed_variables:
+            if not vartype in available_variables:
+                return None
+            
+            if not available_variables[vartype] >= self.needed_variables[vartype]:
+                return None
+            else:
+                return_list = return_list + prng.random_selection(available_variables[vartype], self.needed_variables[vartype])
+        
+        return return_list
 
     def _list_to_dict(self, predicate_variables: list[str]) -> dict[namegenerator.VariableNameTypes, list[str]]:
         result_dict = {}
