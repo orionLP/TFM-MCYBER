@@ -1,5 +1,8 @@
 import abc
 import secrets
+import math
+
+from typing import Any
 from Crypto.Cipher import ChaCha20
 
 class PRNG(abc.ABC):
@@ -45,6 +48,15 @@ class PRNG(abc.ABC):
     def get_unsigned_integer(self, number_bytes: int) -> int:
         pass
 
+    @abc.abstractmethod
+    def get_range_unsigned_integer(self, upper_limit: int) -> int:
+        '''Number between [0,upper_limit)'''
+        pass
+    
+    @abc.abstractmethod
+    def random_choice(self, item_list: list[Any]) -> Any:
+        pass
+    
     @abc.abstractmethod
     def get_uchar(self) -> int:
         pass
@@ -94,6 +106,14 @@ class ChaCha20PRNG(PRNG):
     def get_unsigned_integer(self, number_bytes: int) -> int:
         return int.from_bytes(self.get_n_bytes(number_bytes), byteorder = 'little', signed = False)
     
+    def get_range_unsigned_integer(self, upper_limit: int) -> int:
+        needed_bytes = math.ceil(upper_limit.bit_length() / 8)
+        return self.get_unsigned_integer(needed_bytes) % upper_limit
+
+    def random_choice(self, item_list: list[Any]) -> Any:
+        list_length = len(item_list)
+        return item_list[self.get_range_unsigned_integer(list_length)]
+
     def get_uchar(self) -> int:
         return self.get_unsigned_integer(1)
 

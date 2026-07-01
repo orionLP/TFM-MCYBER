@@ -12,6 +12,7 @@ class AssignmentCOperator(enum.Enum):
 class UnaryCOperator(enum.Enum):
     ADDRESS = Operator('&')
     DEREFERENCE = Operator('*')
+    NOT = Operator('!')
 
 class BinaryCOperator(enum.Enum):
     ADDITION = Operator('+')

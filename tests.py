@@ -3,6 +3,8 @@ import src.lib.chandling.cbuilder as cbuilder
 import src.lib.chandling.ctypes as ctypes
 import src.lib.obfuscation.utils.namegenerator as namegenerator
 import src.lib.obfuscation.control.opaquepredicate as opaquepredicate
+import src.lib.obfuscation.control.opaqueif as opaqueif
+
 import src.lib.obfuscation.utils.scope as scope
 
 from pycparser import c_generator
@@ -99,3 +101,18 @@ created_block = cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU).block(rapov_n
 
 print(created_block)
 print(scope.defined_variables_to_line(created_block,5))
+
+print('\nJunkOpaqueIf\n')
+
+joi = opaqueif.JunkOpaqueIf(
+    cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
+)
+
+empty_scope = scope.StandardScope()
+empty_scope.enter_block()
+
+newblock = cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU).block(rapov_nodes)
+joi.use_opaque_if(empty_scope, top_nodes[0], newblock)
+
+for node in newblock:
+    print(generator.visit(node))
