@@ -13,7 +13,7 @@ from src.lib.crypto.rng import prng
 import secrets
 
 key = b'\x80\xbc6\x8a[\xd3u\xb1\xb7\xc4\xf8\xb8\xdd\xf2\xef\xea\xbc\xaf\xca\xb0>\xd8\xf3\xe8\x0f,\xf6\x17:\xd9V\x8f'
-nonce = b'\xbcj}v\xadL\xf0\xf0\xd4\xef\x0f!'
+nonce = b'\xbcj}v\xadL\xf0\xf0\xd4\xef\x14!'
 
 prng.key = key
 prng.nonce = nonce
@@ -113,6 +113,21 @@ empty_scope.enter_block()
 
 newblock = cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU).block(rapov_nodes)
 joi.use_opaque_if(empty_scope, top_nodes[0], newblock)
+
+for node in newblock:
+    print(generator.visit(node))
+
+print('\nBogusFlowOpaqueIf\n')
+
+bfoi = opaqueif.BogusFlowOpaqueIf(
+    cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
+)
+
+empty_scope = scope.StandardScope()
+empty_scope.enter_block()
+
+newblock = cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU).block(rapov_nodes)
+bfoi.use_opaque_if(empty_scope, top_nodes[0], newblock)
 
 for node in newblock:
     print(generator.visit(node))

@@ -68,3 +68,20 @@ class JunkOpaqueIf(OpaqueIf):
         bogus_if = self._cbuilder.if_block(negated_predicate, self._generate_junk_block(available_variables))
         current_block.block_items.insert(chosen_index, bogus_if)
 
+class BogusFlowOpaqueIf(OpaqueIf):
+
+    def use_opaque_if(self, upper_blocks_variables: scope.Scope, used_predicate: pycparser.c_ast.Node, current_block: pycparser.c_ast.Compound) -> None:
+        '''Get everything between [chosen_start, chosen_end]'''
+        if current_block.block_items is None or len(current_block.block_items) == 0:
+            raise ValueError("Given BogusFlowOpaqueIf a block with nothing in it")
+        
+        chosen_start = prng.get_range_unsigned_integer(len(current_block.block_items))
+        chosen_end = len(current_block.block_items) - 1
+
+        selected_nodes = current_block.block_items[chosen_start: (chosen_end + 1)]
+        new_block = self._cbuilder.block(selected_nodes)
+        new_if = self._cbuilder.if_block(used_predicate, new_block)
+
+        del current_block.block_items[chosen_start: (chosen_end + 1)]
+
+        current_block.block_items.insert(chosen_start, new_if)
