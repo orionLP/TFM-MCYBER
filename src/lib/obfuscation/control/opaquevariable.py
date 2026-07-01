@@ -60,7 +60,7 @@ class ResidueTrueOpaqueVariable(TrueOpaqueVariable):
         ]
 
     def _declare_opaque_variable(self, target_variable_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
-        x = self._cbuilder.variable(self._result_variable_name)
+        x = self._cbuilder.variable(self._address_variable_name)
 
         square = self._cbuilder.binary_operation(coperators.BinaryCOperator.MULTIPLICATION, x, x)
         addition_operation = self._cbuilder.binary_operation(coperators.BinaryCOperator.ADDITION, square, x)
