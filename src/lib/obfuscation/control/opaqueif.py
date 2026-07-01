@@ -24,7 +24,6 @@ class JunkOpaqueIf(OpaqueIf):
     def __init__(self, used_cbuilder: cbuilder.StandardCBuilder) -> None:
         super().__init__(used_cbuilder)
         self._expected_junk_length = 4
-        self._maximum_insertion_index = 255
 
     def _generate_random_operation(self, available_variables: list[str]) -> pycparser.c_ast.Node:
         # unary_chosen = bool(prng.get_range_unsigned_integer(2))
@@ -54,10 +53,18 @@ class JunkOpaqueIf(OpaqueIf):
         return self._cbuilder.block(new_block_items)
 
     def use_opaque_if(self, upper_blocks_variables: scope.Scope, used_predicate: pycparser.c_ast.Node, current_block: pycparser.c_ast.Compound) -> None:
-        max_index = min(self._maximum_insertion_index, len(current_block.block_items))
-        chosen_index = prng.get_range_unsigned_integer(max_index)
-        negated_predicate = self._cbuilder.unary_operation(coperators.UnaryCOperator.NOT, used_predicate)
+        min_index = 0
+        if upper_blocks_variables.variables_in_scope == 0:
+            first_variable_line = scope.first_line_with_variable(current_block)
+            if first_variable_line is None:
+                raise ValueError("Given JunkOpaqueIf a block with no variables in scope")
+            min_index = first_variable_line + 1
+        
+        max_index = len(current_block.block_items)
+        chosen_index = prng.get_range_unsigned_integer(max_index + 1, min_index)
         available_variables = upper_blocks_variables.scope_list + scope.defined_variables_to_line(current_block, chosen_index)
+
+        negated_predicate = self._cbuilder.unary_operation(coperators.UnaryCOperator.NOT, used_predicate)
         bogus_if = self._cbuilder.if_block(negated_predicate, self._generate_junk_block(available_variables))
         current_block.block_items.insert(chosen_index, bogus_if)
 

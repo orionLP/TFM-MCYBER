@@ -27,6 +27,11 @@ class Scope(abc.ABC):
     
     @property
     @abc.abstractmethod
+    def variables_in_scope(self) -> int:
+        pass
+    
+    @property
+    @abc.abstractmethod
     def depth(self) -> int:
         pass
 
@@ -54,6 +59,10 @@ class StandardScope(Scope):
         self._scope[-1].append(variable_name)
 
     @property
+    def variables_in_scope(self) -> int:
+        return len(self.scope_list)
+    
+    @property
     def depth(self) -> int:
         return len(self._scope)
 
@@ -73,13 +82,24 @@ class StandardScope(Scope):
                 return_list.append(block_variable)
         return return_list
 
+def _is_initalized_variable(node: pycparser.c_ast.Node) -> bool:
+    return isinstance(node, pycparser.c_ast.Decl) and node.init is not None
+
+def first_line_with_variable(block: pycparser.c_ast.Compound) -> int | None:
+    for i in range(len(block.block_items)):
+        if _is_initalized_variable(block.block_items[i]):
+            return i
+    return None        
+
 def defined_variables_to_line(block: pycparser.c_ast.Compound, item_line: int) -> list[str]:
+    '''Defined variables between [0,item_line)'''
+    
     if(item_line > len(block.block_items)):
         raise ValueError("defined_variables_to_line given an item_line out of index")
     
     return_list = []
     for i in range(item_line):
         node = block.block_items[i]
-        if isinstance(node, pycparser.c_ast.Decl) and node.init is not None:
+        if _is_initalized_variable(node):
             return_list.append(node.name)
     return return_list

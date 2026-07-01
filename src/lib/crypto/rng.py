@@ -44,22 +44,31 @@ class PRNG(abc.ABC):
     def get_n_bytes(self, n: int) -> bytes:
         pass
 
-    @abc.abstractmethod
     def get_unsigned_integer(self, number_bytes: int) -> int:
-        pass
+        return int.from_bytes(self.get_n_bytes(number_bytes), byteorder = 'little', signed = False)
+    
+    def get_range_unsigned_integer(self, upper_limit: int, lower_limit: int | None = None) -> int:
+        '''Number between [0,upper_limit) if lower_limit is none and [lower_limit, upper_limit) otherwise'''
+        effective_range = None
+        if lower_limit is None:
+            effective_range = upper_limit
+        else:
+            effective_range = upper_limit - lower_limit
 
-    @abc.abstractmethod
-    def get_range_unsigned_integer(self, upper_limit: int) -> int:
-        '''Number between [0,upper_limit)'''
-        pass
-    
-    @abc.abstractmethod
+        needed_bytes = math.ceil(effective_range.bit_length() / 8)
+        number_in_range = self.get_unsigned_integer(needed_bytes) % effective_range
+
+        if lower_limit is None:
+            return number_in_range
+        else:
+            return number_in_range + lower_limit
+
     def random_choice(self, item_list: list[Any]) -> Any:
-        pass
-    
-    @abc.abstractmethod
+        list_length = len(item_list)
+        return item_list[self.get_range_unsigned_integer(list_length)]
+
     def get_uchar(self) -> int:
-        pass
+        return self.get_unsigned_integer(1)
     
     @abc.abstractmethod
     def commit_changes(self) -> None:
@@ -103,20 +112,6 @@ class ChaCha20PRNG(PRNG):
     def get_n_bytes(self, n: int) -> bytes:
         return self._cipher.encrypt(b'\x00' * n)
     
-    def get_unsigned_integer(self, number_bytes: int) -> int:
-        return int.from_bytes(self.get_n_bytes(number_bytes), byteorder = 'little', signed = False)
-    
-    def get_range_unsigned_integer(self, upper_limit: int) -> int:
-        needed_bytes = math.ceil(upper_limit.bit_length() / 8)
-        return self.get_unsigned_integer(needed_bytes) % upper_limit
-
-    def random_choice(self, item_list: list[Any]) -> Any:
-        list_length = len(item_list)
-        return item_list[self.get_range_unsigned_integer(list_length)]
-
-    def get_uchar(self) -> int:
-        return self.get_unsigned_integer(1)
-
     def commit_changes(self) -> None:
         self._cipher = ChaCha20.new(key=self._key, nonce=self._nonce)
 
