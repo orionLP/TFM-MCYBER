@@ -32,9 +32,12 @@ class InjectOpaqueVariableVisitor(pycparser.c_ast.NodeVisitor):
 
     def visit_Compound(self, node):
         self._upper_block_scope.enter_block()
-
+        
         if node.block_items is None:
             node.block_items = []
+
+        if self._upper_block_scope.depth == self._max_depth:
+            return
         
         if self._upper_block_scope.depth == 1:
             new_block = self._cbuider.block(node.block_items)

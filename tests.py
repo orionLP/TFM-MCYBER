@@ -15,7 +15,7 @@ from src.lib.crypto.rng import prng
 import secrets
 
 key = b'\x80\xbc6\x8a[\xd3u\xb1\xb7\xc4\xf8\xb8\xdd\xf2\xef\xea\xbc\xaf\xca\xb0>\xd8\xf3\xe8\x0f,\xf6\x17:\xd9V\x8f'
-nonce = b'\xbcj}v\xadL\xf0\xf0\xd4\xef\x14!'
+nonce = b'\xbcj}v\xadL\xf0\xf0\xd4\xef\x19!'
 
 prng.key = key
 prng.nonce = nonce
@@ -152,15 +152,27 @@ iovv = opaquevariablevisitor.InjectOpaqueVariableVisitor(
 
 newblock = cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU).block(rapov_nodes)
 
+print('Original: ')
+print(generator.visit(newblock))
 iovv.visit(newblock)
+
+print("With variables")
 print(generator.visit(newblock))
 
-# toiv = opaqueifvisitor.TrueOpaqueIfVisitor(
-#     opaquepredicate.IsOddOrTwoOpaquePredicate(
-#         cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
-#     ), 
-#     scope.StandardScope()
-# )
+toiv = opaqueifvisitor.TrueOpaqueIfVisitor(
+    opaquepredicate.DummyOpaquePredicate(
+        cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
+    ),
+    opaqueif.JunkOpaqueIf(cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU)),
+    ctypes.CTypes.UNSIGNED_INT,
+    scope.StandardScope(),
+    16
+)
+toiv.visit(newblock)
+
+
+print("With toiv")
+print(generator.visit(newblock))
 
 
 # toiv.visit(newblock)

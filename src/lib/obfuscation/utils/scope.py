@@ -86,12 +86,12 @@ class StandardScope(Scope):
                 return_list.append(block_variable)
         return return_list
 
-def _is_initalized_variable(node: pycparser.c_ast.Node) -> bool:
+def is_initalized_variable(node: pycparser.c_ast.Node) -> bool:
     return isinstance(node, pycparser.c_ast.Decl) and node.init is not None
 
 def first_line_with_variable(block: pycparser.c_ast.Compound) -> int | None:
     for i in range(len(block.block_items)):
-        if _is_initalized_variable(block.block_items[i]):
+        if is_initalized_variable(block.block_items[i]):
             return i
     return None        
 
@@ -104,6 +104,6 @@ def defined_variables_to_line(block: pycparser.c_ast.Compound, item_line: int) -
     return_list = []
     for i in range(item_line):
         node = block.block_items[i]
-        if _is_initalized_variable(node):
+        if is_initalized_variable(node):
             return_list.append(node.name)
     return return_list

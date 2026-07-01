@@ -32,7 +32,7 @@ class OpaquePredicate(abc.ABC):
             if not vartype in available_variables:
                 return None
             
-            if not available_variables[vartype] >= self.needed_variables[vartype]:
+            if not len(available_variables[vartype]) >= self.needed_variables[vartype]:
                 return None
             else:
                 return_list = return_list + prng.random_selection(available_variables[vartype], self.needed_variables[vartype])
