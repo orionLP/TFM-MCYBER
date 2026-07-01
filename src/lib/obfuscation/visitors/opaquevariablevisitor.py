@@ -35,18 +35,17 @@ class InjectOpaqueVariableVisitor(pycparser.c_ast.NodeVisitor):
 
         if node.block_items is None:
             node.block_items = []
-
-        if self._upper_block_scope == 1:
+        
+        if self._upper_block_scope.depth == 1:
             new_block = self._cbuider.block(node.block_items)
             node.block_items = [new_block]
 
         if prng.chance(self._aggressiveness):
             position_to_place = prng.get_range_unsigned_integer(len(node.block_items) + 1)
-            node.block_items.insert
-            (
-                position_to_place, 
-                self._opaque_variable.generate_opaque_variable(self._target_type)
-            )
+            nodes_to_insert = self._opaque_variable.generate_opaque_variable(self._target_type)
+            for i in range(len(nodes_to_insert) - 1, -1, -1):
+                node.block_items.insert(position_to_place, nodes_to_insert[i])
+        
         self.generic_visit(node)
 
         self._upper_block_scope.enter_block()
