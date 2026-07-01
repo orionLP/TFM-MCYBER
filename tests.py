@@ -4,6 +4,8 @@ import src.lib.chandling.ctypes as ctypes
 import src.lib.obfuscation.utils.namegenerator as namegenerator
 import src.lib.obfuscation.control.opaquepredicate as opaquepredicate
 import src.lib.obfuscation.control.opaqueif as opaqueif
+import src.lib.obfuscation.visitors.opaqueifvisitor as opaqueifvisitor
+import src.lib.obfuscation.visitors.opaquevariablevisitor as opaquevariablevisitor
 
 import src.lib.obfuscation.utils.scope as scope
 
@@ -131,3 +133,37 @@ bfoi.use_opaque_if(empty_scope, top_nodes[0], newblock)
 
 for node in newblock:
     print(generator.visit(node))
+
+print('\nTrueOpaqueIfVisitor InjectOpaqueVariableVisitor\n')
+
+iovv = opaquevariablevisitor.InjectOpaqueVariableVisitor(
+    cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU),
+    op.ResidueTrueOpaqueVariable(
+        ctypes.I686PCWindowsGNU, 
+        cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
+        cbuilder.StandardFrequentCodeCBuilder(cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), ctypes.I686PCWindowsGNU), 
+        namegenerator.StandardVariableNameGenerator(16)
+    ),
+    ctypes.CTypes.UNSIGNED_INT,
+    scope.StandardScope(),
+    16,
+    1
+)
+
+newblock = cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU).block(rapov_nodes)
+
+iovv.visit(newblock)
+print(generator.visit(newblock))
+
+# toiv = opaqueifvisitor.TrueOpaqueIfVisitor(
+#     opaquepredicate.IsOddOrTwoOpaquePredicate(
+#         cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
+#     ), 
+#     scope.StandardScope()
+# )
+
+
+# toiv.visit(newblock)
+
+# for node in newblock:
+#     print(generator.visit(node))
