@@ -68,10 +68,14 @@ class StandardScope(Scope):
 
     @property
     def scope_dict(self) -> dict[namegenerator.VariableNameTypes, list[str]]:
-        return_dict = {possible_type: [] for possible_type in namegenerator.VariableNameTypes}
+        # return_dict = {possible_type: [] for possible_type in namegenerator.VariableNameTypes}
+        return_dict = {}
         for block in self._scope:
             for block_variable in block:
-                return_dict[namegenerator.variable_type(block_variable)].append(block_variable)
+                this_type = namegenerator.variable_type(block_variable)
+                if not this_type in return_dict:
+                    return_dict[this_type] = []
+                return_dict[this_type].append(block_variable)
         return return_dict
 
     @property
