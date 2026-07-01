@@ -44,7 +44,10 @@ class OpaquePredicate(abc.ABC):
     def create_predicate(self, predicate_variables: list[str], used_type: ctypes.CTypes) -> pycparser.c_ast.Node:
         pass
 
-class IsOddOrTwoOpaquePredicate(OpaquePredicate):
+class TrueOpaquePredicate(OpaquePredicate):
+    pass
+
+class IsOddOrTwoOpaquePredicate(TrueOpaquePredicate):
 
     def __init__(self, used_cbuilder: cbuilder.CBuilder) -> None:
         super().__init__(used_cbuilder)
@@ -72,7 +75,7 @@ class IsOddOrTwoOpaquePredicate(OpaquePredicate):
             equal_2
         )
 
-class PythagoreanTripleOpaquePredicate(OpaquePredicate):
+class PythagoreanTripleOpaquePredicate(TrueOpaquePredicate):
 
     def __init__(self, used_cbuilder: cbuilder.CBuilder) -> None:
         super().__init__(used_cbuilder)
@@ -100,7 +103,7 @@ class PythagoreanTripleOpaquePredicate(OpaquePredicate):
 
         return self._cbuilder.binary_operation(coperators.BinaryCOperator.EQUAL, addition_9_16, mult_25)
 
-class TrueOpaquePredicate(OpaquePredicate):
+class DummyOpaquePredicate(TrueOpaquePredicate):
 
     def __init__(self, used_cbuilder: cbuilder.CBuilder) -> None:
         super().__init__(used_cbuilder)

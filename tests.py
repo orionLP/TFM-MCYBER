@@ -84,9 +84,9 @@ ptpt_nodes = [ptpt.create_predicate(['vde3a5852e9ee86b89bb50b79ef143a09_random_o
 for node in ptpt_nodes:
     print(generator.visit(node))
 
-print('\nTrueOpaquePredicate\n')
+print('\nDummyOpaquePredicate\n')
 
-top = opaquepredicate.TrueOpaquePredicate(
+top = opaquepredicate.DummyOpaquePredicate(
     cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU), 
 )
 
@@ -99,8 +99,8 @@ print('\ndefined_variables_to_line\n')
 
 created_block = cbuilder.StandardCBuilder(ctypes.I686PCWindowsGNU).block(rapov_nodes)
 
-print(created_block)
-print(scope.defined_variables_to_line(created_block,5))
+# print(created_block)
+# print(scope.defined_variables_to_line(created_block,5))
 
 print('\nJunkOpaqueIf\n')
 
