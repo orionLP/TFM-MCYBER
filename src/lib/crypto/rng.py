@@ -1,6 +1,7 @@
 import abc
 import secrets
 import math
+import copy
 
 from typing import Any
 from Crypto.Cipher import ChaCha20
@@ -66,6 +67,24 @@ class PRNG(abc.ABC):
     def random_choice(self, item_list: list[Any]) -> Any:
         list_length = len(item_list)
         return item_list[self.get_range_unsigned_integer(list_length)]
+
+    def random_selection(self, item_list: list[Any], number_of_items: int) -> list[Any]:
+        if number_of_items > len(item_list):
+            raise ValueError("Given PRNG a number_of_items too big for the list")
+        if number_of_items < 0:
+            raise ValueError("Given PRNG a negative number_of_items")
+        
+        new_list = copy.deepcopy(item_list)
+
+        while len(new_list) != number_of_items:
+            random_index = self.get_range_unsigned_integer(len(new_list))
+            del new_list[random_index]
+
+        return new_list
+
+    def chance(self, probability: float) -> bool:
+        chosen = self.get_range_unsigned_integer(100 + 1) / 100
+        return probability < chosen
 
     def get_uchar(self) -> int:
         return self.get_unsigned_integer(1)
