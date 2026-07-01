@@ -84,7 +84,7 @@ class PRNG(abc.ABC):
 
     def chance(self, probability: float) -> bool:
         chosen = self.get_range_unsigned_integer(100 + 1) / 100
-        return probability < chosen
+        return probability > chosen
 
     def get_uchar(self) -> int:
         return self.get_unsigned_integer(1)
