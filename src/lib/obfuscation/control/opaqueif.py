@@ -33,11 +33,12 @@ class JunkOpaqueIf(OpaqueIf):
         #     variable1 = self._cbuilder.variable(prng.random_choice(available_variables))
         #     final_operation = self._cbuilder.unary_operation(chosen_operator, variable1)
         # else:
+        variables_following_format = [var for var in available_variables if namegenerator.follows_format(var)]
         chosen_operator = prng.random_choice(list(coperators.BinaryCOperator))
-        variable1 = self._cbuilder.variable(prng.random_choice(available_variables))
-        variable2 = self._cbuilder.variable(prng.random_choice(available_variables))
+        variable1 = self._cbuilder.variable(prng.random_choice(variables_following_format))
+        variable2 = self._cbuilder.variable(prng.random_choice(variables_following_format))
         final_operation = self._cbuilder.binary_operation(chosen_operator, variable1, variable2)
-        assign_variable = self._cbuilder.variable(prng.random_choice(available_variables))
+        assign_variable = self._cbuilder.variable(prng.random_choice(variables_following_format))
         
         return self._cbuilder.assignment(
             coperators.AssignmentCOperator.ASSIGNMENT,
