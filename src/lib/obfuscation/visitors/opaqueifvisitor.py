@@ -37,11 +37,12 @@ class TrueOpaqueIfVisitor(pycparser.c_ast.NodeVisitor):
     def visit_Compound(self, node):
         self._upper_block_scope.enter_block()
         
-        if self._upper_block_scope.depth == self._max_depth:
-            return
-
         if node.block_items is None:
             node.block_items = []
+        
+        if self._upper_block_scope.depth == self._max_depth:
+            self._upper_block_scope.exit_block()
+            return
 
         selected_variables = self._predicate_generator.chosen_variables(self._upper_block_scope)
         if not selected_variables is None:

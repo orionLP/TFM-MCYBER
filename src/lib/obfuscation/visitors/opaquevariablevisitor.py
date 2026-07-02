@@ -37,6 +37,7 @@ class InjectOpaqueVariableVisitor(pycparser.c_ast.NodeVisitor):
             node.block_items = []
 
         if self._upper_block_scope.depth == self._max_depth:
+            self._upper_block_scope.exit_block()
             return
         
         if self._upper_block_scope.depth == 1:
@@ -51,4 +52,4 @@ class InjectOpaqueVariableVisitor(pycparser.c_ast.NodeVisitor):
         
         self.generic_visit(node)
 
-        self._upper_block_scope.enter_block()
+        self._upper_block_scope.exit_block()

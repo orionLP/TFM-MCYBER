@@ -12,7 +12,7 @@ All names generated in this file follow the convention that they are made of CUS
 
 @dataclasses.dataclass
 class NameType():
-    name_string: str
+    name_string: str | None
 
 class VariableNameTypes(enum.Enum):
     TRUE = NameType('true_opaque')
@@ -21,9 +21,22 @@ class VariableNameTypes(enum.Enum):
     RANDOM = NameType('random_opaque')
     USELESS = NameType('useless_opaque')
     COMPUTATION = NameType('computation_opaque')
+    OTHER = NameType(None)
 
 def is_type(variable_name: str, name_type: VariableNameTypes) -> bool:
+    if name_type == VariableNameTypes.OTHER:
+        for possible_type in VariableNameTypes:
+            if possible_type != VariableNameTypes.OTHER and variable_name.endswith(possible_type.value.name_string):
+                return False
+        return True
+
     return variable_name.endswith(name_type.value.name_string)
+
+def follows_format(name: str) -> bool:
+    for available_type in VariableNameTypes:
+        if available_type != VariableNameTypes.OTHER and is_type(name, available_type):
+            return True
+    return False
 
 def variable_type(variable_name: str) -> VariableNameTypes:
     for available_type in VariableNameTypes:
