@@ -81,6 +81,7 @@ if __name__ == "__main__":
     extractor = StandardHeaderExtractor()
     pah = ProcessArchiveHandler()
     for header, library in relation_header_libraries.items():
+
         path_to_include = '/usr/i686-w64-mingw32/include/' + header
         path_to_library = '/usr/i686-w64-mingw32/lib/' + library
         
@@ -91,4 +92,4 @@ if __name__ == "__main__":
 
         print(f'Header: {header}, Library {library}')
         print(f'Number of functions {len(functions_in_header.intersection(functions_in_archive))}')
-        print(functions_in_header.intersection(functions_in_archive))
+        # print(functions_in_header.intersection(functions_in_archive))
