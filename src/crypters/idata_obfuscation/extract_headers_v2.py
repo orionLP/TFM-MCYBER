@@ -28,7 +28,7 @@ class StandardHeaderExtractor(HeaderExtractor):
         return_list = []
         for cursor in self._tu.cursor.get_children():
             if cursor.kind == CursorKind.FUNCTION_DECL:
-                return_list.append(cursor)
+                return_list.append(cursor.spelling)
         return return_list
 
 import subprocess
@@ -80,9 +80,11 @@ if __name__ == "__main__":
     extractor = StandardHeaderExtractor()
     path_to_include = '/usr/i686-w64-mingw32/include/windows.h'
     extractor.parse(path_to_include)
-    functions_in_header = extractor.list_functions()
-    print(functions_in_header)
+    functions_in_header = set(extractor.list_functions())
+    # print(functions_in_header)
 
     pah = ProcessArchiveHandler()
-    functions_in_archive = pah.list_functions('/usr/i686-w64-mingw32/lib/libkernel32.a')
-    print(functions_in_archive)
+    functions_in_archive = set(pah.list_functions('/usr/i686-w64-mingw32/lib/libkernel32.a'))
+    # print(functions_in_archive)
+
+    print(functions_in_header.intersection(functions_in_archive))
