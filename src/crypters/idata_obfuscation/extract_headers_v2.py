@@ -62,6 +62,27 @@ class ProcessArchiveHandler(ArchiveHandler):
 
         return return_list            
 
+
+class EligibleFunctions(abc.ABC):
+
+    @abc.abstractmethod
+    def parse(self, header_path: str) -> None:
+        pass
+
+    @abc.abstractmethod
+    def eligible_functions(self, function_list: list[str], header_file_path: str) -> list[str]:
+        pass
+
+class StandardEligibleFunctions(EligibleFunctions):
+
+    def parse(self, header_path: str) -> None:
+        self._processed_headers = None
+        self._tu = None
+        self._index = Index.create()
+    
+    def eligible_functions(self, function_list: list[str], header_file_path: str) -> list[str]:
+        pass
+
 import csv
 
 if __name__ == "__main__":
