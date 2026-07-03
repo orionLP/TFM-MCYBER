@@ -26,8 +26,10 @@ class StandardHeaderExtractor(HeaderExtractor):
 
     def list_functions(self):
         return_list = []
+        main_file = self._tu.cursor.extent.start.file.name
         for cursor in self._tu.cursor.get_children():
-            if cursor.kind == CursorKind.FUNCTION_DECL:
+            function_location = cursor.location.file.name
+            if cursor.kind == CursorKind.FUNCTION_DECL and main_file == function_location:
                 return_list.append(cursor.spelling)
         return return_list
 
@@ -54,8 +56,9 @@ class ProcessArchiveHandler(ArchiveHandler):
         for line in result.stdout.split('\n'):
             found = not re.match("[0-9]* I __imp__[A-Z]", line) is None
             if found:
-                name = re.search("__imp__.*@",line).group(0)[7:-1]
-                return_list.append(name)
+                name = re.search("__imp__.*@",line)
+                if not name is None:
+                    return_list.append(name.group(0)[7:-1])
 
         return return_list            
 
@@ -74,17 +77,18 @@ if __name__ == "__main__":
             header_file = row[0]
             archive_file = row[1]
             relation_header_libraries[header_file] = archive_file
-    
-    print(relation_header_libraries)
 
     extractor = StandardHeaderExtractor()
-    path_to_include = '/usr/i686-w64-mingw32/include/windows.h'
-    extractor.parse(path_to_include)
-    functions_in_header = set(extractor.list_functions())
-    # print(functions_in_header)
-
     pah = ProcessArchiveHandler()
-    functions_in_archive = set(pah.list_functions('/usr/i686-w64-mingw32/lib/libkernel32.a'))
-    # print(functions_in_archive)
+    for header, library in relation_header_libraries.items():
+        path_to_include = '/usr/i686-w64-mingw32/include/' + header
+        path_to_library = '/usr/i686-w64-mingw32/lib/' + library
+        
+        extractor.parse(path_to_include)
+        functions_in_header = set(extractor.list_functions())
+        
+        functions_in_archive = set(pah.list_functions(path_to_library))
 
-    print(functions_in_header.intersection(functions_in_archive))
+        print(f'Header: {header}, Library {library}')
+        print(f'Number of functions {len(functions_in_header.intersection(functions_in_archive))}')
+        print(functions_in_header.intersection(functions_in_archive))
