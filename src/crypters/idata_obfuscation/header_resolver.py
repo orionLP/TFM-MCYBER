@@ -72,8 +72,16 @@ class HeaderResolver:
         needed_types = []
         if is_function_declaration(cursor): 
             needed_types = self._clean_types(list(cursor.type.argument_types()) + [cursor.result_type])
-        
+        if cursor.kind == CursorKind.TYPEDEF_DECL:
+            needed_types += self._clean_types([cursor.underlying_typedef_type])
 
+        types_declarations = [item.get_declaration() for item in needed_types]
+        for item in needed_types:
+            cursor = item.get_declaration()
+            identifier = cursor.get_usr()
+            if not identifier in dependency_graph.nodes:
+                dependency_graph.add_node(identifier, cursor = cursor)
+            dependency_graph.add_edge(start_node, identifier)
 
 
     def _construct_dependency_graph(self, function_node: clang.cindex.Cursor) -> nx.DiGraph:
@@ -86,11 +94,14 @@ class HeaderResolver:
         '''Returns a list of all dependencies and the function node'''
         function_node = self._function_nodes[func_name]
         dependency_graph = self._construct_dependency_graph(function_node)
+        return dependency_graph
         
-        
-        # type_nodes = self._resolve_types(needed_types)
+        # # type_nodes = self._resolve_types(needed_types)
 
-        return type_nodes + [function_node]
+        # return type_nodes + [function_node]
+
+
+import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     extractor = HeaderResolver()
@@ -98,4 +109,17 @@ if __name__ == "__main__":
     # print(extractor._function_nodes)
     # print([extractor._function_nodes[e].get_usr() for e in extractor._function_nodes])
     # print(extractor._file_path)
-    print(extractor.resolve_dependencies('VirtualAlloc'))
+    graph = extractor.resolve_dependencies('VirtualAlloc')
+
+    # Create layout (spring layout works well)
+    pos = nx.spring_layout(graph, seed=42)
+
+    # Draw the graph
+    nx.draw_networkx_nodes(graph, pos, node_color='lightblue', node_size=100)
+    nx.draw_networkx_edges(graph, pos, edge_color='gray', arrows=True, arrowsize=20)
+    nx.draw_networkx_labels(graph, pos, font_size=10)
+
+    plt.title("Control Flow Graph")
+    plt.axis('off')
+    plt.tight_layout()
+    plt.show()
