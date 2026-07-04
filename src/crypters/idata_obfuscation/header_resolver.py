@@ -56,10 +56,11 @@ class HeaderResolver:
             unwrapped = self._unwrap(item)
             if is_primitive(unwrapped.kind):
                 continue
-            elif unwrapped.kind == TypeKind.FUNCTIONPROTO:
-                for argument in unwrapped.argument_types():
-                    clean_list += self._clean_types(argument)
-                clean_list += self._clean_types(unwrapped.get_result())
+            elif unwrapped.kind in (TypeKind.FUNCTIONPROTO, TypeKind.FUNCTIONNOPROTO):
+                if unwrapped.kind == TypeKind.FUNCTIONPROTO:
+                    for argument in unwrapped.argument_types():
+                        clean_list += self._clean_types([argument])
+                clean_list += self._clean_types([unwrapped.get_result()])
             else:
                 clean_list += [unwrapped]
         
@@ -79,21 +80,28 @@ class HeaderResolver:
         for item in needed_types:
             cursor = item.get_declaration()
             identifier = cursor.get_usr()
-            if not identifier in dependency_graph.nodes:
+            was_before = identifier in dependency_graph.nodes
+            if not was_before:
                 dependency_graph.add_node(identifier, cursor = cursor)
             dependency_graph.add_edge(start_node, identifier)
+            if not was_before:
+                self._construct_dependencies(dependency_graph, identifier)
 
 
-    def _construct_dependency_graph(self, function_node: clang.cindex.Cursor) -> nx.DiGraph:
-        dependency_graph = nx.DiGraph()
+    def _construct_dependency_graph(self, function_node: clang.cindex.Cursor, previous_graph: nx.DiGraph | None = None) -> nx.DiGraph:
+        dependency_graph = None
+        if previous_graph is None:
+            dependency_graph = nx.DiGraph()
+        else:
+            dependency_graph = previous_graph
         dependency_graph.add_node(function_node.get_usr(), cursor = function_node)
         self._construct_dependencies(dependency_graph, function_node.get_usr())
         return dependency_graph
     
-    def resolve_dependencies(self, func_name: str) -> list[clang.cindex.Cursor]:
+    def resolve_dependencies(self, func_name: str, previous_graph: nx.DiGraph | None = None) -> list[clang.cindex.Cursor]:
         '''Returns a list of all dependencies and the function node'''
         function_node = self._function_nodes[func_name]
-        dependency_graph = self._construct_dependency_graph(function_node)
+        dependency_graph = self._construct_dependency_graph(function_node, previous_graph)
         return dependency_graph
         
         # # type_nodes = self._resolve_types(needed_types)
@@ -110,12 +118,19 @@ if __name__ == "__main__":
     # print([extractor._function_nodes[e].get_usr() for e in extractor._function_nodes])
     # print(extractor._file_path)
     graph = extractor.resolve_dependencies('VirtualAlloc')
+    graph = extractor.resolve_dependencies('VirtualProtect', graph)
+    graph = extractor.resolve_dependencies('GetProcAddress', graph)
 
-    # Create layout (spring layout works well)
-    pos = nx.spring_layout(graph, seed=42)
+
+
+    # Create layout with better spacing
+    pos = nx.spring_layout(graph, seed=42, k=2, iterations=50)
+
+    # Or increase the repulsive force
+    pos = nx.spring_layout(graph, seed=42, k=3, iterations=50)
 
     # Draw the graph
-    nx.draw_networkx_nodes(graph, pos, node_color='lightblue', node_size=100)
+    nx.draw_networkx_nodes(graph, pos, node_color='lightblue', node_size=300)
     nx.draw_networkx_edges(graph, pos, edge_color='gray', arrows=True, arrowsize=20)
     nx.draw_networkx_labels(graph, pos, font_size=10)
 
