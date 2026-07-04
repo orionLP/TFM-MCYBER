@@ -113,6 +113,7 @@ class HeaderResolver:
 
         for resource in topological_sort:
             node = graph.nodes[resource]['cursor']
+            print(node.extent)
             first = True
             for token in node.get_tokens():
                 if first:
