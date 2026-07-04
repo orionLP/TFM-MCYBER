@@ -51,7 +51,6 @@ class HeaderResolver:
     def _clean_types(self, type_list: list[clang.cindex.Type]) -> list[clang.cindex.Type]:
         clean_list = []
 
-        print(f'Unclean list {[item.spelling for item in type_list]}')
         for item in type_list:
             unwrapped = self._unwrap(item)
             if is_primitive(unwrapped.kind):
@@ -64,8 +63,6 @@ class HeaderResolver:
             else:
                 clean_list += [unwrapped]
         
-        print(f'Clean list {[item.spelling for item in clean_list]}')
-        
         return clean_list
 
     def _construct_dependencies(self, dependency_graph: nx.DiGraph, start_node: str) -> None:
@@ -76,9 +73,7 @@ class HeaderResolver:
         if cursor.kind == CursorKind.TYPEDEF_DECL:
             needed_types += self._clean_types([cursor.underlying_typedef_type])
         if cursor.kind in (CursorKind.STRUCT_DECL, CursorKind.UNION_DECL):
-            print('In struct')
             for field in cursor.get_children():
-                print(f'Child {field.spelling}')
                 if field.kind == CursorKind.FIELD_DECL:
                     needed_types += self._clean_types([field.type])
 
@@ -110,19 +105,45 @@ class HeaderResolver:
         dependency_graph = self._construct_dependency_graph(function_node, previous_graph)
         return dependency_graph
 
+    def sort_dependencies(self, graph: nx.DiGraph) -> list[str]:
+        return list(reversed(list(nx.topological_sort(graph))))
+
+    def print_code(self, graph: nx.DiGraph, topological_sort: list[str]) -> str:
+        for resource in topological_sort:
+            node = graph.nodes[resource]['cursor']
+            print(node.get_usr())
+            print(node.kind)
+            print(node.extent)
+            for token in node.get_tokens():
+                print(f"{token.kind.name:15} | {repr(token.spelling)}")
+
+            for child in node.get_children():
+                tokens = list(child.get_tokens())
+                print(f"  Child {child.kind.name}: {[t.spelling for t in tokens]}")
+
 import matplotlib.pyplot as plt
+
+def print_node(node):
+    for cursor in node.get_children():
+        print(cursor.spelling)
+
+
+# i have no idea why but with preprocessing it finally works
+# 
+# command used:
+# clang  --target=i686-pc-windows-gnu -E -I/usr/i686-w64-mingw32/include /usr/i686-w64-mingw32/include/windows.h -o preprocessed.i
 
 if __name__ == "__main__":
     extractor = HeaderResolver()
-    extractor.parse('/usr/i686-w64-mingw32/include/windows.h', '/usr/i686-w64-mingw32/include/')
-
-
+    extractor.parse('./preprocessed.i', '/usr/i686-w64-mingw32/include/')
 
     graph = extractor.resolve_dependencies('VirtualAlloc')
     graph = extractor.resolve_dependencies('VirtualProtect', graph)
     graph = extractor.resolve_dependencies('GetProcAddress', graph)
 
-
+    dependencies_listed = extractor.sort_dependencies(graph)
+    generated_code = extractor.print_code(graph, dependencies_listed)
+    print(generated_code)
 
     # Create layout with better spacing
     pos = nx.spring_layout(graph, seed=42, k=2, iterations=50)
