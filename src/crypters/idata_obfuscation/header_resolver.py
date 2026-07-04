@@ -109,24 +109,22 @@ class HeaderResolver:
         return list(reversed(list(nx.topological_sort(graph))))
 
     def print_code(self, graph: nx.DiGraph, topological_sort: list[str]) -> str:
+        final_string = ""
+
         for resource in topological_sort:
             node = graph.nodes[resource]['cursor']
-            print(node.get_usr())
-            print(node.kind)
-            print(node.extent)
+            first = True
             for token in node.get_tokens():
-                print(f"{token.kind.name:15} | {repr(token.spelling)}")
+                if first:
+                    final_string += token.spelling
+                    first = False
+                else:
+                    final_string += " " + token.spelling
+            final_string += ";\n"
 
-            for child in node.get_children():
-                tokens = list(child.get_tokens())
-                print(f"  Child {child.kind.name}: {[t.spelling for t in tokens]}")
+        return final_string
 
 import matplotlib.pyplot as plt
-
-def print_node(node):
-    for cursor in node.get_children():
-        print(cursor.spelling)
-
 
 # i have no idea why but with preprocessing it finally works
 # 
