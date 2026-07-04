@@ -72,9 +72,15 @@ class HeaderResolver:
         cursor = dependency_graph.nodes[start_node]['cursor']
         needed_types = []
         if is_function_declaration(cursor): 
-            needed_types = self._clean_types(list(cursor.type.argument_types()) + [cursor.result_type])
+            needed_types += self._clean_types(list(cursor.type.argument_types()) + [cursor.result_type])
         if cursor.kind == CursorKind.TYPEDEF_DECL:
             needed_types += self._clean_types([cursor.underlying_typedef_type])
+        if cursor.kind in (CursorKind.STRUCT_DECL, CursorKind.UNION_DECL):
+            print('In struct')
+            for field in cursor.get_children():
+                print(f'Child {field.spelling}')
+                if field.kind == CursorKind.FIELD_DECL:
+                    needed_types += self._clean_types([field.type])
 
         types_declarations = [item.get_declaration() for item in needed_types]
         for item in needed_types:
@@ -103,20 +109,15 @@ class HeaderResolver:
         function_node = self._function_nodes[func_name]
         dependency_graph = self._construct_dependency_graph(function_node, previous_graph)
         return dependency_graph
-        
-        # # type_nodes = self._resolve_types(needed_types)
-
-        # return type_nodes + [function_node]
-
 
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     extractor = HeaderResolver()
     extractor.parse('/usr/i686-w64-mingw32/include/windows.h', '/usr/i686-w64-mingw32/include/')
-    # print(extractor._function_nodes)
-    # print([extractor._function_nodes[e].get_usr() for e in extractor._function_nodes])
-    # print(extractor._file_path)
+
+
+
     graph = extractor.resolve_dependencies('VirtualAlloc')
     graph = extractor.resolve_dependencies('VirtualProtect', graph)
     graph = extractor.resolve_dependencies('GetProcAddress', graph)
