@@ -1,7 +1,7 @@
 import abc
 import networkx as nx
 
-from clang.cindex import CursorKind
+from clang.cindex import CursorKind, TypeKind
 
 class HeaderHandler(abc.ABC):
 
@@ -92,12 +92,17 @@ class StandardHeaderResolver(HeaderHandler):
             i += 1
         return ''.join(out)
 
+    def _is_typedef_struct(self, graph: nx.DiGraph, resource: str) -> bool:
+        parents = list(graph.predecessors(resource))
+        return len(parents) == 1 and CursorKind.TYPEDEF_DECL == graph.nodes[parents[0]]['cursor'].kind and CursorKind.STRUCT_DECL == graph.nodes[resource]['cursor'].kind
+
     def print_code(self, graph: nx.DiGraph) -> tuple[str,str]:
         final_string = ""
         topological_sort = self._sort_dependencies(graph)
         for resource in topological_sort:
             node = graph.nodes[resource]['cursor']
-            final_string += self._get_source_text(node)
-            final_string += "\n"
+            if not self._is_typedef_struct(graph, resource):
+                final_string += self._get_source_text(node)
+                final_string += "\n"
 
         return (final_string, self._strip_attributes(final_string))
