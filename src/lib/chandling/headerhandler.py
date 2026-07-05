@@ -15,9 +15,6 @@ class StandardHeaderResolver(HeaderHandler):
 
     def _get_source_text(self, cursor) -> str:
         extent = cursor.extent
-        print(extent)
-        print([token for token in cursor.get_tokens()])
-        print(cursor.spelling)
         start = extent.start.offset
 
         filename = extent.start.file.name
@@ -64,9 +61,7 @@ class StandardHeaderResolver(HeaderHandler):
     def print_code(self, graph: nx.DiGraph) -> tuple[str,str]:
         final_string = ""
         topological_sort = self._sort_dependencies(graph)
-        print(topological_sort)
         for resource in topological_sort:
-            print(graph.nodes[resource]['cursor'])
             node = graph.nodes[resource]['cursor']
             final_string += self._get_source_text(node)
             final_string += ";\n"
