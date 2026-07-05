@@ -1,4 +1,5 @@
 import clang
+from clang.cindex import CursorKind, TypeKind
 
 BUILTIN_KINDS = {
     TypeKind.VOID, TypeKind.BOOL, TypeKind.CHAR_U, TypeKind.UCHAR, TypeKind.CHAR16, TypeKind.CHAR32,
