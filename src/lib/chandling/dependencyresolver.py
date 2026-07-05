@@ -12,6 +12,14 @@ class DependencyResolver(abc.ABC):
         self._file_path = None
         self._function_nodes = {}
         self._index = Index.create()
+        self._cursor_by_usr = {} 
+
+    def _build_cursor_map(self, cursor: clang.cindex.Cursor) -> None:
+        usr = cursor.get_usr()
+        if usr:
+            self._cursor_by_usr[usr] = cursor
+        for child in cursor.get_children():
+            self._build_cursor_map(child)
     
     @abc.abstractmethod
     def parse(self, file_path: str, include_dirs: list[str]) -> None:
@@ -26,6 +34,8 @@ class ClangDependencyResolver(DependencyResolver):
     def parse(self, file_path: str, include_dirs: list[str]) -> None:
         args = [f"-I{directory}" for directory in include_dirs]
         self._tu = self._index.parse(file_path, args=args)
+
+        self._build_cursor_map(self._tu.cursor)
 
         for cursor in self._tu.cursor.get_children():
             if is_function_declaration(cursor):
@@ -75,6 +85,11 @@ class ClangDependencyResolver(DependencyResolver):
         for item in needed_types:
             cursor = item.get_declaration()
             identifier = cursor.get_usr()
+
+            # Look up the cursor from the AST map (has location info) (sometimes with get_declaration there are no extensions)
+            if identifier in self._cursor_by_usr:
+                cursor = self._cursor_by_usr[identifier]
+
             was_before = identifier in dependency_graph.nodes
             if not was_before:
                 dependency_graph.add_node(identifier, cursor = cursor)

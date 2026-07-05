@@ -11,10 +11,13 @@ class HeaderHandler(abc.ABC):
         The first string is the one from clang, the second one a variation that pycparser will understand
         '''
     
-class HeaderResolver:
+class StandardHeaderResolver(HeaderHandler):
 
     def _get_source_text(self, cursor) -> str:
         extent = cursor.extent
+        print(extent)
+        print([token for token in cursor.get_tokens()])
+        print(cursor.spelling)
         start = extent.start.offset
 
         filename = extent.start.file.name
@@ -32,7 +35,7 @@ class HeaderResolver:
     def _sort_dependencies(self, graph: nx.DiGraph) -> list[str]:
         return list(reversed(list(nx.topological_sort(graph))))
 
-    def _strip_attributes(text: str) -> str:
+    def _strip_attributes(self, text: str) -> str:
         out = []
         i = 0
         kw = "__attribute__"
@@ -58,11 +61,12 @@ class HeaderResolver:
             i += 1
         return ''.join(out)
 
-    def print_code(graph: nx.DiGraph) -> tuple[str,str]:
+    def print_code(self, graph: nx.DiGraph) -> tuple[str,str]:
         final_string = ""
         topological_sort = self._sort_dependencies(graph)
-
+        print(topological_sort)
         for resource in topological_sort:
+            print(graph.nodes[resource]['cursor'])
             node = graph.nodes[resource]['cursor']
             final_string += self._get_source_text(node)
             final_string += ";\n"
