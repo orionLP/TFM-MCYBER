@@ -16,18 +16,52 @@ class StandardHeaderResolver(HeaderHandler):
     def _get_source_text(self, cursor) -> str:
         extent = cursor.extent
         start = extent.start.offset
-
+ 
         filename = extent.start.file.name
         with open(filename, 'rb') as f:
             content = f.read()
-
-        # for some reason for typedefs libclang refuses to work
-        if cursor.kind == CursorKind.TYPEDEF_DECL:
-            end = content.find(b';', start)
-        else:
-            end = extent.end.offset
+ 
+        i = start
+        depth = 0  # Track { } and ( ) nesting
+        in_string = False
+        in_char = False
+        escape_next = False
         
-        return content[start:end].decode('utf-8')
+        while i < len(content):
+            char = chr(content[i])
+            
+            if escape_next:
+                escape_next = False
+                i += 1
+                continue
+            
+            if char == '\\' and (in_string or in_char):
+                escape_next = True
+                i += 1
+                continue
+            
+            if char == '"' and not in_char:
+                in_string = not in_string
+                i += 1
+                continue
+            
+            if char == "'" and not in_string:
+                in_char = not in_char
+                i += 1
+                continue
+            
+            if not in_string and not in_char:
+                if char in '({':
+                    depth += 1
+                elif char in ')}':
+                    depth -= 1
+                
+                if char == ';' and depth == 0:
+                    return content[start:i+1].decode('utf-8', errors='replace')
+            
+            i += 1
+        
+        raise Exception("The function StandardHeaderResolver._get_source_text should have never reached this point")
         
     def _sort_dependencies(self, graph: nx.DiGraph) -> list[str]:
         return list(reversed(list(nx.topological_sort(graph))))
@@ -64,6 +98,6 @@ class StandardHeaderResolver(HeaderHandler):
         for resource in topological_sort:
             node = graph.nodes[resource]['cursor']
             final_string += self._get_source_text(node)
-            final_string += ";\n"
+            final_string += "\n"
 
         return (final_string, self._strip_attributes(final_string))
