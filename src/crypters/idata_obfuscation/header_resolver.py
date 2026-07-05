@@ -108,19 +108,28 @@ class HeaderResolver:
     def sort_dependencies(self, graph: nx.DiGraph) -> list[str]:
         return list(reversed(list(nx.topological_sort(graph))))
 
+    def get_source_text(self, cursor) -> str:
+        extent = cursor.extent
+        start = extent.start.offset
+
+        filename = extent.start.file.name
+        with open(filename, 'rb') as f:
+            content = f.read()
+
+        # for some reason for typedefs libclang refuses to work
+        if cursor.kind == CursorKind.TYPEDEF_DECL:
+            end = content.find(b';', start)
+        else:
+            end = extent.end.offset
+        
+        return content[start:end].decode('utf-8')
+        
     def print_code(self, graph: nx.DiGraph, topological_sort: list[str]) -> str:
         final_string = ""
 
         for resource in topological_sort:
             node = graph.nodes[resource]['cursor']
-            print(node.extent)
-            first = True
-            for token in node.get_tokens():
-                if first:
-                    final_string += token.spelling
-                    first = False
-                else:
-                    final_string += " " + token.spelling
+            final_string += self.get_source_text(node)
             final_string += ";\n"
 
         return final_string
