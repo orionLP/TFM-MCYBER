@@ -1,5 +1,8 @@
 import abc
+import enum
 import clang
+import pycparser
+
 import networkx as nx
 
 from clang.cindex import Index, CursorKind, TypeKind
@@ -26,7 +29,8 @@ class DependencyResolver(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def resolve_dependencies(self, func_name: str, previous_graph: nx.DiGraph | None = None) -> list[clang.cindex.Cursor]:
+    def resolve_dependencies(self, func_name: str, previous_graph: nx.DiGraph | None = None) -> nx.DiGraph:
+        '''Return a graph for type dependencies'''
         pass
     
 class ClangDependencyResolver(DependencyResolver):
@@ -107,8 +111,36 @@ class ClangDependencyResolver(DependencyResolver):
         self._construct_dependencies(dependency_graph, function_node.get_usr())
         return dependency_graph
     
-    def resolve_dependencies(self, func_name: str, previous_graph: nx.DiGraph | None = None) -> list[clang.cindex.Cursor]:
-        '''Returns a list of all dependencies and the function node'''
+    def resolve_dependencies(self, func_name: str, previous_graph: nx.DiGraph | None = None) -> nx.DiGraph:
         function_node = self._function_nodes[func_name]
         dependency_graph = self._construct_dependency_graph(function_node, previous_graph)
         return dependency_graph
+
+import src.lib.chandling.pycparserfinder as pycparserfinder
+
+class FunctionVariableNodeTypes(enum.StrEnum):
+    FUNCTION = 'function'
+    ARGUMENT = 'argument'
+    RETURN_VARIABLE = 'return_variable'
+    TYPE = 'type'
+
+class FunctionVariableResolver():
+
+    def __init__(self, function_finder: pycparserfinder.ItemFinder) -> None:
+        self._function_finder = function_finder
+
+    def resolve_dependencies(self, func_name: str, ast: pycparser.c_ast.FileAST, previous_graph: nx.DiGraph | None = None) -> nx.DiGraph:
+        '''
+        return a graph with root nodes representing functions, and the other nodes eventually having a type that can be used to create a variable. There
+        must be a function declaration at some point of the code.
+        '''
+        
+        dependency_graph = None
+        if previous_graph is None:
+            dependency_graph = nx.DiGraph()
+        else:
+            dependency_graph = previous_graph
+        
+        function_node = self._function_finder.find(ast, func_name)
+        print(function_node)
+        dependency_graph.add_node(func_name, nodetype = 'function', pycparser_node = function_node)
