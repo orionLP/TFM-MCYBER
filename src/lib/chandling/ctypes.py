@@ -1,6 +1,8 @@
 import enum
 import dataclasses
 
+'''Utilities related to pycparser types'''
+
 class CTypes(enum.StrEnum):
     UNSIGNED_INT = 'unsigned_int'
     INT = 'int'

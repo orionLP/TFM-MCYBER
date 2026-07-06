@@ -1,5 +1,6 @@
 import abc
 import pycparser
+import src.lib.chandling.pycparsertypes as pycparsertypes
 
 class ItemFinder(abc.ABC, pycparser.c_ast.NodeVisitor):
 
@@ -16,7 +17,7 @@ class ItemFinder(abc.ABC, pycparser.c_ast.NodeVisitor):
 class FunctionDeclarationFinder(ItemFinder):
 
     def _found_condition(self, node: pycparser.c_ast.Node) -> bool:
-        return isinstance(node.type, pycparser.c_ast.FuncDecl) and node.name == self._item_to_search
+        return pycparsertypes.is_function_declaration(node) and node.name == self._item_to_search
     
     def visit_Decl(self, node):
         if self._found_condition(node):

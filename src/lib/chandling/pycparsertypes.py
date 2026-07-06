@@ -1,0 +1,4 @@
+import pycparser
+
+def is_function_declaration(node: pycparser.c_ast.Node) -> bool:
+    return isinstance(node.type, pycparser.c_ast.FuncDecl) and isinstance(node, pycparser.c_ast.Decl)
