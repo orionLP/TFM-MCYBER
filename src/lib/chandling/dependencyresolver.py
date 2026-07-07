@@ -76,14 +76,18 @@ class ClangDependencyResolver(DependencyResolver):
     def _construct_dependencies(self, dependency_graph: nx.DiGraph, start_node: str) -> None:
         cursor = dependency_graph.nodes[start_node]['cursor']
         needed_types = []
-        if is_function_declaration(cursor): 
+        if is_function_declaration(cursor):
             needed_types += self._clean_types(list(cursor.type.argument_types()) + [cursor.result_type])
         if cursor.kind == CursorKind.TYPEDEF_DECL:
+            dependency_graph.nodes[start_node]['underlying_kind'] = cursor.underlying_typedef_type.kind
             needed_types += self._clean_types([cursor.underlying_typedef_type])
         if cursor.kind in (CursorKind.STRUCT_DECL, CursorKind.UNION_DECL):
             for field in cursor.get_children():
                 if field.kind == CursorKind.FIELD_DECL:
                     needed_types += self._clean_types([field.type])
+        
+        dependency_graph.nodes[start_node]['kind'] = cursor.kind
+        dependency_graph.nodes[start_node]['spelling'] = cursor.spelling
 
         types_declarations = [item.get_declaration() for item in needed_types]
         for item in needed_types:
@@ -107,7 +111,7 @@ class ClangDependencyResolver(DependencyResolver):
             dependency_graph = nx.DiGraph()
         else:
             dependency_graph = previous_graph
-        dependency_graph.add_node(function_node.get_usr(), cursor = function_node)
+        dependency_graph.add_node(function_node.get_usr(), cursor = function_node, spelling = function_node.spelling)
         self._construct_dependencies(dependency_graph, function_node.get_usr())
         return dependency_graph
     
@@ -119,6 +123,7 @@ class ClangDependencyResolver(DependencyResolver):
 import src.lib.chandling.pycparserfinder as pycparserfinder
 import src.lib.chandling.pycparsertypes as pycparsertypes
 
+# In the end i have put this part on hold, as it would take a bit of time to do
 class FunctionVariableNodeTypes(enum.StrEnum):
     FUNCTION = 'function'
     ARGUMENT = 'argument'
