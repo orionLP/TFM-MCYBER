@@ -26,7 +26,7 @@ class DerivedCTypes(enum.StrEnum):
 
 class UserDefinedTypes(enum.StrEnum):
     UNION = 'union'
-    STRUCTURE = 'structure'
+    STRUCT = 'struct'
     ENUM = 'enum'
 
 @dataclasses.dataclass
