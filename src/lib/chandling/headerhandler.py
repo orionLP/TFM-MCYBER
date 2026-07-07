@@ -96,12 +96,16 @@ class StandardHeaderResolver(HeaderHandler):
         parents = list(graph.predecessors(resource))
         return len(parents) == 1 and CursorKind.TYPEDEF_DECL == graph.nodes[parents[0]]['cursor'].kind and CursorKind.STRUCT_DECL == graph.nodes[resource]['cursor'].kind
 
+    def _is_typdef_enum(self, graph: nx.DiGraph, resource: str) -> bool:
+        parents = list(graph.predecessors(resource))
+        return len(parents) == 1 and CursorKind.TYPEDEF_DECL == graph.nodes[parents[0]]['cursor'].kind and CursorKind.ENUM_DECL == graph.nodes[resource]['cursor'].kind
+
     def print_code(self, graph: nx.DiGraph) -> tuple[str,str]:
         final_string = ""
         topological_sort = self._sort_dependencies(graph)
         for resource in topological_sort:
             node = graph.nodes[resource]['cursor']
-            if not self._is_typedef_struct(graph, resource):
+            if not self._is_typedef_struct(graph, resource) and not self._is_typdef_enum(graph, resource):
                 final_string += self._get_source_text(node)
                 final_string += "\n"
 
