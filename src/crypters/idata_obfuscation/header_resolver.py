@@ -63,12 +63,12 @@ if __name__ == "__main__":
 
     ast_res = rfcb.create_function('notmyname', ast, graph)
 
-
+    print(ast_res)
     gen = pycparser.c_generator.CGenerator()
     result = ''
     for item in ast_res:
-        result += gen.visit(ast)
-    # print(result)
+        result += gen.visit(item) + ';\n'
+    print(result)
     # Create layout with better spacing
     pos = nx.spring_layout(graph, seed=42, k=2, iterations=50)
 

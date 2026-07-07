@@ -30,12 +30,27 @@ class FunctionDeclarationFinder(ItemFinder):
     
 class StructFinder(ItemFinder):
 
-    def visit_Struct(self, node):
+    def visit_TypeDef(self, node):
+        self.visit_body(node)
+    
+    def visit_Decl(self, node):
         self.visit_body(node)
 
-    def _found_condition(self, node: pycparser.c_ast.Node) -> bool:
-        return node.name == self._item_to_search
+    def visit_body(self, node):
+        if self._found_condition(node):
+            if pycparsertypes.is_typedef(node):
+                self._found_item =  node.type.type
+            if pycparsertypes.is_decl(node):
+                self._found_item =  node.type
+        if self._found_item is None:
+            self.generic_visit(node)
 
+    def _found_condition(self, node: pycparser.c_ast.Node) -> bool:
+        if pycparsertypes.is_typedef(node) and pycparsertypes.is_struct(node.type.type):
+            return node.type.type.name == self._item_to_search
+        if pycparsertypes.is_decl(node) and pycparsertypes.is_struct(node.type):
+            return node.type.name == self._item_to_search
+        
 class EnumFinder(ItemFinder):
 
     def visit_Enum(self, node):

@@ -12,10 +12,16 @@ def is_function_declaration(node: pycparser.c_ast.Node) -> bool:
     return isinstance(node.type, pycparser.c_ast.FuncDecl) and isinstance(node, pycparser.c_ast.Decl)
 
 def is_struct(node: pycparser.c_ast.Node) -> bool:
-    return isinstance(node.type, pycparser.c_ast.Struct)
+    return isinstance(node, pycparser.c_ast.Struct)
 
 def is_enum(node: pycparser.c_ast.Node) -> bool:
-    return isinstance(node.type, pycparser.c_ast.Enum)
+    return isinstance(node, pycparser.c_ast.Enum)
 
 def is_union(node: pycparser.c_ast.Node) -> bool:
-    return isinstance(node.type, pycparser.c_ast.Union)
+    return isinstance(node, pycparser.c_ast.Union)
+
+def is_decl(node: pycparser.c_ast.Node) -> bool:
+    return isinstance(node, pycparser.c_ast.Decl)
+
+def is_typedef(node: pycparser.c_ast.Node) -> bool:
+    return isinstance(node, pycparser.c_ast.Typedef)

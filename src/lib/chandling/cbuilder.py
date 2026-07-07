@@ -272,24 +272,40 @@ class RandomFunctionCallBuilder(abc.ABC):
     
 class StandardRandomFunctionCallBuilder(RandomFunctionCallBuilder):
 
+    def _treat_simple(self, used_type: ctypes.CTypeInfo) -> pycparser.c_ast.Node:
+        byte_string = prng.get_n_bytes(used_type.size)
+        ctype_instance = used_type.enum_instance
+        name = self._name_generation.generate_name()
+        generated_variable = self._frequent_cbuiler.define_initialized_variable_bytes(byte_string, name, ctype_instance)
+        return generated_variable
+    
+    def _treat_variable(self, declarations_ast: pycparser.c_ast, argument_type: pycparser.c_ast.Node) -> pycparser.c_ast.Node:
+        print(argument_type)
+        primitive = pycparsertypes.is_primitive(argument_type, self._integer_definitions)
+        if not primitive is None:
+            return self._treat_simple(primitive)
+        
+        if pycparsertypes.is_struct(argument_type):
+            original_struct = self._struct_finder.find(declarations_ast, argument_type.name)
+            print(original_struct)
+        if pycparsertypes.is_enum(argument_type):
+            pass
+        if pycparsertypes.is_union(argument_type):
+            pass
+
+        return None
+    
     def create_function(self, function_name: str, declarations_ast: pycparser.c_ast, dependency_graph: nx.DiGraph) -> list[pycparser.c_ast.Node]:
         function_node = self._function_finder.find(declarations_ast, function_name)
         function_identifier = dependencyresolver.identifier_of_name(function_name, dependency_graph)
 
         arguments = function_node.type.args.params
         return_type = function_node.type.type
-
         variables = []
         for argument in arguments:
             argument_type = argument.type.type
-
-            primitive = pycparsertypes.is_primitive(argument_type, self._integer_definitions)
-            if not primitive is None:
-                byte_string = prng.get_n_bytes(primitive.size)
-                ctype_instance = primitive.enum_instance
-                name = self._name_generation.generate_name()
-                generated_variable = self._frequent_cbuiler.define_initialized_variable_bytes(byte_string, name, ctype_instance)
-                variables.append(generated_variable)
+            returned_variable = self._treat_variable(declarations_ast, argument_type)
+            variables.append(returned_variable)
 
 
 
