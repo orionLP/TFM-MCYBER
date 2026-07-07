@@ -120,8 +120,8 @@ class ClangDependencyResolver(DependencyResolver):
         dependency_graph = self._construct_dependency_graph(function_node, previous_graph)
         return dependency_graph
 
-import src.lib.chandling.pycparserfinder as pycparserfinder
-import src.lib.chandling.pycparsertypes as pycparsertypes
+# import src.lib.chandling.pycparserfinder as pycparserfinder
+# import src.lib.chandling.pycparsertypes as pycparsertypes
 
 # # In the end i have put this part on hold, as it would take a bit of time to do
 # class FunctionVariableNodeTypes(enum.StrEnum):
