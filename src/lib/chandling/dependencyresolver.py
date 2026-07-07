@@ -111,58 +111,25 @@ class ClangDependencyResolver(DependencyResolver):
             dependency_graph = nx.DiGraph()
         else:
             dependency_graph = previous_graph
-        dependency_graph.add_node(function_node.get_usr(), cursor = function_node, spelling = function_node.spelling)
+        dependency_graph.add_node(function_node.get_usr(), cursor = function_node, spelling = function_node.spelling, kind = function_node.kind)
         self._construct_dependencies(dependency_graph, function_node.get_usr())
         return dependency_graph
     
     def resolve_dependencies(self, func_name: str, previous_graph: nx.DiGraph | None = None) -> nx.DiGraph:
         function_node = self._function_nodes[func_name]
         dependency_graph = self._construct_dependency_graph(function_node, previous_graph)
+        
+        seen_names = set()
+        for node in dependency_graph.nodes():
+            if dependency_graph.nodes[node]['spelling'] in seen_names:
+                raise Exception("Cannot have a dependency_graph with two equal names")
+            else:
+                seen_names.add(dependency_graph.nodes[node]['spelling'])
+            
         return dependency_graph
 
-# import src.lib.chandling.pycparserfinder as pycparserfinder
-# import src.lib.chandling.pycparsertypes as pycparsertypes
-
-# # In the end i have put this part on hold, as it would take a bit of time to do
-# class FunctionVariableNodeTypes(enum.StrEnum):
-#     FUNCTION = 'function'
-#     ARGUMENT = 'argument'
-#     RETURN_VARIABLE = 'return_variable'
-#     TYPE = 'type'
-#     STRUCT = 'struct'
-
-# class FunctionVariableResolver():
-
-#     def __init__(self, function_finder: pycparserfinder.ItemFinder) -> None:
-#         self._function_finder = function_finder
-
-#     def _resolve_node(self, node_name: str, ast: pycparser.c_ast.FileAST, graph: nx.DiGraph):
-#         pycparser_node = graph.nodes[node_name]['pycparser_node']
-
-#         if pycparsertypes.is_function_declaration(pycparser_node):
-#             arguments = pycparser_node.type.args.params
-#             return_node = pycparser_node.type.type
-#             for argument in arguments:
-#                 graph.add_node(argument.name, nodetype = FunctionVariableNodeTypes.ARGUMENT, pycparser_node = argument)
-#                 graph.add_edge(node_name, argument.name)
-#                 self._resolve_node(argument.name, ast, graph)
-#             graph.add_node(FunctionVariableNodeTypes.RETURN_VARIABLE.value, nodetype = FunctionVariableNodeTypes.RETURN_VARIABLE, pycparser_node = return_node)
-#             graph.add_edge(node_name, FunctionVariableNodeTypes.RETURN_VARIABLE.value)
-#             self._resolve_node(argument.name, ast, graph)
-        
-        
-    
-#     def resolve_dependencies(self, func_name: str, ast: pycparser.c_ast.FileAST, type_dependency_graph: nx.DiGraph) -> nx.DiGraph:
-#         '''
-#         return a graph with root nodes representing functions, and the other nodes eventually having a type that can be used to create a variable. There
-#         must be a function declaration at some point of the code.
-#         '''
-#         dependency_graph = nx.DiGraph()
-        
-#         function_node = self._function_finder.find(ast, func_name)
-#         dependency_graph.add_node(func_name, nodetype = FunctionVariableNodeTypes.FUNCTION, pycparser_node = function_node)
-
-#         self._resolve_node(func_name, ast, dependency_graph)
-
-#         print(dependency_graph)
-
+def identifier_of_name(name: str, graph: nx.DiGraph) -> str | None:
+    for node in graph.nodes():
+        if graph.nodes[node]['spelling'] == name:
+            return node
+    return None

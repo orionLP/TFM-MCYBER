@@ -36,6 +36,7 @@ class CTypeInfo():
     min_value: Optional[int] | None
     max_value: Optional[int] | None
     size: int | None
+    enum_instance: CTypes | DerivedCTypes | UserDefinedTypes
 
 @dataclasses.dataclass
 class CTypeTable():
@@ -57,20 +58,25 @@ class CTypeTable():
     def __getitem__(self, ctype: CTypes | DerivedCTypes) -> CTypeInfo:
         return getattr(self, ctype.value)
 
+    def __iter__(self):
+        for ctype in CTypes:
+            yield self[ctype]
+        yield self[DerivedCTypes.POINTER]
+
 # i686 (32-bit) Windows with MinGW GNU toolchain
 I686PCWindowsGNU: CTypeTable = CTypeTable(
-    unsigned_int=CTypeInfo('unsigned int', ['unsigned', 'int'], 0, 2**32 - 1, 4),
-    int=CTypeInfo('int', ['int'], -(2**31), 2**31 - 1, 4),
-    unsigned_short=CTypeInfo('unsigned short', ['unsigned', 'short'], 0, 2**16 - 1, 2),
-    short=CTypeInfo('short', ['short'], -(2**15), 2**15 - 1, 2),
-    unsigned_char=CTypeInfo('unsigned char', ['unsigned', 'char'], 0, 2**8 - 1, 1),
-    char=CTypeInfo('char', ['char'], -(2**7), 2**7 - 1, 1),
-    unsigned_long=CTypeInfo('unsigned long', ['unsigned', 'long'], 0, 2**32 - 1, 4),
-    long=CTypeInfo('long', ['long'], -(2**31), 2**31 - 1, 4),
-    unsigned_long_long=CTypeInfo('unsigned long long', ['unsigned', 'long', 'long'], 0, 2**64 - 1, 8),
-    long_long=CTypeInfo('long long', ['long', 'long'], -(2**63), 2**63 - 1, 8),
-    float=CTypeInfo('float', ['float'], None, None, 4),
-    double=CTypeInfo('double', ['double'], None, None, 8),
-    void=CTypeInfo('void', ['void'], None, None, 0),
-    pointer=CTypeInfo('pointer',['pointer'], 0, 2**32 - 1, 4)
+    unsigned_int=CTypeInfo('unsigned int', ['unsigned', 'int'], 0, 2**32 - 1, 4, CTypes.UNSIGNED_INT),
+    int=CTypeInfo('int', ['int'], -(2**31), 2**31 - 1, 4, CTypes.INT),
+    unsigned_short=CTypeInfo('unsigned short', ['unsigned', 'short'], 0, 2**16 - 1, 2, CTypes.UNSIGNED_SHORT),
+    short=CTypeInfo('short', ['short'], -(2**15), 2**15 - 1, 2, CTypes.SHORT),
+    unsigned_char=CTypeInfo('unsigned char', ['unsigned', 'char'], 0, 2**8 - 1, 1, CTypes.UNSIGNED_CHAR),
+    char=CTypeInfo('char', ['char'], -(2**7), 2**7 - 1, 1, CTypes.CHAR),
+    unsigned_long=CTypeInfo('unsigned long', ['unsigned', 'long'], 0, 2**32 - 1, 4, CTypes.UNSIGNED_LONG),
+    long=CTypeInfo('long', ['long'], -(2**31), 2**31 - 1, 4, CTypes.LONG),
+    unsigned_long_long=CTypeInfo('unsigned long long', ['unsigned', 'long', 'long'], 0, 2**64 - 1, 8, CTypes.UNSIGNED_LONG_LONG),
+    long_long=CTypeInfo('long long', ['long', 'long'], -(2**63), 2**63 - 1, 8, CTypes.LONG_LONG),
+    float=CTypeInfo('float', ['float'], None, None, 4, CTypes.FLOAT),
+    double=CTypeInfo('double', ['double'], None, None, 8, CTypes.DOUBLE),
+    void=CTypeInfo('void', ['void'], None, None, 0, CTypes.VOID),
+    pointer=CTypeInfo('pointer',['pointer'], 0, 2**32 - 1, 4, DerivedCTypes.POINTER)
 )

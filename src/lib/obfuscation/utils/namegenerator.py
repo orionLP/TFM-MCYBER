@@ -45,6 +45,20 @@ def variable_type(variable_name: str) -> VariableNameTypes:
     
     raise ValueError('Given string to variable_type that does not conform to variable name rules')
 
+class NameGenerator(abc.ABC):
+
+    def __init__(self, name_length) -> None:        
+        self._name_length = name_length
+
+    @abc.abstractmethod
+    def generate_name(self) -> str:
+        pass
+
+class RandomNameGenerator(NameGenerator):
+
+    def generate_name(self) -> str:
+        return 'v' + prng.get_n_bytes(self._name_length).hex()
+
 class VariableNameGenerator(abc.ABC):
 
     def __init__(self, *args) -> None:
@@ -58,7 +72,7 @@ class StandardVariableNameGenerator(VariableNameGenerator):
 
     def __init__(self, *args) -> None:
         if len(args) != 1:
-            raise ValueError("VariableNameGenerator needs to be initalized with an int parameter")
+            raise ValueError("StandardVariableNameGenerator needs to be initalized with an int parameter")
         
         self._len_random_string = args[0]
 

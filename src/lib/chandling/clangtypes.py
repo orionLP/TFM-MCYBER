@@ -47,6 +47,7 @@ CLANG_TO_CUSTOM = {
     TypeKind.POINTER: ctypes.DerivedCTypes.POINTER
 }
 
+
 # TODO: i think the type hint is wrong
 def is_primitive(cursor: clang.cindex.Cursor) -> bool:
     return cursor in BUILTIN_KINDS

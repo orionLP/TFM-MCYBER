@@ -2,8 +2,16 @@ import abc
 import pycparser
 import copy
 
+from src.lib.crypto.rng import prng
+
+import networkx as nx
 import src.lib.chandling.ctypes as ctypes
 import src.lib.chandling.coperators as coperators
+import src.lib.chandling.variableclassifier as variableclassifier
+import src.lib.chandling.dependencyresolver as dependencyresolver
+import src.lib.chandling.pycparserfinder as pycparserfinder
+import src.lib.chandling.pycparsertypes as pycparsertypes
+import src.lib.obfuscation.utils.namegenerator as namegenerator
 
 class CBuilder(abc.ABC):
 
@@ -42,6 +50,10 @@ class CBuilder(abc.ABC):
     def while_block(self, condition: pycparser.c_ast.Node, statement_block: pycparser.c_ast.Compound) -> pycparser.c_ast.While:
         pass
     
+    @abc.abstractmethod
+    def function_call(self, name: str, arguments: list[pycparser.c_ast.Node]) -> pycparser.c_ast.Node:
+        pass
+
     @abc.abstractmethod
     def cast(self, target_type: ctypes.CTypes, expression: pycparser.c_ast.Node) -> pycparser.c_ast.Cast:
         pass
@@ -100,6 +112,12 @@ class StandardCBuilder(CBuilder):
             cond = copy.deepcopy(condition),
             stmt = copy.deepcopy(statement_block)
         )
+
+    def function_call(self, name: str, arguments: list[pycparser.c_ast.Node]) -> pycparser.c_ast.Node:
+        return pycparser.c_ast.FuncCall(
+            pycparser.c_ast.ID(name),
+            pycparser.c_ast.ExprList(copy.deepcopy(arguments))
+        )
     
     def cast(self, target_type: ctypes.CTypes, expression: pycparser.c_ast.Node) -> pycparser.c_ast.Cast:
         return pycparser.c_ast.Cast(
@@ -147,6 +165,10 @@ class FrequentCodeCBuilder(abc.ABC):
         pass
 
     @abc.abstractmethod
+    def define_initialized_variable_bytes(self, bytes_string: bytes, variable_name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
+        pass
+    
+    @abc.abstractmethod
     def define_variable_address(self, operand_name: str, variable_name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
         pass
 
@@ -171,7 +193,19 @@ class StandardFrequentCodeCBuilder(FrequentCodeCBuilder):
             target_type,
             constant
         )
+    
+    def define_initialized_variable_bytes(self, bytes_string: bytes, variable_name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
+        constant = self._cbuilder.constant(
+            target_type,
+            '0x' + bytes_string.hex()
+        )
 
+        return self._cbuilder.declaration(
+            variable_name,
+            target_type,
+            constant
+        )
+    
     def define_variable_address(self, operand_name: str, variable_name: str, target_type: ctypes.CTypes) -> pycparser.c_ast.Decl:
         operand_variable = self._cbuilder.variable(
             operand_name
@@ -210,3 +244,55 @@ class StandardFrequentCodeCBuilder(FrequentCodeCBuilder):
             variable,
             constant
         )
+
+class RandomFunctionCallBuilder(abc.ABC):
+
+    def __init__(
+        self, 
+        cbuilder: CBuilder, 
+        frequent_builder: FrequentCodeCBuilder,
+        name_generation: namegenerator.NameGenerator,
+        integer_definitions: ctypes.CTypeTable,
+        function_finder: pycparserfinder.ItemFinder,
+        struct_finder: pycparserfinder.ItemFinder,
+        enum_finder: pycparserfinder.ItemFinder,
+        variable_classifier: variableclassifier.StandardVariableClassifier
+        ) -> None:
+        self._cbuilder = cbuilder
+        self._frequent_cbuiler = frequent_builder
+        self._name_generation = name_generation
+        self._integer_definitions = integer_definitions
+        self._function_finder = function_finder
+        self._struct_finder = struct_finder
+        self._enum_finder = enum_finder
+
+    @abc.abstractmethod
+    def create_function(self, function_name: str, declarations_ast: pycparser.c_ast, dependency_graph: nx.DiGraph) -> list[pycparser.c_ast.Node]:
+        pass
+    
+class StandardRandomFunctionCallBuilder(RandomFunctionCallBuilder):
+
+    def create_function(self, function_name: str, declarations_ast: pycparser.c_ast, dependency_graph: nx.DiGraph) -> list[pycparser.c_ast.Node]:
+        function_node = self._function_finder.find(declarations_ast, function_name)
+        function_identifier = dependencyresolver.identifier_of_name(function_name, dependency_graph)
+
+        arguments = function_node.type.args.params
+        return_type = function_node.type.type
+
+        variables = []
+        for argument in arguments:
+            argument_type = argument.type.type
+
+            primitive = pycparsertypes.is_primitive(argument_type, self._integer_definitions)
+            if not primitive is None:
+                byte_string = prng.get_n_bytes(primitive.size)
+                ctype_instance = primitive.enum_instance
+                name = self._name_generation.generate_name()
+                generated_variable = self._frequent_cbuiler.define_initialized_variable_bytes(byte_string, name, ctype_instance)
+                variables.append(generated_variable)
+
+
+
+        function_call = self._cbuilder.function_call(function_name, [])
+
+        return variables + [function_call]
