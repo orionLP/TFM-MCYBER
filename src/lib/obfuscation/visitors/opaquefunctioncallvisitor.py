@@ -13,7 +13,7 @@ import src.lib.obfuscation.utils.namegenerator as namegenerator
 import src.lib.obfuscation.control.opaquepredicate as opaquepredicate
 import src.lib.obfuscation.control.opaquefunctioncall as opaquefunctioncall
 
-class FunctionCallVisitor(pycparser.c_ast.NodeVisitor):
+class OpaqueFunctionCallVisitor(pycparser.c_ast.NodeVisitor):
 
     def __init__(
         self,
