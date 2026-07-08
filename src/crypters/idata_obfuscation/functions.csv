@@ -1,4 +1,14 @@
 header,primary_lib,link_flag,resolved_funcs,total_prototypes,other_libs
+stdio.h,libmsvcrt.a,-lmsvcrt,25,25,
+stdlib.h,libmsvcrt.a,-lmsvcrt,30,30,
+string.h,libmsvcrt.a,-lmsvcrt,20,20,
+math.h,libm.a,-lm,50,50,
+time.h,libmsvcrt.a,-lmsvcrt,16,16,
+ctype.h,libmsvcrt.a,-lmsvcrt,13,13,
+memory.h,libmsvcrt.a,-lmsvcrt,6,6,
+assert.h,libmsvcrt.a,-lmsvcrt,1,1,
+limits.h,libmsvcrt.a,-lmsvcrt,0,0,
+float.h,libmsvcrt.a,-lmsvcrt,0,0,
 aclapi.h,libadvapi32.a,-ladvapi32,49,49,
 adshlp.h,libactiveds.a,-lactiveds,22,23,adsldpc(10)
 agtsvr.h,libkernel32.a,-lkernel32,1,328,
