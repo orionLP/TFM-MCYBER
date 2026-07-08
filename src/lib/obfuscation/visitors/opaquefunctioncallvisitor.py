@@ -18,7 +18,7 @@ class OpaqueFunctionCallVisitor(pycparser.c_ast.NodeVisitor):
     def __init__(
         self,
         predicate_generator: opaquepredicate.TrueOpaquePredicate,
-        function_call_generator: opaquefunctioncall.NoCallOpaqueFunctionCall,
+        function_call_generator: opaquefunctioncall.OpaqueFunctionCall,
         target_variable_type: ctypes.CTypes,
         upper_block_scope: scope.Scope,
         max_depth: int = 16, 

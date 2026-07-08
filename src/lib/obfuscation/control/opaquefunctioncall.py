@@ -94,7 +94,7 @@ class NoCallOpaqueFunctionCall(OpaqueFunctionCall):
 
     def use_opaque_call(self, used_predicate: pycparser.c_ast.Node, current_block: pycparser.c_ast.Compound) -> None:
         '''Place an opaque if with a call to the function'''
-        block_range = len(current_block.items)
+        block_range = len(current_block.block_items)
         chosen_index = prng.get_range_unsigned_integer(block_range + 1)
 
         chosen_function = prng.random_choice(self._functions_list)

@@ -7,6 +7,8 @@ import src.lib.chandling.headerhandler as headerhandler
 import src.lib.chandling.dependencyresolver as dependencyresolver
 import src.lib.chandling.functionextractors as functionextractors
 
+#└─$ tail -n +2 src/crypters/idata_obfuscation/functions.csv | cut -d, -f1 | while read -r h; do clang --target=i686-pc-windows-gnu -E -I/usr/i686-w64-mingw32/include "/usr/i686-w64-mingw32/include/${h}" -o "./src/preprocessed_headers/${h}" ; done 
+
 INCLUDES = './data/preprocessed_headers/'
 LIBRARIES = '/usr/i686-w64-mingw32/lib/'
 CSV_FILE = 'src/crypters/idata_obfuscation/functions.csv'
