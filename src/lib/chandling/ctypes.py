@@ -81,11 +81,11 @@ I686PCWindowsGNU: CTypeTable = CTypeTable(
     pointer=CTypeInfo('pointer',['void *'], 0, 2**32 - 1, 4, DerivedCTypes.POINTER)
 )
 
-def corresponding_ctype(info_table: CTypeTable, cname_list: list[str]) -> CTypes:
+def corresponding_ctype(info_table: CTypeTable, cname_list: list[str]) -> CTypes | DerivedCTypes:
     for item in info_table:
         if cname_list == item.cname_list:
             return item.enum_instance
-    raise Exception("Ctype not found")
+    return None
 
 def is_primitive(c_type: CTypes | DerivedCTypes) -> bool:
     if c_type in CTypes:
