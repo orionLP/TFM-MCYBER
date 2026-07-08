@@ -100,7 +100,8 @@ class NoCallOpaqueFunctionCall(OpaqueFunctionCall):
         chosen_function = prng.random_choice(self._functions_list)
         new_nodes_list = self._create_function(chosen_function, self._declarations_ast, self._dependency_graph)
 
+        negated_predicate = self._cbuilder.unary_operation(coperators.UnaryCOperator.NOT, used_predicate) 
         new_block = self._cbuilder.block(new_nodes_list)
-        new_if = self._cbuilder.if_block(used_predicate, new_block)
+        new_if = self._cbuilder.if_block(negated_predicate, new_block)
 
         current_block.block_items.insert(chosen_index, new_if)
