@@ -23,7 +23,10 @@ class OpaqueFunctionCall(abc.ABC):
         name_generation: namegenerator.NameGenerator,
         integer_definitions: ctypes.CTypeTable,
         function_finder: pycparserfinder.ItemFinder,
-        variable_classifier: variableclassifier.StandardVariableClassifier
+        variable_classifier: variableclassifier.StandardVariableClassifier,
+        function_list: list[str],
+        declarations_ast: pycparser.c_ast,
+        dependecy_graph: nx.DiGraph
         ) -> None:
         self._cbuilder = cbuilder
         self._frequent_cbuiler = frequent_builder
@@ -31,13 +34,16 @@ class OpaqueFunctionCall(abc.ABC):
         self._integer_definitions = integer_definitions
         self._function_finder = function_finder
         self._variable_classifier = variable_classifier
+        self._functions_list = function_list
+        self._declarations_ast = declarations_ast
+        self._dependency_graph = dependecy_graph
 
     @abc.abstractmethod
     def _create_function(self, function_name: str, declarations_ast: pycparser.c_ast, dependency_graph: nx.DiGraph) -> list[pycparser.c_ast.Node]:
         pass
     
     @abc.abstractmethod
-    def use_opaque_call(self, upper_blocks_variables: scope.Scope, used_predicate: pycparser.c_ast.Node, current_block: pycparser.c_ast.Compound) -> None:
+    def use_opaque_call(self, used_predicate: pycparser.c_ast.Node, current_block: pycparser.c_ast.Compound) -> None:
         pass
 
 class NoCallOpaqueFunctionCall(OpaqueFunctionCall):
@@ -85,3 +91,16 @@ class NoCallOpaqueFunctionCall(OpaqueFunctionCall):
             return variables + [return_variable] + [final_statement]
         else:
             return variables + [function_call]
+
+    def use_opaque_call(self, used_predicate: pycparser.c_ast.Node, current_block: pycparser.c_ast.Compound) -> None:
+        '''Place an opaque if with a call to the function'''
+        block_range = len(current_block.items)
+        chosen_index = prng.get_range_unsigned_integer(block_range + 1)
+
+        chosen_function = prng.random_choice(self._functions_list)
+        new_nodes_list = self._create_function(chosen_function, self._declarations_ast, self._dependency_graph)
+
+        new_block = self._cbuilder.block(new_nodes_list)
+        new_if = self._cbuilder.if_block(used_predicate, new_block)
+
+        current_block.block_items.insert(chosen_index, new_if)
