@@ -14,7 +14,7 @@ import src.lib.chandling.pycparserfinder as pycparserfinder
 import src.lib.chandling.pycparsertypes as pycparsertypes
 import src.lib.obfuscation.utils.namegenerator as namegenerator
 
-class RandomFunctionCallBuilder(abc.ABC):
+class OpaqueFunctionCall(abc.ABC):
 
     def __init__(
         self, 
@@ -23,8 +23,6 @@ class RandomFunctionCallBuilder(abc.ABC):
         name_generation: namegenerator.NameGenerator,
         integer_definitions: ctypes.CTypeTable,
         function_finder: pycparserfinder.ItemFinder,
-        struct_finder: pycparserfinder.ItemFinder,
-        enum_finder: pycparserfinder.ItemFinder,
         variable_classifier: variableclassifier.StandardVariableClassifier
         ) -> None:
         self._cbuilder = cbuilder
@@ -32,15 +30,17 @@ class RandomFunctionCallBuilder(abc.ABC):
         self._name_generation = name_generation
         self._integer_definitions = integer_definitions
         self._function_finder = function_finder
-        self._struct_finder = struct_finder
-        self._enum_finder = enum_finder
         self._variable_classifier = variable_classifier
 
     @abc.abstractmethod
-    def create_function(self, function_name: str, declarations_ast: pycparser.c_ast, dependency_graph: nx.DiGraph) -> list[pycparser.c_ast.Node]:
+    def _create_function(self, function_name: str, declarations_ast: pycparser.c_ast, dependency_graph: nx.DiGraph) -> list[pycparser.c_ast.Node]:
         pass
     
-class StandardRandomFunctionCallBuilder(RandomFunctionCallBuilder):
+    @abc.abstractmethod
+    def use_opaque_call(self, upper_blocks_variables: scope.Scope, used_predicate: pycparser.c_ast.Node, current_block: pycparser.c_ast.Compound) -> None:
+        pass
+
+class NoCallOpaqueFunctionCall(OpaqueFunctionCall):
 
     def _treat_simple(self, used_type: ctypes.CTypeInfo) -> pycparser.c_ast.Node:
         byte_string = prng.get_n_bytes(used_type.size)
@@ -49,21 +49,10 @@ class StandardRandomFunctionCallBuilder(RandomFunctionCallBuilder):
         generated_variable = self._frequent_cbuiler.define_initialized_variable_bytes(byte_string, name, ctype_instance)
         return generated_variable
 
-    def _treat_constant(self, used_type: ctypes.CTypeInfo) -> pycparser.c_ast.Node:
-        byte_string = '0x' + prng.get_n_bytes(used_type.size).hex()
-        ctype_instance = used_type.enum_instance
-        return self._cbuilder.constant(ctype_instance, byte_string)
-
-    def _treat_primitive(self, primitive: ctypes.CTypeInfo, within_user_type: bool) -> pycparser.c_ast.Node:
-        if within_user_type:
-            return self._treat_constant(primitive)
-        else:
-            return self._treat_simple(primitive)
-
-    def _treat_variable(self, declarations_ast: pycparser.c_ast, argument_type: pycparser.c_ast.Node, dependency_graph: nx.DiGraph, within_user_type: bool = False) -> pycparser.c_ast.Node:
+    def _treat_variable(self, declarations_ast: pycparser.c_ast, argument_type: pycparser.c_ast.Node, dependency_graph: nx.DiGraph) -> pycparser.c_ast.Node:
         primitive = pycparsertypes.corresponding_primitive(argument_type, self._integer_definitions)
         if not primitive is None:
-            return self._treat_primitive(primitive, within_user_type)
+            return self._treat_simple(primitive)
         
         is_typedef = pycparsertypes.is_type_identifier(argument_type.type)
         if is_typedef:
@@ -71,11 +60,11 @@ class StandardRandomFunctionCallBuilder(RandomFunctionCallBuilder):
             typedef_identifier = dependencyresolver.identifier_of_name(typedef_name, dependency_graph)
             original_name, node_type = self._variable_classifier.classify_variable(typedef_identifier, dependency_graph)
             if ctypes.is_primitive(node_type):
-                return self._treat_primitive(self._integer_definitions[node_type], within_user_type)
+                return self._treat_simple(self._integer_definitions[node_type])
 
         raise Exception("Object not made to handle complex types (enums, structs, union)")
     
-    def create_function(self, function_name: str, declarations_ast: pycparser.c_ast, dependency_graph: nx.DiGraph) -> list[pycparser.c_ast.Node]:
+    def _create_function(self, function_name: str, declarations_ast: pycparser.c_ast, dependency_graph: nx.DiGraph) -> list[pycparser.c_ast.Node]:
         function_node = self._function_finder.find(declarations_ast, function_name)
         function_identifier = dependencyresolver.identifier_of_name(function_name, dependency_graph)
 
