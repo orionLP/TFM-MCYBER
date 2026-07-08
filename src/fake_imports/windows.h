@@ -17,7 +17,7 @@ typedef const char*     LPCSTR;
 #define __stdcall
 #define WINAPI __stdcall
 
-typedef unsigned int  SIZE_T;
+typedef unsigned long  SIZE_T;
 typedef void*         HMODULE;
 typedef void*         HANDLE;
 
