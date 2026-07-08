@@ -29,6 +29,17 @@ class UserDefinedTypes(enum.StrEnum):
     STRUCT = 'struct'
     ENUM = 'enum'
 
+def corresponding_ctype(info_table: CTypeInfo, cname_list: list[str]) -> CTypes:
+    for item in info_table:
+        if cname_list == info_table.cname_list:
+            return info_table.enum_instance
+    raise Exception("Ctype not found")
+    
+def is_primitive(c_type: CTypes | DerivedCTypes) -> bool:
+    if c_type in CTypes:
+        return True
+    return c_type == DerivedCTypes.POINTER
+
 @dataclasses.dataclass
 class CTypeInfo():
     cname: str
@@ -78,5 +89,5 @@ I686PCWindowsGNU: CTypeTable = CTypeTable(
     float=CTypeInfo('float', ['float'], None, None, 4, CTypes.FLOAT),
     double=CTypeInfo('double', ['double'], None, None, 8, CTypes.DOUBLE),
     void=CTypeInfo('void', ['void'], None, None, 0, CTypes.VOID),
-    pointer=CTypeInfo('pointer',['pointer'], 0, 2**32 - 1, 4, DerivedCTypes.POINTER)
+    pointer=CTypeInfo('pointer',['void *'], 0, 2**32 - 1, 4, DerivedCTypes.POINTER)
 )

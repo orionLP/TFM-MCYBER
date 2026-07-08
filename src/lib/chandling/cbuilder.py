@@ -69,10 +69,15 @@ class StandardCBuilder(CBuilder):
             name = variable_name
         )
     
-    def constant(self, constant_type: ctypes.CTypes, value: int) -> pycparser.c_ast.Constant:
-        return pycparser.c_ast.Constant(
+    def constant(self, constant_type: ctypes.CTypes, value: int | str) -> pycparser.c_ast.Constant:
+        const = pycparser.c_ast.Constant(
             type = self._integer_definitions[constant_type].cname_list,
             value = str(value)
+        )
+
+        return self.cast(
+            constant_type,
+            const
         )
     
     def unary_operation(self, operator: coperators.UnaryCOperator, operand: pycparser.c_ast.Node) -> pycparser.c_ast.Node:
@@ -265,6 +270,7 @@ class RandomFunctionCallBuilder(abc.ABC):
         self._function_finder = function_finder
         self._struct_finder = struct_finder
         self._enum_finder = enum_finder
+        self._variable_classifier = variable_classifier
 
     @abc.abstractmethod
     def create_function(self, function_name: str, declarations_ast: pycparser.c_ast, dependency_graph: nx.DiGraph) -> list[pycparser.c_ast.Node]:
@@ -278,37 +284,64 @@ class StandardRandomFunctionCallBuilder(RandomFunctionCallBuilder):
         name = self._name_generation.generate_name()
         generated_variable = self._frequent_cbuiler.define_initialized_variable_bytes(byte_string, name, ctype_instance)
         return generated_variable
-    
-    def _treat_variable(self, declarations_ast: pycparser.c_ast, argument_type: pycparser.c_ast.Node) -> pycparser.c_ast.Node:
-        print(argument_type)
-        primitive = pycparsertypes.is_primitive(argument_type, self._integer_definitions)
-        if not primitive is None:
-            return self._treat_simple(primitive)
-        
-        if pycparsertypes.is_struct(argument_type):
-            original_struct = self._struct_finder.find(declarations_ast, argument_type.name)
-            print(original_struct)
-        if pycparsertypes.is_enum(argument_type):
-            pass
-        if pycparsertypes.is_union(argument_type):
-            pass
 
-        return None
+    def _treat_constant(self, used_type: ctypes.CTypeInfo) -> pycparser.c_ast.Node:
+        byte_string = '0x' + prng.get_n_bytes(used_type.size).hex()
+        ctype_instance = used_type.enum_instance
+        return self._cbuilder.constant(ctype_instance, byte_string)
+
+    def _treat_primitive(self, primitive: ctypes.CTypeInfo, within_user_type: bool) -> pycparser.c_ast.Node:
+        if within_user_type:
+            return self._treat_constant(primitive)
+        else:
+            return self._treat_simple(primitive)
+
+    # def _handle_complex(self, declarations_ast: pycparser.c_ast, name: str, complex_c_type: ctypes.CTypes) -> pycparser.c_ast.Node:
+    #     if complex_c_type == ctypes.UserDefinedTypes.STRUCT:
+    #         original_struct = self._struct_finder.find(declarations_ast, name)
+    #     return None
+
+    def _treat_variable(self, declarations_ast: pycparser.c_ast, argument_type: pycparser.c_ast.Node, dependency_graph: nx.DiGraph, within_user_type: bool = False) -> pycparser.c_ast.Node:
+        primitive = pycparsertypes.corresponding_primitive(argument_type, self._integer_definitions)
+        if not primitive is None:
+            return self._treat_primitive(primitive, within_user_type)
+        
+        is_typedef = pycparsertypes.is_type_identifier(argument_type.type)
+        if is_typedef:
+            typedef_name = argument_type.type.names[0]
+            typedef_identifier = dependencyresolver.identifier_of_name(typedef_name, dependency_graph)
+            original_name, node_type = self._variable_classifier.classify_variable(typedef_identifier, dependency_graph)
+            if ctypes.is_primitive(node_type):
+                return self._treat_primitive(self._integer_definitions[node_type], within_user_type)
+            # return self._handle_complex(declarations_ast, original_name, node_type)
+
+        # if pycparsertypes.is_struct(argument_type.type):
+        #     return self._handle_complex(declarations_ast, argument_type.type.name, ctypes.UserDefinedTypes.STRUCT)
+        # if pycparsertypes.is_enum(argument_type.type):
+        #     return self._handle_complex(declarations_ast, argument_type.type.name, ctypes.UserDefinedTypes.ENUM)
+        # if pycparsertypes.is_union(argument_type.type):
+        #     return self._handle_complex(declarations_ast, argument_type.type.name, ctypes.UserDefinedTypes.UNION)
+
+        raise Exception("Object not made to handle complex types (enums, structs, union)")
     
     def create_function(self, function_name: str, declarations_ast: pycparser.c_ast, dependency_graph: nx.DiGraph) -> list[pycparser.c_ast.Node]:
         function_node = self._function_finder.find(declarations_ast, function_name)
         function_identifier = dependencyresolver.identifier_of_name(function_name, dependency_graph)
 
         arguments = function_node.type.args.params
-        return_type = function_node.type.type
         variables = []
         for argument in arguments:
-            argument_type = argument.type.type
-            returned_variable = self._treat_variable(declarations_ast, argument_type)
-            variables.append(returned_variable)
+            argument_type = argument.type
+            created_variable = self._treat_variable(declarations_ast, argument_type, dependency_graph)
+            variables.append(created_variable)
 
+        function_call = self._cbuilder.function_call(function_name, [self._cbuilder.variable(var.name) for var in variables])
 
-
-        function_call = self._cbuilder.function_call(function_name, [])
-
-        return variables + [function_call]
+        return_type = function_node.type.type
+        type_identifier = ctypes.corresponding_ctype(self._integer_definitions, return_type.type.names)
+        if type_identifier != ctypes.CTypes.VOID:
+            return_variable = self._treat_variable(declarations_ast, return_type, dependency_graph)
+            final_statement = self._cbuilder.assignment(coperators.AssignmentCOperator.ASSIGNMENT, self._cbuilder.variable(return_variable.name), function_call)
+            return variables + [return_variable] + [final_statement]
+        else:
+            return variables + [function_call]
