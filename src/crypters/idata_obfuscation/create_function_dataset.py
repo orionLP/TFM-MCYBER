@@ -201,7 +201,10 @@ if __name__ == "__main__":
                 print(e)
                 print('Ignoring this function due to errors')
 
-        print(f'Accepted {number_of_accepted_functions / number_of_functions} of header file {header_name}. Total accepted functions is {number_of_accepted_functions}, and checked functions {number_of_functions}')
+        print(f'Finalized {header_name}')
+        if number_of_functions != 0:
+            print(f'Accepted {(number_of_accepted_functions / number_of_functions) * 100}% of functions.')
+        print(f'Total accepted functions is {number_of_accepted_functions}, and checked functions {number_of_functions}')
 
     with open(OUTPUT_JSON, 'w') as output_file:
         json.dump(usable_functions, output_file, indent = 2)
