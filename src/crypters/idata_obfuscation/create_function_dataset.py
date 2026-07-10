@@ -192,7 +192,7 @@ if __name__ == "__main__":
 
                 # the last check is way too slow
                 # if compilation_checker.check_file(CLANG_FILE) and compilation_checker.check_file(TMP_OUTPUT_FILE) and parser_checker.check_file(PYCPARSER_FILE):
-                if compilation_checker.check_file(CLANG_FILE) and parser_checker.check_file(PYCPARSER_FILE)
+                if compilation_checker.check_file(CLANG_FILE) and parser_checker.check_file(PYCPARSER_FILE):
                     print('Accepted this function')
                     usable_functions[header_name]["functions"].append(function_name)
                     number_of_accepted_functions += 1
