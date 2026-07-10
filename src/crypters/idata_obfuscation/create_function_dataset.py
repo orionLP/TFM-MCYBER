@@ -148,6 +148,7 @@ if __name__ == "__main__":
         print(f'Processing header file {header_name}')
         number_of_functions = 0
         number_of_accepted_functions = 0
+        number_of_functions_since_last_accepted = 0
 
         library, compilation_flag = lib_link
 
@@ -175,6 +176,7 @@ if __name__ == "__main__":
             try:
                 print(f'Processing function {function_name}')
                 number_of_functions += 1
+                number_of_functions_since_last_accepted += 1
 
                 graph = dependencies_extractor.resolve_dependencies(function_name)
                 clang_text, pycparser_text = header_printer.print_code(graph)
@@ -196,6 +198,10 @@ if __name__ == "__main__":
                     print('Accepted this function')
                     usable_functions[header_name]["functions"].append(function_name)
                     number_of_accepted_functions += 1
+                    number_of_functions_since_last_accepted = 0
+                
+                if number_of_functions_since_last_accepted >= 100:
+                    break
                     
             except nx.exception.NetworkXUnfeasible as e:
                 print('Ignoring this function due to loops')
