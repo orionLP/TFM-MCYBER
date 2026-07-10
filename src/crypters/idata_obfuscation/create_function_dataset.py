@@ -174,6 +174,7 @@ if __name__ == "__main__":
         for function_name in intersection_of_functions:
             try:
                 print(f'Processing function {function_name}')
+                number_of_functions += 1
 
                 graph = dependencies_extractor.resolve_dependencies(function_name)
                 clang_text, pycparser_text = header_printer.print_code(graph)
@@ -196,7 +197,6 @@ if __name__ == "__main__":
                     usable_functions[header_name]["functions"].append(function_name)
                     number_of_accepted_functions += 1
                     
-                number_of_functions += 1
             except nx.exception.NetworkXUnfeasible as e:
                 print('Ignoring this function due to loops')
             except Exception as e:
