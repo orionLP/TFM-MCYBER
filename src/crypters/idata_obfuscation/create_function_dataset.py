@@ -200,7 +200,7 @@ if __name__ == "__main__":
                     number_of_accepted_functions += 1
                     number_of_functions_since_last_accepted = 0
                 
-                if number_of_functions_since_last_accepted >= 100:
+                if number_of_functions_since_last_accepted >= 10:
                     break
                     
             except nx.exception.NetworkXUnfeasible as e:
