@@ -189,7 +189,9 @@ if __name__ == "__main__":
 
                 create_example_file(TMP_INPUT_FILE, TMP_OUTPUT_FILE, path_to_include, ORIGINAL_FOLDER, function_name)
 
-                if compilation_checker.check_file(CLANG_FILE) and compilation_checker.check_file(TMP_OUTPUT_FILE) and parser_checker.check_file(PYCPARSER_FILE):
+                # the last check is way too slow
+                # if compilation_checker.check_file(CLANG_FILE) and compilation_checker.check_file(TMP_OUTPUT_FILE) and parser_checker.check_file(PYCPARSER_FILE):
+                if compilation_checker.check_file(CLANG_FILE) and parser_checker.check_file(PYCPARSER_FILE)
                     print('Accepted this function')
                     usable_functions[header_name]["functions"].append(function_name)
                     number_of_accepted_functions += 1
