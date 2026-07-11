@@ -3,6 +3,12 @@ import enum
 import subprocess
 
 @dataclasses.dataclass
+class Compier():
+    compiler_name: str
+    compiler_command: str
+
+
+@dataclasses.dataclass
 class Machine():
     target_flag: str
 
@@ -171,18 +177,28 @@ class AvailableLibraries(enum.Enum):
 
 class CompilationHandler(abc.ABC):
 
-    def __init__(self, 
-
+    def __init__(self, used_machine: TargetMachines, used_libraries: list[AvailableLibraries]) -> None: 
+        self.target = used_machine
+        self.libraries = used_libraries
+    
     @property
-    def target(self) -> str:
+    def target(self) -> TargetMachines:
         self._target_machine
 
     @target.setter
-    def target(self, target_machine: str) -> None:
-        self._target_machine = target_machine    
+    def target(self, target_machine: TargetMachines) -> None:
+        self._target_machine = target_machine   
 
+    @property
+    def libraries(self) -> list[AvailableLibraries]:
+        return self._target_libraries
+    
+    @libraries.setter
+    def libraries(self, list_of_libraries: list[AvailableLibraries]) -> None:
+        self._target_libraries = list_of_libraries
+    
     @abc.abstractmethod
-    def compile(self, file_path: str) -> bool:
+    def compile_file(self, target_file: str, output_file: str | None) -> bool:
         pass
 
 class CompilationFileChecker(FileChecker):
