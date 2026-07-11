@@ -150,11 +150,11 @@ if __name__ == "__main__":
         number_of_accepted_functions = 0
         number_of_functions_since_last_accepted = 0
 
-        library, compilation_flag = lib_link
+        library, library_name = lib_link
 
-        usable_functions[header_name] = {"header_path":INCLUDES + header_name, "command":compilation_flag, "functions":[]}
+        usable_functions[header_name] = {"header_path":INCLUDES + header_name, "command":library_name, "functions":[]}
         
-        compilation_checker = filechecker.CompilationFileChecker([compilation_flag])
+        compilation_checker = filechecker.CompilationFileChecker([library_name])
         parser_checker = filechecker.PyParserFileChecker()
 
         path_to_include = INCLUDES + header_name
