@@ -15,9 +15,14 @@ import pycparser
 import secrets
 import sys
 
+ORIGINAL_HEADERS_FOLDER = '/usr/i686-w64-mingw32/include/'
+
+HEADERS_FILE = './data/preprocessed_headers/memoryapi.h'
+FUNCTIONS_TO_EXTRACT = ['VirtualProtect', 'VirtualAlloc', 'VirtualFree', 'VirtualQuery']
+
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        print(f"Usage: {sys.argv[0]} <input.c> <output.c> [seed]")
+        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <json_headers_dataset.json> [seed]")
         sys.exit(1)
 
     input_file  = sys.argv[1]
@@ -86,6 +91,7 @@ if __name__ == '__main__':
 
     for iiv in if_injection_visitors:
         iiv.visit(ast)
+
 
 
     gen = pycparser.c_generator.CGenerator()
