@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
     print('Creating opaque if objects...')
 
-    junk_if = opaqueif.JunkOpaqueIf(builder)
+    junk_if = opaqueif.JunkOpaqueIf(builder, variable_type)
     bogus_flow_if = opaqueif.BogusFlowOpaqueIf(builder)
 
     print('Creating scope...')
@@ -172,20 +172,38 @@ if __name__ == '__main__':
 
     print('Using funciton opaques')
     for opaque_predicate in [is_odd_or_two_predicate, pythagorean_triple_predicate, dummy_predicate]:
-        function_call_visitor = opaquefunctioncallvisitor.OpaqueFunctionCallVisitor(opaque_predicate, no_function_call_opaque, ctypes.CTypes.UNSIGNED_INT, scope_handler, 8, 1)
+        function_call_visitor = opaquefunctioncallvisitor.OpaqueFunctionCallVisitor(opaque_predicate, no_function_call_opaque, ctypes.CTypes.UNSIGNED_INT, scope_handler, 8, 0.3)
         function_call_visitor.visit(ast)
 
     print('Creating visitors to inject opaque true ifs...')
     if_injection_visitors = []
     for opaque_predicate in [is_odd_or_two_predicate, pythagorean_triple_predicate, dummy_predicate]:
         for opaque_if in [junk_if, bogus_flow_if]:
-            if_injection_visitors.append(opaqueifvisitor.TrueOpaqueIfVisitor(opaque_predicate, opaque_if, variable_type, scope_handler, 16, 0.3))
+            if_injection_visitors.append(opaqueifvisitor.TrueOpaqueIfVisitor(opaque_predicate, opaque_if, variable_type, scope_handler, 8, 0.3))
 
     for iiv in if_injection_visitors:
         iiv.visit(ast)
 
-    gen = pycparser.c_generator.CGenerator()
+    gen = c_generator.CGenerator()
     result = gen.visit(ast)
 
     with open(output_file, 'w') as f:
         f.write(result)
+
+    with open(output_file, 'r') as f:
+        content = f.read()
+
+    replacements = [
+        ('BOOL VirtualProtect(',        'BOOL __stdcall VirtualProtect('),
+        ('LPVOID VirtualAlloc(',        'LPVOID __stdcall VirtualAlloc('),
+        ('HMODULE GetModuleHandleA(',   'HMODULE __stdcall GetModuleHandleA('),
+        ('HMODULE LoadLibraryA(',       'HMODULE __stdcall LoadLibraryA('),
+        ('void *GetProcAddress(',       'void * __stdcall GetProcAddress('),
+    ]
+    for old, new in replacements:
+        content = content.replace(old, new)
+
+    content = clang_text + '\n' + content
+    with open(output_file, 'w') as f:
+        f.write(content)
+

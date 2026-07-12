@@ -21,9 +21,12 @@ class OpaqueIf(abc.ABC):
 
 class JunkOpaqueIf(OpaqueIf):
 
-    def __init__(self, used_cbuilder: cbuilder.StandardCBuilder) -> None:
+    def __init__(self, used_cbuilder: cbuilder.StandardCBuilder, used_ctype: ctypes.CTypes) -> None:
         super().__init__(used_cbuilder)
         self._expected_junk_length = 4
+        self._used_ctype = used_ctype
+        self._max_constant_value = 127
+        self._min_constant_value = 0
 
     def _generate_random_operation(self, available_variables: list[str]) -> pycparser.c_ast.Node:
         # unary_chosen = bool(prng.get_range_unsigned_integer(2))
@@ -35,8 +38,16 @@ class JunkOpaqueIf(OpaqueIf):
         # else:
         variables_following_format = [var for var in available_variables if namegenerator.follows_format(var)]
         chosen_operator = prng.random_choice(list(coperators.BinaryCOperator))
-        variable1 = self._cbuilder.variable(prng.random_choice(variables_following_format))
-        variable2 = self._cbuilder.variable(prng.random_choice(variables_following_format))
+        chosen_first_variable_name = prng.random_choice(variables_following_format)
+        chosen_second_variable_name = prng.random_choice(variables_following_format)
+        variable1 = self._cbuilder.variable(chosen_first_variable_name)
+        variable2 = None
+        if chosen_first_variable_name == chosen_second_variable_name:
+            variable2 = self._cbuilder.constant(self._used_ctype, prng.get_range_unsigned_integer(self._max_constant_value, self._min_constant_value))
+            if chosen_operator == coperators.BinaryCOperator.OR:
+                chosen_operator = coperators.BinaryCOperator.BITWISEOR
+        else:
+            variable2 = self._cbuilder.variable(chosen_second_variable_name)
         final_operation = self._cbuilder.binary_operation(chosen_operator, variable1, variable2)
         assign_variable = self._cbuilder.variable(prng.random_choice(variables_following_format))
         

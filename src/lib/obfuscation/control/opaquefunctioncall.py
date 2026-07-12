@@ -55,9 +55,11 @@ class NoCallOpaqueFunctionCall(OpaqueFunctionCall):
         generated_variable = self._frequent_cbuiler.define_initialized_variable_bytes(byte_string, name, ctype_instance)
         return generated_variable
 
-    def _treat_variable(self, declarations_ast: pycparser.c_ast, argument_type: pycparser.c_ast.Node, dependency_graph: nx.DiGraph) -> pycparser.c_ast.Node:
+    def _treat_variable(self, declarations_ast: pycparser.c_ast, argument_type: pycparser.c_ast.Node, dependency_graph: nx.DiGraph) -> pycparser.c_ast.Node | None:
         primitive = pycparsertypes.corresponding_primitive(argument_type, self._integer_definitions)
         if not primitive is None:
+            if primitive.enum_instance == ctypes.CTypes.VOID:
+                return None
             return self._treat_simple(primitive)
         
         is_typedef = pycparsertypes.is_type_identifier(argument_type.type)
@@ -66,6 +68,8 @@ class NoCallOpaqueFunctionCall(OpaqueFunctionCall):
             typedef_identifier = dependencyresolver.identifier_of_name(typedef_name, dependency_graph)
             original_name, node_type = self._variable_classifier.classify_variable(typedef_identifier, dependency_graph)
             if ctypes.is_primitive(node_type):
+                if node_type == ctypes.CTypes.VOID:
+                    return None
                 return self._treat_simple(self._integer_definitions[node_type])
 
         raise Exception("Object not made to handle complex types (enums, structs, union)")
@@ -79,12 +83,14 @@ class NoCallOpaqueFunctionCall(OpaqueFunctionCall):
         for argument in arguments:
             argument_type = argument.type
             created_variable = self._treat_variable(declarations_ast, argument_type, dependency_graph)
-            variables.append(created_variable)
+            if not created_variable is None:
+                variables.append(created_variable)
 
         function_call = self._cbuilder.function_call(function_name, [self._cbuilder.variable(var.name) for var in variables])
 
         return_type = function_node.type.type
         type_identifier = ctypes.corresponding_ctype(self._integer_definitions, return_type.type.names)
+
         if type_identifier != ctypes.CTypes.VOID:
             return_variable = self._treat_variable(declarations_ast, return_type, dependency_graph)
             final_statement = self._cbuilder.assignment(coperators.AssignmentCOperator.ASSIGNMENT, self._cbuilder.variable(return_variable.name), function_call)
