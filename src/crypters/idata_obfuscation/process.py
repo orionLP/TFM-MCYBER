@@ -1,36 +1,56 @@
+import sys
+import csv
+import json
+import clang
+import pycparser
+
+from clang.cindex import Config
+Config.set_library_file("/usr/lib/llvm-21/lib/libclang.so")
+from pycparser import c_generator
+from clang.cindex import TypeKind
+from collections import defaultdict
+from clang.cindex import Index, CursorKind, TypeKind
+from src.lib.crypto.rng import prng
+
+import networkx as nx
+import matplotlib.pyplot as plt
 import src.lib.chandling.ctypes as ctypes
 import src.lib.chandling.cbuilder as cbuilder
 import src.lib.obfuscation.utils.scope as scope
-import src.lib.obfuscation.control.opaqueif as opaqueif
+import src.lib.chandling.filechecker as filechecker
+import src.lib.chandling.headerhandler as headerhandler
+import src.lib.chandling.pycparserfinder as pycparserfinder
 import src.lib.obfuscation.utils.namegenerator as namegenerator
+import src.lib.chandling.functionextractors as functionextractors
+import src.lib.chandling.variableclassifier as variableclassifier
+import src.lib.chandling.dependencyresolver as dependencyresolver
+import src.lib.chandling.compilationhandler as compilationhandler
+import src.lib.obfuscation.control.opaqueif as opaqueif
 import src.lib.obfuscation.control.opaquevariable as opaquevariable
 import src.lib.obfuscation.control.opaquepredicate as opaquepredicate
 import src.lib.obfuscation.visitors.opaqueifvisitor as opaqueifvisitor
+import src.lib.obfuscation.control.opaquefunctioncall as opaquefunctioncall
 import src.lib.obfuscation.visitors.opaquevariablevisitor as opaquevariablevisitor
+import src.lib.obfuscation.visitors.opaquefunctioncallvisitor as opaquefunctioncallvisitor
 
-from src.lib.crypto.rng import prng
-from pycparser import c_generator
-
-import pycparser
-import secrets
-import sys
-
+LIBRARIES = '/usr/i686-w64-mingw32/lib/'
 ORIGINAL_HEADERS_FOLDER = '/usr/i686-w64-mingw32/include/'
-
-HEADERS_FILE = './data/preprocessed_headers/memoryapi.h'
-FUNCTIONS_TO_EXTRACT = ['VirtualProtect', 'VirtualAlloc', 'VirtualFree', 'VirtualQuery']
+TMP_INPUT_FILE = './src/crypters/idata_obfuscation/merged.c'
+FAKE_IMPORTS = '-I./src/fake_imports'
 
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <json_headers_dataset.json> [seed]")
+    if len(sys.argv) < 4:
+        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <json_headers_dataset.json> <includes_folder> [seed]")
         sys.exit(1)
 
     input_file  = sys.argv[1]
     output_file = sys.argv[2]
+    json_headers_dataset = sys.argv[3]
+    includes_folder = sys.argv[4]
     seed = None
-    if len(sys.argv) == 4:
+    if len(sys.argv) == 6:
         print('Using selected seed...')
-        seed = sys.argv[3]
+        seed = sys.argv[5]
         key = seed[:prng.key_length * 2]
         nonce = seed[prng.key_length * 2: (prng.key_length + prng.nonce_length) * 2]
         prng.key = bytes.fromhex(key)
@@ -43,7 +63,7 @@ if __name__ == '__main__':
         input_file,
         use_cpp=True,
         cpp_path='cpp',
-        cpp_args=['-I./src/fake_imports']
+        cpp_args=[FAKE_IMPORTS]
     )
 
     print('Configuring objects...')
@@ -83,6 +103,78 @@ if __name__ == '__main__':
     for viv in variable_injection_visitors:
         viv.visit(ast)
 
+    print('Gathering libraries to inject into the executable...')
+    cleaned_libraries = []
+    with open(json_headers_dataset, 'r') as json_file:
+        unclean_libraries_to_use = json.load(json_file)
+        for key in unclean_libraries_to_use:
+            inner_json = unclean_libraries_to_use[key]
+            if not inner_json['functions'] == []:
+                cleaned_libraries.append({key : inner_json})
+
+    print('Selecting compiler and target to use...')
+    COMPILER = compilationhandler.AvailableCompilationTools.CLANG
+    TARGET = compilationhandler.TargetMachines.I686PCWindowsGNU 
+    USED_LIBRARIES = set()
+
+    extractor = dependencyresolver.ClangDependencyResolver()
+    handler = headerhandler.StandardHeaderResolver()
+    
+    print('Attempting dependencies extraction...')
+    graph = None
+    list_of_chosen_functions = []
+    while True:
+        try:
+            number_of_libraries = prng.get_range_unsigned_integer(3, 7)
+            selected_libraries = prng.random_selection(cleaned_libraries, number_of_libraries)
+            graph = None
+            list_of_chosen_functions = []
+            USED_LIBRARIES = set()
+            for item_library in selected_libraries:
+                key = list(item_library.keys())[0]
+        
+                header_path = item_library[key]['header_path']
+                library_name = item_library[key]['library_name']
+                functions = item_library[key]['functions']
+        
+                chosen_upper_limit = min(10, len(functions))
+                number_of_functions_chosen = max(1, prng.get_range_unsigned_integer(chosen_upper_limit))
+                chosen_functions = prng.random_selection(functions, number_of_functions_chosen)
+
+                USED_LIBRARIES.add(compilationhandler.library_identity(library_name))
+
+                print(f'Adding functions of library {library_name}...')
+                extractor.parse(header_path, ORIGINAL_HEADERS_FOLDER)
+                for function in chosen_functions:
+                    list_of_chosen_functions.append(function)
+                    if graph is None:
+                        graph = extractor.resolve_dependencies(function)
+                    else:
+                        graph = extractor.resolve_dependencies(function,graph)
+        except Exception as e:
+            print('There was an error with this version')
+            print(e)
+        else:
+            print('Succeeded :)')
+            break
+
+    print('Creating ast of dependencies and clang and pycparser code...')
+    clang_text, pycparser_text = handler.print_code(graph)
+    dependencies_ast = pycparser.CParser().parse(pycparser_text)
+    
+    print('Creating last objects to use opaque function calls')
+
+    classifier = variableclassifier.StandardVariableClassifier()
+    function_finder = pycparserfinder.FunctionDeclarationFinder()
+    name_generator = namegenerator.RandomNameGenerator(16)
+
+    no_function_call_opaque = opaquefunctioncall.NoCallOpaqueFunctionCall(builder, frequent_builder, name_generator, integer_types, function_finder, classifier, list_of_chosen_functions, dependencies_ast, graph)
+
+    print('Using funciton opaques')
+    for opaque_predicate in [is_odd_or_two_predicate, pythagorean_triple_predicate, dummy_predicate]:
+        function_call_visitor = opaquefunctioncallvisitor.OpaqueFunctionCallVisitor(opaque_predicate, no_function_call_opaque, ctypes.CTypes.UNSIGNED_INT, scope_handler, 8, 1)
+        function_call_visitor.visit(ast)
+
     print('Creating visitors to inject opaque true ifs...')
     if_injection_visitors = []
     for opaque_predicate in [is_odd_or_two_predicate, pythagorean_triple_predicate, dummy_predicate]:
@@ -91,8 +183,6 @@ if __name__ == '__main__':
 
     for iiv in if_injection_visitors:
         iiv.visit(ast)
-
-
 
     gen = pycparser.c_generator.CGenerator()
     result = gen.visit(ast)
