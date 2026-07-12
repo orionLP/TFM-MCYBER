@@ -2,6 +2,8 @@ import abc
 import subprocess
 import pycparser
 
+import src.lib.chandling.compilationhandler as compilationhandler
+
 class FileChecker(abc.ABC):
 
     @abc.abstractmethod
@@ -10,22 +12,12 @@ class FileChecker(abc.ABC):
 
 class CompilationFileChecker(FileChecker):
 
-    def __init__(self, library_commands: list[str]) -> None:
-        self._libraries = library_commands
+    def __init__(self, compilation_handler: compilationhandler.CompilationHandler) -> None:
+        self._compilation_handler = compilation_handler
     
     def check_file(self, file_path: str) -> bool:
-        try:
-            cmd = ["clang", "--target=i686-pc-windows-gnu", "-o", "/tmp/tmpfile_compilation_checker.exe"] + self._libraries + [file_path]
-
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                timeout=30
-            )
- 
-            return result.returncode == 0
-        except Exception as e:
-            return False
+        status_code = self._compilation_handler.compile_file(file_path, '/tmp/tmpfile_compilation_checker.exe')
+        return status_code
 
 class PyParserFileChecker(FileChecker):
 

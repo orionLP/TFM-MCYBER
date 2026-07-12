@@ -1,12 +1,17 @@
 import abc
 import enum
 import subprocess
+import dataclasses
+
+from pathlib import Path
 
 @dataclasses.dataclass
-class Compier():
+class CompilationTool():
     compiler_name: str
     compiler_command: str
 
+class AvailableCompilationTools(enum.Enum):
+    CLANG = CompilationTool('clang','clang')
 
 @dataclasses.dataclass
 class Machine():
@@ -175,15 +180,30 @@ class AvailableLibraries(enum.Enum):
     XAUDIO2_8 = Library("xaudio2_8", "-lxaudio2_8")
     XINPUT1_3 = Library("xinput1_3", "-lxinput1_3")
 
+def library_identity(searched_name: str) -> AvailableLibraries | None:
+    for item in AvailableLibraries:
+        if item.value.library_name == searched_name:
+            return item
+    return None
+
 class CompilationHandler(abc.ABC):
 
-    def __init__(self, used_machine: TargetMachines, used_libraries: list[AvailableLibraries]) -> None: 
+    def __init__(self, used_compiler: AvailableCompilationTools, used_machine: TargetMachines, used_libraries: list[AvailableLibraries]) -> None:
         self.target = used_machine
         self.libraries = used_libraries
+        self.compiler = used_compiler
+    
+    @property
+    def compiler(self) -> AvailableCompilationTools:
+        return self._target_compiler
+
+    @compiler.setter
+    def compiler(self, new_compiler: AvailableCompilationTools) -> None:
+        self._target_compiler = new_compiler
     
     @property
     def target(self) -> TargetMachines:
-        self._target_machine
+        return self._target_machine
 
     @target.setter
     def target(self, target_machine: TargetMachines) -> None:
@@ -201,21 +221,20 @@ class CompilationHandler(abc.ABC):
     def compile_file(self, target_file: str, output_file: str | None) -> bool:
         pass
 
-class CompilationFileChecker(FileChecker):
+class StandardCompilationHandler(CompilationHandler):
 
-    def __init__(self, library_commands: list[str]) -> None:
-        self._libraries = library_commands
-    
-    def check_file(self, file_path: str) -> bool:
+    def compile_file(self, target_file: str, output_file: str | None) -> bool:
+        executable_name = self.compiler.value.compiler_command
+        target_machine = self.target.value.target_flag
+        library_flags = [item.value.library_flag for item in self.libraries]
+        
+        input_path = Path(target_file).expanduser().resolve(strict=True)
+        if not input_path.is_file():
+            raise ValueError('Path is not a file')
+        output_path = Path(output_file).expanduser().resolve(strict=False)
+        final_command = [executable_name, '--target=' + target_machine, '-o', str(output_path)] + library_flags + [input_path]
         try:
-            cmd = ["clang", "--target=i686-pc-windows-gnu", "-o", "/tmp/tmpfile_compilation_checker.exe"] + self._libraries + [file_path]
-
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                timeout=30
-            )
- 
+            result = subprocess.run(final_command, capture_output=True, timeout=30)
             return result.returncode == 0
         except Exception as e:
             return False

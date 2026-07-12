@@ -1,16 +1,11 @@
+import sys
 import csv
 import json
-
-import networkx as nx
-import src.lib.chandling.filechecker as filechecker
-import src.lib.chandling.headerhandler as headerhandler
-import src.lib.chandling.dependencyresolver as dependencyresolver
-import src.lib.chandling.functionextractors as functionextractors
-
-import sys
 import clang
 import pycparser
 
+from clang.cindex import Config
+Config.set_library_file("/usr/lib/llvm-21/lib/libclang.so")
 from pycparser import c_generator
 from clang.cindex import TypeKind
 from collections import defaultdict
@@ -21,11 +16,14 @@ import matplotlib.pyplot as plt
 import src.lib.chandling.ctypes as ctypes
 import src.lib.chandling.cbuilder as cbuilder
 import src.lib.obfuscation.utils.scope as scope
+import src.lib.chandling.filechecker as filechecker
 import src.lib.chandling.headerhandler as headerhandler
 import src.lib.chandling.pycparserfinder as pycparserfinder
 import src.lib.obfuscation.utils.namegenerator as namegenerator
+import src.lib.chandling.functionextractors as functionextractors
 import src.lib.chandling.variableclassifier as variableclassifier
 import src.lib.chandling.dependencyresolver as dependencyresolver
+import src.lib.chandling.compilationhandler as compilationhandler
 import src.lib.obfuscation.control.opaquevariable as opaquevariable
 import src.lib.obfuscation.control.opaquepredicate as opaquepredicate
 import src.lib.obfuscation.visitors.opaqueifvisitor as opaqueifvisitor
@@ -33,7 +31,6 @@ import src.lib.obfuscation.control.opaquefunctioncall as opaquefunctioncall
 import src.lib.obfuscation.visitors.opaquevariablevisitor as opaquevariablevisitor
 import src.lib.obfuscation.visitors.opaquefunctioncallvisitor as opaquefunctioncallvisitor
 
-#└─$ tai
 INCLUDES = './data/preprocessed_headers/'
 LIBRARIES = '/usr/i686-w64-mingw32/lib/'
 CSV_FILE = 'src/crypters/idata_obfuscation/functions.csv'
@@ -142,7 +139,8 @@ if __name__ == "__main__":
     archive_function_extractor = functionextractors.ArchiveHeaderFunctionExtractor()
     dependencies_extractor = dependencyresolver.ClangDependencyResolver()
     header_printer = headerhandler.StandardHeaderResolver()
-
+    compilation_handler = compilationhandler.StandardCompilationHandler(compilationhandler.AvailableCompilationTools.CLANG, compilationhandler.TargetMachines.I686PCWindowsGNU, [])
+    
     usable_functions = {}
     for header_name, lib_link in relation_header_libraries.items():
         print(f'Processing header file {header_name}')
@@ -152,9 +150,12 @@ if __name__ == "__main__":
 
         library, library_name = lib_link
 
-        usable_functions[header_name] = {"header_path":INCLUDES + header_name, "command":library_name, "functions":[]}
+        usable_functions[header_name] = {"header_path":INCLUDES + header_name, "library_name":library_name, "functions":[]}
         
-        compilation_checker = filechecker.CompilationFileChecker([library_name])
+        LIBRARY = compilationhandler.library_identity(library_name)
+        compilation_handler.libraries = [LIBRARY]
+        
+        compilation_checker = filechecker.CompilationFileChecker(compilation_handler)
         parser_checker = filechecker.PyParserFileChecker()
 
         path_to_include = INCLUDES + header_name
@@ -189,8 +190,6 @@ if __name__ == "__main__":
 
                 with open(PYCPARSER_FILE, 'w') as file_pycparser:
                     file_pycparser.write(pycparser_text)
-
-                create_example_file(TMP_INPUT_FILE, TMP_OUTPUT_FILE, path_to_include, ORIGINAL_FOLDER, function_name)
 
                 # the last check is way too slow
                 # if compilation_checker.check_file(CLANG_FILE) and compilation_checker.check_file(TMP_OUTPUT_FILE) and parser_checker.check_file(PYCPARSER_FILE):
