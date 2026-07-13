@@ -1,0 +1,34 @@
+
+*
+* Avast Scan Report
+* This file is generated automatically
+*
+* Scan name: Targeted Scan
+* Started on: Monday, July 13, 2026 3:23:18 AM
+* VPS: 260712-4, 7/12/2026
+*
+
+C:\Users\V\Downloads\output_1.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_10.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_11.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_12.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_13.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_14.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_2.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_3.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_4.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_5.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_6.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_7.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_8.exe [L] Win32:MalwareX-gen [Misc] (0)
+C:\Users\V\Downloads\output_9.exe [L] Win32:MalwareX-gen [Misc] (0)
+Infected files: 14
+Total files: 45
+Total folders: 1
+Total size: 3.9 MB
+
+*
+* Scan stopped: Monday, July 13, 2026 3:23:19 AM
+* Run-time was 1 second(s)
+*
+
