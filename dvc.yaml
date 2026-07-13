@@ -44,3 +44,11 @@ stages:
     - src/crypters/code_obfuscation/
     outs:
     - data/crypters/exe/x86/code_obfuscation/
+  idata_obfuscation_opaque_calls:
+    cmd: ./src/crypters/idata_obfuscation/execute_pipeline.sh
+    deps:
+    - ./src/lib/
+    - data/preprocessed_headers/
+    - data/raw/exe/x86/
+    - data/usable_headers/
+    - src/crypters/idata_obfuscation/
