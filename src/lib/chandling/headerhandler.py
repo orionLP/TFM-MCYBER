@@ -94,11 +94,20 @@ class StandardHeaderResolver(HeaderHandler):
 
     def _is_typedef_struct(self, graph: nx.DiGraph, resource: str) -> bool:
         parents = list(graph.predecessors(resource))
-        return len(parents) == 1 and CursorKind.TYPEDEF_DECL == graph.nodes[parents[0]]['cursor'].kind and CursorKind.STRUCT_DECL == graph.nodes[resource]['cursor'].kind
+        enough_parents = len(parents) >= 1
+        all_parents_are_typedef = True
+        for parent_item in parents:
+            all_parents_are_typedef = all_parents_are_typedef and CursorKind.TYPEDEF_DECL == graph.nodes[parent_item]['cursor'].kind
+
+        return enough_parents and all_parents_are_typedef and CursorKind.STRUCT_DECL == graph.nodes[resource]['cursor'].kind
 
     def _is_typdef_enum(self, graph: nx.DiGraph, resource: str) -> bool:
         parents = list(graph.predecessors(resource))
-        return len(parents) == 1 and CursorKind.TYPEDEF_DECL == graph.nodes[parents[0]]['cursor'].kind and CursorKind.ENUM_DECL == graph.nodes[resource]['cursor'].kind
+        enough_parents = len(parents) >= 1
+        all_parents_are_typedef = True
+        for parent_item in parents:
+            all_parents_are_typedef = all_parents_are_typedef and CursorKind.TYPEDEF_DECL == graph.nodes[parents[0]]['cursor'].kind
+        return enough_parents and all_parents_are_typedef and CursorKind.ENUM_DECL == graph.nodes[resource]['cursor'].kind
 
     def print_code(self, graph: nx.DiGraph) -> tuple[str,str]:
         final_string = ""

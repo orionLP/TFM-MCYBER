@@ -39,6 +39,7 @@ LIBRARIES = '/usr/i686-w64-mingw32/lib/'
 ORIGINAL_HEADERS_FOLDER = '/usr/i686-w64-mingw32/include/'
 TMP_INPUT_FILE = './src/crypters/idata_obfuscation/merged.c'
 FAKE_IMPORTS = '-I./src/fake_imports'
+EXCLUDED_LIBRARIES = set(['d3dx9_38'])
 
 if __name__ == '__main__':
     if len(sys.argv) < 7:
@@ -113,7 +114,7 @@ if __name__ == '__main__':
         unclean_libraries_to_use = json.load(json_file)
         for key in unclean_libraries_to_use:
             inner_json = unclean_libraries_to_use[key]
-            if not inner_json['functions'] == []:
+            if not inner_json['functions'] == [] and not inner_json['library_name'] in EXCLUDED_LIBRARIES:
                 cleaned_libraries.append({key : inner_json})
 
     print('Selecting compiler and target to use...')
