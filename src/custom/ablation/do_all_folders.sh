@@ -26,6 +26,7 @@ source_directories=(
     "./data/crypters/exe/x86/multiple_information_reveal/algo2_v3/KEY1/"
     "./data/crypters/exe/x86/multiple_information_reveal/algo2_v3/KEY2/"
     "./data/crypters/exe/x86/multiple_information_reveal/algo2_v3/KEY3/"
+    "./data/crypters/exe/x86/idata_obfuscation/opaque_calls/"
 )
  
 destination_directories=(
@@ -54,6 +55,7 @@ destination_directories=(
     "./data/custom/ablation/multiple_information_reveal/algo2_v3/KEY1/"
     "./data/custom/ablation/multiple_information_reveal/algo2_v3/KEY2/"
     "./data/custom/ablation/multiple_information_reveal/algo2_v3/KEY3/"
+    "./data/custom/ablation/idata_obfuscation/opaque_calls/"
 )
 
 rm -rf "./data/custom/ablation/"
