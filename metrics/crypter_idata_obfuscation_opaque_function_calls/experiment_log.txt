@@ -1,0 +1,39 @@
+TEST LOG FOR AVAST 13/Jul/2026
+
+STEP 0: 10:34: Update AV system
+    10:34: AVAST updated
+
+STEP 1: 10:35: Send 15 files to the computer and make sure none is detected
+RESULT:
+    10:39: Sent files output_0.exe to output_14.exe in a folder excluded from scanning. I will refer to these
+	files by their index (number before .exe)
+    10:40: Reversed folder to not being excluded from scanning
+
+STEP 2: 10:41: Scan the entire directory in which the executables reside:
+RESULT:
+    10:46: Executed the scan, no malware was found in any of the samples
+
+STEP 3: 10:46: Execute output_0.exe and wait for updates
+RESULT:
+    10:48: Execute output_0.exe
+    10:49: Execute output_0.exe again
+    10:52: Executed several times the output_0.exe file, but it has not been pickedup, i will change the executable within 
+	the executables from windows_exec.exe to windows_meterpreter_reverse_tcp.exe (perhaps it is not malicious enough?)
+
+STEP 4: 10:54: Recompile all samples and send them to the machine
+RESULT:
+    10:55: Execute pipeilne again
+    11:03: All files regenerated
+    11:07: Removed previous output_x.exe files and replaced them with the new ones (again into the folder excluded from analysis,
+	and once all samples have been placed, reverted the folder to allow scans)
+
+STEP 5: 11:08: Execute output_0.exe and wait for updates
+RESULT:
+    11:10: Execute output_0.exe
+    11:11: Detected by cybercapture
+    11:13: Update AV
+
+STEP 6: 11:14 put erased samples back in and do a scan
+RESULT:
+    11:14: Placed missing samples back into the machine
+    11:20: Did a full scan of all files in the folder, and all of the samples got detected.
