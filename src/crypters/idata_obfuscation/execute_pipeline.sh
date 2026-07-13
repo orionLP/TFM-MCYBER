@@ -3,6 +3,8 @@
 source_file="./data/raw/exe/x86/windows_meterpreter_reverse_tcp.exe" 
 destination_directory="./data/crypters/exe/x86/idata_obfuscation/opaque_calls/"
 
+mkdir -p ${destination_directory}
+
 seeds=(
   030ef3d5def77b283000fac50eb35e068fea1190be3474cc5ac5452178562ef7b089642c2b5835ab168b4640
   93dfc96fe270b45f865db20f4c9148c5901a497ec952d1b5ac9320029a08e8215f1a8f8b334d9427a9d48589

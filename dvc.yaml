@@ -52,3 +52,5 @@ stages:
     - data/raw/exe/x86/
     - data/usable_headers/
     - src/crypters/idata_obfuscation/
+    outs:
+    - data/crypters/exe/x86/idata_obfuscation/opaque_calls/
