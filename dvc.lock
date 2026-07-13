@@ -138,7 +138,7 @@ stages:
     deps:
     - path: ./src/lib/
       hash: md5
-      md5: 19ab3c39a38e56a9e566622d6c1db65d.dir
+      md5: 6f05b9f524da7a2d08b9f6a15044930b.dir
       size: 259936
       nfiles: 54
     - path: data/preprocessed_headers/
@@ -158,6 +158,12 @@ stages:
       nfiles: 1
     - path: src/crypters/idata_obfuscation/
       hash: md5
-      md5: b86b412ed2654f4ab4d8d6fe2fdce7af.dir
-      size: 86537
-      nfiles: 6
+      md5: a69a66e74c07c7456e7df2dae61d5c47.dir
+      size: 591238
+      nfiles: 8
+    outs:
+    - path: data/crypters/exe/x86/idata_obfuscation/opaque_calls/
+      hash: md5
+      md5: 84d4610d5fcafa194b4b440d8e0dd326.dir
+      size: 4078667
+      nfiles: 15
