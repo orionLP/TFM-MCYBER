@@ -232,7 +232,7 @@ class StandardCompilationHandler(CompilationHandler):
         if not input_path.is_file():
             raise ValueError('Path is not a file')
         output_path = Path(output_file).expanduser().resolve(strict=False)
-        final_command = [executable_name, '--target=' + target_machine, '-o', str(output_path), str(input_path)] + library_flags
+        final_command = [executable_name, '--target=' + target_machine, '-O0', '-o', str(output_path), str(input_path)] + library_flags
         try:
             result = subprocess.run(final_command, capture_output=True, timeout=30)
             return result.returncode == 0
