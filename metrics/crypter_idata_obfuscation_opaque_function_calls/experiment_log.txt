@@ -36,4 +36,4 @@ RESULT:
 STEP 6: 11:14 put erased samples back in and do a scan
 RESULT:
     11:14: Placed missing samples back into the machine
-    11:20: Did a full scan of all files in the folder, and all of the samples got detected.
+    11:20: Did a full scan of all files in the folder, and all of the samples got detected. Saved log at avast_log.txt.
