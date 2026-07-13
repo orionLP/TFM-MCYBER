@@ -24,6 +24,6 @@ seeds=(
 for i in $(seq 0 14); do
 	echo "Running iteration with seed ${seeds[${i}]}"
 
-	python3 src/crypters/idata_obfuscation/process.py ./src/crypters/idata_obfuscation/merged.c "./src/crypters/idata_obfuscation/output_${i}.c" "${destination_directory}output_${i}.exe"  ./data/usable_headers/list_of_usable_headers.json ./data/preprocessed_headers/ "${seeds[${i}]}"
+	python3 src/crypters/idata_obfuscation/process.py ./src/crypters/idata_obfuscation/merged.c "./src/crypters/idata_obfuscation/output_${i}.c" "${destination_directory}output_${i}.exe" "${source_file}" ./data/usable_headers/list_of_usable_headers.json ./data/preprocessed_headers/ "${seeds[${i}]}"
 	objcopy --strip-debug "${destination_directory}output_${i}.exe"
 done
