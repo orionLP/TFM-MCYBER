@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source_file="./data/raw/exe/x86/windows_exec.exe" 
+source_file="./data/raw/exe/x86/windows_meterpreter_reverse_tcp.exe" 
 destination_directory="./data/crypters/exe/x86/idata_obfuscation/opaque_calls/"
 
 seeds=(

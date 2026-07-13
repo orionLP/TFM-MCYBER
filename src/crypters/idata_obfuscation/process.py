@@ -39,7 +39,7 @@ LIBRARIES = '/usr/i686-w64-mingw32/lib/'
 ORIGINAL_HEADERS_FOLDER = '/usr/i686-w64-mingw32/include/'
 TMP_INPUT_FILE = './src/crypters/idata_obfuscation/merged.c'
 FAKE_IMPORTS = '-I./src/fake_imports'
-EXCLUDED_LIBRARIES = set(['d3dx9_38'])
+EXCLUDED_LIBRARIES = set(['d3dx9_38', 'glaux', 'qutil', 'xinput1_3', 'd3drm', 'penwin32', 'p2p'])
 
 if __name__ == '__main__':
     if len(sys.argv) < 7:
