@@ -51,13 +51,13 @@ stages:
     deps:
     - path: ./data/crypters/exe/x86/code_obfuscation/opaque_ifs
       hash: md5
-      md5: d07a729db3248e9d542f527b0d958add.dir
-      size: 1746487
+      md5: eeef17fc1fd7f1a927ec2231eb9b2512.dir
+      size: 1753107
       nfiles: 15
     - path: ./data/crypters/exe/x86/multiple_information_reveal/
       hash: md5
-      md5: d386d268c7c58230f8e6a9ddad5cf07e.dir
-      size: 18494019
+      md5: 55b70d6b52a5191da4cd16b950676b1d.dir
+      size: 18521019
       nfiles: 270
     - path: ./data/crypters/exe/x86/tutorial/
       hash: md5
@@ -86,14 +86,14 @@ stages:
       nfiles: 15
     - path: ./src/custom/ablation/
       hash: md5
-      md5: 481d5e5e2b82806558801395c44149c2.dir
+      md5: 858c6edd305b666fbe8a0fd6f8e49c22.dir
       size: 47784
       nfiles: 7
     outs:
     - path: ./data/custom/ablation/
       hash: md5
-      md5: ec14698c67575c911d324f62e8e66730.dir
-      size: 3401810672
+      md5: 97c8123aa845f02f8bb303220f5576f0.dir
+      size: 3408656112
       nfiles: 44880
   multiple_crypters_information_reveal:
     cmd: ./src/crypters/multiple_information_reveal/do_all.sh
@@ -105,14 +105,14 @@ stages:
       nfiles: 15
     - path: src/crypters/multiple_information_reveal
       hash: md5
-      md5: 600a576e9f1d800fe964d147f417039d.dir
-      size: 251577
+      md5: f483cfef055379039c37cff818dfc2d0.dir
+      size: 253377
       nfiles: 30
     outs:
     - path: data/crypters/exe/x86/multiple_information_reveal/
       hash: md5
-      md5: d386d268c7c58230f8e6a9ddad5cf07e.dir
-      size: 18494019
+      md5: 55b70d6b52a5191da4cd16b950676b1d.dir
+      size: 18521019
       nfiles: 270
   crypter_obfuscation:
     cmd: ./src/crypters/code_obfuscation/do_all.sh
@@ -124,12 +124,40 @@ stages:
       nfiles: 15
     - path: src/crypters/code_obfuscation/
       hash: md5
-      md5: 7c52009a720ec4e62d8018bc5b757eb7.dir
-      size: 340042
-      nfiles: 12
+      md5: eff5bf283ff99e32da461c4626d2ffd7.dir
+      size: 330213
+      nfiles: 11
     outs:
     - path: data/crypters/exe/x86/code_obfuscation/
       hash: md5
-      md5: 9696e497e95dd73937908e43683236f7.dir
-      size: 1746487
+      md5: fd8e8f560238e71cc510a5801235af2a.dir
+      size: 1753107
       nfiles: 15
+  idata_obfuscation_opaque_calls:
+    cmd: ./src/crypters/idata_obfuscation/execute_pipeline.sh
+    deps:
+    - path: ./src/lib/
+      hash: md5
+      md5: 19ab3c39a38e56a9e566622d6c1db65d.dir
+      size: 259936
+      nfiles: 54
+    - path: data/preprocessed_headers/
+      hash: md5
+      md5: 3f57f3ce033df854a1b981dad44daf61.dir
+      size: 254877168
+      nfiles: 294
+    - path: data/raw/exe/x86/
+      hash: md5
+      md5: ce6784c84e615c66c4e7afed79b2af7c.dir
+      size: 875008
+      nfiles: 15
+    - path: data/usable_headers/
+      hash: md5
+      md5: 465ef3d08b84b0d6b34f2e77b67b2844.dir
+      size: 329163
+      nfiles: 1
+    - path: src/crypters/idata_obfuscation/
+      hash: md5
+      md5: b86b412ed2654f4ab4d8d6fe2fdce7af.dir
+      size: 86537
+      nfiles: 6
