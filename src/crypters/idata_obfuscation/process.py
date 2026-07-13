@@ -262,6 +262,10 @@ if __name__ == '__main__':
         f.write(final_content)
     
     print('Compiling file into an executable...')
-
+    
     compilation_handler_object = compilationhandler.StandardCompilationHandler(USED_COMPILER, USED_TARGET, USED_LIBRARIES)
-    compilation_handler_object.compile_file(output_file, output_executable_path)
+    compilation_result = compilation_handler_object.compile_file(output_file, output_executable_path)
+    if compilation_result:
+        print('Compilation successful...')
+    else:
+        print('Something went something wrong with the compilation...')

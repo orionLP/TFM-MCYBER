@@ -20,6 +20,8 @@ static const int key_matrix_inverse[NUM_ROWS][NUM_COLUMNS] = {
     {220, 89, 88, 9}
 };
 
+const int iv_length = 16;
+
 static int data_matrix[NUM_ROWS][NUM_COLUMNS] = {0};
 static int last_matrix[NUM_ROWS][NUM_COLUMNS] = {0};
 static int tmp_matrix[NUM_ROWS][NUM_COLUMNS] = {0};
@@ -266,7 +268,7 @@ void code_handling_execute(in_memory_pe *new_pe){
 int main(void) { 
     decrypt_data(executable_pe, executable_size);
 
-    in_memory_pe *pe_to_execute = code_handling_load_pe(executable_pe, executable_size);
+    in_memory_pe *pe_to_execute = code_handling_load_pe(executable_pe + iv_length, executable_size);
     if(pe_to_execute == NULL){
         printf("Something went wrong while loading the pe\n");
         return EXIT_FAILURE;

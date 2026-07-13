@@ -6,7 +6,8 @@ typedef unsigned short  WORD;
 typedef unsigned long   DWORD;
 typedef int             BOOL;
 typedef void*           HANDLE;
-typedef void*           HMODULE;
+typedef struct HINSTANCE__ *HINSTANCE;
+typedef HINSTANCE       HMODULE;
 typedef void*           LPVOID;
 typedef char*           LPSTR;
 typedef const char*     LPCSTR;
@@ -18,7 +19,6 @@ typedef const char*     LPCSTR;
 #define WINAPI __stdcall
 
 typedef unsigned long  SIZE_T;
-typedef void*         HMODULE;
 typedef void*         HANDLE;
 
 #define PAGE_READONLY           0x02
