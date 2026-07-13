@@ -39,18 +39,19 @@ TMP_INPUT_FILE = './src/crypters/idata_obfuscation/merged.c'
 FAKE_IMPORTS = '-I./src/fake_imports'
 
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <json_headers_dataset.json> <includes_folder> [seed]")
+    if len(sys.argv) < 6:
+        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <output_executable.exe> <json_headers_dataset.json> <includes_folder> [seed]")
         sys.exit(1)
 
     input_file  = sys.argv[1]
     output_file = sys.argv[2]
-    json_headers_dataset = sys.argv[3]
-    includes_folder = sys.argv[4]
+    output_executable_path = sys.argv[3]
+    json_headers_dataset = sys.argv[4]
+    includes_folder = sys.argv[5]
     seed = None
-    if len(sys.argv) == 6:
+    if len(sys.argv) == 7:
         print('Using selected seed...')
-        seed = sys.argv[5]
+        seed = sys.argv[6]
         key = seed[:prng.key_length * 2]
         nonce = seed[prng.key_length * 2: (prng.key_length + prng.nonce_length) * 2]
         prng.key = bytes.fromhex(key)
@@ -113,8 +114,8 @@ if __name__ == '__main__':
                 cleaned_libraries.append({key : inner_json})
 
     print('Selecting compiler and target to use...')
-    COMPILER = compilationhandler.AvailableCompilationTools.CLANG
-    TARGET = compilationhandler.TargetMachines.I686PCWindowsGNU 
+    USED_COMPILER = compilationhandler.AvailableCompilationTools.CLANG
+    USED_TARGET = compilationhandler.TargetMachines.I686PCWindowsGNU 
     USED_LIBRARIES = set()
 
     extractor = dependencyresolver.ClangDependencyResolver()
@@ -170,7 +171,7 @@ if __name__ == '__main__':
 
     no_function_call_opaque = opaquefunctioncall.NoCallOpaqueFunctionCall(builder, frequent_builder, name_generator, integer_types, function_finder, classifier, list_of_chosen_functions, dependencies_ast, graph)
 
-    print('Using funciton opaques')
+    print('Using funciton opaques...')
     for opaque_predicate in [is_odd_or_two_predicate, pythagorean_triple_predicate, dummy_predicate]:
         function_call_visitor = opaquefunctioncallvisitor.OpaqueFunctionCallVisitor(opaque_predicate, no_function_call_opaque, ctypes.CTypes.UNSIGNED_INT, scope_handler, 8, 0.3)
         function_call_visitor.visit(ast)
@@ -183,6 +184,8 @@ if __name__ == '__main__':
 
     for iiv in if_injection_visitors:
         iiv.visit(ast)
+    
+    print('Generating c file...')
 
     gen = c_generator.CGenerator()
     result = gen.visit(ast)
@@ -206,4 +209,8 @@ if __name__ == '__main__':
     content = clang_text + '\n' + content
     with open(output_file, 'w') as f:
         f.write(content)
+    
+    print('Compiling file into an executable...')
 
+    compilation_handler_object = compilationhandler.StandardCompilationHandler(USED_COMPILER, USED_TARGET, USED_LIBRARIES)
+    compilation_handler_object.compile_file(output_file, output_executable_path)
