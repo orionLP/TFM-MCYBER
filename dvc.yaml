@@ -48,6 +48,7 @@ stages:
   idata_obfuscation_opaque_calls:
     cmd: ./src/crypters/idata_obfuscation/execute_pipeline.sh
     deps:
+    - ./src/fake_imports/
     - ./src/lib/
     - data/preprocessed_headers/
     - data/raw/exe/x86/
