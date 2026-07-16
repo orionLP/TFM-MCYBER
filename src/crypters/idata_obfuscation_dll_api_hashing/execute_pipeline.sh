@@ -1,0 +1,32 @@
+#!/bin/bash
+
+source_file="./data/raw/exe/x86/windows_meterpreter_reverse_tcp.exe" 
+destination_directory="./data/crypters/exe/x86/idata_obfuscation/opaque_calls/"
+
+mkdir -p ${destination_directory}
+
+seeds=(
+  030ef3d5def77b283000fac50eb35e068fea1190be3474cc5ac5452178562ef7b089642c2b5835ab168b4640
+  93dfc96fe270b45f865db20f4c9148c5901a497ec952d1b5ac9320029a08e8215f1a8f8b334d9427a9d48589
+  e24dfc26b596d577c3f5b758dda537529298d58429bbe2dfdb936926059d54910b1e2fd0c154a1abe2f389ac
+  4727683b603599dc498f9c32a14e36ae96624abe6116f30af2f33b53c8c613fc5d821565b814417d6513aa52
+  2945fae1bd9cdad433387787cd4fe0756e6aef1a3343b8ad11bf74c06ecd4d4f05b127e8d9ec3a2c78def503
+  be48327e2b2f635729a7221443858aee07c432de80b0adc9bd8335026997cde992ded70adcd3a7a5d8a2a6a5
+  76eb3f89660531fda6529f493d973502f6e4625013dc03c769c66bb19a29c04f69f866017f5a0bc3801cf8aa
+  734f4db403e98d523e1f1c06313dd438be3c8f421d3e72f92a81dc5aec5674c9448c6f4f1a8eaa1141a5f93d
+  a0377c372d2efb5e82a88caac875b7fd1828d9fed3bfc2e36f72db242a02bd6bae7d66078591f278c6d933d1
+  4805d1c9cba075d876d04cb69335a56c3a1dd9bd9efdc98f4d18303889f75f2dd6095743534d7d5971f9efd5
+  3eb4f5ff6ca72323a43d13c48b9457dc00a928dc3f7d130982d40748b3467cc17b4da4d1b64b2775bcd08854
+  2e474cae7650775b62e29bdf3d01e059c1feb03db3b78825241db8a2005eb765c32899e78c21ae9252378731
+  f45a3a3edaa30527d71a6eac878209f153298c0f8a30258a72de9730a35ad4036019b24b18aeee023f22e9c4
+  9715b27217dccf152de8ba7a2925322d20cbb2f1de9a1234a36ac404e6458ff6cbc280d28383e5d536092916
+  b9d10e19d7ae9394b7201c9507d7daa4cb3374fa9bd3d6ce46ad934c474f6a43c6c63b7a22d7cf8beff52187
+)
+
+for i in $(seq 0 14); do
+	echo "Running iteration with seed ${seeds[${i}]}"
+
+	python3 src/crypters/idata_obfuscation/process.py ./src/crypters/idata_obfuscation/merged.c "./src/crypters/idata_obfuscation/output_${i}.c" "${destination_directory}output_${i}.exe" "${source_file}" ./data/usable_headers/list_of_usable_headers.json ./data/preprocessed_headers/ "${seeds[${i}]}"
+	objcopy --strip-debug "${destination_directory}output_${i}.exe"
+	rm "./src/crypters/idata_obfuscation/output_${i}.c"
+done	
