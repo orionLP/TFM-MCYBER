@@ -1,6 +1,14 @@
 #ifndef FAKE_WINNT_H
 #define FAKE_WINNT_H
 
+#include <ntdef.h>
+#include <missingtypes.h>
+
+
+#define IMAGE_DIRECTORY_ENTRY_EXPORT 0
+
+typedef void *PVOID;
+
 #if defined(_ARM_) || defined(_ARM64_)
 #define NTAPI
 #else

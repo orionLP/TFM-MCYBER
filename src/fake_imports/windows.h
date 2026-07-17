@@ -1,6 +1,8 @@
 #ifndef FAKE_WINDOWS_H
 #define FAKE_WINDOWS_H
 
+#include <missingtypes.h>
+
 typedef unsigned char   BYTE;
 typedef unsigned short  WORD;
 typedef unsigned long   DWORD;
@@ -15,7 +17,7 @@ typedef const char*     LPCSTR;
 #define NULL 0
 #define TRUE  1
 #define FALSE 0
-#define __stdcall
+//#define __stdcall
 #define WINAPI __stdcall
 
 typedef unsigned long  SIZE_T;
