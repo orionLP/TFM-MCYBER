@@ -11,6 +11,10 @@ DWORD executable_size = 7168;
 
 // STANDARD LIBRARY FUNCTION REPLACEMENTS
 
+// DLL API HASHING 
+// It is assumed that the first module in needed_library_names
+// is always kernel32.dll, since it is always loaded into the program
+
 int wcs_equals(const wchar_t *s1, const wchar_t *s2) {
     while (*s1 == *s2) {
         if (*s1 == 0) return 1;  // match
@@ -32,13 +36,9 @@ int compare_file_name(const wchar_t *path, const wchar_t *name){
     return wcs_equals(basename, name);
 }
 
-// DLL API HASHING 
-// It is assumed that the first module in needed_library_names
-// is always kernel32.dll, since it is always loaded into the program
-
 void *resolved_library_addresses[] = {NULL, NULL};
 void *resolved_function_addresses[] = {NULL, NULL};
-const wchar_t needed_library_names[] = L"kernel32.dll\x00msvcrt.dll";
+const wchar_t needed_library_names[] = L"KERNEL32.DLL\x00msvcrt.dll";
 const char needed_imported_function_names[] = "GetProcAddress\x00VirtualAlloc";
 
 const wchar_t *get_library_by_number(const wchar_t *buffer, int n){
