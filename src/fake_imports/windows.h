@@ -158,8 +158,12 @@ typedef struct {
     DWORD SizeOfBlock;
 } IMAGE_BASE_RELOCATION;
 
+typedef void *HANDLE;
 
-BOOL  WINAPI VirtualProtect(LPVOID, DWORD, DWORD, DWORD*);
+HANDLE GetProcessHeap(void);
+LPVOID HeapAlloc(HANDLE hHeap, DWORD  dwFlags, SIZE_T dwBytes);
+BOOL WINAPI HeapFree(HANDLE hHeap, DWORD  dwFlags, LPVOID lpMem);
+BOOL WINAPI VirtualProtect(LPVOID, DWORD, DWORD, DWORD*);
 LPVOID WINAPI VirtualAlloc(LPVOID, SIZE_T, DWORD, DWORD);
 HMODULE WINAPI GetModuleHandleA(const char*);
 HMODULE WINAPI LoadLibraryA(const char*);
