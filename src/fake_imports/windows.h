@@ -14,6 +14,21 @@ typedef void*           LPVOID;
 typedef char*           LPSTR;
 typedef const char*     LPCSTR;
 
+typedef DWORD *LPDWORD;
+
+typedef struct _OVERLAPPED {
+    ULONG_PTR Internal;
+    ULONG_PTR InternalHigh;
+    union {
+        struct {
+            DWORD Offset;
+            DWORD OffsetHigh;
+        } DUMMYSTRUCTNAME;
+        void *Pointer;
+    } DUMMYUNIONNAME;
+    HANDLE hEvent;
+} OVERLAPPED, *LPOVERLAPPED;
+
 #define NULL 0
 #define TRUE  1
 #define FALSE 0
@@ -160,6 +175,9 @@ typedef struct {
 
 typedef void *HANDLE;
 
+BOOL VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType);
+HANDLE GetStdHandle(DWORD nStdHandle);
+BOOL WriteFile(HANDLE hFile, const void *lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped);
 HANDLE GetProcessHeap(void);
 LPVOID HeapAlloc(HANDLE hHeap, DWORD  dwFlags, SIZE_T dwBytes);
 BOOL WINAPI HeapFree(HANDLE hHeap, DWORD  dwFlags, LPVOID lpMem);

