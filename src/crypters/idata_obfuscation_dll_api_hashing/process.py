@@ -40,6 +40,7 @@ ORIGINAL_HEADERS_FOLDER = '/usr/i686-w64-mingw32/include/'
 TMP_INPUT_FILE = './src/crypters/idata_obfuscation/merged.c'
 FAKE_IMPORTS = '-I./src/fake_imports'
 EXCLUDED_LIBRARIES = set(['d3dx9_38', 'glaux', 'qutil', 'xinput1_3', 'd3drm', 'penwin32', 'p2p'])
+NOSTDLIBFLAG = '-DNOSTDLIB'
 
 if __name__ == '__main__':
     if len(sys.argv) < 7:
@@ -68,7 +69,7 @@ if __name__ == '__main__':
         input_file,
         use_cpp=True,
         cpp_path='cpp',
-        cpp_args=[FAKE_IMPORTS]
+        cpp_args=[FAKE_IMPORTS, NOSTDLIBFLAG]
     )
 
     print('Configuring objects...')
@@ -201,6 +202,13 @@ if __name__ == '__main__':
         content = f.read()
 
     replacements = [
+        ('typedef VOID (*PPS_POST_PROCESS_INIT_ROUTINE)(VOID);', 'typedef VOID (__stdcall *PPS_POST_PROCESS_INIT_ROUTINE)(VOID);'),
+        ('BOOL VirtualFree(',           'BOOL __stdcall VirtualFree('),
+        ('HANDLE GetStdHandle(',        'HANDLE __stdcall GetStdHandle('),
+        ('BOOL WriteFile(',             'BOOL __stdcall WriteFile('),
+        ('HANDLE GetProcessHeap(',      'HANDLE __stdcall GetProcessHeap('),
+        ('LPVOID HeapAlloc(',           'LPVOID __stdcall HeapAlloc('),
+        ('BOOL HeapFree(',              'BOOL __stdcall HeapFree('),
         ('BOOL VirtualProtect(',        'BOOL __stdcall VirtualProtect('),
         ('LPVOID VirtualAlloc(',        'LPVOID __stdcall VirtualAlloc('),
         ('HMODULE GetModuleHandleA(',   'HMODULE __stdcall GetModuleHandleA('),

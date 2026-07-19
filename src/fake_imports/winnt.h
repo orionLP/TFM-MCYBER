@@ -12,6 +12,7 @@ typedef void *PVOID;
 #if defined(_ARM_) || defined(_ARM64_)
 #define NTAPI
 #else
+#define __stdcall
 #define NTAPI __stdcall
 #endif
 #define NTAPI_INLINE NTAPI
@@ -19,26 +20,21 @@ typedef void *PVOID;
 #ifndef _LIST_ENTRY_DEFINED
 #define _LIST_ENTRY_DEFINED
 
-  typedef struct _LIST_ENTRY {
+  struct _LIST_ENTRY {
     struct _LIST_ENTRY *Flink;
     struct _LIST_ENTRY *Blink;
-  } LIST_ENTRY,*PLIST_ENTRY,*RESTRICTED_POINTER PRLIST_ENTRY;
+  };
 
-  typedef struct _SINGLE_LIST_ENTRY {
+  typedef struct _LIST_ENTRY LIST_ENTRY;
+  typedef struct _LIST_ENTRY *PLIST_ENTRY;
+  typedef struct _LIST_ENTRY *RESTRICTED_POINTER PRLIST_ENTRY;
+
+  struct _SINGLE_LIST_ENTRY {
     struct _SINGLE_LIST_ENTRY *Next;
-  } SINGLE_LIST_ENTRY,*PSINGLE_LIST_ENTRY;
-
-  typedef struct LIST_ENTRY32 {
-    DWORD Flink;
-    DWORD Blink;
-  } LIST_ENTRY32;
-  typedef LIST_ENTRY32 *PLIST_ENTRY32;
-
-  typedef struct LIST_ENTRY64 {
-    ULONGLONG Flink;
-    ULONGLONG Blink;
-  } LIST_ENTRY64;
-  typedef LIST_ENTRY64 *PLIST_ENTRY64;
+  };
+  
+  typedef struct _SINGLE_LIST_ENTRY SINGLE_LIST_ENTRY;
+  typedef struct _SINGLE_LIST_ENTRY *PSINGLE_LIST_ENTRY;
 
 #endif /* _LIST_ENTRY_DEFINED */
 

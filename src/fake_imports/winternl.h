@@ -6,20 +6,24 @@
 
 #ifndef __UNICODE_STRING_DEFINED
 #define __UNICODE_STRING_DEFINED
-typedef struct _UNICODE_STRING {
+struct _UNICODE_STRING {
     USHORT Length;
     USHORT MaximumLength;
     PWSTR Buffer;
-} UNICODE_STRING;
+};
+typedef struct _UNICODE_STRING UNICODE_STRING;
 #endif
 
-typedef struct _PEB_LDR_DATA {
+struct _PEB_LDR_DATA {
     BYTE Reserved1[8];
     PVOID Reserved2[3];
     LIST_ENTRY InMemoryOrderModuleList;
-} PEB_LDR_DATA,*PPEB_LDR_DATA;
+};
 
-typedef struct _LDR_DATA_TABLE_ENTRY {
+typedef struct _PEB_LDR_DATA PEB_LDR_DATA;
+typedef struct _PEB_LDR_DATA *PPEB_LDR_DATA;
+
+struct _LDR_DATA_TABLE_ENTRY {
     PVOID Reserved1[2];
     LIST_ENTRY InMemoryOrderLinks;
     PVOID Reserved2[2];
@@ -33,11 +37,14 @@ typedef struct _LDR_DATA_TABLE_ENTRY {
       PVOID Reserved6;
     };
     ULONG TimeDateStamp;
-} LDR_DATA_TABLE_ENTRY,*PLDR_DATA_TABLE_ENTRY;
+};
+
+typedef struct _LDR_DATA_TABLE_ENTRY LDR_DATA_TABLE_ENTRY;
+typedef struct _LDR_DATA_TABLE_ENTRY *PLDR_DATA_TABLE_ENTRY;
 
 typedef VOID (NTAPI *PPS_POST_PROCESS_INIT_ROUTINE)(VOID);
 
-typedef struct _PEB {
+struct _PEB {
     BYTE Reserved1[2];
     BYTE BeingDebugged;
     BYTE Reserved2[1];
@@ -57,14 +64,20 @@ typedef struct _PEB {
     BYTE Reserved11[128];
     PVOID Reserved12[1];
     ULONG SessionId;
-} PEB,*PPEB;
+};
 
-typedef struct _RTL_USER_PROCESS_PARAMETERS {
+typedef struct _PEB PEB;
+typedef struct _PEB *PPEB;
+
+struct _RTL_USER_PROCESS_PARAMETERS {
     BYTE Reserved1[16];
     PVOID Reserved2[10];
     UNICODE_STRING ImagePathName;
     UNICODE_STRING CommandLine;
-} RTL_USER_PROCESS_PARAMETERS,*PRTL_USER_PROCESS_PARAMETERS;
+};
+
+typedef struct _RTL_USER_PROCESS_PARAMETERS RTL_USER_PROCESS_PARAMETERS;
+typedef struct _RTL_USER_PROCESS_PARAMETERS *PRTL_USER_PROCESS_PARAMETERS;
 
 #endif
 

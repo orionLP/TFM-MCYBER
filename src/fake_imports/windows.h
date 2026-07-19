@@ -16,7 +16,7 @@ typedef const char*     LPCSTR;
 
 typedef DWORD *LPDWORD;
 
-typedef struct _OVERLAPPED {
+struct _OVERLAPPED {
     ULONG_PTR Internal;
     ULONG_PTR InternalHigh;
     union {
@@ -27,12 +27,15 @@ typedef struct _OVERLAPPED {
         void *Pointer;
     } DUMMYUNIONNAME;
     HANDLE hEvent;
-} OVERLAPPED, *LPOVERLAPPED;
+};
+
+typedef struct _OVERLAPPED OVERLAPPED;
+typedef struct _OVERLAPPED *LPOVERLAPPED;
 
 #define NULL 0
 #define TRUE  1
 #define FALSE 0
-//#define __stdcall
+#define __stdcall
 #define WINAPI __stdcall
 
 typedef unsigned long  SIZE_T;
@@ -44,6 +47,7 @@ typedef void*         HANDLE;
 #define PAGE_EXECUTE_READWRITE  0x40
 #define MEM_COMMIT              0x1000
 #define MEM_RESERVE             0x2000
+#define MEM_RELEASE 		0x8000
 
 #define IMAGE_NUMBEROF_DIRECTORY_ENTRIES 16
 #define IMAGE_SIZEOF_SHORT_NAME          8
@@ -175,11 +179,11 @@ typedef struct {
 
 typedef void *HANDLE;
 
-BOOL VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType);
-HANDLE GetStdHandle(DWORD nStdHandle);
-BOOL WriteFile(HANDLE hFile, const void *lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped);
-HANDLE GetProcessHeap(void);
-LPVOID HeapAlloc(HANDLE hHeap, DWORD  dwFlags, SIZE_T dwBytes);
+BOOL WINAPI VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType);
+HANDLE WINAPI GetStdHandle(DWORD nStdHandle);
+BOOL WINAPI WriteFile(HANDLE hFile, const void *lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped);
+HANDLE WINAPI GetProcessHeap(void);
+LPVOID WINAPI HeapAlloc(HANDLE hHeap, DWORD  dwFlags, SIZE_T dwBytes);
 BOOL WINAPI HeapFree(HANDLE hHeap, DWORD  dwFlags, LPVOID lpMem);
 BOOL WINAPI VirtualProtect(LPVOID, DWORD, DWORD, DWORD*);
 LPVOID WINAPI VirtualAlloc(LPVOID, SIZE_T, DWORD, DWORD);

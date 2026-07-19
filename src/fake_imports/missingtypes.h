@@ -1,8 +1,13 @@
 #ifndef WINDOWS_TYPEDEFS_I686_H
 #define WINDOWS_TYPEDEFS_I686_H
 
+#ifdef NOSTDLIB
+#include <nostdlib.h>
+#endif 
+
 /* i686 Windows MinGW type definitions */
 #define RESTRICTED_POINTER restrict
+
 
 /* Basic integer types */
 typedef unsigned long long ULONGLONG;
@@ -11,7 +16,7 @@ typedef signed long LONG;
 typedef unsigned int UINT;
 
 /* Pointer-sized types (32-bit on i686) */
-typedef unsigned long UINT_PTR;
+typedef unsigned int UINT_PTR;
 typedef signed long LONG_PTR;
 typedef unsigned long ULONG_PTR;
 
@@ -32,9 +37,9 @@ typedef wchar_t *PWSTR;
 typedef const wchar_t *PCWSTR;
  
 /* Calling convention (i686/x86) */
-//#define __stdcall
 
 #ifndef NTAPI
+#define __stdcall
 #define NTAPI __stdcall
 #endif
  
@@ -52,7 +57,7 @@ typedef struct _IMAGE_NT_HEADERS *PIMAGE_NT_HEADERS;
 typedef struct _IMAGE_EXPORT_DIRECTORY *PIMAGE_EXPORT_DIRECTORY;
  
 /* Optional: Full struct definitions if needed */
-typedef struct _IMAGE_EXPORT_DIRECTORY {
+struct _IMAGE_EXPORT_DIRECTORY {
     UINT Characteristics;
     UINT TimeDateStamp;
     USHORT MajorVersion;
@@ -64,8 +69,8 @@ typedef struct _IMAGE_EXPORT_DIRECTORY {
     UINT AddressOfFunctions;
     UINT AddressOfNames;
     UINT AddressOfNameOrdinals;
-} IMAGE_EXPORT_DIRECTORY;
+};
  
-
+typedef struct _IMAGE_EXPORT_DIRECTORY IMAGE_EXPORT_DIRECTORY;
 
 #endif /* WINDOWS_TYPEDEFS_I686_H */
