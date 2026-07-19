@@ -426,13 +426,14 @@ error:
 }
 
 void code_handling_execute(in_memory_pe *new_pe){
+    print_minimal();
     void (*execute_entry_point)(void) = (void(*)()) new_pe->entry_point;
     execute_entry_point();
 }
 
 // MAIN
 
-int __start(void) {   
+int main(void) {   
     init_kernel_library();
     print_minimal();
 
