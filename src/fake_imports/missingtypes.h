@@ -1,9 +1,7 @@
 #ifndef WINDOWS_TYPEDEFS_I686_H
 #define WINDOWS_TYPEDEFS_I686_H
 
-#ifdef NOSTDLIB
-#include <nostdlib.h>
-#endif 
+#include <missingc.h>
 
 /* i686 Windows MinGW type definitions */
 #define RESTRICTED_POINTER restrict

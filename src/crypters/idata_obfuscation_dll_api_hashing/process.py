@@ -73,7 +73,7 @@ if __name__ == '__main__':
                 input_file,
                 use_cpp=True,
                 cpp_path='cpp',
-                cpp_args=[FAKE_IMPORTS, NOSTDLIBFLAG]
+                cpp_args=[FAKE_IMPORTS]
             )
             print('Configuring objects...')
 
