@@ -1,0 +1,100 @@
+TEST LOG FOR AVAST 13/Jul/2026
+
+STEP 0: 17:01: Update AV system
+RESULT:
+    17:36: AVAST updated
+
+STEP 1: 17:37: Send 15 files to the computer and make sure that none are detected
+RESULT:
+    17:45: Sent all files from output_0.exe to output_14.exe in a folder excluded from scanning. I will refer to these files by index (nubmer before .exe)
+    17:46: Reversed folder to not being excluded from scanning
+
+STEP 2: 17:47: Scan the entire directory in which the executables reside:
+RESULT:
+    17:47: Executed the scan, no malware was found in any of the samples
+
+STEP 3: 17:48: Execute output_0.exe and wait for updates
+RESULT:
+    17:49: Execute output_0.exe, file was captured by cyberguard, aparently, it was sent to ThreatLabs for analysis, and the file itself will be blocked?
+    17:55: Update avast
+    
+STEP 4: Repeat scan, excution and update process
+RESULT:
+   18:01: For some reason only sample output_9.exe is the one that gets picked up???
+   18:06: Just in case, i resent all files, and updated the AV
+   18:08: Redid the scan, apparently only outout_0.exe and output_9.exe get picked up (the previous one is because the AV is deleting the file output_0.exe constantly, saved result to avast_log_1.txt
+
+STEP 5: Repeat process
+RESULT:
+    18:16: Update AV
+    18:17: Execute output_1.exe
+    18:18: Nothing, executing again output_1.exe
+    18:20: Nothing, moving on to execute output_2.exe
+    18:21: Nothing, executing again output_2.exe
+    18:23: Nothing, moving on to execute output_3.exe
+    18:25: Nothing, moving on to execute, wait, sample output_2.exe has been detected (weird since i had killed the process but ok), a few moments later, output_3.exe also was captured.
+    18:27: Update AV
+    18:27: Scanned the folder, wierdly, nothing new was found (turns out the AV had deleted them (output_2.exe and output_3.exe), resent them again).
+    18:30: Update the AV
+    18:32: Scan folder again, only detected now:
+	output_0.exe, output_2.exe, output_3.exe, output_9.exe
+    Saved result to avast_log_2.txt
+
+STEP 6: Repeat process
+RESULT:
+    18:40: Update AV
+    18:40: Execute output_4.exe, sample was detected by cyberguard. Resend output_4.exe to the computer (it was deleted by the AV)
+    18:46: Update AV
+    18:47: Scanned again these were the detected files:
+  	output_0.exe, output_2.exe, output_3.exe, output_4.exe, output_9.exe
+    18:50: Saved result to avast_log_3.txt
+
+STEP 7: Repeat process
+RESULT:
+    18:51: Update AV
+    18:52: Execute output_5.exe 
+    18:54: Nothing happened... exectuing again output_5.exe
+    18:55: Although nothing alerted me apparently the file has been deleted, resending file and executing it again    18:59: Same happened, sent file output_5.exe again to the AV system, lets do an update and a reescan
+    19:00: Update AV
+    19:14: Scanned again, detected files were:
+   	output_0.exe, output_2.exe, output_3.exe, output_4.exe, output_5.exe, output_9.exe
+    19:15: Saved result to avast_log_4.txt
+
+STEP 8: Repeat the process
+RESULT:
+    19:17: Update AV
+    19:20: Executed output_6.exe, file was deleted shortly after, resent it to the computer
+    19:25: Update AV
+    19:27: Nothing new detected, executing again output_6.exe
+    19:30: Nothing new, executing again output_6.exe, file was deleted shortly after, resent it to the computer
+    19:34: Update AV
+    19:35: Scanned again, detected files were:
+	output_0.exe, output_2.exe, output_3.exe, output_4.exe, output_5.exe, output_6.exe, output_9.exe
+    19:37: Saved result to avast_log_5.txt
+
+STEP 9: Repeat the process
+RESULT:
+   19:43: Update AV
+   19:44: Executed output_7.exe, nothing happened
+   19:47: Executed again output_7.exe, file was eliminated, resent file to AV machine
+   19:51: Update AV
+   19:52: Scanned again, detected files were:
+    	output_0.exe, output_1.exe, output_2.exe, output_3.exe, output_4.exe, output_5.exe, output_6.exe, output_7.exe, output_9.exe
+   19:56: Saved result to avast_log_6.txt
+
+STEP 10: Repeat the process
+RESULT:
+   19:59: Update AV
+   20:02: Execute output_8.exe, captured with cyberguard and deleted, resent output_8.exe to the AV machine
+   20:14: Update AV
+   20:17: Scanned again the directory, detected files were:
+   	output_0.exe, output_1.exe, output_2.exe, output_3, output_4.exe, output_5.exe, output_6.exe, output_7.exe, output_8.exe, output_9.exe, output_11.exe
+  20:18: Saved result to avast_log_7.txt
+
+STEP 11: Repeat the process
+RESULT:
+   20:23: Update AV
+   20:24: Executed output_10.exe
+   20:25: Nothing, executing again output_10.exe
+   20:27: Nothing, executing again output_10.exe, file was deleted, resent output_10.exe to the AV machine
+   20:30: Update AV
