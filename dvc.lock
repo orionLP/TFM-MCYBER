@@ -56,7 +56,7 @@ stages:
       nfiles: 15
     - path: ./data/crypters/exe/x86/idata_obfuscation/opaque_calls/
       hash: md5
-      md5: 7a934a61dec87c64a37f1666b03ef1fc.dir
+      md5: be267dbcccb1159c79bd4ff29ec65362.dir
       size: 4078667
       nfiles: 15
     - path: ./data/crypters/exe/x86/multiple_information_reveal/
@@ -97,7 +97,7 @@ stages:
     outs:
     - path: ./data/custom/ablation/
       hash: md5
-      md5: aad645f2a7993bb20926007a9f851933.dir
+      md5: e1afd2156d0d359d83071f8a83cd9d38.dir
       size: 5496933616
       nfiles: 52560
   multiple_crypters_information_reveal:
@@ -141,10 +141,15 @@ stages:
   idata_obfuscation_opaque_calls:
     cmd: ./src/crypters/idata_obfuscation/execute_pipeline.sh
     deps:
+    - path: ./src/fake_imports/
+      hash: md5
+      md5: a6dc31ccf60e471749b7494b0b1a27e4.dir
+      size: 10268
+      nfiles: 9
     - path: ./src/lib/
       hash: md5
-      md5: 4229aef7552c04542a68115afb55924d.dir
-      size: 259936
+      md5: 95f51ddc8d2ac0ce99f1e4324409e457.dir
+      size: 260034
       nfiles: 54
     - path: data/preprocessed_headers/
       hash: md5
@@ -163,12 +168,52 @@ stages:
       nfiles: 1
     - path: src/crypters/idata_obfuscation/
       hash: md5
-      md5: e24fdbe172885b19d1991c318c638c32.dir
-      size: 86572
+      md5: 3e759b27373af191dc22481a053ced42.dir
+      size: 87063
       nfiles: 6
     outs:
     - path: data/crypters/exe/x86/idata_obfuscation/opaque_calls/
       hash: md5
-      md5: 7a934a61dec87c64a37f1666b03ef1fc.dir
+      md5: be267dbcccb1159c79bd4ff29ec65362.dir
       size: 4078667
+      nfiles: 15
+  idata_obfuscation_dynamic_api_resolution:
+    cmd: 
+      ./src/crypters/idata_obfuscation_dynamic_api_resolution/execute_pipeline.sh
+    deps:
+    - path: ./src/fake_imports/
+      hash: md5
+      md5: a6dc31ccf60e471749b7494b0b1a27e4.dir
+      size: 10268
+      nfiles: 9
+    - path: ./src/lib/
+      hash: md5
+      md5: 95f51ddc8d2ac0ce99f1e4324409e457.dir
+      size: 260034
+      nfiles: 54
+    - path: data/preprocessed_headers/
+      hash: md5
+      md5: 3f57f3ce033df854a1b981dad44daf61.dir
+      size: 254877168
+      nfiles: 294
+    - path: data/raw/exe/x86/
+      hash: md5
+      md5: ce6784c84e615c66c4e7afed79b2af7c.dir
+      size: 875008
+      nfiles: 15
+    - path: data/usable_headers/
+      hash: md5
+      md5: 465ef3d08b84b0d6b34f2e77b67b2844.dir
+      size: 329163
+      nfiles: 1
+    - path: src/crypters/idata_obfuscation_dynamic_api_resolution/
+      hash: md5
+      md5: 963aafb4e9113428a336ff1629b67f50.dir
+      size: 65158
+      nfiles: 3
+    outs:
+    - path: data/crypters/exe/x86/idata_obfuscation/dynamic_api_resolution/
+      hash: md5
+      md5: 5426a0b9b686bdcdda7eb5b8b8bac19c.dir
+      size: 4506047
       nfiles: 15
