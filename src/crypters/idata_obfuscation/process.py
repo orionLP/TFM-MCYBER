@@ -42,8 +42,8 @@ FAKE_IMPORTS = '-I./src/fake_imports'
 EXCLUDED_LIBRARIES = set(['d3dx9_38', 'glaux', 'qutil', 'xinput1_3', 'd3drm', 'penwin32', 'p2p'])
 
 if __name__ == '__main__':
-    if len(sys.argv) < 7:
-        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <output_executable.exe> <input_pe_executable.exe> <json_headers_dataset.json> <includes_folder> [seed]")
+    if len(sys.argv) < 6:
+        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <output_executable.exe> <input_pe_executable.exe> <json_headers_dataset.json> [seed]")
         sys.exit(1)
 
     input_file  = sys.argv[1]
@@ -51,11 +51,10 @@ if __name__ == '__main__':
     output_executable_path = sys.argv[3]
     input_pe_executable = sys.argv[4]
     json_headers_dataset = sys.argv[5]
-    includes_folder = sys.argv[6]
     seed = None
-    if len(sys.argv) == 8:
+    if len(sys.argv) == 7:
         print('Using selected seed...')
-        seed = sys.argv[7]
+        seed = sys.argv[6]
         key = seed[:prng.key_length * 2]
         nonce = seed[prng.key_length * 2: (prng.key_length + prng.nonce_length) * 2]
         prng.key = bytes.fromhex(key)
@@ -201,12 +200,20 @@ if __name__ == '__main__':
         content = f.read()
 
     replacements = [
+        ('typedef VOID (*PPS_POST_PROCESS_INIT_ROUTINE)(VOID);', 'typedef VOID (__stdcall *PPS_POST_PROCESS_INIT_ROUTINE)(VOID);'),
+        ('BOOL VirtualFree(',           'BOOL __stdcall VirtualFree('),
+        ('HANDLE GetStdHandle(',        'HANDLE __stdcall GetStdHandle('),
+        ('BOOL WriteFile(',             'BOOL __stdcall WriteFile('),
+        ('HANDLE GetProcessHeap(',      'HANDLE __stdcall GetProcessHeap('),
+        ('LPVOID HeapAlloc(',           'LPVOID __stdcall HeapAlloc('),
+        ('BOOL HeapFree(',              'BOOL __stdcall HeapFree('),
         ('BOOL VirtualProtect(',        'BOOL __stdcall VirtualProtect('),
         ('LPVOID VirtualAlloc(',        'LPVOID __stdcall VirtualAlloc('),
         ('HMODULE GetModuleHandleA(',   'HMODULE __stdcall GetModuleHandleA('),
         ('HMODULE LoadLibraryA(',       'HMODULE __stdcall LoadLibraryA('),
         ('void *GetProcAddress(',       'void * __stdcall GetProcAddress('),
     ]
+   
     for old, new in replacements:
         content = content.replace(old, new)
 
