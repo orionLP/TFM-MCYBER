@@ -264,7 +264,7 @@ if __name__ == '__main__':
            
             print('Placing kernel and function strings...')
             
-            kernel_string = 'kernel32.dll'.encode('utf-16-le') + b'\x00\x00'
+            kernel_string = 'KERNEL32.DLL'.encode('utf-16-le') + b'\x00\x00'
             encrypted_kernel_string = encryption_algorithm.encrypt(kernel_string)
             
             kernel_library_function_string = 'GetProcAddress\x00LoadLibraryA\x00GetModuleHandleA\x00VirtualAlloc\x00VirtualProtect\x00HeapFree\x00HeapAlloc\x00GetProcessHeap\x00WriteFile\x00GetStdHandle\x00VirtualFree'.encode('ascii') + b'\x00'
