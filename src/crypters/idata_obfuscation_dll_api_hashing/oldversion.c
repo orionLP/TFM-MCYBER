@@ -57,8 +57,8 @@ static HANDLE global_windows_heap = NULL;
 
 // START C STANDARD LIBRARY REPLACEMENT
 
-// strcmp - compare strings
-int strcmp(const char *s1, const char *s2) {
+// replacement_string - compare strings
+int replacement_string(const char *s1, const char *s2) {
     while (*s1 && (*s1 == *s2)) {
         s1++;
         s2++;
@@ -66,8 +66,8 @@ int strcmp(const char *s1, const char *s2) {
     return (unsigned char)*s1 - (unsigned char)*s2;
 }
 
-// memcpy - copy memory
-void *memcpy(void *dest, const void *src, size_t n) {
+// replacement_memcpy - copy memory
+void *replacement_memcpy(void *dest, const void *src, size_t n) {
     unsigned char *d = (unsigned char *)dest;
     const unsigned char *s = (const unsigned char *)src;
     while (n--) {
@@ -76,8 +76,8 @@ void *memcpy(void *dest, const void *src, size_t n) {
     return dest;
 }
 
-// memset - set memory
-void *memset(void *s, int c, size_t n) {
+// replacement_memset - set memory
+void *replacement_memset(void *s, int c, size_t n) {
     unsigned char *p = (unsigned char *)s;
     while (n--) {
         *p++ = (unsigned char)c;
@@ -86,11 +86,11 @@ void *memset(void *s, int c, size_t n) {
 }
 
 
-void *malloc(size_t size) {
+void *replacement_malloc(size_t size) {
     return ((LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)) kernel_library_function_addresses[3])(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
 }
 
-void free(void *ptr) {
+void replacement_free(void *ptr) {
     if (ptr) {
         ((BOOL (__stdcall *)(LPVOID, SIZE_T, DWORD)) kernel_library_function_addresses[10])(ptr, 0, MEM_RELEASE);
     }
@@ -181,7 +181,7 @@ void *get_function_address(void *module_address, const char *function_name){
     
     for (DWORD i = 0; i < export_directory->NumberOfNames; i++) {
         const char *function_in_module = (const char *) (((BYTE *) module_address) + names_exported[i]);
-        if (strcmp(function_in_module, function_name) == 0) {
+        if (replacement_string(function_in_module, function_name) == 0) {
             WORD selected_ordinal = ordinals[i];
             return (((BYTE *) module_address) + function_address_array[selected_ordinal]);
         }
@@ -272,7 +272,7 @@ void copy_to_virtual(const char *pe_data, char *image_base){
     IMAGE_SECTION_HEADER* source_sections = (IMAGE_SECTION_HEADER *) (source_pe_nt_header + 1); 
 
     // First copy the headers
-    memcpy(image_base, pe_data, source_pe_nt_header->OptionalHeader.SizeOfHeaders);
+    replacement_memcpy(image_base, pe_data, source_pe_nt_header->OptionalHeader.SizeOfHeaders);
     
     // Now copy each section
     for(int i = 0; i < source_pe_nt_header->FileHeader.NumberOfSections; i++){
@@ -281,9 +281,9 @@ void copy_to_virtual(const char *pe_data, char *image_base){
 
         // Copy raw data or set to 0 if there is none
         if(source_sections[i].SizeOfRawData > 0){
-            memcpy(dest, pe_data + source_sections[i].PointerToRawData, source_sections[i].SizeOfRawData);
+            replacement_memcpy(dest, pe_data + source_sections[i].PointerToRawData, source_sections[i].SizeOfRawData);
         } else {
-            memset(dest, 0, source_sections[i].Misc.VirtualSize);
+            replacement_memset(dest, 0, source_sections[i].Misc.VirtualSize);
         }
     }
 }
@@ -395,7 +395,7 @@ int set_protections(in_memory_pe *new_pe){
 }
 
 in_memory_pe *code_handling_load_pe(const char *pe_data, DWORD size){
-    in_memory_pe *new_pe = malloc(sizeof(in_memory_pe));
+    in_memory_pe *new_pe = replacement_malloc(sizeof(in_memory_pe));
     if(new_pe == NULL)
         goto error;
     
@@ -421,7 +421,7 @@ in_memory_pe *code_handling_load_pe(const char *pe_data, DWORD size){
 
     return new_pe;
 error:
-    free(new_pe);
+    replacement_free(new_pe);
     return NULL;
 }
 
