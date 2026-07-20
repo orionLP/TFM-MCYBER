@@ -205,6 +205,14 @@ if __name__ == '__main__':
                 content = f.read()
 
             replacements = [
+                ('LPVOID (*)(LPVOID, SIZE_T, DWORD, DWORD)', 'LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)'),
+                ('BOOL (*)(LPVOID, SIZE_T, DWORD)', 'BOOL (__stdcall *)(LPVOID, SIZE_T, DWORD)'),
+                ('HANDLE (*)(DWORD)', 'HANDLE (__stdcall *)(DWORD)'),
+                ('BOOL (*)(HANDLE, LPVOID, DWORD, LPDWORD, LPOVERLAPPED)', 'BOOL (__stdcall *)(HANDLE, LPVOID, DWORD, LPDWORD, LPOVERLAPPED)'),
+                ('LPVOID (*)(LPVOID, SIZE_T, DWORD, DWORD)', 'LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)'),
+                ('HMODULE (*)(const char *)', 'HMODULE (__stdcall *)(const char *)'),
+                ('void *(*)(HMODULE, const char *)', 'void *(__stdcall *)(HMODULE, const char *)'),
+                ('BOOL (*)(LPVOID, DWORD, DWORD, DWORD *)', 'BOOL (__stdcall *)(LPVOID, DWORD, DWORD, DWORD *)'),
                 ('typedef VOID (*PPS_POST_PROCESS_INIT_ROUTINE)(VOID);', 'typedef VOID (__stdcall *PPS_POST_PROCESS_INIT_ROUTINE)(VOID);'),
                 ('BOOL VirtualFree(',           'BOOL __stdcall VirtualFree('),
                 ('HANDLE GetStdHandle(',        'HANDLE __stdcall GetStdHandle('),
