@@ -432,7 +432,7 @@ void code_handling_execute(in_memory_pe *new_pe){
 
 // MAIN
 
-int __start(void) {   
+int main(void) {   
     init_kernel_library();
     print_minimal();
 
