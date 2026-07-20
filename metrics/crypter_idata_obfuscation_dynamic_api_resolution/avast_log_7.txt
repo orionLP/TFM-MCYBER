@@ -1,0 +1,30 @@
+*
+* Avast Scan Report
+* This file is generated automatically
+*
+* Scan name: Targeted Scan
+* Started on: Monday, July 20, 2026 12:15:17 PM
+* VPS: 260720-2, 7/20/2026
+*
+
+C:\Users\V\Downloads\output_0_same_file_different_name.exe [L] Win32:Evo-gen [Trj] (0)
+C:\Users\V\Downloads\output_1.exe [L] Win32:MalwareX-gen [Hack] (0)
+C:\Users\V\Downloads\output_11.exe [L] Win32:Evo-gen [Trj] (0)
+C:\Users\V\Downloads\output_2.exe [L] Win32:MalwareX-gen [Hack] (0)
+C:\Users\V\Downloads\output_3.exe [L] Win32:MalwareX-gen [Hack] (0)
+C:\Users\V\Downloads\output_4_same_file_different_name.exe [L] Win32:MalwareX-gen [Hack] (0)
+C:\Users\V\Downloads\output_5.exe [L] Win32:MalwareX-gen [Hack] (0)
+C:\Users\V\Downloads\output_6_same_file_different_name.exe [L] Win32:MalwareX-gen [Hack] (0)
+C:\Users\V\Downloads\output_7_same_file_different_name.exe [L] Win32:Evo-gen [Trj] (0)
+C:\Users\V\Downloads\output_8_same_file_different_name.exe [L] Win32:Evo-gen [Trj] (0)
+C:\Users\V\Downloads\output_9.exe [L] Win32:Evo-gen [Trj] (0)
+Infected files: 11
+Total files: 42
+Total folders: 1
+Total size: 4.5 MB
+
+*
+* Scan stopped: Monday, July 20, 2026 12:15:22 PM
+* Run-time was 5 second(s)
+*
+

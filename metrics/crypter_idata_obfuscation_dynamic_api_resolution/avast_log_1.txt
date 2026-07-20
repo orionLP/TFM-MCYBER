@@ -1,0 +1,21 @@
+*
+* Avast Scan Report
+* This file is generated automatically
+*
+* Scan name: Targeted Scan
+* Started on: Monday, July 20, 2026 10:08:19 AM
+* VPS: 260720-2, 7/20/2026
+*
+
+C:\Users\V\Downloads\output_0_same_file_different_name.exe [L] Win32:Evo-gen [Trj] (0)
+C:\Users\V\Downloads\output_9.exe [L] Win32:Evo-gen [Trj] (0)
+Infected files: 2
+Total files: 47
+Total folders: 1
+Total size: 4.5 MB
+
+*
+* Scan stopped: Monday, July 20, 2026 10:08:21 AM
+* Run-time was 2 second(s)
+*
+
