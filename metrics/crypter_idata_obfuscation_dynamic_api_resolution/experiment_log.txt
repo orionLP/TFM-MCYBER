@@ -98,3 +98,34 @@ RESULT:
    20:25: Nothing, executing again output_10.exe
    20:27: Nothing, executing again output_10.exe, file was deleted, resent output_10.exe to the AV machine
    20:30: Update AV
+   20:49: Scanned again the directory, detected files were:
+  	output_0.exe, output_1.exe, output_2.exe, output_3.exe, output_4.exe, output_5.exe, output_6.exe, output_7.exe, output_8.exe, output_9.exe, output_10.exe, output_11.exe
+   20:51: Saved result to avast_log_8.txt
+
+STEP 12: Repeat the process
+RESULT:
+   20:53: Update AV
+   20:56: Executed sample output_12.exe
+   20:59: Nothing happens, executing again output_12.exe, file was deleted, resent file to the AV machine
+   21:00: Update AV
+   21:03: Scanned again the directory, detected files were:
+   	output_0.exe, output_1.exe, output_2.exe, output_3.exe, output_4.exe, output_5.exe, output_6.exe, output_7.exe, output_8.exe, output_9.exe, output_10.exe, output_11.exe, output_12.exe
+   21:06: Saved result to avast_log_9.txt
+
+STEP 13: Repeat the process
+RESULT:
+   21:11: Update AV
+   21:12: Execute output_13.exe, sample was detected by cybercaptrue and deleted, resent file to the AV machine
+   21:19: Update AV
+   21:21: Scanned again the directory, detected files were:
+	output_0.exe, output_1.exe, output_2.exe, output_3.exe, output_4.exe, output_5.exe, output_6.exe, output_7.exe, output_8.exe, output_9.exe, output_10.exe, output_11.exe, output_12.exe, output_13.exe
+   21:21: Saved result to avast_log_10.txt
+
+STEP 14: Repeat the process
+RESULT:
+   21:24: Update AV
+   21:28: Execute sample output_14.exe, sample was deleted, resent output_14.exe to the AV machine
+   21:32: Update AV
+   21:35: Scanned again the directory, detected files were:
+	output_0.exe, output_1.exe, output_2.exe, output_3.exe, output_4.exe, output_5.exe, output_6.exe, output_7.exe, output_8.exe, output_9.exe, output_10.exe, output_11.exe, output_12.exe, output_13.exe, output_14.exe
+   21:38: Saved result to avast_log_11.txt
