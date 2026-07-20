@@ -40,11 +40,10 @@ ORIGINAL_HEADERS_FOLDER = '/usr/i686-w64-mingw32/include/'
 TMP_INPUT_FILE = './src/crypters/idata_obfuscation/merged.c'
 FAKE_IMPORTS = '-I./src/fake_imports'
 EXCLUDED_LIBRARIES = set(['d3dx9_38', 'glaux', 'qutil', 'xinput1_3', 'd3drm', 'penwin32', 'p2p'])
-NOSTDLIBFLAG = '-DNOSTDLIB'
 
 if __name__ == '__main__':
-    if len(sys.argv) < 7:
-        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <output_executable.exe> <input_pe_executable.exe> <json_headers_dataset.json> <includes_folder> [seed]")
+    if len(sys.argv) < 6:
+        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <output_executable.exe> <input_pe_executable.exe> <json_headers_dataset.json> [seed]")
         sys.exit(1)
 
     input_file  = sys.argv[1]
@@ -52,11 +51,10 @@ if __name__ == '__main__':
     output_executable_path = sys.argv[3]
     input_pe_executable = sys.argv[4]
     json_headers_dataset = sys.argv[5]
-    includes_folder = sys.argv[6]
     seed = None
-    if len(sys.argv) == 8:
+    if len(sys.argv) == 7:
         print('Using selected seed...')
-        seed = sys.argv[7]
+        seed = sys.argv[6]
         key = seed[:prng.key_length * 2]
         nonce = seed[prng.key_length * 2: (prng.key_length + prng.nonce_length) * 2]
         prng.key = bytes.fromhex(key)
