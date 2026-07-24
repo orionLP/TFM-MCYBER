@@ -1,0 +1,63 @@
+TEST LOG FOR KASPERSKY 24/Jul/2026
+
+STEP 0: 15:31: Update AV system
+RESULT:
+    15:35: Update kaspersky
+
+STEP 1: 15:41: Send 15 files to the computer (kaspersky folder) and make sure none are detected
+RESULT:
+    15:41: Sent all files in a folder excluded from scanning, files wil be copied to another folder when exeucitg samples and scanning samples.
+
+STEP 2: 15:43: Scan all files and make sure none are detected
+RESULT:
+    15:57: Scanned all samples, none of them got detected by the AV.
+	saved log at kaspersky_log_1.csv
+
+STEP 3: 15:58: Execute sample and reescan
+RESULT:
+    15:59: Executed output_0.exe, sample was detected during execution and deleted by the AV
+    16:03: Updated AV
+    16:05: Reescaned samples, no detections were found, let's wait a bit
+	saved log at kaspersky_log_2.csv
+
+STEP 4: 16:12: Repeat process again
+RESULT:
+    16:36: Update AV
+    16:36: Reescaned samples, no detections were found
+	saved log at kaspersky_log_3.csv
+    16:39: Executed again output_0.exe, actually file was not in folder.
+
+It turns out that kaspersky is deleting the file output_0.exe just before the folder scan. Taking this into account, from now on i will simply execute files, and after detection resend them to the machine, and see if they get automatically deleted. Saved log of output_0.exe detection at kaspersky_log_4.csv
+
+I will change for this AV how to detect files. If they are allowed to download, they bypass kaspersky, if not, they are considered detected. 
+
+STEP 5: 16:48: Try to download each sample
+RESULT:
+    16:52: Only output_0.exe was blocked from downloading
+
+STEP 6: 16:59: Execute new sample, update and retry downloads
+RESULT:
+    17:00: Executed output_1.exe, sample was detected by kaspersky
+    17:04: Update AV
+    17:05: Downlaod of output_1.exe is still possible, reexecuting again, sample was detected
+    17:10: Updated AV
+    17:12: File is being prevented from being downloaded, counting this as a detection
+    17:15: Attempting download of all files:
+	Files blocked or deleted: output_0.exe, output_1.exe, output_10.exe, output_11.exe, outpu_12.exe, output_13.exe, output_2.exe, output_3.exe, output_4.exe, output_6.exe, output_8.exe, output_9.exe
+
+STEP 7: 17:27: Execute new sample, update and retry downloads
+RESULT:
+    17:31: Executing sample output_5.exe, sample got detected by kaspersky
+    17:39: Update AV
+    17:40: Sample output_5.exe was automatically deleted after downloaing, counting as detection
+    17:49: Update AV
+    17:50: Attempting to download all files
+   	Files blocked or deleted: output_0.exe, output_1.exe, output_10.exe, output_11.exe, output_12.exe, output_13.exe, output_2.exe, output_3.exe, output_5.exe, output_6.exe, output_7.exe, output_8.exe, output_9.exe
+
+STEP 8: 17:57: There is only one remaining file, output_14.exe, execute it and see if it catches it
+    17:59: Executed output_14.exe
+    18:00: Update AV
+    18:06: Download is still possible, executing output_14.exe again
+    18:46: Update AV
+    19:03: Attempted to download all files
+	All files were deleted or blocked from download
