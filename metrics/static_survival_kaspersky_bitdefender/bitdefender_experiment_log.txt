@@ -1,0 +1,42 @@
+TEST LOG FOR BITDEFENDER 24/Jul/2026
+
+STEP 0: 12:58: Update AV system
+RESULT:
+    12:58: Update bitdefender
+
+STEP 1: 12:59: Send 15 files to the computer and make sure none are detected
+RESULT:
+    12:59: Sent all files in a folder excluded from scanning, files will be copied to another folder when executing samples and scanning samples.
+
+STEP 2: 12:59: Scan all files and make sure none are detected
+RESULT:
+    13:00: Executed scan, two files were detected and given the name of Draptor (output_6.exe, output_11.exe)?
+	saved result at bitdefender_log_1.txt
+
+STEP 3: 13:21: Execute sample and reescan
+RESULT:
+    13:21: Executed output_0.exe, application was detected and blocked by bitdefender (name given was Marte?) (all samples in the directory were deleted)
+    13:29: Update AV
+    13:30: Performed the scan again to all samples, no new detections where found (only output_6.exe and output_11.exe) ???
+	saved result at bitdefender_log_2.txt
+
+STEP 4: 13:38: Repeat
+RESULT:
+    13:44: Update AV
+    13:45: Scanned again, only output_6.exe and output_11.exe were found ??? 
+    	saved output to bitdefender_log_3.txt
+    13:46: Execute output_0.exe, all samples were eliminated from the directory they were at
+    13:51: Update AV
+    13:54: Scanned again, no new detections found (only output_6.exe and output_11.exe)
+	saved result at bitdefender_log_4.txt
+
+STEP 5: 13:58: Repeat
+RESULT:
+   14:03: Update AV
+   14:12: Scanned again, no new malware found (only output_6.exe and output_11.exe)
+	saved result at bitdefender_log_5.txt
+   14:13: Execute output_0.exe, file was detected by AV
+   14:30: Update AV
+   14:33: Scanned again, no new detections were found (only output_6.exe and output_11.exe)
+
+Since nothing is happening, lets wait some hours, and see if updates just take longer with Bitdefender, stopping the experiment for now
