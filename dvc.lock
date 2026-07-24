@@ -56,7 +56,7 @@ stages:
       nfiles: 15
     - path: ./data/crypters/exe/x86/idata_obfuscation/opaque_calls/
       hash: md5
-      md5: be267dbcccb1159c79bd4ff29ec65362.dir
+      md5: 516d9e15175efc5f7f12b52f2bf7b238.dir
       size: 4078667
       nfiles: 15
     - path: ./data/crypters/exe/x86/multiple_information_reveal/
@@ -97,7 +97,7 @@ stages:
     outs:
     - path: ./data/custom/ablation/
       hash: md5
-      md5: e1afd2156d0d359d83071f8a83cd9d38.dir
+      md5: f28516d2bcbc0174600fb4032f4f18be.dir
       size: 5496933616
       nfiles: 52560
   multiple_crypters_information_reveal:
@@ -148,7 +148,7 @@ stages:
       nfiles: 9
     - path: ./src/lib/
       hash: md5
-      md5: 95f51ddc8d2ac0ce99f1e4324409e457.dir
+      md5: 68da46f95584f3adee2422dd14522678.dir
       size: 260034
       nfiles: 54
     - path: data/preprocessed_headers/
@@ -174,7 +174,7 @@ stages:
     outs:
     - path: data/crypters/exe/x86/idata_obfuscation/opaque_calls/
       hash: md5
-      md5: be267dbcccb1159c79bd4ff29ec65362.dir
+      md5: 516d9e15175efc5f7f12b52f2bf7b238.dir
       size: 4078667
       nfiles: 15
   idata_obfuscation_dynamic_api_resolution:
@@ -188,7 +188,7 @@ stages:
       nfiles: 9
     - path: ./src/lib/
       hash: md5
-      md5: 95f51ddc8d2ac0ce99f1e4324409e457.dir
+      md5: 68da46f95584f3adee2422dd14522678.dir
       size: 260034
       nfiles: 54
     - path: data/preprocessed_headers/
@@ -208,12 +208,52 @@ stages:
       nfiles: 1
     - path: src/crypters/idata_obfuscation_dynamic_api_resolution/
       hash: md5
-      md5: 963aafb4e9113428a336ff1629b67f50.dir
-      size: 65158
-      nfiles: 3
+      md5: 3e3b4d92246cebca9a6f2e83eaaff2dd.dir
+      size: 69502
+      nfiles: 4
     outs:
     - path: data/crypters/exe/x86/idata_obfuscation/dynamic_api_resolution/
       hash: md5
-      md5: 5426a0b9b686bdcdda7eb5b8b8bac19c.dir
-      size: 4506047
+      md5: a0b624e3f14cef06871414eb9b740d9f.dir
+      size: 4506568
       nfiles: 15
+  static_survival_kaspersky_bitdefender:
+    cmd: 
+      ./src/crypters/idata_obfuscation_dynamic_api_resolution/static_survival_kaspersky_bitdefender.sh
+    deps:
+    - path: ./src/fake_imports/
+      hash: md5
+      md5: a6dc31ccf60e471749b7494b0b1a27e4.dir
+      size: 10268
+      nfiles: 9
+    - path: ./src/lib/
+      hash: md5
+      md5: 68da46f95584f3adee2422dd14522678.dir
+      size: 260034
+      nfiles: 54
+    - path: data/preprocessed_headers/
+      hash: md5
+      md5: 3f57f3ce033df854a1b981dad44daf61.dir
+      size: 254877168
+      nfiles: 294
+    - path: data/raw/exe/x86/
+      hash: md5
+      md5: ce6784c84e615c66c4e7afed79b2af7c.dir
+      size: 875008
+      nfiles: 15
+    - path: data/usable_headers/
+      hash: md5
+      md5: 465ef3d08b84b0d6b34f2e77b67b2844.dir
+      size: 329163
+      nfiles: 1
+    - path: src/crypters/idata_obfuscation_dynamic_api_resolution/
+      hash: md5
+      md5: 3e3b4d92246cebca9a6f2e83eaaff2dd.dir
+      size: 69502
+      nfiles: 4
+    outs:
+    - path: data/crypters/exe/x86/idata_obfuscation/static_survival/
+      hash: md5
+      md5: 04503b619e8cae7de79d2047a685b9f4.dir
+      size: 8929735
+      nfiles: 30
