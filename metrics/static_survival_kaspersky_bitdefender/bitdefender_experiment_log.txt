@@ -40,3 +40,15 @@ RESULT:
    14:33: Scanned again, no new detections were found (only output_6.exe and output_11.exe)
 
 Since nothing is happening, lets wait some hours, and see if updates just take longer with Bitdefender, stopping the experiment for now
+
+STEP 6: 19:09 Continuing experiment with bitdefender
+RESULT:
+   19:15: Updated AV
+   19:16: Attempting to download samples:
+	Blocked or deleted files were: output_11.exe, output_6.exe
+   19:26: Executing output_0.exe, application was detected by bitdefender
+   19:30: Updated AV
+   19:35: Attempting download of all files:
+	Blocked or deleted files were: output_11.exe, output_6.exe
+
+Results are the same, stopping experiment
