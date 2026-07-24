@@ -68,3 +68,15 @@ stages:
     - src/crypters/idata_obfuscation_dynamic_api_resolution/
     outs:
     - data/crypters/exe/x86/idata_obfuscation/dynamic_api_resolution/
+  static_survival_kaspersky_bitdefender:
+    cmd: 
+      ./src/crypters/idata_obfuscation_dynamic_api_resolution/static_survival_kaspersky_bitdefender.sh
+    deps:
+    - ./src/fake_imports/
+    - ./src/lib/
+    - data/preprocessed_headers/
+    - data/raw/exe/x86/
+    - data/usable_headers/
+    - src/crypters/idata_obfuscation_dynamic_api_resolution/
+    outs:
+    - data/crypters/exe/x86/idata_obfuscation/static_survival/
