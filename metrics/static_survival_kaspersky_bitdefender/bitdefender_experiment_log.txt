@@ -52,3 +52,18 @@ RESULT:
 	Blocked or deleted files were: output_11.exe, output_6.exe
 
 Results are the same, stopping experiment
+
+TEST LOG FOR BITDEFENDER 27/Jul/2026
+
+Going back at it after some days, let us see if there are any changes to bitdefender
+
+STEP 0: Update bitdefender
+RESULT: 
+    13:29: Updated AV
+
+STEP 1: Try to download samples, see if the same are flagged
+RESULT:
+    13:32: Attempting download of all files:
+	Blocked or deleted files were: output_11.exe, output_6.exe
+
+Nothing changed, from now on we will assume bitdefender has no automatic updates of this sort
