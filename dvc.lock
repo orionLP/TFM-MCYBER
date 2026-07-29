@@ -257,3 +257,42 @@ stages:
       md5: 04503b619e8cae7de79d2047a685b9f4.dir
       size: 8929735
       nfiles: 30
+  code_stop:
+    cmd: ./src/custom/code_stop/execute_pipeline.sh
+    deps:
+    - path: ./src/fake_imports/
+      hash: md5
+      md5: a6dc31ccf60e471749b7494b0b1a27e4.dir
+      size: 10268
+      nfiles: 9
+    - path: ./src/lib/
+      hash: md5
+      md5: 68da46f95584f3adee2422dd14522678.dir
+      size: 260034
+      nfiles: 54
+    - path: data/preprocessed_headers/
+      hash: md5
+      md5: 3f57f3ce033df854a1b981dad44daf61.dir
+      size: 254877168
+      nfiles: 294
+    - path: data/raw/exe/x86/
+      hash: md5
+      md5: ce6784c84e615c66c4e7afed79b2af7c.dir
+      size: 875008
+      nfiles: 15
+    - path: data/usable_headers/
+      hash: md5
+      md5: 465ef3d08b84b0d6b34f2e77b67b2844.dir
+      size: 329163
+      nfiles: 1
+    - path: src/custom/code_stop/
+      hash: md5
+      md5: 5ad118cd5ccdbd3b3aece52ac56a4488.dir
+      size: 205869
+      nfiles: 6
+    outs:
+    - path: data/custom/code_stop/
+      hash: md5
+      md5: c1fda87ebf86bc3bfc90d317d9121963.dir
+      size: 8860579
+      nfiles: 30
