@@ -94,6 +94,44 @@ class IsOddOrTwoOpaquePredicate(TrueOpaquePredicate):
             equal_2
         )
 
+class BogusBooleanExpressionOpaquePredicate(TrueOpaquePredicate):
+
+    def __init__(self, used_cbuilder: cbuilder.CBuilder) -> None:
+        super().__init__(used_cbuilder)
+        self._needed_variables = {
+            namegenerator.VariableNameTypes.TRUE: 1  
+        }
+        self._max_depth = 3
+    
+    def _recursive_bogus_boolean(self, variables_chosen: list[str], level: int) -> pycparser.c_ast.Node:
+        if level == 0:
+            return self._cbuilder.variable(prng.random_choice(variables_chosen))
+        
+        left_operator = self._recursive_bogus_boolean(variables_chosen, level - 1)
+        right_operator = self._recursive_bogus_boolean(variables_chosen, level - 1)
+
+        chosen_route = prng.get_range_unsigned_integer(3)
+        if chosen_route == 0:
+            negation = self._cbuilder.unary_operation(coperators.UnaryCOperator.NOT, left_operator) 
+            return self._cbuilder.binary_operation(coperators.BinaryCOperator.OR, negation, right_operator)
+        if chosen_route == 1:
+            negation = self._cbuilder.unary_operation(coperators.UnaryCOperator.NOT, right_operator) 
+            return self._cbuilder.binary_operation(coperators.BinaryCOperator.OR, left_operator, negation)
+        if chosen_route == 2:
+            return self._cbuilder.binary_operation(coperators.BinaryCOperator.AND, left_operator, right_operator) 
+
+    def create_predicate(self, predicate_variables: list[str], used_type: ctypes.CTypes) -> pycparser.c_ast.Node:
+        available_variables = self._list_to_dict(predicate_variables)
+        if not self._check_input_variables(available_variables):
+            raise ValueError("Did not give BogusBooleanExpressionOpaquePredicate the necessary variables to be used")
+        
+        available_true_variables = available_variables[namegenerator.VariableNameTypes.TRUE]
+        number_variables_chosen = prng.get_range_unsigned_integer(len(available_true_variables) + 1, 1)
+        variables_chosen = prng.random_selection(available_true_variables, number_variables_chosen)
+        chosen_depth = prng.get_range_unsigned_integer(self._max_depth)
+        return self._recursive_bogus_boolean(variables_chosen, chosen_depth)
+
+        
 class PythagoreanTripleOpaquePredicate(TrueOpaquePredicate):
 
     def __init__(self, used_cbuilder: cbuilder.CBuilder) -> None:

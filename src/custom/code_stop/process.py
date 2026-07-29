@@ -92,6 +92,7 @@ if __name__ == '__main__':
             is_odd_or_two_predicate = opaquepredicate.IsOddOrTwoOpaquePredicate(builder)
             pythagorean_triple_predicate = opaquepredicate.PythagoreanTripleOpaquePredicate(builder)
             dummy_predicate = opaquepredicate.DummyOpaquePredicate(builder)
+            bogus_predicate = opaquepredicate.BogusBooleanExpressionOpaquePredicate(builder)
 
             print('Creating opaque if objects...')
 
@@ -178,13 +179,13 @@ if __name__ == '__main__':
             no_function_call_opaque = opaquefunctioncall.NoCallOpaqueFunctionCall(builder, frequent_builder, name_generator, integer_types, function_finder, classifier, list_of_chosen_functions, dependencies_ast, graph)
 
             print('Using funciton opaques...')
-            for opaque_predicate in [is_odd_or_two_predicate, pythagorean_triple_predicate, dummy_predicate]:
+            for opaque_predicate in [bogus_predicate]:
                 function_call_visitor = opaquefunctioncallvisitor.OpaqueFunctionCallVisitor(opaque_predicate, no_function_call_opaque, ctypes.CTypes.UNSIGNED_INT, scope_handler, 8, 0.3)
                 function_call_visitor.visit(ast)
 
             print('Creating visitors to inject opaque true ifs...')
             if_injection_visitors = []
-            for opaque_predicate in [is_odd_or_two_predicate, pythagorean_triple_predicate, dummy_predicate]:
+            for opaque_predicate in [bogus_predicate]:
                 for opaque_if in [junk_if, bogus_flow_if]:
                     if_injection_visitors.append(opaqueifvisitor.TrueOpaqueIfVisitor(opaque_predicate, opaque_if, variable_type, scope_handler, 8, 0.3))
 

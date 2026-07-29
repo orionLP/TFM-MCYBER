@@ -1,0 +1,11 @@
+TEST LOG FOR CODE STOPS 29/Jul/2026
+
+STEP 0: 17:00: Test which code is allowed execution for Avast
+RESULT:
+    17:27: Update AV
+    17:27: Download third_stop_output_20.exe and wait 3 minutes
+    17:36: Sample has not been detected, executing third_stop_output_20.exe and waiting 3 minutes
+    17:40: Sample was detected and removed
+    17:41: Downloading second_stop_output_10.exe and waiting 3 minutes
+    17:45: Sample detected, downloading second_stop_output_11.exe and waiting 3 minutes
+    16:48: Turns out that Avast now detects my samples...

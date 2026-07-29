@@ -26,3 +26,4 @@ class BinaryCOperator(enum.Enum):
     LESSOREQUAL = Operator('<=')
     OR = Operator('||')
     BITWISEOR = Operator('|')
+    AND = Operator('&&')
