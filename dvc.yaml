@@ -80,3 +80,14 @@ stages:
     - src/crypters/idata_obfuscation_dynamic_api_resolution/
     outs:
     - data/crypters/exe/x86/idata_obfuscation/static_survival/
+  code_stop:
+    cmd: ./src/custom/code_stop/execute_pipeline.sh
+    deps:
+    - ./src/fake_imports/
+    - ./src/lib/
+    - data/preprocessed_headers/
+    - data/raw/exe/x86/
+    - data/usable_headers/
+    - src/custom/code_stop/
+    outs:
+    - data/custom/code_stop/

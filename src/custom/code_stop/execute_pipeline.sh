@@ -41,26 +41,26 @@ seeds=(
 for i in $(seq 0 9); do
 	echo "Running iteration ${i} with seed ${seeds[${i}]}"
 
-	python3 src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/process.py src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/first_stop_merged.c "./src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/first_stop_output_${i}.c" "${destination_directory}first_stop_output_${i}.exe" "${source_file}" data/usable_headers/list_of_usable_headers.json "${seeds[${i}]}"
+	python3 src/custom/code_stop/process.py src/custom/code_stop/first_stop_merged.c "./src/custom/code_stop/first_stop_output_${i}.c" "${destination_directory}first_stop_output_${i}.exe" "${source_file}" data/usable_headers/list_of_usable_headers.json "${seeds[${i}]}"
 
 	objcopy --strip-debug "${destination_directory}first_stop_output_${i}.exe"
-	rm "./src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/first_stop_output_${i}.c"
+	rm "./src/custom/code_stop/first_stop_output_${i}.c"
 done
 
 for i in $(seq 10 19); do
 	echo "Running iteration ${i} with seed ${seeds[${i}]}"
 
-	python3 src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/process.py src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/second_stop_merged.c "./src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/second_stop_output_${i}.c" "${destination_directory}second_stop_output_${i}.exe" "${source_file}" data/usable_headers/list_of_usable_headers.json "${seeds[${i}]}"
+	python3 src/custom/code_stop/process.py src/custom/code_stop/second_stop_merged.c "./src/custom/code_stop/second_stop_output_${i}.c" "${destination_directory}second_stop_output_${i}.exe" "${source_file}" data/usable_headers/list_of_usable_headers.json "${seeds[${i}]}"
 
 	objcopy --strip-debug "${destination_directory}second_stop_output_${i}.exe"
-	rm "./src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/second_stop_output_${i}.c"
+	rm "./src/custom/code_stop/second_stop_output_${i}.c"
 done	
 
 for i in $(seq 20 29); do
 	echo "Running iteration ${i} with seed ${seeds[${i}]}"
 
-	python3 src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/process.py src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/third_stop_merged.c "./src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/third_stop_output_${i}.c" "${destination_directory}third_stop_output_${i}.exe" "${source_file}" data/usable_headers/list_of_usable_headers.json "${seeds[${i}]}"
+	python3 src/custom/code_stop/process.py src/custom/code_stop/third_stop_merged.c "./src/custom/code_stop/third_stop_output_${i}.c" "${destination_directory}third_stop_output_${i}.exe" "${source_file}" data/usable_headers/list_of_usable_headers.json "${seeds[${i}]}"
 
 	objcopy --strip-debug "${destination_directory}third_stop_output_${i}.exe"
-	rm "./src/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/third_stop_output_${i}.c"
+	rm "./src/custom/code_stop/third_stop_output_${i}.c"
 done	
