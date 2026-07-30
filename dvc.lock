@@ -287,12 +287,12 @@ stages:
       nfiles: 1
     - path: src/custom/code_stop/
       hash: md5
-      md5: 3150afe5d9e085703cb0310e24a0b39c.dir
-      size: 161361
+      md5: 89fed20ba423d6c95eba668768435399.dir
+      size: 162033
       nfiles: 5
     outs:
     - path: data/custom/code_stop/
       hash: md5
-      md5: 8848d155cf2756d649708fdc76abfcdb.dir
-      size: 9198967
-      nfiles: 30
+      md5: d1b0c16105db213c64548acfe7506c8e.dir
+      size: 9506558
+      nfiles: 31
