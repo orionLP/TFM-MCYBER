@@ -427,7 +427,7 @@ void print_minimal(void) {
     const char *msg = "Hello from minimal printf\n";
     
     // Assuming GetStdHandle and WriteFile are in kernel_library_function_addresses
-    HANDLE stdout_handle = ((HANDLE (__stdcall *)(DWORD)) kernel_library_function_addresses[9])(STD_OUTPUT_HANDLE);
+    HANDLE stdout_handle = ((HANDLE (__stdcall *)(DWORD)) kernel_library_function_addresses[9])(-11);
     DWORD written;
     ((BOOL (__stdcall *)(HANDLE, LPVOID, DWORD, LPDWORD, LPOVERLAPPED)) kernel_library_function_addresses[8])(stdout_handle, (void*)msg, 26, &written, NULL);
 }
