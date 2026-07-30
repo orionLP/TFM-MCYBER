@@ -145,7 +145,7 @@ if __name__ == '__main__':
                         library_name = item_library[key]['library_name']
                         functions = item_library[key]['functions']
                 
-                        chosen_upper_limit = min(10, len(functions))
+                        chosen_upper_limit = min(20, len(functions))
                         number_of_functions_chosen = max(1, prng.get_range_unsigned_integer(chosen_upper_limit))
                         chosen_functions = prng.random_selection(functions, number_of_functions_chosen)
 
