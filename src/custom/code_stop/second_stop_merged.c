@@ -423,6 +423,16 @@ void code_handling_execute(in_memory_pe *new_pe){
     execute_entry_point();
 }
 
+void print_minimal(void) {
+    const char *msg = "Hello from minimal printf\n";
+    
+    // Assuming GetStdHandle and WriteFile are in kernel_library_function_addresses
+    HANDLE stdout_handle = ((HANDLE (__stdcall *)(DWORD)) kernel_library_function_addresses[9])(STD_OUTPUT_HANDLE);
+    DWORD written;
+    ((BOOL (__stdcall *)(HANDLE, LPVOID, DWORD, LPDWORD, LPOVERLAPPED)) kernel_library_function_addresses[8])(stdout_handle, (void*)msg, 26, &written, NULL);
+}
+
+
 // MAIN
 
 int main(void) {   
@@ -430,9 +440,11 @@ int main(void) {
 
     decrypt_data(executable_pe, executable_size);
     
+    print_minimal(); 
     while(1){
 
     }
+    print_minimal();
 
     DWORD new_size = executable_size - (DWORD) iv_length - (DWORD) executable_pe[executable_size - 1];
     in_memory_pe *pe_to_execute = code_handling_load_pe(executable_pe + iv_length, new_size);
