@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source_file="./data/raw/exe/x86/windows_meterpreter_reverse_tcp.exe" 
+source_file="./data/raw/exe/x86/windows_meterpreter_reverse_tcp.exe"
+ablation_file="./data/custom/ablation/raw/windows_meterpreter_reverse_tcp.exe._header_.gbhh"
 destination_directory="./data/custom/code_stop/crypters_idata_obfuscation_dynamic_api_resolution/"
 
 mkdir -p ${destination_directory}
@@ -36,6 +37,7 @@ seeds=(
   f0b3668954e351050e0a93a13c492b667f70372adb5e15396f185370f27c22cf1aef02af748bcfd9d93c4279
   5dda5bf31869c3fb6e4c8e2fef6de51c7bf55002d7d8b9746d261da78987230a1bb77a2f51e9abedce3e579d
   90f01cb582b591819acaa2558a5c6870f5cc009f9e87a0f369e2d0561c07bdc79e29fb8b17c72c405ace50a7
+  bfc794afc8c48bc9217a4f7680f0016fcbace260ebec1b39494bb05a82b5fb1bf2d7625331fb28eef8e74b95
 )
 
 for i in $(seq 0 9); do
@@ -63,4 +65,14 @@ for i in $(seq 20 29); do
 
 	objcopy --strip-debug "${destination_directory}third_stop_output_${i}.exe"
 	rm "./src/custom/code_stop/third_stop_output_${i}.c"
-done	
+done
+
+echo "Running ablation sample 30 with seed ${seeds[30]}"
+
+python3 src/custom/code_stop/process.py src/custom/code_stop/second_stop_merged.c "./src/custom/code_stop/second_stop_ablation_output_30.c" "${destination_directory}second_stop_ablation_output_30.exe" "${ablation_file}" data/usable_headers/list_of_usable_headers.json "${seeds[30]}"
+
+objcopy --strip-debug "${destination_directory}second_stop_ablation_output_30.exe"
+rm "./src/custom/code_stop/second_stop_ablation_output_30.c"
+
+
+
