@@ -24,19 +24,12 @@ def bin_to_c_array(input_file, output_file=None, array_name="shellcode"):
         sys.exit(1)
     
     # Generate C array
-    c_code = f"unsigned char {array_name}[] = {{\n"
+    c_code = f"unsigned char {array_name}[] = \""
     
     # Format bytes: 16 per line, hex format
     for i, byte in enumerate(data):
-        if i % 16 == 0:
-            c_code += "    "
-        c_code += f"0x{byte:02x}"
-        if i < len(data) - 1:
-            c_code += ", "
-        if (i + 1) % 16 == 0:
-            c_code += "\n"
-    
-    c_code += f"\n}};\nunsigned int {array_name}_len = {len(data)};\n"
+        c_code += f"\\x{byte:02x}"
+    c_code += f"\";\n"
     
     # Output
     if output_file:
