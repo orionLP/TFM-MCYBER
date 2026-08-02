@@ -45,7 +45,29 @@ HANDLE create_process_with_pipe(char *command, HANDLE *hReadPipe) {
     return pi.hProcess;
 }
 
+#include <stdio.h>
+
 int main() {
+
+    printf("Calling function\n");
+
+    void *pointer_my_man = VirtualAlloc(NULL, 3, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    DWORD oldProtect;
+    VirtualProtect(pointer_my_man, 3, PAGE_EXECUTE_READ, &oldProtect);
+    HMODULE library = LoadLibraryA("ws2_32");
+    if(library == NULL){
+        printf("Not able to find the sockets library\n");
+	exit(-1);
+    }
+    FARPROC funcion_address = GetProcAddress(library, "WSAStartup");
+    FARPROC socket_address = GetProcAddress(library, "socket");
+    FARPROC connection_address = GetProcAddress(library, "connect");
+    if(funcion_address == NULL || socket_address == NULL || connection_address == NULL){
+	printf("Goodbye\n");
+        exit(-1);
+    }
+    printf("Hello there\n");
+
     WSADATA wsa_data;
     SOCKET sock;
     struct sockaddr_in sa;
