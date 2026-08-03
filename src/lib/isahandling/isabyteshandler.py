@@ -1,6 +1,7 @@
 import abc
 import src.lib.isahandling.instructionclassifier as instructionclassifier
 import src.lib.isahandling.isa as isa
+import src.lib.isahandling.sequencing as sequencing
 import src.lib.isahandling.instructionparser as instructionparser
 import distorm3
 
@@ -21,7 +22,11 @@ class X86ISAConversionHandler(ISAConversionHandler):
     def __init__(self):
         self._classifier = instructionclassifier.X86InstructionClassifier()
         self._parser = instructionparser.X86InstructionParser()
-        
+        self._sequencer = sequencing.X86SequencingHandler()
+
+    def _parse_shell(self, instruction_list: list[isa.ISAInstruction]) -> None:
+        pass
+
     def convert_to_instructions(self, bytes_string: bytes) -> list[isa.ISAInstruction]:
         result_list = []
         decoded_instructions = distorm3.Decode(0, bytes_string, distorm3.Decode32Bits)
@@ -37,4 +42,13 @@ class X86ISAConversionHandler(ISAConversionHandler):
                         self._parser.parse(bytes_string[offset:offset+size])
                     )
             )
+
+        for instruction in result_list:
+            if self._sequencer.is_relative_jump(instruction):
+                delta = self._sequencer.relative_jump_delta(instruction)
+                print(f'delta is {delta}')
+
+
+
+
         return result_list
