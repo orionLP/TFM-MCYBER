@@ -733,10 +733,10 @@ def fix_shell(sl):
 				shell_insert_bytes(sl, ni, b'\x49', i.label) # dec ecx
 				shell_replace_bytes(sl, ni+1, b'\x75\x00', -1, i.jmp_label) # jnz
 				fix_jmp(sl, ni+1)
-			#if i.bytes[0] == 0xe3: # jecxz
-			#	shell_insert_bytes(sl, ni, b'\x85\xc9', i.label) # test ecx, ecx
-			#	shell_replace_bytes(sl, ni+1, b'\x74\x00', -1, i.jmp_label) # jz
-			#	fix_jmp(sl, ni+1)
+			if i.bytes[0] == 0xe3: # jecxz
+				shell_insert_bytes(sl, ni, b'\x85\xc9', i.label) # test ecx, ecx
+				shell_replace_bytes(sl, ni+1, b'\x74\x00', -1, i.jmp_label) # jz
+				fix_jmp(sl, ni+1)
 			#if i.bytes[0] in [0xe0, 0xe1]:
 			#	li = i.label
 			#	jmpi = i.jmp_label

@@ -26,7 +26,7 @@ class MachineInstruction():
 class X86Instructions(enum.Enum):
     Jccrel8 = MachineInstruction('Jcc rel8')
     LOOPrel8 = MachineInstruction('LOOP rel8')
-    LOOPNErel8 = MachineInstruction('LOOPN rel8')
+    LOOPNErel8 = MachineInstruction('LOOPNE rel8')
     LOOPErel8 = MachineInstruction('LOOPE rel8')
     JECXZrel8 = MachineInstruction('JECXZ rel8')
     CALLrel32 = MachineInstruction('CALL rel32')

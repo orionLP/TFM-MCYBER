@@ -26,17 +26,23 @@ class X86InstructionBuilder():
         instruction_bytes = b'\x49'
         return self._build_instruction(instruction_bytes, instruction_label, None)
 
-    def jz(self, instruction_label: isa.Label, jump_label: isa.Label) -> isa.ISAInstruction:
+    def jz_rel8(self, instruction_label: isa.Label, jump_label: isa.Label) -> isa.ISAInstruction:
         instruction_bytes = b'\x74\x00'
         return self._build_instruction(instruction_bytes, instruction_label, jump_label)
 
-    def jnz(self, instruction_label: isa.Label, jump_label: isa.Label) -> isa.ISAInstruction:
+    def jnz_rel8(self, instruction_label: isa.Label, jump_label: isa.Label) -> isa.ISAInstruction:
         instruction_bytes = b'\x75\x00'
+        return self._build_instruction(instruction_bytes, instruction_label, jump_label)
+    
+    def jmp_rel32(self, instruction_label: isa.Label, jump_label: isa.Label) -> isa.ISAInstruction:
+        instruction_bytes = b'\xe9\x00\x00\x00\x00'
         return self._build_instruction(instruction_bytes, instruction_label, jump_label)
 
     def test_ecx_ecx(self, instruction_label: isa.Label) -> isa.ISAInstruction:
         instruction_bytes = b'\x85\xc9'
         return self._build_instruction(instruction_bytes, instruction_label, None)
 
-    
+    def nop(self, instruction_label: isa.Label) -> isa.ISAInstruction:
+        instruction_bytes = b'\x90'
+        return self._build_instruction(instruction_bytes, instruction_label, None)
 
