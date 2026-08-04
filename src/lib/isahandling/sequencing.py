@@ -21,10 +21,17 @@ class SequencingHandler(abc.ABC):
     @abc.abstractmethod
     def modify_jump_delta(self, instruction: isa.ISAInstruction, delta: int) -> None:
         pass
-    
-    @abc.abstractmethod
-    def fix_jump(self, jumping_instruction: isa.ISAInstruction, destination_instruction: isa.ISAInstruction) -> None:
-        pass
+
+    def fix_jump(self, instruction_list: list[isa.ISAInstruction], jumping_instruction_index: int) -> None:
+        jump_to_label_identifier = instruction_list[jumping_instruction_index].jump_label.identifier
+        jump_to_instruction_index = utils.get_instruction_index_by_label(instruction_list, jump_to_label_identifier)
+        new_delta = utils.get_jump_delta_between_instructions(instruction_list, jumping_instruction_index, jump_to_instruction_index)
+        self.modify_jump_delta(instruction_list[jumping_instruction_index], new_delta)
+
+    def fix_jumps(self, instruction_list: list[isa.ISAInstruction]) -> None:
+        for i in range(len(instruction_list)):
+            if not instruction_list[i].jump_label is None:
+                self.fix_jump(instruction_list, i)
 
 class X86SequencingHandler(SequencingHandler):
      
@@ -72,18 +79,18 @@ class X86SequencingHandler(SequencingHandler):
     def relative_jump_delta(self, instruction: isa.ISAInstruction) -> int:
         if not self.is_relative_jump(instruction):
             raise ValueError('Given relative_jump_delta an instruction that does not perform a jump')
-        jump_lenght = self.relative_jump_length(instruction)
+        jump_length = self.relative_jump_length(instruction)
         delta = int.from_bytes(instruction.parsed_bytes.imm, 'little')
-        return utils.get_signed_int(delta, jump_lenght)
+        return utils.get_signed_int(delta, jump_length)
 
     def modify_jump_delta(self, instruction: isa.ISAInstruction, delta: int) -> None:
         jump_length = self.relative_jump_length(instruction)
         diff = 0
 
         if -128 <= delta <= 127:
-            if jump_lenght == 1:
+            if jump_length == 1:
                 instruction.modify_field(1, 'imm', struct.pack('<b', delta))
-            elif jump_lenght == 4:
+            elif jump_length == 4:
                 if instruction.identified_function == isa.X86Instructions.CALLrel32:
                     instruction.modify_field(1, 'imm', struct.pack('<b', delta))
                 if instruction.identified_function == isa.X86Instructions.Jccrel32:
@@ -92,40 +99,38 @@ class X86SequencingHandler(SequencingHandler):
                     lsb_opcode = instruction.parsed_bytes.opcode[1]
                     instruction.modify_field(0, 'opcode', bytes([(lsb_opcode & 0x0f) | 0x70]))
                     instruction.modify_field(1, 'imm', struct.pack('<i', delta + diff))
-                    instruction.identified_function = self._classifier.classify(instruction.bytes)
+                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
                 if instruction.identified_function == isa.X86Instructions.JMPrel32:
                     if delta < 0:
                         diff = 3
                     instruction.modify_field(0, 'opcode', bytes([0xeb]))
                     instruction.modify_field(1, 'imm', struct.pack('<b', delta + diff))
-                    instruction.identified_function = self._classifier.classify(instruction.bytes)
+                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
         else:
-            if jump_lenght == 1:
+            if jump_length == 1:
                 if instruction.identified_function == isa.X86Instructions.Jccrel8:
                     if delta < 0:
                         diff -4
                     msb_opcode = instruction.parsed_bytes.opcode[0]
                     instruction.modify_field(0, 'opcode', bytes([0x0f, (msb_opcode & 0x0f) | 0x80]))
                     instruction.modify_field(2, 'imm', struct.pack('<i',delta + diff))
-                    instruction.identified_function = self._classifier.classify(instruction.bytes)
+                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
                 if instruction.identified_function == isa.X86Instructions.JMPrel8:
                     if delta < 0:
                         diff = -3
                     instruction.modify_field(0, 'opcode', bytes([0xe9]))
                     instruction.modify_field(1, 'imm', struct.pack('<i', delta + diff))
-                    instruction.identified_function = self._classifier.classify(instruction.bytes)
-            if jump_lenght == 4:
+                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
+            if jump_length == 4:
                 if instruction.identified_function == isa.X86Instructions.Jccrel32:
                     lsb_opcode = instruction.parsed_bytes.opcode[1]
                     instruction.modify_field(0, 'opcode', bytes([0x0f, lsb_opcode]))
                     instruction.modify_field(2, 'imm', struct.pack('<i', delta))
-                    instruction.identified_function = self._classifier.classify(instruction.bytes)
+                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
                 else:
                     msb_opcode = instruction.parsed_bytes.opcode[0]
                     instruction.modify_field(0, 'opcode', bytes([msb_opcode]))
-                    instruction.modify_field(1, 'imm', delta)
-                    instruction.identified_function = self._classifier.classify(instruction.bytes)
-
-    def fix_jump(self, jumping_instruction: isa.ISAInstruction, destination_instruction: isa.ISAInstruction) -> None:
-        pass   
+                    instruction.modify_field(1, 'imm', struct.pack('<i',delta))
+                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
+            
     

@@ -58,6 +58,6 @@ class ISAInstruction():
         self.parsed_bytes.__dict__[field] = new_byte_string
         new_string = self.instruction_bytes[:bytes_offset] + new_byte_string + self.instruction_bytes[bytes_offset + len(new_byte_string):]
         self.instruction_bytes = new_string
-        self.size = len(new_byte_string)
+        self.size = len(self.instruction_bytes)
 
 
