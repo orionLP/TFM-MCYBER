@@ -56,3 +56,21 @@ def get_signed_int(number: int, original_bytes_lenght: int) -> int:
         else:
             return number
     raise ValueError('get_signed_int has been given a original_bytes_length it does not support')
+
+def x86_extract_destination_register(instruction: bytes) -> int:
+    """Extract destination register (0-7) from instruction bytes."""
+    i = 0
+
+    # Skip operand-size prefix
+    if instruction[i] == 0x66:
+        i += 1
+
+    opcode = instruction[i]
+
+    # MOV reg, imm: register in opcode
+    if 0xB0 <= opcode <= 0xBF:
+        return opcode & 0x07
+
+    # All others: register in ModR/M byte
+    modrm = instruction[i + 1]
+    return modrm & 0x07

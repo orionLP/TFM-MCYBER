@@ -19,7 +19,8 @@ class X86InstructionClassifier(InstructionClassifier):
         instruction_format = self._instruction_parser.parse(instruction_bytes)
         opcode = instruction_format.opcode
         prefix = instruction_format.prefix
-        
+        modrm = instruction_format.modrm
+
         if len(instruction_bytes) >= 2:
             if (opcode[0] & 0xf0) == 0x70:
                 return isa.X86Instructions.Jccrel8
@@ -46,5 +47,22 @@ class X86InstructionClassifier(InstructionClassifier):
                 return isa.X86Instructions.MOVR16IMM16
             if opcode[0] in range(0xb8, 0xc0):
                 return isa.X86Instructions.MOVR32IMM32
-
+            if opcode[0] == 0x83 and modrm in range(0xc0, 0xc0+8):
+                return isa.X86Instructions.ADDR8IMM8
+            if prefix[0] == 0x66 and opcode[0] == 0x81 and modrm in range(0xc0, 0xc0+8):
+                return isa.X86Instructions.ADDR16IMM16
+            if opcode[0] == 0x81 and modrm in range(0xc0, 0xc0+8):
+                return isa.X86Instructions.ADDR32IMM32
+            if opcode[0] == 0x83 and modrm in range(0xf0, 0xf0+8):
+                return isa.X86Instructions.XORR8IMM8
+            if prefix[0] == 0x66 and opcode[0] == 0x81 and modrm in range(0xf0, 0xf0+8):
+                return isa.X86Instructions.XORR16IMM16
+            if opcode[0] == 0x81 and modrm in range(0xf0, 0xf0+8):
+                return isa.X86Instructions.XORR32IMM32
+            if opcode[0] == 0x83 and modrm in range(0xe0, 0xe0+8):
+                return isa.X86Instructions.SUBR8IMM8
+            if prefix[0] == 0x66 and opcode[0] == 0x81 and modrm in range(0xe0, 0xe0+8):
+                return isa.X86Instructions.SUBR16IMM16
+            if opcode[0] == 0x81 and modrm in range(0xe0, 0xe0+8):
+                return isa.X86Instructions.SUBR32IMM32
         return None
