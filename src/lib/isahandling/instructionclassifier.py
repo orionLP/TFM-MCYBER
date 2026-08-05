@@ -18,6 +18,7 @@ class X86InstructionClassifier(InstructionClassifier):
     def classify(self, instruction_bytes: bytes) -> Any:
         instruction_format = self._instruction_parser.parse(instruction_bytes)
         opcode = instruction_format.opcode
+        prefix = instruction_format.prefix
         
         if len(instruction_bytes) >= 2:
             if (opcode[0] & 0xf0) == 0x70:
@@ -39,5 +40,11 @@ class X86InstructionClassifier(InstructionClassifier):
             # This might cause trouble
             if opcode[0] == 0x0f and (opcode[1] & 0xf0) == 0x80:
                 return isa.X86Instructions.Jccrel32
+            if opcode[0] in range(0xb0,0xb8):
+                return isa.X86Instructions.MOVR8IMM8
+            if prefix[0] == 0x66 and opcode[0] in range(0xb8, 0xc0):
+                return isa.X86Instructions.MOVR16IMM16
+            if opcode[0] in range(0xb8, 0xc0):
+                return isa.X86Instructions.MOVR32IMM32
 
         return None
