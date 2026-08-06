@@ -101,6 +101,7 @@ class X86InstructionBuilder():
 
     def operation_reg_imm(self, operation_type: isa.X86Instructions, reg: int, immidiate: int, signed: bool, instruction_label: isa.Label) -> isa.ISAInstruction:
         operation_immidiate_bytes = None
+        
         if operation_type in [isa.X86Instructions.MOVR8IMM8, isa.X86Instructions.ADDR8IMM8, isa.X86Instructions.XORR8IMM8, isa.X86Instructions.SUBR8IMM8]:
             if signed:
                 operation_immidiate_bytes = struct.pack('<b', immidiate)

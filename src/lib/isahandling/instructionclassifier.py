@@ -59,10 +59,10 @@ class X86InstructionClassifier(InstructionClassifier):
                 return isa.X86Instructions.XORR16IMM16
             if opcode[0] == 0x81 and modrm in range(0xf0, 0xf0+8):
                 return isa.X86Instructions.XORR32IMM32
-            if opcode[0] == 0x83 and modrm in range(0xe0, 0xe0+8):
+            if opcode[0] == 0x83 and modrm in range(0xe8, 0xe8+8):
                 return isa.X86Instructions.SUBR8IMM8
-            if prefix[0] == 0x66 and opcode[0] == 0x81 and modrm in range(0xe0, 0xe0+8):
+            if prefix[0] == 0x66 and opcode[0] == 0x81 and modrm in range(0xe8, 0xe8+8):
                 return isa.X86Instructions.SUBR16IMM16
-            if opcode[0] == 0x81 and modrm in range(0xe0, 0xe0+8):
+            if opcode[0] == 0x81 and modrm in range(0xe8, 0xe8+8):
                 return isa.X86Instructions.SUBR32IMM32
         return None

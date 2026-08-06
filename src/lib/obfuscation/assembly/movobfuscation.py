@@ -20,20 +20,23 @@ class StandardX86MOVObfuscator(MOVObfuscator):
         
     def _obfuscate_one_mov(self, instructions_dictionary: dict[str, isa.X86Instructions], reg: int, label: isa.Label, target: bytes) -> list[isa.ISAInstruction]:
         chosen_instruction = prng.random_choice(['add', 'sub', 'xor'])
-        random_bytes = prng.get_n_bytes(len(target))
-        chosen_immidiate = int.from_bytes(random_bytes, 'little') % ((2 ** (len(target) - 1)) - 1)
         target_integer = int.from_bytes(target, 'little')
         
         result_list = []
         if chosen_instruction == 'add':
+            chosen_immidiate = prng.get_range_unsigned_integer(target_integer)
             offset = target_integer - chosen_immidiate
             result_list.append(self._builder.operation_reg_imm(instructions_dictionary['mov'], reg, chosen_immidiate, False, label))
-            result_list.append(self._builder.operation_reg_imm(instructions_dictionary['add'], reg, offset, offset < 0, None))
+            result_list.append(self._builder.operation_reg_imm(instructions_dictionary['add'], reg, offset, False, None))
         elif chosen_instruction == 'sub':
+            maximum_number = 2 ** (len(target) * 8)
+            chosen_immidiate = prng.get_range_unsigned_integer(maximum_number + 1, target_integer + 1)
             offset = chosen_immidiate - target_integer
             result_list.append(self._builder.operation_reg_imm(instructions_dictionary['mov'], reg, chosen_immidiate, False, label))
-            result_list.append(self._builder.operation_reg_imm(instructions_dictionary['sub'], reg, offset, offset < 0, None))
+            result_list.append(self._builder.operation_reg_imm(instructions_dictionary['sub'], reg, offset, False, None))
         else:
+            maximum_number = 2 ** (len(target) * 8)
+            chosen_immidiate = prng.get_range_unsigned_integer(maximum_number + 1)
             xored_op = target_integer ^ chosen_immidiate
             result_list.append(self._builder.operation_reg_imm(instructions_dictionary['mov'], reg, chosen_immidiate, False, label))
             result_list.append(self._builder.operation_reg_imm(instructions_dictionary['xor'], reg, xored_op, False, None))
