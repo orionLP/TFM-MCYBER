@@ -27,13 +27,7 @@ class StandardX86PUSHObfuscator(PUSHObfuscator):
         selected_register = prng.random_choice([possible_register.value.register_identifier for possible_register in isa.X86Registers if not possible_register in [isa.X86Registers.ESP, isa.X86Registers.EBP]])
         value_push = self._builder.push_reg(selected_register, None)
 
-        chosen_mov = None
-        if push_instruction.identified_function == isa.X86Instructions.PUSHIMM8:
-            chosen_mov = isa.X86Instructions.MOVR8IMM8
-        elif push_instruction.identified_function == isa.X86Instructions.PUSHIMM32:
-            chosen_mov = isa.X86Instructions.MOVR32IMM32
-        else:
-            raise ValueError('StandardX86PUSHObfuscator given an instruction that is not a recognized push')
+        chosen_mov = isa.X86Instructions.MOVR32IMM32
 
         push_immidiate = push_instruction.parsed_bytes.imm
         mov_treg_val = self._builder.operation_reg_imm(chosen_mov, selected_register, int.from_bytes(push_immidiate, 'little'), False, None)

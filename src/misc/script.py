@@ -37,8 +37,6 @@ while index < len(a):
         index += 1
 
 for i in range(16):
-    break
-    print('got here')
     index = 0
     while index < len(a):
         next_instruction = a[index]
