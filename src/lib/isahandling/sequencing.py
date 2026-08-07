@@ -3,6 +3,7 @@ import src.lib.isahandling.isa as isa
 import src.lib.isahandling.utils as utils
 import src.lib.isahandling.instructionclassifier as instructionclassifier
 import struct
+import copy
 
 class SequencingHandler(abc.ABC):
     
@@ -28,10 +29,17 @@ class SequencingHandler(abc.ABC):
         new_delta = utils.get_jump_delta_between_instructions(instruction_list, jumping_instruction_index, jump_to_instruction_index)
         self.modify_jump_delta(instruction_list[jumping_instruction_index], new_delta)
 
-    def fix_jumps(self, instruction_list: list[isa.ISAInstruction]) -> None:
-        for i in range(len(instruction_list)):
+    def _fix_jumps_individual_step(self, instruction_list: list[isa.ISAInstruction]) -> None:
+         for i in range(len(instruction_list)):
             if not instruction_list[i].jump_label is None:
                 self.fix_jump(instruction_list, i)
+
+    def fix_jumps(self, instruction_list: list[isa.ISAInstruction]) -> None:
+        copied_code = copy.deepcopy(instruction_list)
+        self._fix_jumps_individual_step(instruction_list)
+        while copied_code != instruction_list:
+            copied_code = copy.deepcopy(instruction_list)
+            self._fix_jumps_individual_step(instruction_list)
 
 class X86SequencingHandler(SequencingHandler):
      
