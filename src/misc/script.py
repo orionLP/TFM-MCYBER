@@ -29,10 +29,6 @@ while index < len(a):
         
         new_instructions = movdispobfs.obfuscate(next_instruction)
         
-        for inst in new_instructions:
-            print(inst)
-            print(' ')
-
         del a[index]
         for item in reversed(new_instructions):
             a.insert(index, item)
