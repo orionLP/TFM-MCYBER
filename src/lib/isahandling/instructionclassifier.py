@@ -20,7 +20,8 @@ class X86InstructionClassifier(InstructionClassifier):
         opcode = instruction_format.opcode
         prefix = instruction_format.prefix
         modrm = instruction_format.modrm
-
+        sib = instruction_format.sib
+        
         if len(instruction_bytes) >= 2:
             if (opcode[0] & 0xf0) == 0x70:
                 return isa.X86Instructions.Jccrel8
@@ -65,4 +66,58 @@ class X86InstructionClassifier(InstructionClassifier):
                 return isa.X86Instructions.SUBR16IMM16
             if opcode[0] == 0x81 and modrm in range(0xe8, 0xe8+8):
                 return isa.X86Instructions.SUBR32IMM32
+            if opcode[0] == 0x6a:
+                return isa.X86Instructions.PUSHIMM8
+            if opcode[0] == 0x68:
+                return isa.X86Instructions.PUSHIMM32
+            if opcode[0] == 0x89 and sib in range(0x20, 0x20 + 8) and (modrm & 0xC7) == 0x44:
+                return isa.X86Instructions.MOVR32DISP8R32
+            if opcode[0] == 0x89 and sib in range(0x20, 0x20 + 8) and (modrm & 0xC7) == 0x84:
+                return isa.X86Instructions.MOVR32DISP32R32
+            if opcode[0] == 0x8a and (modrm & 0b11000000) == 0b01000000 and (modrm & 0b00000111) != 0b100:
+                return isa.X86Instructions.MOVR8DISP8MEM
+            if opcode[0] == 0x8a and (modrm & 0b11000000) == 0b10000000 and (modrm & 0b00000111) != 0b100:
+                return isa.X86Instructions.MOVR8DISP32MEM
+            if prefix[0] == 0x66 and opcode[0] == 0x8b and (modrm & 0b11000000) == 0b01000000 and (modrm & 0b00000111) != 0b100:
+                return isa.X86Instructions.MOVR16DISP8MEM
+            if prefix[0] == 0x66 and opcode[0] == 0x8b and (modrm & 0b11000000) == 0b10000000 and (modrm & 0b00000111) != 0b100:
+                return isa.X86Instructions.MOVR16DISP32MEM
+            if opcode[0] == 0x8b and (modrm & 0b11000000) == 0b01000000 and (modrm & 0b00000111) != 0b100:
+                return isa.X86Instructions.MOVR32DISP8MEM
+            if opcode[0] == 0x8b and (modrm & 0b11000000) == 0b10000000 and (modrm & 0b00000111) != 0b100:
+                return isa.X86Instructions.MOVR32DISP32MEM
+            if opcode[0] == 0x8d and (modrm & 0b11000111) == 0b00000100:
+                return isa.X86Instructions.LEAR32BIS
+            if prefix[0] == 0x66 and opcode[0] == 0x8d and (modrm & 0b11000111) == 0b00000100:
+                return isa.X86Instructions.LEAR16BIS
+            if opcode[0] == 0x8a and (modrm & 0b11000111) == 0b00000100 and (sib & 0b11000000) == 0:
+                return isa.X86Instructions.MOVR8BI
+            if prefix[0] == 0x66 and opcode[0] == 0x8b and (modrm & 0b11000111) == 0b00000100 and (sib & 0b11000000) == 0:
+                return isa.X86Instructions.MOVR16BI
+            if opcode[0] == 0x8b and (modrm & 0b11000111) == 0b00000100 and (sib & 0b11000000) == 0:
+                return isa.X86Instructions.MOVR32BI
+            if opcode[0] == 0x8a and (modrm & 0b11000111) == 0b00000100 and (sib & 0b11000000) != 0 and (sib & 0b00000111) != 0b101:
+                return isa.X86Instructions.MOVR8BIS
+            if prefix[0] == 0x66 and opcode[0] == 0x8b and (modrm & 0b11000111) == 0b00000100 and (sib & 0b11000000) != 0 and (sib & 0b00000111) != 0b101:
+                return isa.X86Instructions.MOVR16BIS
+            if opcode[0] == 0x8b and (modrm & 0b11000111) == 0b00000100 and (sib & 0b11000000) != 0 and (sib & 0b00000111) != 0b101:
+                return isa.X86Instructions.MOVR32BIS
+            if opcode[0] == 0x8a and (modrm & 0b11000111) == 0b00000100 and (sib & 0b00000111) == 0b101:
+                return isa.X86Instructions.MOVR8IS
+            if prefix[0] == 0x66 and opcode[0] == 0x8b and (modrm & 0b11000111) == 0b00000100 and (sib & 0b00000111) == 0b101:
+                return isa.X86Instructions.MOVR16IS
+            if opcode[0] == 0x8b and (modrm & 0b11000111) == 0b00000100 and (sib & 0b00000111) == 0b101:
+                return isa.X86Instructions.MOVR32IS
+            if opcode[0] == 0x8a and (modrm & 0b11000111) == 0b01000100:
+                return isa.X86Instructions.MOVR8BISDISP8
+            if prefix[0] == 0x66 and opcode[0] == 0x8b and (modrm & 0b11000111) == 0b01000100:
+                return isa.X86Instructions.MOVR16BISDISP8
+            if opcode[0] == 0x8b and (modrm & 0b11000111) == 0b01000100:
+                return isa.X86Instructions.MOVR32BISDISP8
+            if opcode[0] == 0x8a and (modrm & 0b11000111) == 0b10000100:
+                return isa.X86Instructions.MOVR8BISDISP32
+            if prefix[0] == 0x66 and opcode[0] == 0x8b and (modrm & 0b11000111) == 0b10000100:
+                return isa.X86Instructions.MOVR16BISDISP32
+            if opcode[0] == 0x8b and (modrm & 0b11000111) == 0b10000100:
+                return isa.X86Instructions.MOVR32BISDISP32
         return None

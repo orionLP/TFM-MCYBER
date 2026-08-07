@@ -24,19 +24,19 @@ class StandardX86MOVObfuscator(MOVObfuscator):
         
         result_list = []
         if chosen_instruction == 'add':
-            chosen_immidiate = prng.get_range_unsigned_integer(target_integer)
+            chosen_immidiate = prng.get_range_unsigned_integer(target_integer + 1)
             offset = target_integer - chosen_immidiate
             result_list.append(self._builder.operation_reg_imm(instructions_dictionary['mov'], reg, chosen_immidiate, False, label))
             result_list.append(self._builder.operation_reg_imm(instructions_dictionary['add'], reg, offset, False, None))
         elif chosen_instruction == 'sub':
             maximum_number = 2 ** (len(target) * 8)
-            chosen_immidiate = prng.get_range_unsigned_integer(maximum_number + 1, target_integer + 1)
+            chosen_immidiate = prng.get_range_unsigned_integer(maximum_number, target_integer)
             offset = chosen_immidiate - target_integer
             result_list.append(self._builder.operation_reg_imm(instructions_dictionary['mov'], reg, chosen_immidiate, False, label))
             result_list.append(self._builder.operation_reg_imm(instructions_dictionary['sub'], reg, offset, False, None))
         else:
             maximum_number = 2 ** (len(target) * 8)
-            chosen_immidiate = prng.get_range_unsigned_integer(maximum_number + 1)
+            chosen_immidiate = prng.get_range_unsigned_integer(maximum_number)
             xored_op = target_integer ^ chosen_immidiate
             result_list.append(self._builder.operation_reg_imm(instructions_dictionary['mov'], reg, chosen_immidiate, False, label))
             result_list.append(self._builder.operation_reg_imm(instructions_dictionary['xor'], reg, xored_op, False, None))

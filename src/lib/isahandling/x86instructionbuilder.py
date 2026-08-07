@@ -22,6 +22,14 @@ class X86InstructionBuilder():
                self._classifier.classify(instruction_bytes),
                self._parser.parse(instruction_bytes)
         )
+    
+    def push_reg(self, reg: int, instruction_label: isa.Label) -> isa.ISAInstruction:
+        instruction_bytes = bytes([0x50 + reg])
+        return self._build_instruction(instruction_bytes, instruction_label, None)
+
+    def pop_reg(self, reg: int, instruction_label: isa.Label) -> isa.ISAInstruction:
+        instruction_bytes = bytes([0x58 + reg])
+        return self._build_instruction(instruction_bytes, instruction_label, None)
 
     def dec_ecx(self, instruction_label: isa.Label) -> isa.ISAInstruction:
         instruction_bytes = b'\x49'
@@ -46,7 +54,42 @@ class X86InstructionBuilder():
     def nop(self, instruction_label: isa.Label) -> isa.ISAInstruction:
         instruction_bytes = b'\x90'
         return self._build_instruction(instruction_bytes, instruction_label, None)
-    
+   
+    def _lea_reg_reg_index_scale(self, operation_type: isa.X86Instructions, dest_reg: int, base_reg: int, index_reg: int, scale: int, instruction_label: isa.Label) -> isa.ISAInstruction:
+        instruction_bytes = b''
+        if operation_type == isa.X86Instructions.LEAR16BIS:
+            instruction_bytes += bytes([0x66, 0x8d])
+        elif operation_type == isa.X86Instructions.LEAR32BIS:
+            instruction_bytes += bytes([0x8d])
+
+        instruction_bytes += bytes([0b00000100 + (dest_reg << 3), (scale << 6) + (index_reg << 3) + base_reg])
+
+        return self._build_instruction(instruction_bytes, instruction_label, None)
+            
+    def _mov_reg_base_index(self, operation_type: isa.X86Instructions, dest_reg: int, base_reg: int, index_reg: int, instruction_label: isa.Label) -> isa.ISAInstruction:
+        instruction_bytes = b''
+        if operation_type == isa.X86Instructions.MOVR8BI:
+            instruction_bytes += bytes([0x8a])
+        elif operation_type == isa.X86Instructions.MOVR16BI:
+            instruction_bytes += bytes([0x66, 0x8b])
+        elif operation_type == isa.X86Instructions.MOVR32BI:
+            instruction_bytes += bytes([0x8b])
+
+        instruction_bytes += bytes([0b00000100 + (dest_reg << 3), (index_reg << 3) + base_reg])
+        return self._build_instruction(instruction_bytes, instruction_label, None)
+
+    def _mov_reg_disp_reg(self, operation_type: isa.X86Instructions, displacement_reg: int, source_reg: int, displacement: bytes, instruction_label: isa.Label) -> isa.ISAInstruction:
+        instruction_bytes = b''
+
+        if operation_type == isa.X86Instructions.MOVR32DISP8R32:
+            instruction_bytes += bytes([0x89, 0b01000100 + (source_reg << 3), 0x20 + displacement_reg])
+        elif operation_type == isa.X86Instructions.MOVR32DISP32R32:
+            instruction_bytes += bytes([0x89, 0b10000100 + (source_reg << 3), 0x20 + displacement_reg])
+
+        instruction_bytes += displacement
+
+        return self._build_instruction(instruction_bytes, instruction_label, None)
+
     def _mov_reg_imm(self, operation_type: isa.X86Instructions, reg: int, immidiate: bytes, instruction_label: isa.Label) -> isa.ISAInstruction:
         instruction_bytes = b''
         if operation_type == isa.X86Instructions.MOVR8IMM8:
