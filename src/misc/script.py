@@ -14,7 +14,6 @@ pushobfs = pushobfuscation.StandardX86PUSHObfuscator()
 movdispobfs = movdispobfuscation.StandardX86MOVDISPObfuscator()
 final_sequencer = sequencing.X86SequencingHandler()
 index = 0
-print('Doing push obfuscation')
 while index < len(a):
     next_instruction = a[index]
 
@@ -28,12 +27,8 @@ while index < len(a):
         index += len(new_instructions)
     elif next_instruction.identified_function in [isa.X86Instructions.MOVR8DISP8MEM,isa.X86Instructions.MOVR8DISP32MEM, isa.X86Instructions.MOVR16DISP8MEM, isa.X86Instructions.MOVR16DISP32MEM, isa.X86Instructions.MOVR32DISP8MEM, isa.X86Instructions.MOVR32DISP32MEM, isa.X86Instructions.MOVR8BIS, isa.X86Instructions.MOVR16BIS, isa.X86Instructions.MOVR32BIS, isa.X86Instructions.MOVR8IS, isa.X86Instructions.MOVR16IS, isa.X86Instructions.MOVR32IS, isa.X86Instructions.MOVR8BISDISP8, isa.X86Instructions.MOVR8BISDISP32, isa.X86Instructions.MOVR16BISDISP8, isa.X86Instructions.MOVR16BISDISP32, isa.X86Instructions.MOVR32BISDISP8, isa.X86Instructions.MOVR32BISDISP32]:
         
-        print('new obfuscation')
-        print(next_instruction)
-
         new_instructions = movdispobfs.obfuscate(next_instruction)
         
-        print('obfuscated instructions')
         for inst in new_instructions:
             print(inst)
             print(' ')
@@ -45,7 +40,6 @@ while index < len(a):
     else:
         index += 1
 
-print('Doing mov obfuscation')
 for i in range(16):
     index = 0
     while index < len(a):
