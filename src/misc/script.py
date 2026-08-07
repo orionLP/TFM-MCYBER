@@ -2,6 +2,7 @@ import src.lib.isahandling.isabyteshandler as isbytes
 import src.lib.obfuscation.assembly.movobfuscation as movobfuscation
 import src.lib.obfuscation.assembly.pushobfuscation as pushobfuscation
 import src.lib.obfuscation.assembly.movdispobfuscation as movdispobfuscation
+import src.lib.obfuscation.assembly.flowmanglingobfuscation as flowmanglingobfuscation
 import src.lib.isahandling.sequencing as sequencing
 import src.lib.isahandling.isa as isa
 
@@ -12,7 +13,9 @@ a = handler.convert_to_instructions(file_bytes)
 movobfs = movobfuscation.StandardX86MOVObfuscator()
 pushobfs = pushobfuscation.StandardX86PUSHObfuscator()
 movdispobfs = movdispobfuscation.StandardX86MOVDISPObfuscator()
+flowmangobfs = flowmanglingobfuscation.StandardX86FlowManglingObfuscator()
 final_sequencer = sequencing.X86SequencingHandler()
+
 index = 0
 while index < len(a):
     next_instruction = a[index]
@@ -49,7 +52,10 @@ for i in range(16):
             index += len(new_instructions)
         else:
             index += 1
-        
+
+for i in range(64):
+    flowmangobfs.obfuscate(a)
+
 final_sequencer.fix_jumps(a)
 
 

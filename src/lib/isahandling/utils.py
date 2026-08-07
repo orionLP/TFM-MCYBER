@@ -1,5 +1,12 @@
 import src.lib.isahandling.isa as isa
 
+def get_max_label_identifier(instruction_list: list[isa.ISAInstruction]) -> int:
+    max_label_identifer = 0
+    for instruction in instruction_list:
+        if not instruction.label is None and instruction.label.identifier > max_label_identifer:
+            max_label_identifer = instruction.label.identifier
+    return max_label_identifer
+
 def get_jump_delta_between_instructions(instruction_list: list[isa.ISAInstruction], jumping_instruction_index: int, jump_to_instruction_index: int) -> int:
     delta = 0
     bytes_between_instructions = get_bytes_between_instructions(instruction_list, jumping_instruction_index, jump_to_instruction_index)
