@@ -58,6 +58,8 @@ class X86Instructions(enum.Enum):
     SUBR32IMM32 = MachineInstruction('SUB r32, imm32')
     PUSHIMM8 = MachineInstruction('PUSH imm8')
     PUSHIMM32 = MachineInstruction('PUSH imm32')
+    PUSHR32 = MachineInstruction('PUSH reg32')
+    POPR32 = MachineInstruction('POP reg32')
     LEAR16BIS = MachineInstruction('LEA reg16, [base + index * scale]')
     LEAR32BIS = MachineInstruction('LEA reg32, [base + index * scale]')
     MOVR8BI = MachineInstruction('MOV reg8, [base + index]')

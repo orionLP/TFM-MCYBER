@@ -15,6 +15,9 @@ class StandardX86MOVDISPObfuscator(MOVDISPObfuscator):
     
     def __init__(self) -> None:
         self._builder = x86instructionbuilder.X86InstructionBuilder()
+        self._byte_instructions = [isa.X86Instructions.MOVR8DISP8MEM, isa.X86Instructions.MOVR8DISP32MEM, isa.X86Instructions.MOVR8BIS, isa.X86Instructions.MOVR8IS, isa.X86Instructions.MOVR8BISDISP8, isa.X86Instructions.MOVR8BISDISP32]
+        self._short_instructions = [isa.X86Instructions.MOVR16DISP8MEM, isa.X86Instructions.MOVR16DISP32MEM, isa.X86Instructions.MOVR16BIS, isa.X86Instructions.MOVR16IS, isa.X86Instructions.MOVR16BISDISP8, isa.X86Instructions.MOVR16BISDISP32]
+        self._four_byte_instructions = [isa.X86Instructions.MOVR32DISP8MEM, isa.X86Instructions.MOVR32DISP32MEM, isa.X86Instructions.MOVR32BIS, isa.X86Instructions.MOVR32IS, isa.X86Instructions.MOVR32BISDISP8, isa.X86Instructions.MOVR32BISDISP32]
 
     def obfuscate(self, mov_instruction: isa.ISAInstruction) -> list[isa.ISAInstruction]:
         modrm = mov_instruction.parsed_bytes.modrm
@@ -51,11 +54,12 @@ class StandardX86MOVDISPObfuscator(MOVDISPObfuscator):
             lea_treg_treg_reg_scale = self._builder._lea_reg_reg_index_scale(isa.X86Instructions.LEAR32BIS, treg, treg, reg_index, reg_scale, None)
         
         chosen_mov_instruction = None
-        if mov_instruction in [isa.X86Instructions.MOVR8DISP8MEM, isa.X86Instructions.MOVR8DISP32MEM]:
+
+        if mov_instruction.identified_function in self._byte_instructions:
             chosen_mov_instruction = isa.X86Instructions.MOVR8BI
-        elif mov_instruction in [isa.X86Instructions.MOVR16DISP8MEM, isa.X86Instructions.MOVR16DISP32MEM]:
+        elif mov_instruction.identified_function in self._short_instructions:
             chosen_mov_instruction = isa.X86Instructions.MOVR16BI
-        elif mov_instruction in [isa.X86Instructions.MOVR32DISP8MEM, isa.X86Instructions.MOVR32DISP32MEM]:
+        elif mov_instruction.identified_function in self._four_byte_instructions:
             chosen_mov_instruction = isa.X86Instructions.MOVR32BI
 
         mov_treg_reg_treg = self._builder._mov_reg_base_index(chosen_mov_instruction, destination_reg, source_reg, treg, None)

@@ -76,6 +76,7 @@ class X86InstructionBuilder():
             instruction_bytes += bytes([0x8b])
 
         instruction_bytes += bytes([0b00000100 + (dest_reg << 3), (index_reg << 3) + base_reg])
+
         return self._build_instruction(instruction_bytes, instruction_label, None)
 
     def _mov_reg_disp_reg(self, operation_type: isa.X86Instructions, displacement_reg: int, source_reg: int, displacement: bytes, instruction_label: isa.Label) -> isa.ISAInstruction:

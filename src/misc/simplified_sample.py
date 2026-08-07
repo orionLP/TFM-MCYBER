@@ -591,14 +591,14 @@ def obf_instr(sl, ni):
 	if i.bytes[fi] in [0x26, 0x2e, 0x36, 0x3e, 0x64, 0x65, 0x66, 0x67, 0x9b, 0xf0, 0xf1, 0xf2, 0xf3]: # known prefixes
 		fi += 1
 
-	if i.bytes[fi] >= 0xb0 and i.bytes[fi] <= 0xbf: # mov reg, imm
-		iadd = obf_mov_reg_imm(sl, ni)
-	elif i.bytes[fi] == 0x6a or i.bytes[fi] == 0x68: # push imm
-		iadd = obf_push_imm(sl, ni)
-	elif (i.bytes[fi] == 0x8b or i.bytes[fi] == 0x8a) and (i.bytes[fi+1] & 0xC0) in [0x40, 0x80]: # mov reg, [reg+disp]
+    #if i.bytes[fi] >= 0xb0 and i.bytes[fi] <= 0xbf: # mov reg, imm
+    #	iadd = obf_mov_reg_imm(sl, ni)
+    #elif i.bytes[fi] == 0x6a or i.bytes[fi] == 0x68: # push imm
+    #	iadd = obf_push_imm(sl, ni)
+	if (i.bytes[fi] == 0x8b or i.bytes[fi] == 0x8a) and (i.bytes[fi+1] & 0xC0) in [0x40, 0x80]: # mov reg, [reg+disp]
 		iadd = obf_mov_reg_reg_imm_disp(sl, ni)
-	elif i.bytes[fi] in [0x80, 0x81, 0x82, 0x83]: # <add, or, adc, sbb, and, sub, xor, cmp> reg, imm
-		iadd = obf_oper_reg_imm(sl, ni)
+    #elif i.bytes[fi] in [0x80, 0x81, 0x82, 0x83]: # <add, or, adc, sbb, and, sub, xor, cmp> reg, imm
+    #	iadd = obf_oper_reg_imm(sl, ni)
 	return iadd
 
 def do_obfuscate(sl):
@@ -737,29 +737,29 @@ def fix_shell(sl):
 				shell_insert_bytes(sl, ni, b'\x85\xc9', i.label) # test ecx, ecx
 				shell_replace_bytes(sl, ni+1, b'\x74\x00', -1, i.jmp_label) # jz
 				fix_jmp(sl, ni+1)
-			#if i.bytes[0] in [0xe0, 0xe1]:
-			#	li = i.label
-			#	jmpi = i.jmp_label
-			#	nextl = get_next_label(sl)
+			if i.bytes[0] in [0xe0, 0xe1]:
+				li = i.label
+				jmpi = i.jmp_label
+				nextl = get_next_label(sl)
 
-			#	fjmp = b'\x75\x00'
-			#	if i.bytes[0] == 0xe1:
-			#		fjmp = b'\x74\x00'
+				fjmp = b'\x75\x00'
+				if i.bytes[0] == 0xe1:
+					fjmp = b'\x74\x00'
 
-			#	shell_delete_bytes(sl, ni)
+				shell_delete_bytes(sl, ni)
 
-			#	jlab = nextl+1
+				jlab = nextl+1
 
-			#	shell_insert_bytes(sl, ni, b'\x75\x00', li, nextl)
-			#	shell_insert_bytes(sl, ni+1, b'\x49')
-			#	shell_insert_bytes(sl, ni+2, b'\x74\x00', -1, jlab)
-			#	shell_insert_bytes(sl, ni+3, b'\xe9\x00\x00\x00\x00', -1, jmpi)
-			#	shell_insert_bytes(sl, ni+4, b'\x49', nextl)
-			#	shell_insert_bytes(sl, ni+5, b'\x90', jlab)
+				shell_insert_bytes(sl, ni, b'\x75\x00', li, nextl)
+				shell_insert_bytes(sl, ni+1, b'\x49')
+				shell_insert_bytes(sl, ni+2, b'\x74\x00', -1, jlab)
+				shell_insert_bytes(sl, ni+3, b'\xe9\x00\x00\x00\x00', -1, jmpi)
+				shell_insert_bytes(sl, ni+4, b'\x49', nextl)
+				shell_insert_bytes(sl, ni+5, b'\x90', jlab)
 
-			#	fix_jmp(sl, ni)
-			#	fix_jmp(sl, ni+2)
-			#	fix_jmp(sl, ni+3)
+				fix_jmp(sl, ni)
+				fix_jmp(sl, ni+2)
+				fix_jmp(sl, ni+3)
 
 		ni += 1
 
@@ -925,10 +925,10 @@ def main():
 	sl = load_shell(shbin, args.range)
 	print_disasm(sl)
 	fix_shell(sl)
-	#print('')
-	#for i in range(1,args.passes+1):
-	#	print('Obfuscation pass:', i)
-	#	do_obfuscate(sl)
+	print('')
+	for i in range(0,1):
+		print('Obfuscation pass:', i)
+		do_obfuscate(sl)
 
 	#if args.mixflow > 0:
 	#	sl = do_mangle_flow(sl, args.mixflow)
