@@ -43,10 +43,7 @@ class StandardX86FlowManglingObfuscator(FlowManglingObfuscator):
         jump_to_after_mangle = self._builder.jmp_rel32(None, after_mangle_instruction_label) 
         jump_to_mangled_instructions = self._builder.jmp_rel32(None, first_mangled_instruction_label)
 
-        instruction_list.insert(start_index, self._builder.nop(None))
         instruction_list.insert(start_index, jump_to_mangled_instructions)
-
-        copy_of_mangled_instructions.append(self._builder.nop(None))
         copy_of_mangled_instructions.append(jump_to_after_mangle)
 
         length_instruction_list = len(instruction_list)
@@ -62,6 +59,5 @@ class StandardX86FlowManglingObfuscator(FlowManglingObfuscator):
         jump_bypass_mangled = self._builder.jmp_rel32(None, label_instruction_after_mangle)
 
         instruction_list.insert(index_copied_mangled, jump_bypass_mangled)
-        instruction_list.insert(index_copied_mangled, self._builder.nop(None))
 
 
