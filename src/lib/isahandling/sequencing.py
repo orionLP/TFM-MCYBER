@@ -1,7 +1,7 @@
 import abc
 import src.lib.isahandling.isa as isa
 import src.lib.isahandling.utils as utils
-import src.lib.isahandling.instructionclassifier as instructionclassifier
+import src.lib.isahandling.x86instructionbuilder as x86instructionbuilder
 import struct
 import copy
 
@@ -20,14 +20,14 @@ class SequencingHandler(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def modify_jump_delta(self, instruction: isa.ISAInstruction, delta: int) -> None:
+    def modify_jump_delta(self, instruction_list: list[isa.ISAInstruction], instruction_index: int, delta: int) -> None:
         pass
 
     def fix_jump(self, instruction_list: list[isa.ISAInstruction], jumping_instruction_index: int) -> None:
         jump_to_label_identifier = instruction_list[jumping_instruction_index].jump_label.identifier
         jump_to_instruction_index = utils.get_instruction_index_by_label(instruction_list, jump_to_label_identifier)
         new_delta = utils.get_jump_delta_between_instructions(instruction_list, jumping_instruction_index, jump_to_instruction_index)
-        self.modify_jump_delta(instruction_list[jumping_instruction_index], new_delta)
+        self.modify_jump_delta(instruction_list, jumping_instruction_index, new_delta)
 
     def _fix_jumps_individual_step(self, instruction_list: list[isa.ISAInstruction]) -> None:
          for i in range(len(instruction_list)):
@@ -70,8 +70,8 @@ class X86SequencingHandler(SequencingHandler):
             isa.X86Instructions.JMPrel32,
             isa.X86Instructions.Jccrel32
         }
-
-        self._classifier = instructionclassifier.X86InstructionClassifier()
+        
+        self._builder = x86instructionbuilder.X86InstructionBuilder()
 
     def is_relative_jump(self, instruction: isa.ISAInstruction) -> bool:
         return instruction.identified_function in self._jumping_instructions 
@@ -91,54 +91,48 @@ class X86SequencingHandler(SequencingHandler):
         delta = int.from_bytes(instruction.parsed_bytes.imm, 'little')
         return utils.get_signed_int(delta, jump_length)
 
-    def modify_jump_delta(self, instruction: isa.ISAInstruction, delta: int) -> None:
-        jump_length = self.relative_jump_length(instruction)
-        diff = 0
+    def modify_jump_delta(self, instruction_list: list[isa.ISAInstruction], instruction_index: int, delta: int) -> None:
+        original_instruction = instruction_list[instruction_index]
+        original_label = original_instruction.label
+        original_jump_to_label = original_instruction.jump_label
+        new_instruction = None
 
+        jump_length = self.relative_jump_length(original_instruction)
+        diff = 0
+        
         if -128 <= delta <= 127:
             if jump_length == 1:
-                instruction.modify_field(1, 'imm', struct.pack('<b', delta))
+                if original_instruction.identified_function == isa.X86Instructions.Jccrel8:
+                    new_instruction = self._builder.jcc_rel8(original_label, original_jump_to_label, original_instruction.parsed_bytes.opcode[0] & 0x0f, delta)
+                elif original_instruction.identified_function == isa.X86Instructions.JMPrel8:
+                    new_instruction = self._builder.jmp_rel8(original_label, original_jump_to_label, delta)
             elif jump_length == 4:
-                if instruction.identified_function == isa.X86Instructions.CALLrel32:
-                    instruction.modify_field(1, 'imm', struct.pack('<b', delta))
-                if instruction.identified_function == isa.X86Instructions.Jccrel32:
+                if original_instruction.identified_function == isa.X86Instructions.CALLrel32:
+                    new_instruction = self._builder.call_rel32(original_label, original_jump_to_label, delta)
+                if original_instruction.identified_function == isa.X86Instructions.Jccrel32:
                     if delta < 0:
-                        diff = 4
-                    lsb_opcode = instruction.parsed_bytes.opcode[1]
-                    instruction.modify_field(0, 'opcode', bytes([(lsb_opcode & 0x0f) | 0x70]))
-                    instruction.modify_field(1, 'imm', struct.pack('<i', delta + diff))
-                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
-                if instruction.identified_function == isa.X86Instructions.JMPrel32:
+                        diff = 6 - 2
+                    new_instruction = self._builder.jcc_rel8(original_label, original_jump_to_label, original_instruction.parsed_bytes.opcode[1] & 0x0f, delta + diff)
+                if original_instruction.identified_function == isa.X86Instructions.JMPrel32:
                     if delta < 0:
-                        diff = 3
-                    instruction.modify_field(0, 'opcode', bytes([0xeb]))
-                    instruction.modify_field(1, 'imm', struct.pack('<b', delta + diff))
-                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
+                        diff = 5 - 2
+                    new_instruction = self._builder.jmp_rel8(original_label, original_jump_to_label, delta + diff)
         else:
             if jump_length == 1:
-                if instruction.identified_function == isa.X86Instructions.Jccrel8:
+                if original_instruction.identified_function == isa.X86Instructions.Jccrel8:
                     if delta < 0:
-                        diff -4
-                    msb_opcode = instruction.parsed_bytes.opcode[0]
-                    instruction.modify_field(0, 'opcode', bytes([0x0f, (msb_opcode & 0x0f) | 0x80]))
-                    instruction.modify_field(2, 'imm', struct.pack('<i',delta + diff))
-                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
-                if instruction.identified_function == isa.X86Instructions.JMPrel8:
+                        diff = 2 - 6
+                    new_instruction = self._builder.jcc_rel32(original_label, original_jump_to_label, original_instruction.parsed_bytes.opcode[0] & 0x0f, delta + diff)
+                if original_instruction.identified_function == isa.X86Instructions.JMPrel8:
                     if delta < 0:
-                        diff = -3
-                    instruction.modify_field(0, 'opcode', bytes([0xe9]))
-                    instruction.modify_field(1, 'imm', struct.pack('<i', delta + diff))
-                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
+                        diff = 2 - 5
+                    new_instruction = self._builder.jmp_rel32(original_label, original_jump_to_label, delta + diff)
             if jump_length == 4:
-                if instruction.identified_function == isa.X86Instructions.Jccrel32:
-                    lsb_opcode = instruction.parsed_bytes.opcode[1]
-                    instruction.modify_field(0, 'opcode', bytes([0x0f, lsb_opcode]))
-                    instruction.modify_field(2, 'imm', struct.pack('<i', delta))
-                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
-                else:
-                    msb_opcode = instruction.parsed_bytes.opcode[0]
-                    instruction.modify_field(0, 'opcode', bytes([msb_opcode]))
-                    instruction.modify_field(1, 'imm', struct.pack('<i',delta))
-                    instruction.identified_function = self._classifier.classify(instruction.instruction_bytes)
-            
+                if original_instruction.identified_function == isa.X86Instructions.Jccrel32:
+                    new_instruction = self._builder.jcc_rel32(original_label, original_jump_to_label, original_instruction.parsed_bytes.opcode[1] & 0x0f, delta)
+                elif original_instruction.identified_function == isa.X86Instructions.JMPrel32:
+                    new_instruction = self._builder.jmp_rel32(original_label, original_jump_to_label, delta)
+                elif original_instruction.identified_function == isa.X86Instructions.CALLrel32:
+                    new_instruction = self._builder.call_rel32(original_label, original_jump_to_label, delta)
+        instruction_list[instruction_index] = new_instruction
     

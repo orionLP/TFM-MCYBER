@@ -108,12 +108,3 @@ class ISAInstruction():
     isa: AvailableISA
     identified_function: Any
     parsed_bytes: Any
-
-    def modify_field(self, bytes_offset: int, field: str, new_byte_string: bytes) -> None:
-        # this does not update the identifed function o 
-        self.parsed_bytes.__dict__[field] = new_byte_string
-        new_string = self.instruction_bytes[:bytes_offset] + new_byte_string + self.instruction_bytes[bytes_offset + len(new_byte_string):]
-        self.instruction_bytes = new_string
-        self.size = len(self.instruction_bytes)
-
-

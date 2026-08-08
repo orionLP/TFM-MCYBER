@@ -18,6 +18,7 @@ final_sequencer = sequencing.X86SequencingHandler()
 
 index = 0
 while index < len(a):
+    break
     next_instruction = a[index]
 
     if next_instruction.identified_function in [isa.X86Instructions.PUSHIMM8, isa.X86Instructions.PUSHIMM32]:
@@ -41,6 +42,7 @@ while index < len(a):
 
 for i in range(16):
     index = 0
+    break
     while index < len(a):
         next_instruction = a[index]
         if next_instruction.identified_function in [isa.X86Instructions.MOVR8IMM8, isa.X86Instructions.MOVR16IMM16, isa.X86Instructions.MOVR32IMM32]:

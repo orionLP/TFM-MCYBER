@@ -35,16 +35,57 @@ class X86InstructionBuilder():
         instruction_bytes = b'\x49'
         return self._build_instruction(instruction_bytes, instruction_label, None)
 
-    def jz_rel8(self, instruction_label: isa.Label, jump_label: isa.Label) -> isa.ISAInstruction:
+    def jz_rel8(self, instruction_label: isa.Label, jump_label: isa.Label, offset: int | None = None) -> isa.ISAInstruction:
         instruction_bytes = b'\x74\x00'
+        if not offset is None:
+            instruction_bytes = b'\x74' + struct.pack('<b', offset)
+
         return self._build_instruction(instruction_bytes, instruction_label, jump_label)
 
-    def jnz_rel8(self, instruction_label: isa.Label, jump_label: isa.Label) -> isa.ISAInstruction:
+    def jnz_rel8(self, instruction_label: isa.Label, jump_label: isa.Label, offset: int | None = None) -> isa.ISAInstruction:
         instruction_bytes = b'\x75\x00'
+        if not offset is None:
+            instruction_bytes = b'\x75' + struct.pack('<b', offset)
+
         return self._build_instruction(instruction_bytes, instruction_label, jump_label)
-    
-    def jmp_rel32(self, instruction_label: isa.Label, jump_label: isa.Label) -> isa.ISAInstruction:
+
+    def jcc_rel8(self, instruction_label: isa.Label, jump_label: isa.Label, conditional: int, offset: int | None = None) -> isa.ISAInstruction:
+        instruction_bytes = bytes([0x70 + conditional])
+        if not offset is None:
+            instruction_bytes += struct.pack('<b', offset)
+        else:
+            instruction_bytes += b'\x00'
+
+        return self._build_instruction(instruction_bytes, instruction_label, jump_label)
+
+    def jcc_rel32(self, instruction_label: isa.Label, jump_label: isa.Label, conditional: int, offset: int | None = None) -> isa.ISAInstruction:
+        instruction_bytes = bytes([0x0f, 0x80 + conditional])
+        if not offset is None:
+            instruction_bytes += struct.pack('<i', offset)
+        else:
+            instruction_bytes += b'\x00\x00\x00\x00'
+
+        return self._build_instruction(instruction_bytes, instruction_label, jump_label)
+
+    def call_rel32(self, instruction_label: isa.Label, jump_label: isa.Label, offset: int | None = None) -> isa.ISAInstruction:
+        instruction_bytes = b'\xe8\x00\x00\x00\x00'
+        if not offset is None:
+            instruction_bytes = b'\xe8' + struct.pack('<i', offset)
+
+        return self._build_instruction(instruction_bytes, instruction_label, jump_label)
+
+    def jmp_rel8(self, instruction_label: isa.Label, jump_label: isa.Label, offset: int | None = None) -> isa.ISAInstruction:
+        instruction_bytes = b'\xeb\x00'
+        if not offset is None:
+            instruction_bytes = b'\xeb' + struct.pack('<b', offset)
+        
+        return self._build_instruction(instruction_bytes, instruction_label, jump_label)
+
+    def jmp_rel32(self, instruction_label: isa.Label, jump_label: isa.Label, offset: int | None = None) -> isa.ISAInstruction:
         instruction_bytes = b'\xe9\x00\x00\x00\x00'
+        if not offset is None:
+            instruction_bytes = b'\xe9' + struct.pack('<i', offset)
+            
         return self._build_instruction(instruction_bytes, instruction_label, jump_label)
 
     def test_ecx_ecx(self, instruction_label: isa.Label) -> isa.ISAInstruction:

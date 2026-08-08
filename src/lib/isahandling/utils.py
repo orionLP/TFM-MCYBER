@@ -9,12 +9,21 @@ def get_max_label_identifier(instruction_list: list[isa.ISAInstruction]) -> int:
 
 def get_jump_delta_between_instructions(instruction_list: list[isa.ISAInstruction], jumping_instruction_index: int, jump_to_instruction_index: int) -> int:
     delta = 0
-    bytes_between_instructions = get_bytes_between_instructions(instruction_list, jumping_instruction_index, jump_to_instruction_index)
-    if jump_to_instruction_index < jumping_instruction_index:
-        delta = - (bytes_between_instructions + instruction_list[jump_to_instruction_index].size + instruction_list[jumping_instruction_index].size)
-    elif jumping_instruction_index < jump_to_instruction_index:
-        delta = bytes_between_instructions
-    return delta
+    minimum_instruction = 0
+    maximum_instruction = 0
+    direction = 0
+    if jumping_instruction_index < jump_to_instruction_index:
+        minimum_instruction = jumping_instruction_index + 1
+        maximum_instruction = jump_to_instruction_index
+        direction = 1
+    elif jump_to_instruction_index < jumping_instruction_index:
+        minimum_instruction = jump_to_instruction_index
+        maximum_instruction = jumping_instruction_index + 1
+        direction = -1
+    
+    for step_index in range(minimum_instruction, maximum_instruction):
+        delta += instruction_list[step_index].size
+    return direction * delta
         
 def get_bytes_between_instructions(instruction_list: list[isa.ISAInstruction], start_instruction_index: int, end_instruction_index: int) -> int:
     added_number_of_bytes = 0
