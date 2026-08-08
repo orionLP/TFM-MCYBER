@@ -5,9 +5,11 @@ import src.lib.obfuscation.assembly.movdispobfuscation as movdispobfuscation
 import src.lib.obfuscation.assembly.flowmanglingobfuscation as flowmanglingobfuscation
 import src.lib.isahandling.sequencing as sequencing
 import src.lib.isahandling.isa as isa
+from src.lib.crypto.rng import prng
 
 with open('src/misc/shell.bin','rb') as file:
     file_bytes = file.read()
+
 handler = isbytes.X86ISAConversionHandler()
 a = handler.convert_to_instructions(file_bytes)
 movobfs = movobfuscation.StandardX86MOVObfuscator()
@@ -16,11 +18,13 @@ movdispobfs = movdispobfuscation.StandardX86MOVDISPObfuscator()
 flowmangobfs = flowmanglingobfuscation.StandardX86FlowManglingObfuscator()
 final_sequencer = sequencing.X86SequencingHandler()
 
+print('starting obfuscation')
 index = 0
-while index < len(a):
-    break
-    next_instruction = a[index]
 
+print('Replacing pushes')
+while index < len(a):
+    next_instruction = a[index]
+    
     if next_instruction.identified_function in [isa.X86Instructions.PUSHIMM8, isa.X86Instructions.PUSHIMM32]:
         new_instructions = pushobfs.obfuscate(next_instruction)
 
@@ -29,23 +33,27 @@ while index < len(a):
         for item in reversed(new_instructions):
             a.insert(index, item)
         index += len(new_instructions)
-    elif next_instruction.identified_function in [isa.X86Instructions.MOVR8DISP8MEM,isa.X86Instructions.MOVR8DISP32MEM, isa.X86Instructions.MOVR16DISP8MEM, isa.X86Instructions.MOVR16DISP32MEM, isa.X86Instructions.MOVR32DISP8MEM, isa.X86Instructions.MOVR32DISP32MEM, isa.X86Instructions.MOVR8BIS, isa.X86Instructions.MOVR16BIS, isa.X86Instructions.MOVR32BIS, isa.X86Instructions.MOVR8IS, isa.X86Instructions.MOVR16IS, isa.X86Instructions.MOVR32IS, isa.X86Instructions.MOVR8BISDISP8, isa.X86Instructions.MOVR8BISDISP32, isa.X86Instructions.MOVR16BISDISP8, isa.X86Instructions.MOVR16BISDISP32, isa.X86Instructions.MOVR32BISDISP8, isa.X86Instructions.MOVR32BISDISP32]:
-        
-        new_instructions = movdispobfs.obfuscate(next_instruction)
-        
-        del a[index]
-        for item in reversed(new_instructions):
-            a.insert(index, item)
-        index += len(new_instructions)
     else:
         index += 1
 
-for i in range(16):
+print('Obscuring movs')
+for i in range(2 ** 10):
     index = 0
-    break
+    print(f'Iteration {i}')
     while index < len(a):
         next_instruction = a[index]
-        if next_instruction.identified_function in [isa.X86Instructions.MOVR8IMM8, isa.X86Instructions.MOVR16IMM16, isa.X86Instructions.MOVR32IMM32]:
+        
+        taken_chance = prng.chance(0.4)
+
+        if taken_chance and next_instruction.identified_function in [isa.X86Instructions.MOVR8DISP8MEM,isa.X86Instructions.MOVR8DISP32MEM, isa.X86Instructions.MOVR16DISP8MEM, isa.X86Instructions.MOVR16DISP32MEM, isa.X86Instructions.MOVR32DISP8MEM, isa.X86Instructions.MOVR32DISP32MEM, isa.X86Instructions.MOVR8BIS, isa.X86Instructions.MOVR16BIS, isa.X86Instructions.MOVR32BIS, isa.X86Instructions.MOVR8IS, isa.X86Instructions.MOVR16IS, isa.X86Instructions.MOVR32IS, isa.X86Instructions.MOVR8BISDISP8, isa.X86Instructions.MOVR8BISDISP32, isa.X86Instructions.MOVR16BISDISP8, isa.X86Instructions.MOVR16BISDISP32, isa.X86Instructions.MOVR32BISDISP8, isa.X86Instructions.MOVR32BISDISP32]:
+            
+            new_instructions = movdispobfs.obfuscate(next_instruction)
+            
+            del a[index]
+            for item in reversed(new_instructions):
+                a.insert(index, item)
+            index += len(new_instructions)
+        elif taken_chance and next_instruction.identified_function in [isa.X86Instructions.MOVR8IMM8, isa.X86Instructions.MOVR16IMM16, isa.X86Instructions.MOVR32IMM32]:
             new_instructions = movobfs.obfuscate(next_instruction)
 
             del a[index]
@@ -54,10 +62,12 @@ for i in range(16):
             index += len(new_instructions)
         else:
             index += 1
+    
+    if prng.chance(0.3):
+        for i in range(8):
+            flowmangobfs.obfuscate(a)
 
-for i in range(64):
-    flowmangobfs.obfuscate(a)
-
+print('fixing jumps')
 final_sequencer.fix_jumps(a)
 
 
