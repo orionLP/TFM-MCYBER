@@ -249,7 +249,7 @@ if __name__ == '__main__':
 
             isa_x86_handler = isabyteshandler.X86ISAConversionHandler()
             shellcode_instructions = isa_x86_handler.convert_to_instructions(input_shellcode)
-
+            
             mov_obfuscator = movobfuscation.StandardX86MOVObfuscator()
             push_obfuscator = pushobfuscation.StandardX86PUSHObfuscator()
             mov_disp_obfuscator = movdispobfuscation.StandardX86MOVDISPObfuscator()
