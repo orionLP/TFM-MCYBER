@@ -233,7 +233,7 @@ if __name__ == '__main__':
                 ('LPVOID VirtualAlloc(',        'LPVOID __stdcall VirtualAlloc('),
                 ('HMODULE GetModuleHandleA(',   'HMODULE __stdcall GetModuleHandleA('),
                 ('HMODULE LoadLibraryA(',       'HMODULE __stdcall LoadLibraryA('),
-                ('void *GetProcAddress(',       'void * __stdcall GetProcAddress('),
+                ('void *GetProcAddress(',       'void * __stdcall GetProcAddress(')
             ]
             for old, new in replacements:
                 content = content.replace(old, new)

