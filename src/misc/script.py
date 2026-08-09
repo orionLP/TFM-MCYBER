@@ -37,7 +37,7 @@ while index < len(a):
         index += 1
 
 print('Obscuring movs')
-for i in range(2 ** 10):
+for i in range(2 ** 4):
     index = 0
     print(f'Iteration {i}')
     while index < len(a):
