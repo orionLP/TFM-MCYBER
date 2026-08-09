@@ -275,7 +275,7 @@ if __name__ == '__main__':
                 shellcode_length = len(shellcode_instructions)
 
             print('Obscuring movs...')
-            total_num_iterations = 2 ** 10
+            total_num_iterations = 2 ** 8
             print(f'Iterating {total_num_iterations}')
             for i in range(total_num_iterations):
                 shellcode_index = 0

