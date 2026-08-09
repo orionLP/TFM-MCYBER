@@ -219,6 +219,9 @@ if __name__ == '__main__':
                 ('HMODULE (*)(const char *)', 'HMODULE (__stdcall *)(const char *)'),
                 ('void *(*)(HMODULE, const char *)', 'void *(__stdcall *)(HMODULE, const char *)'),
                 ('BOOL (*)(LPVOID, DWORD, DWORD, DWORD *)', 'BOOL (__stdcall *)(LPVOID, DWORD, DWORD, DWORD *)'),
+                ('HANDLE (*)(LPCSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE)', 'HANDLE (__stdcall *)(LPCSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE)'),
+                ('BOOL (*)(HANDLE)','BOOL (__stdcall *)(HANDLE)'),
+                ('BOOL (*)(LPVOID, DWORD, DWORD, DWORD*)','BOOL (__stdcall *)(LPVOID, DWORD, DWORD, DWORD*)'),
                 ('typedef VOID (*PPS_POST_PROCESS_INIT_ROUTINE)(VOID);', 'typedef VOID (__stdcall *PPS_POST_PROCESS_INIT_ROUTINE)(VOID);'),
                 ('BOOL VirtualFree(',           'BOOL __stdcall VirtualFree('),
                 ('HANDLE GetStdHandle(',        'HANDLE __stdcall GetStdHandle('),
@@ -247,7 +250,7 @@ if __name__ == '__main__':
             isa_x86_handler = isabyteshandler.X86ISAConversionHandler()
             shellcode_instructions = isa_x86_handler.convert_to_instructions(input_shellcode)
 
-            mov_obfuscator = movobfuscation.StandardX86PUSHObfuscator()
+            mov_obfuscator = movobfuscation.StandardX86MOVObfuscator()
             push_obfuscator = pushobfuscation.StandardX86PUSHObfuscator()
             mov_disp_obfuscator = movdispobfuscation.StandardX86MOVDISPObfuscator()
             flow_mangling_obfuscation = flowmanglingobfuscation.StandardX86FlowManglingObfuscator()
@@ -269,7 +272,7 @@ if __name__ == '__main__':
                     shellcode_index += len(new_instruction_list)
                 else:
                     shellcode_index += 1
-                shellcode_length = len(new_instruction_list)
+                shellcode_length = len(shellcode_instructions)
 
             print('Obscuring movs...')
             total_num_iterations = 2 ** 10
@@ -283,7 +286,7 @@ if __name__ == '__main__':
                     taken_chance = prng.chance(0.4)
                     
                     if taken_chance and next_instruction.identified_function in [isa.X86Instructions.MOVR8DISP8MEM,isa.X86Instructions.MOVR8DISP32MEM, isa.X86Instructions.MOVR16DISP8MEM, isa.X86Instructions.MOVR16DISP32MEM, isa.X86Instructions.MOVR32DISP8MEM, isa.X86Instructions.MOVR32DISP32MEM, isa.X86Instructions.MOVR8BIS, isa.X86Instructions.MOVR16BIS, isa.X86Instructions.MOVR32BIS, isa.X86Instructions.MOVR8IS, isa.X86Instructions.MOVR16IS, isa.X86Instructions.MOVR32IS, isa.X86Instructions.MOVR8BISDISP8, isa.X86Instructions.MOVR8BISDISP32, isa.X86Instructions.MOVR16BISDISP8, isa.X86Instructions.MOVR16BISDISP32, isa.X86Instructions.MOVR32BISDISP8, isa.X86Instructions.MOVR32BISDISP32]:
-                        new_instruction_list = mov_obfuscator.obfuscate(next_instruction)
+                        new_instruction_list = mov_disp_obfuscator.obfuscate(next_instruction)
 
                         del shellcode_instructions[shellcode_index]
 
@@ -292,7 +295,7 @@ if __name__ == '__main__':
 
                         shellcode_index += len(new_instruction_list)
                     elif taken_chance and next_instruction.identified_function in [isa.X86Instructions.MOVR8IMM8, isa.X86Instructions.MOVR16IMM16, isa.X86Instructions.MOVR32IMM32]:
-                        new_instruction_list = mov_disp_obfuscator.obfuscate(next_instruction)
+                        new_instruction_list = mov_obfuscator.obfuscate(next_instruction)
 
                         del shellcode_instructions[shellcode_index]
 
@@ -303,7 +306,7 @@ if __name__ == '__main__':
                     else:
                         shellcode_index += 1
 
-                    shellcode_length = len(new_instruction_list)
+                    shellcode_length = len(shellcode_instructions)
 
                 if prng.chance(0.3):
                     for i in range(8):

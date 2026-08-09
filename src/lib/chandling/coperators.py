@@ -27,3 +27,4 @@ class BinaryCOperator(enum.Enum):
     OR = Operator('||')
     BITWISEOR = Operator('|')
     AND = Operator('&&')
+    BITWISEAND = Operator('&')

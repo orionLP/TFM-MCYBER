@@ -46,6 +46,8 @@ class JunkOpaqueIf(OpaqueIf):
             variable2 = self._cbuilder.constant(self._used_ctype, prng.get_range_unsigned_integer(self._max_constant_value, self._min_constant_value))
             if chosen_operator == coperators.BinaryCOperator.OR:
                 chosen_operator = coperators.BinaryCOperator.BITWISEOR
+            elif chosen_operator == coperators.BinaryCOperator.AND:
+                chosen_operator = coperators.BinaryCOperator.BITWISEAND
         else:
             variable2 = self._cbuilder.variable(chosen_second_variable_name)
         final_operation = self._cbuilder.binary_operation(chosen_operator, variable1, variable2)
