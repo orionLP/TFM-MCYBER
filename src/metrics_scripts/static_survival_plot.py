@@ -42,7 +42,7 @@ def plot_km(datasets: dict[str, dict]):
         t = list(range(len(S)))
 
         fig, ax = plt.subplots()
-        ax.step(t, S, where="post", marker="o")
+        ax.step(t, S, where="post")
         ax.set_title(f"Kaplan-Meier Estimate — {name}")
         ax.set_xlabel("t")
         ax.set_ylabel(r"$\hat{S}(t)$")
