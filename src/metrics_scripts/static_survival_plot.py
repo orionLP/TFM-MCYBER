@@ -25,8 +25,10 @@ def kaplan_meier(n0: int, deaths: list[int]) -> list[float]:
             continue
         S.append(S[-1] * (1 - d / n_at_risk))
         n_at_risk -= d
+    for i in range(len(S)):
+        if S[i] <= 0:
+            S[i] = 0.0
     return S
-
 
 def plot_km(datasets: dict[str, dict]):
     """
@@ -55,7 +57,6 @@ def plot_km(datasets: dict[str, dict]):
 if __name__ == "__main__":
     # Example usage
     datasets = {
-        "Dataset A": {"n0": 20, "deaths": [1, 0, 2, 1, 0, 3, 0, 1, 0, 0, 1, 0, 2, 0, 1]},
-        "Dataset B": {"n0": 50, "deaths": [2, 3, 1, 0, 4, 2, 1, 0, 0, 2]},
+        "Code obfuscation": {"n0": 15, "deaths": [1, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
     }
     plot_km(datasets)
