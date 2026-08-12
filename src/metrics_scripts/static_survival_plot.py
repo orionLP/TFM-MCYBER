@@ -47,6 +47,7 @@ def plot_km(datasets: dict[str, dict]):
         ax.set_xlabel("t")
         ax.set_ylabel(r"$\hat{S}(t)$")
         ax.set_ylim(0, 1.05)
+        ax.set_yticks([i/10 for i in range(11)])
         ax.set_xticks(t)
         ax.grid(True, alpha=0.3)
         fig.tight_layout()
