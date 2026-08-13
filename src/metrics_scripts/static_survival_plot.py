@@ -59,5 +59,6 @@ if __name__ == "__main__":
     # Example usage
     datasets = {
         "Code obfuscation": {"n0": 15, "deaths": [1, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+        "Junk API call": {"n0": 15, "deaths": [15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
     }
     plot_km(datasets)
