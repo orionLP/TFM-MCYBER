@@ -58,6 +58,6 @@ def plot_km(datasets: dict[str, dict]):
 if __name__ == "__main__":
     # Example usage
     datasets = {
-        "Dynamic API resolution": {"n0": 15, "deaths": [2, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0]}
+        "Kaspersky": {"n0": 15, "deaths": [1, 11, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
     }
     plot_km(datasets)
