@@ -52,7 +52,7 @@ RESULT:
     17:40: Sample output_5.exe was automatically deleted after downloaing, counting as detection
     17:49: Update AV
     17:50: Attempting to download all files
-   	Files blocked or deleted: output_0.exe, output_1.exe, output_10.exe, output_11.exe, output_12.exe, output_13.exe, output_2.exe, output_3.exe, output_5.exe, output_6.exe, output_7.exe, output_8.exe, output_9.exe
+   	Files blocked or deleted: output_0.exe, output_1.exe, output_10.exe, output_11.exe, output_12.exe, output_13.exe, output_2.exe, output_3.exe, output_4.exe, output_5.exe, output_6.exe, output_7.exe, output_8.exe, output_9.exe
 
 STEP 8: 17:57: There is only one remaining file, output_14.exe, execute it and see if it catches it
     17:59: Executed output_14.exe
