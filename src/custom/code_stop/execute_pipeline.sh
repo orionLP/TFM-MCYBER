@@ -38,6 +38,7 @@ seeds=(
   5dda5bf31869c3fb6e4c8e2fef6de51c7bf55002d7d8b9746d261da78987230a1bb77a2f51e9abedce3e579d
   90f01cb582b591819acaa2558a5c6870f5cc009f9e87a0f369e2d0561c07bdc79e29fb8b17c72c405ace50a7
   bfc794afc8c48bc9217a4f7680f0016fcbace260ebec1b39494bb05a82b5fb1bf2d7625331fb28eef8e74b95
+  fb053636b0380d7238038c6c02aa7c9cb416c23ad921ab4791fa295f7f1dd3461c6cf1651f7b282e141a9d12
 )
 
 for i in $(seq 0 9); do
@@ -74,5 +75,11 @@ python3 src/custom/code_stop/process.py src/custom/code_stop/second_stop_merged.
 objcopy --strip-debug "${destination_directory}second_stop_ablation_output_30.exe"
 rm "./src/custom/code_stop/second_stop_ablation_output_30.c"
 
+echo "Running ablation sample 31 with seed ${seeds[31]}"
+
+python3 src/custom/code_stop/process_shell.py src/custom/code_stop/shell_second_stop_merged.c "./src/custom/code_stop/shell_second_stop_output_31.c" "${destination_directory}shell_second_stop_output_31.exe" "${source_file}" data/usable_headers/list_of_usable_headers.json "${seeds[31]}"
+
+objcopy --strip-debug "${destination_directory}shell_second_stop_output_31.exe"
+rm "./src/custom/code_stop/shell_second_stop_output_31.c"
 
 
