@@ -23,6 +23,7 @@ index = 0
 
 print('Replacing pushes')
 while index < len(a):
+    break
     next_instruction = a[index]
     
     if next_instruction.identified_function in [isa.X86Instructions.PUSHIMM8, isa.X86Instructions.PUSHIMM32]:
@@ -37,23 +38,26 @@ while index < len(a):
         index += 1
 
 print('Obscuring movs')
-for i in range(2 ** 4):
+for i in range(1):
     index = 0
     print(f'Iteration {i}')
     while index < len(a):
         next_instruction = a[index]
         
-        taken_chance = prng.chance(0.4)
+        taken_chance = prng.chance(0.4) or True
 
-        if taken_chance and next_instruction.identified_function in [isa.X86Instructions.MOVR8DISP8MEM,isa.X86Instructions.MOVR8DISP32MEM, isa.X86Instructions.MOVR16DISP8MEM, isa.X86Instructions.MOVR16DISP32MEM, isa.X86Instructions.MOVR32DISP8MEM, isa.X86Instructions.MOVR32DISP32MEM, isa.X86Instructions.MOVR8BIS, isa.X86Instructions.MOVR16BIS, isa.X86Instructions.MOVR32BIS, isa.X86Instructions.MOVR8IS, isa.X86Instructions.MOVR16IS, isa.X86Instructions.MOVR32IS, isa.X86Instructions.MOVR8BISDISP8, isa.X86Instructions.MOVR8BISDISP32, isa.X86Instructions.MOVR16BISDISP8, isa.X86Instructions.MOVR16BISDISP32, isa.X86Instructions.MOVR32BISDISP8, isa.X86Instructions.MOVR32BISDISP32]:
-            
+        if False and taken_chance and next_instruction.identified_function in [isa.X86Instructions.MOVR8DISP8MEM,isa.X86Instructions.MOVR8DISP32MEM, isa.X86Instructions.MOVR16DISP8MEM, isa.X86Instructions.MOVR16DISP32MEM, isa.X86Instructions.MOVR32DISP8MEM, isa.X86Instructions.MOVR32DISP32MEM, isa.X86Instructions.MOVR8BIS, isa.X86Instructions.MOVR16BIS, isa.X86Instructions.MOVR32BIS, isa.X86Instructions.MOVR8IS, isa.X86Instructions.MOVR16IS, isa.X86Instructions.MOVR32IS, isa.X86Instructions.MOVR8BISDISP8, isa.X86Instructions.MOVR8BISDISP32, isa.X86Instructions.MOVR16BISDISP8, isa.X86Instructions.MOVR16BISDISP32, isa.X86Instructions.MOVR32BISDISP8, isa.X86Instructions.MOVR32BISDISP32]:
+            print('Got in mov displacement')
+
             new_instructions = movdispobfs.obfuscate(next_instruction)
             
             del a[index]
             for item in reversed(new_instructions):
                 a.insert(index, item)
             index += len(new_instructions)
-        elif taken_chance and next_instruction.identified_function in [isa.X86Instructions.MOVR8IMM8, isa.X86Instructions.MOVR16IMM16, isa.X86Instructions.MOVR32IMM32]:
+        elif False and taken_chance and next_instruction.identified_function in [isa.X86Instructions.MOVR8IMM8, isa.X86Instructions.MOVR16IMM16, isa.X86Instructions.MOVR32IMM32]:
+            print('Got in mov immediate')
+
             new_instructions = movobfs.obfuscate(next_instruction)
 
             del a[index]
@@ -63,7 +67,8 @@ for i in range(2 ** 4):
         else:
             index += 1
     
-    if prng.chance(0.3):
+    if prng.chance(0.3) and False:
+        print('Got in flow mangling')
         for i in range(8):
             flowmangobfs.obfuscate(a)
 
