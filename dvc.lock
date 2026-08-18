@@ -267,9 +267,9 @@ stages:
       nfiles: 9
     - path: ./src/lib/
       hash: md5
-      md5: 0b9d87b244abb339c7a92cbf37e664c8.dir
-      size: 265869
-      nfiles: 54
+      md5: a967792aed969f0754d1589a454fb4b6.dir
+      size: 401536
+      nfiles: 77
     - path: data/preprocessed_headers/
       hash: md5
       md5: 3f57f3ce033df854a1b981dad44daf61.dir
@@ -280,6 +280,11 @@ stages:
       md5: ce6784c84e615c66c4e7afed79b2af7c.dir
       size: 875008
       nfiles: 15
+    - path: data/raw/shellcode/x86/
+      hash: md5
+      md5: e31ea8deb7634e07f2364b30cbd9f5c6.dir
+      size: 652
+      nfiles: 2
     - path: data/usable_headers/
       hash: md5
       md5: 465ef3d08b84b0d6b34f2e77b67b2844.dir
@@ -287,12 +292,12 @@ stages:
       nfiles: 1
     - path: src/custom/code_stop/
       hash: md5
-      md5: 89fed20ba423d6c95eba668768435399.dir
-      size: 162033
-      nfiles: 5
+      md5: c644d15f1328bac4b72204b7033650fb.dir
+      size: 250483
+      nfiles: 9
     outs:
     - path: data/custom/code_stop/
       hash: md5
-      md5: d1b0c16105db213c64548acfe7506c8e.dir
-      size: 9506558
-      nfiles: 31
+      md5: 447ba2e632cc109ee605150bf3925ec8.dir
+      size: 9673320
+      nfiles: 33
