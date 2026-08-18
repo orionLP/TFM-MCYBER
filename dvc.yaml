@@ -87,6 +87,7 @@ stages:
     - ./src/lib/
     - data/preprocessed_headers/
     - data/raw/exe/x86/
+    - data/raw/shellcode/x86/
     - data/usable_headers/
     - src/custom/code_stop/
     outs:
