@@ -79,14 +79,14 @@ rm "./src/custom/code_stop/second_stop_ablation_output_30.c"
 
 echo "Running ablation sample 31 with seed ${seeds[31]}"
 
-python3 src/custom/code_stop/process_shell.py src/custom/code_stop/shell_second_stop_merged.c "./src/custom/code_stop/shell_second_stop_output_31.c" "${destination_directory}shell_second_stop_output_31.exe" "${shellcode_file}" data/usable_headers/list_of_usable_headers.json "${seeds[31]}"
+python3 src/custom/code_stop/process_shell.py src/custom/code_stop/shell_second_stop_merged.c "./src/custom/code_stop/shell_second_stop_output_31.c" "${destination_directory}shell_second_stop_output_31.exe" data/usable_headers/list_of_usable_headers.json "${shellcode_file}" "${seeds[31]}"
 
 objcopy --strip-debug "${destination_directory}shell_second_stop_output_31.exe"
 rm "./src/custom/code_stop/shell_second_stop_output_31.c"
 
 echo "Running ablation sample 32 with seed ${seeds[32]}"
 
-python3 src/custom/code_stop/process_shell.py src/custom/code_stop/shell_third_stop_merged.c "./src/custom/code_stop/shell_third_stop_output_32.c" "${destination_directory}shell_third_stop_output_32.exe" "${shellcode_file}" data/usable_headers/list_of_usable_headers.json "${seeds[32]}"
+python3 src/custom/code_stop/process_shell.py src/custom/code_stop/shell_third_stop_merged.c "./src/custom/code_stop/shell_third_stop_output_32.c" "${destination_directory}shell_third_stop_output_32.exe" data/usable_headers/list_of_usable_headers.json "${shellcode_file}" "${seeds[32]}"
 
 objcopy --strip-debug "${destination_directory}shell_third_stop_output_32.exe"
 rm "./src/custom/code_stop/shell_third_stop_output_32.c"
