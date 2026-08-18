@@ -192,7 +192,7 @@ if __name__ == '__main__':
 
             print('Creating visitors to inject opaque true ifs...')
             if_injection_visitors = []
-            for opaque_predicate in [is_odd_or_two_predicate, pythagorean_triple_predicate, dummy_predicate, bogus_predicate]:
+            for opaque_predicate in [bogus_predicate]:
                 for opaque_if in [junk_if, bogus_flow_if]:
                     if_injection_visitors.append(opaqueifvisitor.TrueOpaqueIfVisitor(opaque_predicate, opaque_if, variable_type, scope_handler, 8, 0.3))
 
