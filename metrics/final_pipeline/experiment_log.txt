@@ -1,0 +1,32 @@
+TEST LOG FOR ALL AVs 19/Aug/2026
+
+STEP 1: 16:33: Test Avast reverse shell
+RESULT:
+    16:33: Update Avast
+    16:37: Sent sample windows_shell_reverse_tcp.exe to machine avast, sample was not detected within 3 mintes (until 16:40)
+    16:41: Executed windows_shell_reverse_tcp.exe, executed a few commands (calc.exe, dir), sample was not detected within 3 minutes (until 16:45)
+
+STEP 2: 17:13: Test AVG reverse shell
+RESULT:
+    17:13: Update AVG
+    17:17: Sent sample windows_shell_reverse_tcp.exe to machine AVG, sample was not detected within 3 minutes (until 17:20)
+    17:20: Executed windows_shell_reverse_tcp.exe, executed a few commands (calc.exe, dir), sample was not detected within 3 minutes (until 17:25)
+
+STEP 3: 19:08: Test Kaspersky reverse shell
+RESULT:
+    19:08: Update Kaspersky
+    19:09: Sent sample windows_shell_reverse_tcp.exe to machine Kaspersky, sample was not detected within 3 minutes (until 19:13)
+    19:13: Executed windows_shell_reverse_tcp.exe, executed a few commands (calc.exe, dir), sample was not detected within 3 minutes (until 19:17)
+
+STEP 4: 19:22: Test Norton reverse shell
+RESULT:
+    19:22: Update Norton
+    19:26: Sent sample windows_shell_reverse_tcp.exe to machine Norton, sample was not detected within 3 minutes (until 19:31)
+    19:31: Executed windows_shell_reverse_tcp.exe, executed a few commands (calc.exe, dir), sample was not detected within 3 minutes (until 19:36)
+
+STEP 5: 20:16: Test Bitdefender reverse shell
+RESULT:
+    20:16: Update Bitdefender
+    20:19: Sent sample windows_shell_reverse_tcp.exe to machine Bitdefender, sample was not detcted within 3 minutes (until 20:22)
+    20:23: Executed windows_shell_reverse_tcp.exe, connection to the attacker machine was cut within 00:20.19 seconds
+
