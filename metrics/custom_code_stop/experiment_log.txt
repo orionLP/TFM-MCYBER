@@ -50,4 +50,17 @@ RESULT:
     15:05: Executed second_stop_ablation_output_30.exe, waited 6:47 minutes, nothing
     15:12: Executed second_stop_ablation_output_30.exe, waited 7:32 minutes, nothing
     
- 
+TEST LOG FOR CODE STOPS 19/Aug/2026
+
+STEP 1: 11:41: Try the second shellcode stop sample
+RESULT:
+    11:41: Update AV
+    11:43: Send sample shell_second_stop_output_31.exe to the machine, waited more than 3 minutes, no detection happened
+    11:52: Executed shell_second_stop_output_31.exe, waited more than 3 minutes (until 11:56), no detection
+
+STEP 2: 12:06: Try the third shellcode stop sample
+RESULT:
+    12:06: Update AV
+    12:07: Send sample shell_third_stop_output_32.exe to the machine, waited more than 3 minutes, no detection happened
+    12:11: Executed shell_third_stop_output_32.exe, waited more than 3 minutes (until 12:16), no detection
+
