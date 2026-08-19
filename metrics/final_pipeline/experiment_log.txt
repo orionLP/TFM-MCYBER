@@ -30,3 +30,32 @@ RESULT:
     20:19: Sent sample windows_shell_reverse_tcp.exe to machine Bitdefender, sample was not detcted within 3 minutes (until 20:22)
     20:23: Executed windows_shell_reverse_tcp.exe, connection to the attacker machine was cut within 00:20.19 seconds
 
+STEP 6: 20:34: Test Avast bind shell
+RESULT:
+    20:35: Update Avast
+    20:37: Sent sample windows_shell_bind_tcp.exe to machine Avast, sample was not detected within 3 mintues (until 20:40)
+    20:40: Execute windows_shell_reverse_tcp.exe, process was detected and killed and file deleted in 1:31.29 minutes
+
+STEP 7: 20:47: Test AVG bind shell
+RESULT:
+    20:47: Update AVG
+    20:48: Sent windows_shell_bind_tcp.exe to machine AVG, sample was not detected within 3 minutes (until 20:51)
+    20:51: Executed windows_shell_reverse_tcp.exe, process was detected and killed and file deleted in 00:57.05 minutes
+
+STEP 8: 21:09: Test Kaspersky bind shell
+RESULT:
+    21:09: Update Kaspersky
+    21:09: Sent windows_shell_bind_tcp.exe to machine Kaspersky, sample was not detected within 3 minutes (until 21:12)
+    21:13: Executed windows_shell_bind_tcp.exe, executed a few commands (calc.exe, dir), sample was note detected within 3 minutes (until 21:17)
+
+STEP 9: 19:22: Test Norton bind shell
+RESULT:
+    21:22: Update Norton
+    21:24: Sent windows_shell_bind_tcp.exe to machine Norton, sample was not detected within 3 minutes (21:27)
+    21:32: Executed windows_shell_reverse_tcp.exe, process was detected in 01:03.88 minutes (until 21:33). Although the process was stopped the file was not deleted
+
+STEP 10: 21:41: Test Bitdefender bind shell
+RESULT:
+    21:41: Update Bitdefender
+    21:43: Sent windows_shell_bind_tcp.exe to machine Bitdefender, sample was not detected within 3 minutes (21:47)
+    21:47: Executed windows_shell_bind_tcp.exe, process was detected and killed in 02:00.09 minutes (until 21:49). A thing to note is that the process was left alive to open a port, and was only killed when a connection from the attacker machine was attempted
