@@ -92,3 +92,14 @@ stages:
     - src/custom/code_stop/
     outs:
     - data/custom/code_stop/
+  final_pipeline:
+    cmd: ./src/final_pipeline/execute_pipeline.sh
+    deps:
+    - ./src/fake_imports/
+    - ./src/lib/
+    - data/preprocessed_headers/
+    - data/raw/shellcode/x86/
+    - data/usable_headers/
+    - src/final_pipeline/
+    outs:
+    - data/final_pipeline/
