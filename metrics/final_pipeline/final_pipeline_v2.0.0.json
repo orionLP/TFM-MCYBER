@@ -1,0 +1,82 @@
+{
+    "version": "v2.0.0",
+    "labels": {
+        "scan_time": "detected after download or while it was at disk",
+        "run_time": "detected after running",
+        "broken": "payload not working after modification",
+        "ran": "ran without being detected"
+    },
+    "misc": "The time format is mm:ss:ms where mm is minutes, ss seconds, and ms a second fraction (from 0 to 99). kaspersky would not allow me to download the files so the times have been put to 0. Both avast_free and avg_antivirus_free were sent a sample before the experiment for testing purposes.",
+    "data": [
+        {
+            "path": "data/final_pipeline",
+            "av": "avast_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "run_time",
+            "time": "01:31:29"
+        },
+        {
+            "path": "data/final_pipeline",
+            "av": "avast_free",
+            "file": "windows_shell_reverse_tcp.exe",
+            "status": "ran",
+            "time": null
+        },
+        {
+            "path": "data/final_pipeline",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "run_time",
+            "time": "00:57:05"
+        },
+        {
+            "path": "data/final_pipeline",
+            "av": "avg_antivirus_free",
+            "file": "windows_shell_reverse_tcp.exe",
+            "status": "ran",
+            "time": null
+        },
+        {
+            "path": "data/final_pipeline",
+            "av": "norton",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "run_time",
+            "time": "01:03:88"
+        },
+        {
+            "path": "data/final_pipeline",
+            "av": "norton",
+            "file": "windows_shell_reverse_tcp.exe",
+            "status": "ran",
+            "time": null
+        },
+        {
+            "path": "data/final_pipeline",
+            "av": "bitdefender",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "run_time",
+            "time": "02:00:09"
+        },
+        {
+            "path": "data/final_pipeline",
+            "av": "bitdefender",
+            "file": "windows_shell_reverse_tcp.exe",
+            "status": "run_time",
+            "time": "00:20:19"
+        },
+        {
+            "path": "data/final_pipeline",
+            "av": "kaspersky",
+            "file": "windows_shell_bind_tcp.exe",
+            "status": "ran",
+            "time": null
+        },
+        {
+            "path": "data/final_pipeline",
+            "av": "kaspersky",
+            "file": "windows_shell_reverse_tcp.exe",
+            "status": "ran",
+            "time": null
+        }
+    ]
+}
