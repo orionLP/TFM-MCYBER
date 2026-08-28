@@ -22,7 +22,11 @@ Next, you need to install the required dependencies:
 pip3 install -r requirements.txt
 ```
 
+Then, to pull the datasets from the DVC repository 
 
+```{bash}
+dvc pull
+```
 
 ## Datasets and code organitzation
 
