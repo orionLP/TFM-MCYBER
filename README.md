@@ -47,6 +47,14 @@ Then you will be able to pull the data from DagsHub (this might take a few minut
 dvc pull
 ```
 
+To use the known packers you will need to install UPX and Wine:
+
+```{bash}
+sudo apt update
+sudo apt install upx-ucl
+sudo apt install wine
+```
+
 ## Datasets and code organitzation
 
 The commits at which an experiment were done and metrics were published have been tagged. As we worked, changes in the code might have changed the output datasets that are created with pipelines, so if you want to see the original output dataset of a technique as it was evaluated you can use the following commands to change the working evironment and datasets to the ones we used:
