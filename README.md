@@ -114,7 +114,9 @@ We used DVC pipelines to automate the creation of the output datasets, so if at 
 
 - `ablation-code-algorithm`: The ablation study for the samples of both the code obfuscation and the study of changes in algorithm, code and keys.
 
-  The code for both evasion techniques is in `src/custom/ablation`. In the case of the code obfuscation the output dataset is at `data/custom/ablation/code_obfuscation/opaque_ifs` and the metrics are at `metrics/custom_ablation/second_experiment_information_reveal_opaque_ifs` in the file `opaque_ifs.json`. In the case of the changes in algorithm, code and keys the output dataset is at `data/custom/ablation/multiple_information_reveal` and the metrics are at `metrics/custom_ablation/second_experiment_information_reveal_opaque_ifs` in file `information_reveal.json`.
+  The code for both evasion techniques is in `src/custom/ablation`. In the case of the code obfuscation the output dataset is at `data/custom/ablation/code_obfuscation/opaque_ifs` and the metrics are at `metrics/custom_ablation/second_experiment` in the file `opaque_ifs.json`. The name of the folder for the metrics changed, and in the current state of the repository, it is called `metrics/custom_ablation/second_experiment_information_reveal_opaque_ifs`.
+
+  In the case of the changes in algorithm, code and keys the output dataset is at `data/custom/ablation/multiple_information_reveal` and the metrics are at `metrics/custom_ablation/second_experiment` in file `information_reveal.json`. As before, the name of the folder for the metrics changed, and in the current state of the repository it is called `metrics/custom_ablation/second_experiment_information_reveal_opaque_ifs`.
 
 - `ablation-idata-obfuscation`: ablation study of the samples for idata obfuscation.
 
@@ -122,7 +124,7 @@ We used DVC pipelines to automate the creation of the output datasets, so if at 
 
 - `ablation-packers-raw-tutorial`: ablation study of the samples in the packing experiment, the raw dataset, and the custom XOR crypter.
 
-  The code for this is for the three in `src/custom/ablation`. In the case of the packers the output datasets are located at `data/custom/ablation` in the folders `mpress`, `petite`, and `uxp`. In the case of the raw dataset the output dataset is located in `data/custom/ablation/raw`. In the case of the custom XOR crypter the dataset is located in `data/custom/ablation/tutorial`. The metrics for the three of these experiments are located in `metrics/custom_ablation/first_experiment_all_initial_techniques` in the file `custom_ablation_v1.0.0.json`.
+  The code for this is for the three in `src/custom/ablation`. In the case of the packers the output datasets are located at `data/custom/ablation` in the folders `mpress`, `petite`, and `upx`. In the case of the raw dataset the output dataset is located in `data/custom/ablation/raw`. In the case of the custom XOR crypter the dataset is located in `data/custom/ablation/tutorial`. The metrics for the three of these experiments are located in `metrics/custom_ablation` in the file `custom_ablation_v1.0.0.json`. In this case the directory where the metrics are found has changed, and in the current state of the repository they are in the directory `metrics/custom_ablation/first_experiment_all_initial_techniques`
 
 
 
