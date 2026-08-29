@@ -26,7 +26,7 @@ Then you will need to execute the following command, changing the path to the on
 into:
 
 ```{bash}
-export PYTHONPATH="${PYTHONPATH}:<path were you cloned the repository into>/TFM/TFM-MCYBER"
+export PYTHONPATH="${PYTHONPATH}:<path were you cloned the repository into>/TFM-MCYBER"
 ```
 
 Then, to pull the datasets from the DVC repository you are going to need a DagsHub account. Now visit the
