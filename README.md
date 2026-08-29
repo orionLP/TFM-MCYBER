@@ -47,7 +47,7 @@ Then you will be able to pull the data from DagsHub (this might take a few minut
 dvc pull
 ```
 
-To use the known packers you will need to install UPX and Wine:
+To use the known packers you will need to install UPX and Wine with the following commands:
 
 ```{bash}
 sudo apt update
