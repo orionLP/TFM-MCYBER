@@ -25,13 +25,23 @@ pip3 install -r requirements.txt
 Then, to pull the datasets from the DVC repository you are going to need a DagsHub account. Now visit the
 DagsHub repository at https://dagshub.com/orionLP/TFM-MCYBER, click at the "Data" button and then look
 at the "Setup credentials" section. You will find the commands below (but with your username and auth token,
-which will be hidden, but you can click a button to make it visible):
+which will be hidden, but you can click a button to make it visible), you can use them, but you will need to
+change the name "origin" with "storage":
 
 ```{bash}
-dvc remote modify origin --local auth basic
-dvc remote modify origin --local user <your DagsHub user>
-dvc remote modify origin --local password <you DagsHub auth token>
+dvc remote modify storage --local auth basic
+dvc remote modify storage --local user <your DagsHub user>
+dvc remote modify storage --local password <you DagsHub auth token>
 ```
+
+Then you will be able to pull the data from DagsHub
+
+```{bash}
+dvc pull
+```
+
+
+
 
 ## Datasets and code organitzation
 
