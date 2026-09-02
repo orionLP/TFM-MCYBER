@@ -57,7 +57,7 @@ sudo apt install wine
 
 ## Datasets and code organitzation
 
-The commits at which an experiment were done and metrics were published have been tagged. As we worked, changes in the code might have changed the output datasets that are created with pipelines, so if you want to see the original output dataset of a technique as it was evaluated you can use the following commands to change the working evironment and datasets to the ones we used:
+The commits at which an experiment were done and its metrics were published have been tagged. As we worked, changes in the code might have changed the output datasets that are created with pipelines, so if you want to see the original output dataset of a technique as it was evaluated you can use the following commands to change the working evironment and datasets to the ones we used:
 
 ```{bash}
 git checkout <tag name>
@@ -76,7 +76,7 @@ The following is a list of each tag corresponding to an evasion techique. If you
 
 We used DVC pipelines to automate the creation of the output datasets, so if at any point you want to run them to execute our code and regenerate the output datasets, you can use the command `dvc repro`, which will run the necessary code to regenerate the output datasets. However, `dvc repro` does not execute the pipelines when there have been no changes in the dependencies to create an output dataset. Therefore, depending on the commit you are and the version of the dataset you have, it might not execute anything if it is unnecessary.
 
-- `algorithm-key-obfuscation`: This is the study were we evaluated changed to the encryption algorithm, the encryption key and obfuscated some versions of the code.
+- `algorithm-key-obfuscation`: This is the study were we evaluated changes to the encryption algorithm, the code version, and the encryption key.
 
   The code for this is in `src/crypters/multiple_information_reveal`, the output datasets are located at `data/crypters/exe/x86/multiple_information_reveal`, and the metrics are at `metrics/crypter_info_reveal`
 
@@ -118,7 +118,7 @@ We used DVC pipelines to automate the creation of the output datasets, so if at 
 
   In the case of the changes in algorithm, code and keys the output dataset is at `data/custom/ablation/multiple_information_reveal` and the metrics are at `metrics/custom_ablation/second_experiment` in file `information_reveal.json`. As before, the name of the folder for the metrics changed, and in the current state of the repository it is called `metrics/custom_ablation/second_experiment_information_reveal_opaque_ifs`.
 
-- `ablation-idata-obfuscation`: ablation study of the samples for idata obfuscation.
+- `ablation-idata-obfuscation`: ablation study of the samples for idata obfuscation using code obfuscation and junk API call insertion.
 
   The code for this is in `src/custom/ablation`, the output datasets are located at `data/custom/ablation/idata_obfuscation/opaque_calls`, and the metrics are at `metrics/custom_ablation/third_experiment_idata_obfuscation_opaque_calls`.
 
